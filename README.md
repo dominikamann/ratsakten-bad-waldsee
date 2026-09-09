@@ -151,7 +151,9 @@ benannten Vorhaben verhandelt wurde, und zeigt die Kette:
 
 Gesucht wird über Stichwort oder Vorlagennummer; filtern lässt sich nach
 Vorgängen mit Beschluss, nicht einstimmigen Entscheidungen und mehrstufigen
-Verfahren. Jeder Treffer und jede Station führt zur Ausgabe der jeweiligen Woche.
+Verfahren. Zusätzlich lässt sich nach der Höhe des im Beschluss genannten Betrags
+filtern — 21 Vorgänge nennen eine Million Euro oder mehr. Jeder Treffer und jede
+Station führt zur Ausgabe der jeweiligen Woche.
 
 Mitdurchsucht werden auch die redaktionellen **Einordnungen**. Sie verbinden
 mehrere Vorgänge über die Zeit — etwa den Befund, dass Bad Waldsee binnen elf
@@ -170,11 +172,17 @@ nötig ist:
 |---|---|---|
 | [`sitzungen.csv`](./data/csv/sitzungen.csv) | 166 | Datum, Gremium, Kalenderwoche, Zahl der Tagesordnungspunkte, ob ein Protokoll vorliegt |
 | [`tagesordnungspunkte.csv`](./data/csv/tagesordnungspunkte.csv) | 616 | jeder Punkt mit Datum, Gremium, Nummer, Titel und Vorlagennummer |
-| [`beschluesse.csv`](./data/csv/beschluesse.csv) | 337 | jede Abstimmung mit Vorlagennummer, Titel und Stimmenverhältnis |
+| [`beschluesse.csv`](./data/csv/beschluesse.csv) | 337 | jede Abstimmung mit Vorlagennummer, Titel, Stimmenverhältnis und Betrag |
 
 Damit lässt sich jede Zahl des Reports ohne Programmierkenntnisse überprüfen.
 Beispiel: In `beschluesse.csv` nach der Spalte `einstimmig` filtern — es bleiben
-63 Zeilen übrig, genau die im Report genannten nicht einstimmigen Beschlüsse.
+63 Zeilen übrig, genau die im Report genannten nicht einstimmigen Beschlüsse. Oder
+nach `betrag_euro` sortieren: 36 Beschlüsse nennen eine Summe ab 250.000 Euro.
+
+**Beträge sind Fundstellen, keine Kostenangaben.** Die Spalte enthält den größten
+im Beschlusstext genannten Betrag. Das kann der Preis eines Vorhabens sein, aber
+ebenso ein Haushaltsansatz — bei der Haushaltssatzung 2025 stehen dort 63,6 Mio.
+Euro, der Ertrag der gesamten Stadt. Maßgeblich ist der Beschlusstext.
 
 Die Tabellen enthalten bewusst keine Dokument-Links: Die URLs des
 Ratsinformationssystems sind nicht dauerhaft gültig. Stabile Kennung ist die

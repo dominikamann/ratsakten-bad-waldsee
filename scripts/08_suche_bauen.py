@@ -44,6 +44,9 @@ AUSZAEHLUNG = re.compile(
     r"\s*Nein-Stimmen?(?:\(n\))?\s*:?\s*(\d+)"
     r"\s*Enthaltung(?:en)?(?:\(en\))?\s*:?\s*(\d+)")
 
+BETRAG = re.compile(r"(\d{1,3}(?:\.\d{3})*(?:,\d+)?)\s*(Mio\.?\s*)?(?:€|Euro)")
+BETRAGSSCHWELLE = 250_000
+
 KURZ = {
     "Gemeinderat": "GR",
     "Verwaltungsausschuss": "VA",
@@ -113,6 +116,17 @@ def pdf_text(pfad: Path) -> str:
     return re.sub(r"[­\s]+", " ", roh)
 
 
+def betrag_lesen(text: str) -> float | None:
+    hoechster = None
+    for m in BETRAG.finditer(text):
+        wert = float(m.group(1).replace(".", "").replace(",", "."))
+        if m.group(2):
+            wert *= 1_000_000
+        if hoechster is None or wert > hoechster:
+            hoechster = wert
+    return hoechster
+
+
 def beschluesse_je_sitzung(text: str) -> dict[str, list[str]]:
     """Vorlagennummer -> alle Abstimmungsergebnisse in ihrer Reihenfolge.
 
@@ -123,6 +137,7 @@ def beschluesse_je_sitzung(text: str) -> dict[str, list[str]]:
     angenommen wurde. Wer nur das letzte Ergebnis behaelt, verliert die Ablehnung.
     """
     ergebnisse: dict[str, list[str]] = collections.defaultdict(list)
+    betraege: dict[str, float] = {}
     for treffer in ERGEBNIS.finditer(text):
         roh = treffer.group(1)
         zahlen = AUSZAEHLUNG.match(roh)
@@ -132,10 +147,15 @@ def beschluesse_je_sitzung(text: str) -> dict[str, list[str]]:
             wert = "einstimmig"
         else:
             continue
-        vorher = VORLAGE.findall(text[:treffer.start()])
-        if vorher:
-            ergebnisse[vorher[-1]].append(wert)
-    return dict(ergebnisse)
+        stellen = list(VORLAGE.finditer(text[:treffer.start()]))
+        if not stellen:
+            continue
+        vorlage = stellen[-1].group(0)
+        ergebnisse[vorlage].append(wert)
+        geld = betrag_lesen(text[stellen[-1].start():treffer.start()])
+        if geld and geld >= BETRAGSSCHWELLE:
+            betraege[vorlage] = max(betraege.get(vorlage, 0), geld)
+    return dict(ergebnisse), betraege
 
 
 def einordnungen_laden() -> dict:
@@ -193,6 +213,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
         protokolle.setdefault(pdf.name[:10], []).append(pdf)
 
     ergebnisse: dict[str, dict[str, list[str]]] = collections.defaultdict(dict)
+    betraege: dict[tuple[str, str], float] = {}
     for s in sitzungen:
         datum = s["start"][:10]
         if datum > stichtag or not s["protokolle"]:
@@ -201,8 +222,11 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
         for pdf in protokolle.get(datum, []):
             if pdf.stem != erwartet and not pdf.stem.startswith(erwartet + "_"):
                 continue
-            for vorlage, werte in beschluesse_je_sitzung(pdf_text(pdf)).items():
+            werte_je_vorlage, geld_je_vorlage = beschluesse_je_sitzung(pdf_text(pdf))
+            for vorlage, werte in werte_je_vorlage.items():
                 ergebnisse[datum].setdefault(vorlage, []).extend(werte)
+            for vorlage, geld in geld_je_vorlage.items():
+                betraege[(datum, vorlage)] = max(betraege.get((datum, vorlage), 0), geld)
 
     # Punkte zu Vorgängen bündeln: bevorzugt über den Namen des Vorhabens,
     # sonst über die Vorlagennummer, sonst als Einzelpunkt.
@@ -239,6 +263,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
                 "e": " → ".join(werte),
                 "t": p["titel"],
                 "a": ausgabe_zu(p["datum"], zeitraeume),
+                "b": betraege.get((p["datum"], p["vorlage"] or ""), 0),
             })
         if schluessel.startswith("@"):
             name = namen[schluessel[1:]]
@@ -255,6 +280,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
             "letzte": teile[-1]["datum"],
             "strittig": any(st["e"] and st["e"] != "einstimmig" and
                             not st["e"].endswith(": 0 : 0") for st in stationen),
+            "b": max((st["b"] for st in stationen), default=0),
         })
 
     # Die redaktionellen Einordnungen mit aufnehmen. Sie verbinden mehrere
@@ -278,6 +304,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
             "s": [],
             "a": pfad,
             "geprueft": ein.get("status") == "geprueft",
+            "b": 0,
             # Nach dem Ende ihres Berichtszeitraums einsortieren, damit sie
             # zwischen den Vorgaengen derselben Zeit auftauchen.
             "letzte": ende_je_ausgabe.get(schluessel, f"{jahr}-01-01"),
@@ -376,6 +403,16 @@ a.station:hover .grem{{border-color:var(--s1)}}
 .titellink:hover{{color:var(--s1);border-bottom-color:var(--s1)}}
 .vorgang.istEinordnung{{border-left:3px solid var(--flag);padding-left:18px;background:var(--flag-bg)}}
 .vorgang .einleitung{{margin:8px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:74ch}}
+.betrag{{
+  padding:1px 7px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  font-variant-numeric:tabular-nums;color:var(--s2);border:1px solid var(--s2);
+  background:color-mix(in srgb, var(--s2) 8%, transparent);white-space:nowrap;
+}}
+.betrag.klein{{font-size:10px;padding:0 5px}}
+.filter select{{
+  background:var(--surface);color:var(--ink);border:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;padding:3px 6px;margin-left:6px;
+}}
 mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 .leer{{padding:40px 0;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:14px}}
 .ohnejs{{
@@ -417,6 +454,15 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
     <label><input type="checkbox" id="f-beschluss"> nur mit Beschluss</label>
     <label><input type="checkbox" id="f-strittig"> nur nicht einstimmig</label>
     <label><input type="checkbox" id="f-mehr"> nur mehrstufige Vorg&auml;nge</label>
+    <label>Betrag ab
+      <select id="f-geld">
+        <option value="0">beliebig</option>
+        <option value="250000">250.000 &euro;</option>
+        <option value="500000">500.000 &euro;</option>
+        <option value="1000000">1 Mio. &euro;</option>
+        <option value="5000000">5 Mio. &euro;</option>
+      </select>
+    </label>
   </div>
 
   <noscript>
@@ -438,6 +484,11 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
   Die Kette zeigt jede Station: Datum, Gremium und — wo ein Beschlussprotokoll
   vorliegt — das Abstimmungsergebnis. Die Schreibweise <span class="mono">25 : 0 : 1</span>
   steht f&uuml;r Ja : Nein : Enthaltungen.</p>
+  <p><b>Beträge sind Fundstellen, keine Kostenangaben.</b> Angezeigt wird der größte
+  im Beschlusstext genannte Betrag ab 250.000 &euro;. Das kann der Preis eines
+  Vorhabens sein, aber ebenso ein Haushaltsansatz oder eine Planungsgröße — bei
+  einer Haushaltssatzung etwa der Ertrag der gesamten Stadt. Maßgeblich ist der
+  Beschlusstext.</p>
   <p>Punkte ohne Vorlagennummer erscheinen als einzelne Station. Gremien ohne
   ver&ouml;ffentlichte Tagesordnung — die Ortschaftsr&auml;te — fehlen hier
   vollst&auml;ndig, weil es von ihnen nichts zu indizieren gibt.</p>
@@ -463,6 +514,7 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
   var fB = document.getElementById("f-beschluss");
   var fS = document.getElementById("f-strittig");
   var fM = document.getElementById("f-mehr");
+  var fG = document.getElementById("f-geld");
 
   /* Umlaute und Grossschreibung sollen beim Suchen keine Rolle spielen.
      ä→ae verlaengert die Zeichenkette. Fuer die Hervorhebung brauchen wir
@@ -471,6 +523,10 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
      um ein Zeichen je Umlaut davor. */
   var ERSATZ = {{ "ä":"ae", "ö":"oe", "ü":"ue", "ß":"ss",
                  "„":'"', "“":'"', "»":'"', "«":'"' }};
+
+  function euro(n){{
+    return n.toLocaleString("de-DE", {{maximumFractionDigits:0}}) + " \u20AC";
+  }}
 
   function normal(t){{
     var aus = "";
@@ -523,6 +579,8 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
       if(fB.checked && !v.s.some(function(s){{ return s.e; }})) return false;
       if(fS.checked && !v.strittig) return false;
       if(fM.checked && v.s.length < 2) return false;
+      var schwelle = parseInt(fG.value, 10);
+      if(schwelle && (v.b || 0) < schwelle) return false;
       return woerter.every(function(w){{ return v._s.indexOf(w) > -1; }});
     }});
 
@@ -579,6 +637,13 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
         nr.appendChild(u);
       }}
       if(nr.textContent) kopf.appendChild(nr);
+      if(v.b){{
+        var geld = document.createElement("span");
+        geld.className = "betrag";
+        geld.title = "größter im Beschlusstext genannter Betrag — nicht zwingend die Kosten";
+        geld.textContent = euro(v.b);
+        kopf.appendChild(geld);
+      }}
 
       if(v.art === "einordnung"){{
         var txt = document.createElement("p");
@@ -606,6 +671,12 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
           nr.className = "svnr"; nr.textContent = s.v; nr.title = s.t;
           st.appendChild(nr);
         }}
+        if(s.b){{
+          var g = document.createElement("span");
+          g.className = "betrag klein"; g.textContent = euro(s.b);
+          g.title = "größter im Beschlusstext genannter Betrag";
+          st.appendChild(g);
+        }}
         if(s.e){{
           var e = document.createElement("span");
           e.className = "erg" + (s.e !== "einstimmig" && !/: 0 : 0$/.test(s.e) ? " split" : "");
@@ -628,7 +699,7 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
   }}
 
   feld.addEventListener("input", zeichne);
-  [fB, fS, fM].forEach(function(f){{ f.addEventListener("change", zeichne); }});
+  [fB, fS, fM, fG].forEach(function(f){{ f.addEventListener("change", zeichne); }});
   zeichne();
 }})();
 </script>

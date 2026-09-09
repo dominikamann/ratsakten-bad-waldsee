@@ -42,6 +42,24 @@ AUSZAEHLUNG = re.compile(
     r"\s*Nein-Stimmen?(?:\(n\))?\s*:?\s*(\d+)"
     r"\s*Enthaltung(?:en)?(?:\(en\))?\s*:?\s*(\d+)")
 
+BETRAG = re.compile(r"(\d{1,3}(?:\.\d{3})*(?:,\d+)?)\s*(Mio\.?\s*)?(?:€|Euro)")
+
+# Ab diesem Betrag gilt eine Summe als berichtenswert. Kleinere Zahlen im
+# Beschlusstext sind meist Aktenzeichen, Flurstuecke oder Nebenkosten.
+BETRAGSSCHWELLE = 250_000
+
+
+def betrag_lesen(text: str) -> float | None:
+    """Groesster Geldbetrag in einem Textabschnitt, in Euro."""
+    hoechster = None
+    for m in BETRAG.finditer(text):
+        wert = float(m.group(1).replace(".", "").replace(",", "."))
+        if m.group(2):  # "Mio."
+            wert *= 1_000_000
+        if hoechster is None or wert > hoechster:
+            hoechster = wert
+    return hoechster
+
 # Semikolon als Trennzeichen und BOM: So öffnet Excel im deutschen Sprachraum
 # die Datei direkt richtig, ohne Importdialog.
 TRENNER = ";"
@@ -143,8 +161,12 @@ def main() -> None:
                 einstimmig = bool(re.match(r"\s*[Ee]instimmig", roh))
                 if not (zahlen or einstimmig):
                     continue
-                vorher = VORLAGE.findall(text[:treffer.start()])
-                vorlage = vorher[-1] if vorher else ""
+                stellen = list(VORLAGE.finditer(text[:treffer.start()]))
+                vorlage = stellen[-1].group(0) if stellen else ""
+                # Groesster Betrag im Beschlusstext zwischen Vorlagennummer und
+                # Ergebniszeile. Nicht zwingend "die Kosten" — siehe README.
+                beginn = stellen[-1].start() if stellen else max(0, treffer.start() - 1500)
+                betrag = betrag_lesen(text[beginn:treffer.start()])
                 ja, nein, enth = zahlen.groups() if zahlen else ("", "", "")
                 zeilen.append({
                     "datum": s["start"][:10],
@@ -157,6 +179,7 @@ def main() -> None:
                     "enthaltungen": enth,
                     "einstimmig": "ja" if einstimmig or (zahlen and not int(nein) and not int(enth))
                                   else "nein",
+                    "betrag_euro": f"{betrag:.0f}" if betrag and betrag >= BETRAGSSCHWELLE else "",
                 })
     schreiben(ZIEL / "beschluesse.csv", list(zeilen[0]), zeilen)
 
