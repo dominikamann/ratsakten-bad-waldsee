@@ -53,6 +53,7 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ➡️ **[Ratsanalyse 2024–2026](./docs/amannlabs-ratsanalyse-bad-waldsee-2026-09-09.html)** — die einmalige Vollauswertung
 ➡️ **[Waldseer Aktenlage, KW 37/2026](./docs/amannlabs-aktenlage-bad-waldsee-2026-kw37.html)** — die wöchentliche Ausgabe
+➡️ **[Archiv Jahrgang 2026](./docs/ausgaben/index.html)** — alle 20 Ausgaben seit Januar
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
 Abhängigkeiten und **funktionieren ohne JavaScript** — auch in der iOS-Dateivorschau,
@@ -110,6 +111,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 
 ```
 ├── docs/       fertige Dokumente — GitHub Pages zeigt diesen Ordner
+│   └── ausgaben/   die wöchentlichen Ausgaben samt Archivübersicht
 ├── src/        Vorlagen (bauen Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 04
 └── data/       Rohdaten und die 74 heruntergeladenen Protokolle
@@ -121,6 +123,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 uv run --with requests                       python scripts/02_protokolle_laden.py
 uv run --with pypdf                          python scripts/03_auswerten.py
+uv run --with pypdf                          python scripts/05_ausgaben_bauen.py --jahr 2026
 npm install jsdom && node scripts/04_vorrendern.js
 ```
 
@@ -134,8 +137,9 @@ belasten.
 
 ## Geplant
 
-- [ ] Wöchentliche Aktualisierung des Reports
-- [ ] Archiv der bisherigen Ausgaben
+- [x] Wöchentliche Ausgaben, Jahrgang 2026 nachgeholt (`scripts/05_ausgaben_bauen.py`)
+- [ ] Automatischer Lauf per GitHub Action
+- [x] Archiv der bisherigen Ausgaben
 - [ ] Rohdaten als CSV/JSON zum Nachrechnen
 - [ ] Übertragung auf weitere Kommunen mit demselben Systemhersteller
 
