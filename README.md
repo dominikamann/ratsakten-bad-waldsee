@@ -281,10 +281,22 @@ wünscht, kann das ebenfalls über ein Issue oder per E-Mail tun.
 ## Lizenz
 
 - **Code:** MIT
-- **Report und Texte:** CC BY 4.0
+- **Report, Texte und Tabellen:** CC BY 4.0 — Weitergabe und Bearbeitung erlaubt,
+  **Namensnennung erforderlich**
 - **Schriften** (`docs/fonts/`): SIL Open Font License 1.1 — Archivo und IBM Plex,
   unverändert weitergegeben. Lizenztext und Copyright-Vermerke in
   [`docs/fonts/OFL.txt`](./docs/fonts/OFL.txt)
+
+### So ist zu zitieren
+
+Wer Zahlen, Texte oder Tabellen aus diesem Projekt weiterverwendet, gibt an:
+
+> Quelle: Ratsakten Bad Waldsee — AmannLabs.eu
+> https://github.com/dominikamann/ratsakten-bad-waldsee · Lizenz: CC BY 4.0
+
+Bei Bearbeitungen ist zusätzlich kenntlich zu machen, dass Änderungen vorgenommen
+wurden. Für den Code genügt es, den Copyright-Vermerk und den MIT-Lizenztext
+beizulegen.
 - **Zugrunde liegende Verwaltungsdokumente:** amtliche Werke, § 5 UrhG, Rechte bei der
   Stadt Bad Waldsee
 

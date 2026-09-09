@@ -24,8 +24,30 @@ ENTSTANDEN.
 
 ---
 
-Report und Texte (Ordner docs/): CC BY 4.0
+Report und Texte (Ordner docs/) sowie die Auswertungstabellen (Ordner data/csv/):
+Creative Commons Namensnennung 4.0 International (CC BY 4.0)
 https://creativecommons.org/licenses/by/4.0/deed.de
+
+Weitergabe, Bearbeitung und auch kommerzielle Nutzung sind erlaubt - unter der
+Bedingung, dass die Herkunft genannt wird.
+
+So ist zu zitieren
+------------------
+
+Bei Weiterverwendung von Report, Ausgaben, Texten oder Tabellen ist folgende
+Angabe zu machen, moeglichst mit Verweis auf die Quelle:
+
+    Quelle: Ratsakten Bad Waldsee - AmannLabs.eu
+    https://github.com/dominikamann/ratsakten-bad-waldsee
+    Lizenz: CC BY 4.0
+
+Bei Bearbeitungen ist zusaetzlich kenntlich zu machen, dass Aenderungen
+vorgenommen wurden.
+
+Fuer den Code gilt die MIT-Lizenz: Dort genuegt es, den obenstehenden
+Copyright-Vermerk und den Lizenztext beizulegen.
+
+---
 
 Zugrunde liegende Verwaltungsunterlagen der Stadt Bad Waldsee (Ordner data/):
 amtliche Werke nach § 5 UrhG, gemeinfrei. Rechte bei der Stadt Bad Waldsee.
