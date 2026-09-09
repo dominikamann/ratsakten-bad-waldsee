@@ -46,13 +46,13 @@ log "2/8  Neue Protokolle laden"
 uv run --quiet --with requests python scripts/02_protokolle_laden.py
 
 log "3/8  Kennzahlen berechnen"
-uv run --quiet --with pypdf python scripts/03_auswerten.py 2>/dev/null | head -3
+uv run --quiet --with pypdf python scripts/03_auswerten.py | head -3
 
 log "4/8  Ausgaben erzeugen"
-uv run --quiet --with pypdf python scripts/05_ausgaben_bauen.py 2>/dev/null | tail -2
+uv run --quiet --with pypdf python scripts/05_ausgaben_bauen.py | tail -2
 
 log "5/8  Tabellen und Suche erzeugen"
-uv run --quiet --with pypdf python scripts/07_tabellen_bauen.py 2>/dev/null | tail -4
+uv run --quiet --with pypdf python scripts/07_tabellen_bauen.py | tail -4
 uv run --quiet --with pypdf python scripts/08_suche_bauen.py
 
 log "6/8  Befunde sammeln"

@@ -14,10 +14,17 @@ import argparse
 import collections
 import datetime as dt
 import json
+import logging
 import re
 from pathlib import Path
 
 from pypdf import PdfReader
+
+# pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
+# Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
+# Gezielt stummschalten, statt die gesamte Fehlerausgabe zu verwerfen: Echte
+# Fehler sollen sichtbar bleiben.
+logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 BASIS = Path(__file__).resolve().parent.parent
 DATEN = BASIS / "data"
