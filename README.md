@@ -134,6 +134,26 @@ Dokumenten liegen bei der Stadt Bad Waldsee.
 Die Abfragen sind bewusst langsam gehalten (Pause zwischen den Aufrufen), um die Server
 der Stadt nicht zu belasten.
 
+## Selbst nachrechnen
+
+Unter `data/csv/` liegen drei Tabellen, die sich direkt in Excel, LibreOffice
+oder Numbers öffnen lassen — Semikolon als Trennzeichen, damit kein Importdialog
+nötig ist:
+
+| Datei | Zeilen | Inhalt |
+|---|---|---|
+| [`sitzungen.csv`](./data/csv/sitzungen.csv) | 166 | Datum, Gremium, Kalenderwoche, Zahl der Tagesordnungspunkte, ob ein Protokoll vorliegt |
+| [`tagesordnungspunkte.csv`](./data/csv/tagesordnungspunkte.csv) | 616 | jeder Punkt mit Datum, Gremium, Nummer, Titel und Vorlagennummer |
+| [`beschluesse.csv`](./data/csv/beschluesse.csv) | 333 | jede Abstimmung mit Vorlagennummer, Titel und Stimmenverhältnis |
+
+Damit lässt sich jede Zahl des Reports ohne Programmierkenntnisse überprüfen.
+Beispiel: In `beschluesse.csv` nach der Spalte `einstimmig` filtern — es bleiben
+59 Zeilen übrig, genau die im Report genannten nicht einstimmigen Beschlüsse.
+
+Die Tabellen enthalten bewusst keine Dokument-Links: Die URLs des
+Ratsinformationssystems sind nicht dauerhaft gültig. Stabile Kennung ist die
+Vorlagennummer.
+
 ## Belegbarkeit
 
 Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
@@ -187,6 +207,7 @@ uv run --with requests                       python scripts/02_protokolle_laden.
 uv run --with pypdf                          python scripts/03_auswerten.py
 uv run --with pypdf                          python scripts/05_ausgaben_bauen.py
 uv run                                       python scripts/06_startseite_bauen.py
+uv run --with pypdf                          python scripts/07_tabellen_bauen.py
 ```
 
 Mehr ist nicht zu tun — keine Datei wird von Hand angefasst. Jahr und Redaktions-
@@ -203,6 +224,8 @@ schluss nehmen die Skripte vom Tagesdatum.
   dazwischenliegen.
 * Schritt 6 zieht Kennzahlen und den Link auf die neueste Ausgabe nach.
 * Schritt 4 wird nur gebraucht, wenn der Report neu gebaut werden soll.
+* Schritt 7 schreibt die Tabellen unter `data/csv/` neu und rechnet zum Schluss
+  gegen `data/kennzahlen.json` gegen. Weichen die Zahlen ab, stimmt etwas nicht.
 
 Die Abfragen sind bewusst mit Pausen versehen, um die Server der Stadt nicht zu
 belasten.
@@ -212,9 +235,7 @@ belasten.
 - [x] Wöchentliche Ausgaben, Jahrgang 2026 nachgeholt (`scripts/05_ausgaben_bauen.py`)
 - [x] Automatischer Lauf per GitHub Action (`.github/workflows/aktenlage.yml`)
 - [x] Archiv der bisherigen Ausgaben
-- [~] Rohdaten zum Nachrechnen — `data/kennzahlen.json` enthält sämtliche Zahlen
-      des Reports, `data/ausgaben.json` das Ausgabenregister. Was noch fehlt: eine
-      Tabelle aller Sitzungen, Tagesordnungspunkte und Beschlüsse als CSV
+- [x] Rohdaten zum Nachrechnen (`data/csv/`, siehe unten)
 - [ ] Übertragung auf weitere Kommunen mit demselben Systemhersteller
 
 ## Haftungsausschluss

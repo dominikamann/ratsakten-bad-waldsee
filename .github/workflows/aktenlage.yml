@@ -68,6 +68,14 @@ jobs:
       - name: Startseite erzeugen
         run: uv run python scripts/06_startseite_bauen.py
 
+      - name: Tabellen zum Nachrechnen erzeugen
+        run: |
+          if [ -n "${{ github.event.inputs.stichtag }}" ]; then
+            uv run --with pypdf python scripts/07_tabellen_bauen.py --stichtag "${{ github.event.inputs.stichtag }}"
+          else
+            uv run --with pypdf python scripts/07_tabellen_bauen.py --stichtag "$(date +%F)"
+          fi
+
       - name: Report vorrendern
         run: node scripts/04_vorrendern.js
 

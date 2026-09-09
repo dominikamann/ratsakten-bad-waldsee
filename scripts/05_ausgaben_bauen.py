@@ -284,6 +284,9 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
         if not s["protokolle"]:
             w["blind"].append({"datum": tag, "gremium": name})
             continue
+        # Eine Sitzung kann mehrere Protokolldateien haben — etwa wenn eine
+        # Anwesenheitsliste getrennt abgelegt ist. Es werden alle ausgewertet:
+        # welche davon den Beschlusstext enthaelt, ist nicht vorhersehbar.
         erwartet = f"{s['start'][:10]}_{dateiname(s['titel'])}"
         for pfad in protokolle.get(s["start"][:10], []):
             if pfad.stem != erwartet and not pfad.stem.startswith(erwartet + "_"):
@@ -301,7 +304,6 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
             bg = bekanntgaben_lesen(text)
             if bg:
                 w["bekanntgaben"].append({"datum": tag, "gremium": name, "text": bg})
-            break
 
     # Die laufende Woche bekommt immer eine Ausgabe, damit stets eine aktuelle
     # existiert — auch wenn in ihr nicht getagt wurde.
