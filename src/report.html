@@ -1,0 +1,736 @@
+<meta charset="utf-8">
+<title>Ratsanalyse Bad Waldsee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+
+<style>
+/* Bewusst einfarbig dunkel — keine Themenumschaltung. */
+:root{
+  color-scheme:dark;
+  --plane:#0B0D0F;
+  --surface:#111316;
+  --surface-2:#171A1E;
+  --ink:#EDF1F5;
+  --ink-2:#B4BDC7;
+  --muted:#7F8A96;
+  --rule:#272C32;
+  --grid:#22262B;
+  --s1:#3987e5;
+  --s2:#d95926;
+  --absent:#3C444D;
+  --flag:#E08163;
+  --flag-bg:rgba(224,129,99,.10);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+  --bar-bg:#15181C;
+  --bar-ink:#D6DEE7;
+  --tip-bg:#EDF1F5;
+  --tip-ink:#0B0D0F;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--plane);color:var(--ink);
+  font-family:"IBM Plex Serif",Georgia,serif;
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+h1,h2,h3,h4,.ui{font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Marke ---------- */
+.brandbar{
+  background:var(--bar-bg);color:var(--bar-ink);
+  border-bottom:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.brandbar a{color:var(--s1);text-decoration:none}
+.brandbar a:hover{text-decoration:underline}
+.brandbar .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;padding-top:10px;padding-bottom:10px}
+.brandbar b{font-weight:600;letter-spacing:.1em}
+
+/* ---------- Kopf ---------- */
+header.top{padding:60px 0 36px;border-bottom:1px solid var(--rule)}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--s1);margin:0 0 16px;
+}
+h1{
+  font-weight:700;font-size:clamp(34px,5.6vw,58px);line-height:1.04;
+  letter-spacing:-.028em;margin:0;text-wrap:balance;max-width:20ch;
+}
+.lede{margin:20px 0 0;font-size:20px;line-height:1.55;color:var(--ink-2);max-width:62ch}
+
+/* ---------- Kennzahlen ---------- */
+.tiles{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);
+  margin:36px 0 0;box-shadow:var(--shadow);
+}
+.tile{background:var(--surface);padding:18px 20px}
+.tile .v{
+  font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:34px;
+  line-height:1;letter-spacing:-.025em;font-variant-numeric:tabular-nums;display:block;
+}
+.tile .k{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;line-height:1.45;
+  color:var(--muted);display:block;margin-top:9px;
+}
+
+/* ---------- Struktur ---------- */
+section{padding:56px 0;border-bottom:1px solid var(--rule)}
+.sec-no{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.12em;
+  color:var(--muted);margin:0 0 10px;text-transform:uppercase;
+}
+h2{font-weight:600;font-size:clamp(25px,3.4vw,34px);line-height:1.14;letter-spacing:-.02em;margin:0 0 18px;text-wrap:balance}
+h3{font-weight:600;font-size:20px;letter-spacing:-.01em;margin:34px 0 10px}
+p{margin:0 0 16px;max-width:68ch}
+.lead-p{font-size:18.5px;color:var(--ink-2)}
+a{color:var(--s1)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
+/* ---------- Diagramme ---------- */
+figure{margin:28px 0;background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow)}
+figcaption{
+  padding:16px 20px 0;font-family:"IBM Plex Sans",sans-serif;
+  font-size:15px;font-weight:600;color:var(--ink);
+}
+.figsub{padding:4px 20px 0;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.03em}
+.chart{padding:14px 20px 18px;overflow-x:auto}
+svg{display:block;max-width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;padding:0 20px 16px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:7px;vertical-align:-1px}
+.axis-lab{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:var(--muted)}
+.val-lab{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:var(--ink-2);font-variant-numeric:tabular-nums}
+.cat-lab{font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;fill:var(--ink-2)}
+.gridline{stroke:var(--grid);stroke-width:1}
+.baseline{stroke:var(--rule);stroke-width:1}
+.bar{transition:opacity .12s}
+.bar:hover{opacity:.82}
+#tip{
+  position:fixed;pointer-events:none;opacity:0;transform:translate(-50%,-118%);
+  background:var(--tip-bg);color:var(--tip-ink);padding:7px 11px;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.5;
+  border-radius:3px;z-index:50;white-space:nowrap;transition:opacity .1s;
+}
+
+/* ---------- Befund ---------- */
+.befund{margin:26px 0;padding:20px 22px;border-left:3px solid var(--flag);background:var(--flag-bg)}
+.befund .lab{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--flag);margin:0 0 8px;font-weight:500;
+}
+.befund p{margin:0;max-width:64ch}
+.befund p + p{margin-top:10px}
+
+/* ---------- Tabellen ---------- */
+.tablewrap{overflow-x:auto;margin:24px 0;border:1px solid var(--rule);background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px;font-family:"IBM Plex Sans",sans-serif}
+th,td{padding:10px 16px;text-align:right;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.05em;background:var(--surface-2)}
+tbody td{font-variant-numeric:tabular-nums}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:none}
+
+/* ---------- Listen ---------- */
+ol.findings{margin:26px 0 0;padding:0;list-style:none;counter-reset:f}
+ol.findings li{
+  display:grid;grid-template-columns:38px minmax(0,1fr);gap:16px;
+  padding:15px 0;border-bottom:1px solid var(--rule);
+}
+ol.findings li::before{
+  counter-increment:f;content:counter(f,decimal-leading-zero);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums;padding-top:3px;
+}
+.f-head{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:16px;line-height:1.35;margin:0 0 5px;color:var(--ink)}
+.f-meta{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.03em;margin:0 0 6px}
+.f-why{margin:0;font-size:15.5px;line-height:1.55;color:var(--ink-2);max-width:74ch}
+
+ol.concerns{margin:26px 0 0;padding:0;list-style:none;counter-reset:c}
+ol.concerns li{
+  padding:20px 22px;margin-bottom:14px;border:1px solid var(--rule);
+  border-left:3px solid var(--flag);background:var(--surface);box-shadow:var(--shadow);
+}
+ol.concerns .c-head{
+  font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:17px;margin:0 0 8px;
+  line-height:1.3;color:var(--ink);
+}
+ol.concerns .c-head::before{
+  counter-increment:c;content:"B" counter(c,decimal-leading-zero);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--flag);
+  letter-spacing:.08em;display:block;margin-bottom:6px;font-weight:500;
+}
+ol.concerns p{margin:0;font-size:15.5px;line-height:1.6;color:var(--ink-2)}
+ol.concerns p + p{margin-top:9px}
+.evidence{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);
+  margin-top:10px;padding-top:9px;border-top:1px solid var(--rule);letter-spacing:.02em;
+}
+
+.note{font-size:15px;color:var(--ink-2)}
+ul.plain{padding-left:20px;font-size:15.5px;color:var(--ink-2)}
+ul.plain li{margin-bottom:8px;max-width:70ch}
+
+/* ---------- Fuß ---------- */
+footer{background:var(--bar-bg);border-top:1px solid var(--rule);margin-top:0;padding:34px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:space-between;align-items:baseline}
+footer p{margin:0;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.05em;color:var(--muted);max-width:none}
+footer .brand{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--bar-ink);font-weight:600}
+footer a{color:var(--s1);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .tile .v{font-size:28px}
+  ol.findings li{grid-template-columns:30px minmax(0,1fr);gap:12px}
+}
+</style>
+
+<div class="brandbar"><div class="wrap">
+  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
+  <span>Alle Angaben und Insights ohne Gewähr</span>
+</div></div>
+
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">Datenanalyse kommunaler Gremienarbeit</p>
+  <h1>Was drei Jahre Bad Waldseer Ratsarbeit in den Akten hinterlassen</h1>
+  <p class="lede">Eine vollständige Auswertung aller öffentlich zugänglichen Sitzungsunterlagen der Großen Kreisstadt Bad Waldsee vom 1. Januar 2024 bis zum 9. September 2026 — 166 Sitzungen, 616 Tagesordnungspunkte, 333 ausgezählte Abstimmungen.</p>
+
+  <div class="tiles">
+    <div class="tile"><span class="v">166</span><span class="k">Sitzungen<br>in 12 Gremien</span></div>
+    <div class="tile"><span class="v">616</span><span class="k">Tagesordnungs-<br>punkte</span></div>
+    <div class="tile"><span class="v">300</span><span class="k">Sitzungs-<br>vorlagen</span></div>
+    <div class="tile"><span class="v">625</span><span class="k">verlinkte<br>Dokumente</span></div>
+    <div class="tile"><span class="v">72</span><span class="k">öffentliche<br>Protokolle</span></div>
+    <div class="tile"><span class="v">333</span><span class="k">ausgewertete<br>Abstimmungen</span></div>
+  </div>
+</header>
+
+<!-- ===================== METHODE ===================== -->
+<section id="methode">
+  <p class="sec-no">Kapitel 00 — Grundlage</p>
+  <h2>Woher die Daten stammen</h2>
+  <p class="lead-p">Alle Zahlen dieses Reports stammen aus zwei öffentlich erreichbaren Quellen: dem <a href="https://ris.bad-waldsee.de/">Ratsinformationssystem der Stadt Bad Waldsee</a> und den <a href="https://www.bad-waldsee.de/buerger/de/rathaus-service/aktuelles-bekanntmachungen/oeffentliche-bekanntmachungen">öffentlichen Bekanntmachungen</a>. Kein Dokument erforderte einen Zugang, keine Zugangsbeschränkung wurde umgangen.</p>
+  <p>Erfasst wurden sämtliche Sitzungstermine des Zeitraums samt Tagesordnungen, Sitzungsvorlagen, Anlagen und Beschlussprotokollen. Die Protokolle wurden im Volltext ausgewertet; Abstimmungsergebnisse stammen aus der Zeile „Ergebnis der Beschlussfassung“, Geldbeträge und Jahresabschlusszahlen aus den Beschlusstexten selbst.</p>
+  <ul class="plain">
+    <li><b>Stichtag:</b> 9. September 2026. Bereits terminierte Sitzungen nach diesem Datum sind ausgeschlossen, damit die Protokollquote nicht durch Zukunftstermine verfälscht wird.</li>
+    <li><b>Themenzuordnung</b> erfolgt regelbasiert über Stichwörter in den Punktüberschriften, in fester Reihenfolge. Ein Punkt zählt genau einmal, beim ersten Treffer. Mischthemen landen deshalb im zuerst passenden Feld.</li>
+    <li><b>Nicht erfasst:</b> nichtöffentliche Sitzungsteile, der Inhalt der Aussprache und alles, was gar nicht dokumentiert wird.</li>
+    <li><b>Personen:</b> Amtsträger werden mit Namen genannt, soweit sie in den Protokollen namentlich handeln. Privatpersonen nicht.</li>
+  </ul>
+</section>
+
+<!-- ===================== TRANSPARENZ ===================== -->
+<section id="transparenz">
+  <p class="sec-no">Kapitel 01 — Transparenz</p>
+  <h2>Wo Beschlüsse nachlesbar sind — und wo nicht</h2>
+  <p class="lead-p">Bad Waldsee dokumentiert seine Kerngremien vorbildlich. Der Gemeinderat hat für jede einzelne der 30 Sitzungen im Zeitraum ein öffentliches Beschlussprotokoll veröffentlicht. Beim Gemeinsamen Ausschuss sind es ebenfalls 100 Prozent.</p>
+  <p>Unterhalb dieser Ebene bricht die Dokumentation vollständig ab.</p>
+
+  <figure>
+    <figcaption>Sitzungen je Gremium und ihre Protokollierung</figcaption>
+    <p class="figsub">01.01.2024 – 09.09.2026 · n = 166 Sitzungen</p>
+    <div class="chart"><svg id="c-gremien" role="img" aria-label="Balkendiagramm der Sitzungen je Gremium, aufgeteilt nach Protokoll vorhanden oder fehlend"></svg></div>
+    <div class="legend">
+      <span><i style="background:var(--s1)"></i>Protokoll veröffentlicht</span>
+      <span><i style="background:var(--absent)"></i>kein Protokoll</span>
+    </div>
+  </figure>
+
+  <div class="befund">
+    <p class="lab">Befund 1 — die Ortschaftsräte sind eine Dokumentationslücke</p>
+    <p>Die vier Ortschaftsräte <b>Reute-Gaisbeuren, Mittelurbach, Michelwinnaden und Haisterkirch</b> haben im Untersuchungszeitraum zusammen <b>85 Mal öffentlich getagt</b>. Für keine einzige dieser Sitzungen existiert ein Protokoll im Ratsinformationssystem. Ihre Sitzungsseiten enthalten ausschließlich Datum und Ort — keine Tagesordnung, keine Vorlage, kein Dokument.</p>
+    <p>Tagesordnungen werden separat als PDF auf der Stadtwebsite bekanntgemacht, bleiben dort aber sehr grob: Ein typischer Ortschaftsrat verhandelt unter den drei Punkten „Informationen Ortsvorsteher“, „Baugesuche“ und „Bekanntgaben/Verschiedenes“. Was zu einem Baugesuch beschlossen wurde, ist nirgends öffentlich nachlesbar.</p>
+    <p>Praktisch heißt das: Rund die Hälfte aller öffentlichen Sitzungen der Stadt hinterlässt keine nachvollziehbare Spur — und zwar genau jene, die den Ortsteilen am nächsten sind.</p>
+  </div>
+
+  <p>Auch Kulturbeirat, Baumkommission und der Arbeitskreis Kinder, Jugend und Bildung veröffentlichen keine Protokolle. Bei den beschließenden Ausschüssen ist die Quote dagegen hoch: Ausschuss für Umwelt, Technik und Nachhaltigkeit 17 von 18, Verwaltungsausschuss 14 von 16.</p>
+</section>
+
+<!-- ===================== THEMEN ===================== -->
+<section id="themen">
+  <p class="sec-no">Kapitel 02 — Themen</p>
+  <h2>Womit sich die Gremien tatsächlich beschäftigen</h2>
+  <p class="lead-p">Vier von zehn Tagesordnungspunkten haben keinen eigenen Sachinhalt. Sie sind Bekanntgaben, Informationen des Oberbürgermeisters, Ehrungen, Verabschiedungen, „Verschiedenes“ oder die Einwohnerfragestunde.</p>
+
+  <figure>
+    <figcaption>Tagesordnungspunkte nach Themenfeld</figcaption>
+    <p class="figsub">n = 616 Punkte · regelbasierte Zuordnung, ein Feld je Punkt</p>
+    <div class="chart"><svg id="c-themen" role="img" aria-label="Balkendiagramm der Tagesordnungspunkte nach Themenfeld"></svg></div>
+  </figure>
+
+  <p>Unter den Sachthemen dominiert die <b>Bauleitplanung</b> mit 120 Punkten alles andere. Bebauungspläne, Flächennutzungsplan-Änderungen, Aufstellungs-, Entwurfs- und Satzungsbeschlüsse machen fast jeden fünften Tagesordnungspunkt aus — und jeder Plan durchläuft dabei mehrere Gremien und mehrere Verfahrensstufen, erscheint also mehrfach.</p>
+  <p>Bemerkenswert schwach vertreten sind Felder, die im Alltag der Einwohner viel Raum einnehmen: <b>Verkehr und Mobilität</b> kommt auf sechs Punkte in fast drei Jahren, <b>Kultur, Tourismus und Sport</b> auf sieben. Beides sind Themen, die überwiegend in Eigenbetrieben, Gesellschaften und Beiräten bearbeitet werden — also dort, wo entweder nichtöffentlich getagt wird oder gar kein Protokoll entsteht.</p>
+
+  <div class="befund">
+    <p class="lab">Befund 2 — die Stadt plant vor allem Flächen</p>
+    <p>Bauleitplanung, Bau und Sanierung zusammen ergeben <b>169 von 616 Punkten</b>. Rechnet man die Formalia heraus, befasst sich der öffentlich dokumentierte Teil der Gremienarbeit zu <b>46 Prozent</b> mit Flächen und Gebäuden. Bad Waldsee verhandelt öffentlich in erster Linie darüber, wo gebaut werden darf.</p>
+  </div>
+</section>
+
+<!-- ===================== ABSTIMMUNGEN ===================== -->
+<section id="abstimmungen">
+  <p class="sec-no">Kapitel 03 — Entscheidungsverhalten</p>
+  <h2>82 Prozent aller Beschlüsse fallen einstimmig</h2>
+  <p class="lead-p">Aus den 72 Protokollen ließen sich 333 Abstimmungen auswerten. 274 davon endeten einstimmig. Nur in 59 Fällen gab es Gegenstimmen oder Enthaltungen, in lediglich 24 Fällen mindestens ein Nein.</p>
+
+  <figure>
+    <figcaption>Anteil nicht einstimmiger Beschlüsse je Jahr</figcaption>
+    <p class="figsub">n = 333 Abstimmungen · gestrichelte Linie: Mittel über den Gesamtzeitraum (17,7 %)</p>
+    <div class="chart"><svg id="c-streit" role="img" aria-label="Balkendiagramm des Anteils nicht einstimmiger Beschlüsse je Jahr"></svg></div>
+  </figure>
+
+  <p>Ein Einbruch der Streitquote fällt mit dem ersten vollen Jahr des im Juni 2024 neu gewählten Gemeinderats zusammen: 2025 waren nur 13,3 Prozent der Beschlüsse nicht einstimmig, gegenüber 19,9 Prozent im Wahljahr 2024. Im laufenden Jahr 2026 liegt der Wert wieder bei 19,5 Prozent. Bei diesen Fallzahlen ist das ein Hinweis, kein Beleg — der Unterschied kann auch an der Zusammensetzung der Tagesordnungen liegen.</p>
+
+  <h3>Wenn der Rat der Verwaltung widerspricht</h3>
+  <p>In acht Fällen weicht der beschlossene Text vom Vorschlag der Verwaltung ab; die Protokolle kennzeichnen das als „Modifizierter Beschluss“. Der teuerste dieser Fälle:</p>
+
+  <div class="befund">
+    <p class="lab">Befund 3 — 2,3 Millionen Euro gegen den Verwaltungsvorschlag</p>
+    <p>Am <b>29. Januar 2024</b> lehnte der Gemeinderat die von der Verwaltung vorgeschlagene Variante 1 zur Erweiterung des Gymnasiums mit Kosten von rund <b>10,1 Millionen Euro</b> mit <b>9 zu 18 Stimmen</b> ab. Angenommen wurde stattdessen mit 20 zu 3 Stimmen bei 4 Enthaltungen die Variante 03 mit rund <b>7,80 Millionen Euro</b> — verbunden mit dem Auftrag, Bühne und Nebenräume in die neue Sporthalle zu verlagern.</p>
+    <p>Es ist die einzige Entscheidung im gesamten Zeitraum, bei der ein Verwaltungsvorschlag dieser Größenordnung offen durchfiel.</p>
+  </div>
+
+  <h3>Namentliche Anträge sind die Ausnahme</h3>
+  <p>In 333 protokollierten Abstimmungen finden sich genau <b>zwei</b> Anträge, die ein einzelnes Ratsmitglied namentlich gestellt hat:</p>
+  <ul class="plain">
+    <li><b>22.04.2024</b> — Stadtrat Senko beantragte beim Bebauungsplan „Holzstraße“, Betriebsleiter- und Hausmeisterwohnungen im Plangebiet weiterhin zuzulassen. Der Antrag scheiterte mit <b>8 zu 9 Stimmen bei 6 Enthaltungen</b> an einer einzigen Stimme.</li>
+    <li><b>29.06.2026</b> — Stadträtin Lentes beantragte, die gesonderte Besteuerung von Kampfhunden aus der Hundesteuersatzung zu streichen. Der Antrag fiel mit <b>1 zu 17 Stimmen bei 4 Enthaltungen</b> durch; die Satzung wurde anschließend unverändert beschlossen.</li>
+  </ul>
+  <p class="note">Beschlussprotokolle halten die Aussprache nicht fest. Ob und wie kontrovers vor einer einstimmigen Entscheidung debattiert wurde, lässt sich aus keinem der 72 Dokumente rekonstruieren.</p>
+</section>
+
+<!-- ===================== FINANZEN ===================== -->
+<section id="finanzen">
+  <p class="sec-no">Kapitel 04 — Finanzen</p>
+  <h2>Ein Haushalt, der wächst, und Abschlüsse, die hinterherhinken</h2>
+  <p class="lead-p">Die in den Protokollen festgestellten Jahresabschlüsse ergeben eine durchgehende Zeitreihe von 2018 bis 2023. Die ordentlichen Erträge der Stadt sind in diesen sechs Jahren um gut ein Viertel gestiegen.</p>
+
+  <figure>
+    <figcaption>Ordentliche Erträge und Aufwendungen der Stadt Bad Waldsee</figcaption>
+    <p class="figsub">in Millionen Euro · Werte aus den festgestellten Jahresabschlüssen 2018–2023</p>
+    <div class="chart"><svg id="c-finanzen" role="img" aria-label="Liniendiagramm der ordentlichen Erträge und Aufwendungen 2018 bis 2023"></svg></div>
+    <div class="legend">
+      <span><i style="background:var(--s1)"></i>Ordentliche Erträge</span>
+      <span><i style="background:var(--s2)"></i>Ordentliche Aufwendungen</span>
+    </div>
+  </figure>
+
+  <p>Die Erträge stiegen von 52,53 Mio. € (2018) auf 65,97 Mio. € (2023), also um 25,6 Prozent. Die Aufwendungen wuchsen im selben Zeitraum von 46,35 auf 59,99 Mio. € — um 29,4 Prozent, also schneller als die Erträge. Das ordentliche Ergebnis blieb dennoch in allen sechs Jahren positiv, zwischen 2,95 Mio. € (2021) und 6,42 Mio. € (2022).</p>
+  <p>Auffällig ist der Kontrast zur Planung: Der beschlossene <b>Haushalt 2025</b> sah bei 63,60 Mio. € Erträgen und 63,50 Mio. € Aufwendungen nur noch einen Überschuss von <b>100.000 €</b> vor — bei einem tatsächlichen Ergebnis von rund 6 Mio. € im Jahr 2023. Passend dazu befasste sich der Gemeinderat im Juni 2024 mit den „Einsparpotenzialen und Maßnahmen zur Erhöhung der Einnahmen“ einer eigens gebildeten Haushaltsstrukturkommission.</p>
+
+  <h3>Der Rückstand bei den Jahresabschlüssen</h3>
+  <p>Nach § 95b der Gemeindeordnung für Baden-Württemberg ist der Jahresabschluss einer Gemeinde <b>innerhalb von zwölf Monaten</b> nach Ende des Haushaltsjahres vom Gemeinderat festzustellen. Bad Waldsee hat diese Frist bei jedem einzelnen Abschluss des Untersuchungszeitraums überschritten — arbeitet den Rückstand aber sichtbar ab.</p>
+
+  <figure>
+    <figcaption>Verspätung der Feststellung je Berichtsjahr</figcaption>
+    <p class="figsub">Monate nach Ablauf der Zwölfmonatsfrist des § 95b GemO BW</p>
+    <div class="chart"><svg id="c-verzug" role="img" aria-label="Balkendiagramm der Verspätung der Jahresabschluss-Feststellung je Berichtsjahr"></svg></div>
+  </figure>
+
+  <div class="befund">
+    <p class="lab">Befund 4 — vier Jahre Rückstand, konsequent aufgeholt</p>
+    <p>Der Jahresabschluss <b>2018</b> wurde erst am <b>3. Juni 2024</b> festgestellt — rund <b>53 Monate</b> nach Fristablauf. Am selben Tag folgte der Abschluss 2019. Am <b>24. März 2025</b> stellte der Gemeinderat die Abschlüsse <b>2020 und 2021 in einer einzigen Sitzung</b> fest, im Dezember 2025 den für 2022, im April 2026 den für 2023.</p>
+    <p>Der Verzug schrumpft dabei kontinuierlich: von 53 auf 41, 39, 27, 23 und zuletzt 15 Monate. Die Stadt holt den Rückstand nachweislich auf — eingehalten ist die gesetzliche Frist damit aber weiterhin nicht.</p>
+    <p>Die Eigenbetriebe stehen deutlich besser da: Ihre Abschlüsse für 2024 lagen dem Gemeinderat bereits im Oktober 2025 vor, also fristgerecht.</p>
+  </div>
+</section>
+
+<!-- ===================== TOP 50 ===================== -->
+<section id="top50">
+  <p class="sec-no">Kapitel 05 — Fundstücke</p>
+  <h2>Die 50 auffälligsten Tagesordnungspunkte</h2>
+  <p class="lead-p">Aus 616 Punkten ausgewählt nach Ungewöhnlichkeit, Tragweite, Streitwert oder schlichter Kuriosität. Jeder Eintrag nennt Datum und Gremium; die zugehörigen Unterlagen sind über das Ratsinformationssystem auffindbar.</p>
+  <p class="note">Abkürzungen: <span class="mono">GR</span> Gemeinderat · <span class="mono">VA</span> Verwaltungsausschuss · <span class="mono">AUT</span> Ausschuss für Umwelt, Technik und Nachhaltigkeit · <span class="mono">GA</span> Gemeinsamer Ausschuss der Verwaltungsgemeinschaft · <span class="mono">AK</span> Arbeitskreis</p>
+
+  <ol class="findings" id="findings"></ol>
+</section>
+
+<!-- ===================== TOP 10 BEDENKLICH ===================== -->
+<section id="bedenklich">
+  <p class="sec-no">Kapitel 06 — Kritische Beobachtungen</p>
+  <h2>Zehn Punkte, die Fragen aufwerfen</h2>
+  <p class="lead-p">Die folgenden Beobachtungen sind <b>keine Vorwürfe</b> und unterstellen niemandem ein Fehlverhalten. Sie benennen Stellen, an denen die Aktenlage Fragen offenlässt, an denen Verfahren formal korrekt, aber in ihrer Wirkung fragwürdig sind, oder an denen die öffentliche Nachvollziehbarkeit endet. Jeder Punkt nennt den Beleg, auf dem er beruht.</p>
+
+  <ol class="concerns" id="concerns"></ol>
+</section>
+
+<!-- ===================== GRENZEN ===================== -->
+<section id="grenzen" style="border-bottom:none">
+  <p class="sec-no">Kapitel 07 — Belastbarkeit</p>
+  <h2>Was dieser Report nicht kann</h2>
+  <ul class="plain">
+    <li><b>Er kennt nur das Dokumentierte.</b> Nichtöffentliche Sitzungsteile sind vollständig unsichtbar. Wie viel dort entschieden wird, lässt sich aus den Unterlagen nicht abschätzen.</li>
+    <li><b>Er kennt keine Debatte.</b> Beschlussprotokolle halten Ergebnisse fest, nicht Argumente. Eine einstimmige Entscheidung kann eine hitzige Aussprache hinter sich haben.</li>
+    <li><b>Die Themenzuordnung ist maschinell</b> und damit grob. Sie zeigt Größenordnungen, keine exakten Anteile.</li>
+    <li><b>Abstimmungen sind nur aus 72 Protokollen gezählt.</b> Die Gremien ohne Protokoll — darunter alle Ortschaftsräte — fehlen in dieser Statistik vollständig. Die Streitquote gilt also für Gemeinderat, beschließende Ausschüsse und Gemeinsamen Ausschuss, nicht für die Stadt insgesamt.</li>
+    <li><b>Dokumentlinks sind sitzungsgebunden.</b> Die URLs des Ratsinformationssystems enthalten Sitzungstoken und sind nicht dauerhaft stabil. Angaben wurden zum Stichtag geprüft.</li>
+    <li><b>Zahlen stammen aus maschineller Textextraktion</b> aus PDF-Dokumenten. Stichproben wurden gegen das Original geprüft; ein Restfehler ist nicht ausgeschlossen. Maßgeblich ist immer das Originaldokument.</li>
+  </ul>
+</section>
+
+<!-- ===================== QUELLEN ===================== -->
+<section id="quellen">
+  <p class="sec-no">Kapitel 08 — Quellen</p>
+  <h2>Wo Sie jede Angabe selbst nachprüfen können</h2>
+  <p class="lead-p">Jede Zahl und jede Aussage in diesem Report stammt aus einem der folgenden öffentlich zugänglichen Dokumente. Es wurden keine Zugangsbeschränkungen umgangen und keine nichtöffentlichen Unterlagen verwendet.</p>
+
+  <h3>Primärquellen</h3>
+  <ul class="plain">
+    <li><b>Ratsinformationssystem der Stadt Bad Waldsee</b> — <a href="https://ris.bad-waldsee.de/" rel="noopener">ris.bad-waldsee.de</a>. Sitzungstermine, Tagesordnungen, Sitzungsvorlagen, Anlagen und Beschlussprotokolle. Einstiegspunkte: <a href="https://ris.bad-waldsee.de/vorlagen" rel="noopener">Vorlagen</a>, <a href="https://ris.bad-waldsee.de/termine" rel="noopener">Sitzungen</a>, <a href="https://ris.bad-waldsee.de/gremien" rel="noopener">Gremien</a>.</li>
+    <li><b>Öffentliche Bekanntmachungen der Stadt Bad Waldsee</b> — <a href="https://www.bad-waldsee.de/buerger/de/rathaus-service/aktuelles-bekanntmachungen/oeffentliche-bekanntmachungen" rel="noopener">bad-waldsee.de</a>. Seit dem 11.02.2022 werden Bekanntmachungen ausschließlich im Internet veröffentlicht.</li>
+    <li><b>Gemeindeordnung für Baden-Württemberg, § 95b</b> — Frist zur Feststellung des Jahresabschlusses: <a href="https://www.landesrecht-bw.de/bsbw/document/jlr-GemOBWV38P95b" rel="noopener">landesrecht-bw.de</a>.</li>
+  </ul>
+
+  <h3>So finden Sie einen einzelnen Vorgang</h3>
+  <p>Jeder der 50 Fundstücke in Kapitel 05 nennt <b>Datum, Gremium und Vorlagennummer</b> im Format <span class="mono">SV-000/JJJJ</span>. Damit lässt sich der Vorgang im Ratsinformationssystem unter „Vorlagen“ eindeutig auffinden — samt Sitzungsvorlage, allen Anlagen und, sofern vorhanden, dem Beschlussprotokoll. Sechs der 50 Punkte haben systemseitig keine Vorlagennummer; sie sind über Datum und Gremium in der Tagesordnung der jeweiligen Sitzung zu finden.</p>
+  <p>Auf feste Direktlinks zu einzelnen PDF-Dateien wurde bewusst verzichtet: Die Dokument-URLs des Systems enthalten sitzungsgebundene Token und sind nicht dauerhaft gültig. Die Vorlagennummer bleibt stabil, der Link nicht.</p>
+
+  <h3>Wichtigste Einzeldokumente dieses Reports</h3>
+  <ul class="plain">
+    <li>Sitzungsvorlage <span class="mono">SV-104/2026</span> nebst Abwägungs- und Beschlussvorlage vom 09.06.2026 — 21. Änderung des Flächennutzungsplans „Lohbühl I – Erweiterung“.</li>
+    <li>Beschlussprotokoll des Gemeinsamen Ausschusses vom <span class="mono">21.07.2026</span> — Feststellungsbeschluss, einstimmig.</li>
+    <li>Sitzungsvorlage <span class="mono">SV-132/2026</span> — Fortschreibung der Elternbeiträge, Gemeinderat 20.07.2026.</li>
+    <li>Beschlussprotokolle des Gemeinderats vom <span class="mono">29.01.2024</span> (Gymnasium), <span class="mono">22.04.2024</span> (Holzstraße), <span class="mono">10.11.2025</span> (Biosphärengebiet) und <span class="mono">29.06.2026</span> (Hundesteuer).</li>
+    <li>Feststellungsbeschlüsse der Jahresabschlüsse: <span class="mono">SV-116/2023</span> und <span class="mono">SV-86/2024</span> (2018/2019), <span class="mono">SV-20/2025</span> und <span class="mono">SV-21/2025</span> (2020/2021), <span class="mono">SV-239/2025</span> (2022), <span class="mono">SV-71/2026</span> (2023).</li>
+  </ul>
+</section>
+
+<!-- ===================== DISCLAIMER ===================== -->
+<section id="disclaimer" style="border-bottom:none">
+  <p class="sec-no">Rechtliche Hinweise</p>
+  <h2>Haftungsausschluss</h2>
+
+  <div class="befund">
+    <p class="lab">Lernprojekt · keine Gewähr · keine Vorwürfe</p>
+    <p><b>Dieser Report ist ein privates Lern- und Technikprojekt.</b> Er dient dazu, Verfahren der automatisierten Auswertung öffentlich zugänglicher Verwaltungsdokumente zu erproben. Er ist kein journalistisches Erzeugnis, kein Prüfbericht und keine rechtliche oder fachliche Bewertung.</p>
+    <p><b>Für die Richtigkeit, Vollständigkeit und Aktualität der dargestellten Informationen wird keine Gewähr übernommen.</b> Sämtliche Auswertungen beruhen auf maschineller Verarbeitung von PDF-Dokumenten. Fehler bei der Texterkennung, bei der Zuordnung von Tagesordnungspunkten und bei der maschinellen Klassifikation sind möglich und nicht auszuschließen. Verbindlich ist ausschließlich das jeweilige Originaldokument der Stadt Bad Waldsee.</p>
+    <p><b>Die Beobachtungen in Kapitel 06 sind keine Vorwürfe.</b> Sie unterstellen weder der Stadtverwaltung noch einzelnen Personen ein rechtswidriges oder schuldhaftes Verhalten. Sie benennen ausschließlich, was sich aus den öffentlich vorliegenden Unterlagen ergibt, und was daraus offenbleibt. Wertungen sind als solche gekennzeichnet und stellen die persönliche Einschätzung des Autors dar; sie sind Meinungsäußerung im Sinne des Art. 5 Abs. 1 GG.</p>
+    <p><b>Personenbezogene Daten:</b> Namen werden ausschließlich dort genannt, wo Personen in amtlicher oder mandatsbezogener Funktion öffentlich gehandelt haben und dies in den öffentlichen Protokollen so dokumentiert ist. Namen von Privatpersonen werden nicht wiedergegeben; öffentliche Zustellungen wurden vollständig von der Auswertung ausgenommen.</p>
+    <p><b>Korrekturen sind ausdrücklich erwünscht.</b> Wer einen Fehler feststellt, wird gebeten, dies unter Angabe der betroffenen Stelle und des Originaldokuments zu melden. Berechtigte Korrekturen werden zeitnah und nachvollziehbar eingearbeitet.</p>
+    <p>Es besteht keine Verbindung zur Stadt Bad Waldsee. Der Report ist weder von ihr beauftragt noch von ihr autorisiert oder geprüft. Alle Rechte an den zugrunde liegenden Dokumenten liegen bei der Stadt Bad Waldsee; amtliche Werke sind nach § 5 UrhG gemeinfrei.</p>
+  </div>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+  <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
+  <p>Alle Angaben und Insights ohne Gewähr · Stand 09.09.2026 · Quelle: Ratsinformationssystem und öffentliche Bekanntmachungen der Stadt Bad Waldsee</p>
+</div></footer>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var NS="http://www.w3.org/2000/svg";
+var tip=document.getElementById("tip");
+/* Farbwerte mit var() muessen als style gesetzt werden: Safari loest CSS-Variablen
+   in SVG-Praesentationsattributen nicht auf, die Marken blieben sonst unsichtbar. */
+function el(n,a){
+  var e=document.createElementNS(NS,n),st="";
+  for(var k in a){
+    var v=a[k];
+    if((k==="fill"||k==="stroke")&&String(v).indexOf("var(")>-1){st+=k+":"+v+";";}
+    else e.setAttribute(k,v);
+  }
+  if(st)e.setAttribute("style",st);
+  return e;
+}
+function fmt(n,d){return n.toLocaleString("de-DE",{minimumFractionDigits:d||0,maximumFractionDigits:d||0});}
+/* Nur das Datenattribut setzen — die Ereignisbindung uebernimmt spaeter das
+   Tooltip-Skript. So ueberlebt der Hinweis das Vorrendern. */
+function hook(node,text){ node.setAttribute("data-tip",text); }
+
+/* ---------- 1. Gremien, gestapelt ---------- */
+(function(){
+  var data=[
+    ["Gemeinderat",30,0],
+    ["Ortschaftsrat Reute-Gaisbeuren",0,28],
+    ["Ortschaftsrat Mittelurbach",0,21],
+    ["Ortschaftsrat Michelwinnaden",0,18],
+    ["Ortschaftsrat Haisterkirch",0,18],
+    ["Ausschuss Umwelt/Technik",17,1],
+    ["Verwaltungsausschuss",14,2],
+    ["Gemeinsamer Ausschuss VVG",11,0],
+    ["Kulturbeirat, Baumkommission, AK",0,6]
+  ];
+  var L=228,R=44,T=8,rowH=30,gap=9,W=880;
+  var H=T+data.length*rowH+26;
+  var max=30, iw=W-L-R;
+  var svg=document.getElementById("c-gremien");
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W);
+  for(var t=0;t<=30;t+=10){
+    var x=L+iw*t/max;
+    svg.appendChild(el("line",{x1:x,y1:T,x2:x,y2:T+data.length*rowH-gap,class:"gridline"}));
+    var lb=el("text",{x:x,y:H-8,class:"axis-lab","text-anchor":"middle"});lb.textContent=t;svg.appendChild(lb);
+  }
+  data.forEach(function(d,i){
+    var y=T+i*rowH, h=rowH-gap;
+    var lab=el("text",{x:L-12,y:y+h/2+4,class:"cat-lab","text-anchor":"end"});
+    lab.textContent=d[0].length>30?d[0].slice(0,29)+"…":d[0];
+    svg.appendChild(lab);
+    var x=L, total=d[1]+d[2];
+    [[d[1],"var(--s1)","mit Protokoll"],[d[2],"var(--absent)","ohne Protokoll"]].forEach(function(seg){
+      if(seg[0]<=0)return;
+      var w=iw*seg[0]/max;
+      var r=el("rect",{x:x,y:y,width:Math.max(w-2,1),height:h,fill:seg[1],rx:2,class:"bar"});
+      hook(r,d[0]+" · "+seg[0]+" "+seg[2]);
+      svg.appendChild(r); x+=w;
+    });
+    var v=el("text",{x:L+iw*total/max+8,y:y+h/2+4,class:"val-lab"});
+    v.textContent=total; svg.appendChild(v);
+  });
+  svg.appendChild(el("line",{x1:L,y1:T,x2:L,y2:T+data.length*rowH-gap,class:"baseline"}));
+})();
+
+/* ---------- 2. Themen ---------- */
+(function(){
+  var data=[["Formalia ohne Sachinhalt",248],["Bauleitplanung",120],["Finanzen & Haushalt",78],
+            ["Bau & Sanierung",49],["Energie & Klima",40],["Sonstige Sachthemen",32],
+            ["Kinder, Schule, Soziales",28],["Gremien & Wahlen",8],["Kultur, Tourismus, Sport",7],
+            ["Verkehr & Mobilität",6]];
+  var L=210,R=112,T=8,rowH=29,gap=9,W=880,max=250;
+  var H=T+data.length*rowH+26, iw=W-L-R;
+  var svg=document.getElementById("c-themen");
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W);
+  for(var t=0;t<=250;t+=50){
+    var x=L+iw*t/max;
+    svg.appendChild(el("line",{x1:x,y1:T,x2:x,y2:T+data.length*rowH-gap,class:"gridline"}));
+    var lb=el("text",{x:x,y:H-8,class:"axis-lab","text-anchor":"middle"});lb.textContent=t;svg.appendChild(lb);
+  }
+  data.forEach(function(d,i){
+    var y=T+i*rowH,h=rowH-gap,w=iw*d[1]/max;
+    var lab=el("text",{x:L-12,y:y+h/2+4,class:"cat-lab","text-anchor":"end"});lab.textContent=d[0];svg.appendChild(lab);
+    var r=el("rect",{x:L,y:y,width:Math.max(w,1),height:h,fill:"var(--s1)",rx:2,class:"bar"});
+    hook(r,d[0]+" · "+d[1]+" Punkte · "+(d[1]/616*100).toFixed(1).replace(".",",")+" %");
+    svg.appendChild(r);
+    var v=el("text",{x:L+w+8,y:y+h/2+4,class:"val-lab"});
+    v.textContent=d[1]+"  ("+(d[1]/616*100).toFixed(1).replace(".",",")+"%)";svg.appendChild(v);
+  });
+  svg.appendChild(el("line",{x1:L,y1:T,x2:L,y2:T+data.length*rowH-gap,class:"baseline"}));
+})();
+
+/* ---------- 3. Streitquote ---------- */
+(function(){
+  var data=[["2024",19.9,151,30],["2025",13.3,105,14],["2026*",19.5,77,15]];
+  var W=620,H=250,L=52,R=20,T=14,B=48,max=25,mean=17.7;
+  var iw=W-L-R, ih=H-T-B, bw=Math.min(96,iw/data.length-38);
+  var svg=document.getElementById("c-streit");
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W);
+  for(var t=0;t<=25;t+=5){
+    var y=T+ih-ih*t/max;
+    svg.appendChild(el("line",{x1:L,y1:y,x2:W-R,y2:y,class:"gridline"}));
+    var lb=el("text",{x:L-10,y:y+4,class:"axis-lab","text-anchor":"end"});lb.textContent=t+"%";svg.appendChild(lb);
+  }
+  var ym=T+ih-ih*mean/max;
+  svg.appendChild(el("line",{x1:L,y1:ym,x2:W-R,y2:ym,stroke:"var(--s2)","stroke-width":1.5,"stroke-dasharray":"5 4"}));
+  var ml=el("text",{x:W-R,y:ym-7,class:"val-lab","text-anchor":"end",fill:"var(--s2)"});
+  ml.textContent="Mittel 17,7 %";svg.appendChild(ml);
+  data.forEach(function(d,i){
+    var cx=L+iw*(i+0.5)/data.length, h=ih*d[1]/max, y=T+ih-h;
+    var r=el("rect",{x:cx-bw/2,y:y,width:bw,height:h,fill:"var(--s1)",rx:3,class:"bar"});
+    hook(r,d[0].replace("*","")+" · "+d[3]+" von "+d[2]+" Abstimmungen nicht einstimmig");
+    svg.appendChild(r);
+    var v=el("text",{x:cx,y:y-9,class:"val-lab","text-anchor":"middle"});
+    v.textContent=String(d[1]).replace(".",",")+" %";svg.appendChild(v);
+    var lb=el("text",{x:cx,y:H-24,class:"cat-lab","text-anchor":"middle"});lb.textContent=d[0];svg.appendChild(lb);
+    var n=el("text",{x:cx,y:H-9,class:"axis-lab","text-anchor":"middle"});n.textContent="n = "+d[2];svg.appendChild(n);
+  });
+  svg.appendChild(el("line",{x1:L,y1:T+ih,x2:W-R,y2:T+ih,class:"baseline"}));
+  var note=el("text",{x:L,y:14,class:"axis-lab"});note.textContent="* 2026 bis 09.09.";svg.appendChild(note);
+})();
+
+/* ---------- 4. Finanzen ---------- */
+(function(){
+  var years=[2018,2019,2020,2021,2022,2023];
+  var ert=[52.53,54.07,53.47,53.29,58.16,65.97];
+  var auf=[46.35,50.31,48.00,50.34,51.73,59.99];
+  var W=760,H=300,L=56,R=64,T=18,B=44,min=40,max=70;
+  var iw=W-L-R, ih=H-T-B;
+  var svg=document.getElementById("c-finanzen");
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W);
+  function X(i){return L+iw*i/(years.length-1);}
+  function Y(v){return T+ih-ih*(v-min)/(max-min);}
+  for(var t=40;t<=70;t+=10){
+    svg.appendChild(el("line",{x1:L,y1:Y(t),x2:W-R,y2:Y(t),class:"gridline"}));
+    var lb=el("text",{x:L-10,y:Y(t)+4,class:"axis-lab","text-anchor":"end"});lb.textContent=t;svg.appendChild(lb);
+  }
+  var yl=el("text",{x:L-10,y:T-6,class:"axis-lab","text-anchor":"end"});yl.textContent="Mio €";svg.appendChild(yl);
+  [[ert,"var(--s1)","Ordentliche Erträge"],[auf,"var(--s2)","Ordentliche Aufwendungen"]].forEach(function(s){
+    var pts=s[0].map(function(v,i){return X(i)+","+Y(v);}).join(" ");
+    svg.appendChild(el("polyline",{points:pts,fill:"none",stroke:s[1],"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"}));
+    s[0].forEach(function(v,i){
+      var c=el("circle",{cx:X(i),cy:Y(v),r:4.5,fill:s[1],stroke:"var(--surface)","stroke-width":2});
+      hook(c,years[i]+" · "+s[2]+": "+fmt(v,2)+" Mio €");
+      svg.appendChild(c);
+    });
+    var last=s[0][s[0].length-1];
+    var dl=el("text",{x:W-R+9,y:Y(last)+4,class:"val-lab",fill:s[1]});
+    dl.textContent=fmt(last,2);svg.appendChild(dl);
+  });
+  years.forEach(function(y,i){
+    var lb=el("text",{x:X(i),y:H-20,class:"cat-lab","text-anchor":"middle"});lb.textContent=y;svg.appendChild(lb);
+  });
+  svg.appendChild(el("line",{x1:L,y1:T+ih,x2:W-R,y2:T+ih,class:"baseline"}));
+})();
+
+/* ---------- 5. Verzug Jahresabschlüsse ---------- */
+(function(){
+  var data=[["2018",53,"03.06.2024"],["2019",41,"03.06.2024"],["2020",39,"24.03.2025"],
+            ["2021",27,"24.03.2025"],["2022",23,"01.12.2025"],["2023",15,"13.04.2026"]];
+  var L=112,R=212,T=8,rowH=32,gap=10,W=800,max=56;
+  var H=T+data.length*rowH+26, iw=W-L-R;
+  var svg=document.getElementById("c-verzug");
+  svg.setAttribute("viewBox","0 0 "+W+" "+H); svg.setAttribute("width",W);
+  for(var t=0;t<=48;t+=12){
+    var x=L+iw*t/max;
+    svg.appendChild(el("line",{x1:x,y1:T,x2:x,y2:T+data.length*rowH-gap,class:"gridline"}));
+    var lb=el("text",{x:x,y:H-8,class:"axis-lab","text-anchor":"middle"});lb.textContent=t+" Mon.";svg.appendChild(lb);
+  }
+  data.forEach(function(d,i){
+    var y=T+i*rowH,h=rowH-gap,w=iw*d[1]/max;
+    var lab=el("text",{x:L-12,y:y+h/2+4,class:"cat-lab","text-anchor":"end"});
+    lab.textContent="Abschluss "+d[0];svg.appendChild(lab);
+    var r=el("rect",{x:L,y:y,width:Math.max(w,1),height:h,fill:"var(--s2)",rx:2,class:"bar"});
+    hook(r,"Berichtsjahr "+d[0]+" · festgestellt am "+d[2]+" · "+d[1]+" Monate nach Fristablauf");
+    svg.appendChild(r);
+    var v=el("text",{x:L+w+9,y:y+h/2+4,class:"val-lab"});
+    v.textContent=d[1]+" Mon. · "+d[2];svg.appendChild(v);
+  });
+  svg.appendChild(el("line",{x1:L,y1:T,x2:L,y2:T+data.length*rowH-gap,class:"baseline"}));
+})();
+
+/* ---------- Top 50 ---------- */
+var F=[
+["Ein Löschfahrzeug für die Ukraine","23.06.2025 · GR · SV-98/2025","Der Gemeinderat beschloss die Abgabe des ausgemusterten Löschgruppenfahrzeugs LF 16/12 an die Ukraine. Kommunalpolitik mit außenpolitischem Bezug — im Untersuchungszeitraum einmalig."],
+["Situationsbericht Schädlingsmanagement und Krähen","14.10.2024 · GR · SV-167/2024","Ein eigener Tagesordnungspunkt zur Krähenpopulation. Der Punkt zeigt, welche Alltagskonflikte es bis auf die Ratsagenda schaffen."],
+["Der Gemeinderat kauft eine Skulptur","18.06.2024 · VA · SV-120/2024","Erwerb einer Skulptur für die Außenanlage des neuen Verwaltungsgebäudes — Kunst am Bau als eigener Beschlusspunkt, wenige Wochen vor der Kommunalwahl."],
+["Bewerbung um die Landesgartenschau","02.12.2024 · GR · SV-231/2024","Eine Bewerbung, die eine Stadt dieser Größe auf ein Jahrzehnt prägen würde. Aus den öffentlichen Unterlagen ist der weitere Verlauf nicht ersichtlich."],
+["Abschaffung der unechten Teilortswahl zur Debatte","29.09.2025 · GR · SV-114/2025","Der Rat verhandelte, ob die unechte Teilortswahl beibehalten wird — eine Grundsatzfrage über die Vertretung der Ortsteile im Gemeinderat."],
+["Bad Waldsee tritt dem Biosphärengebiet nicht bei","10.11.2025 · GR · SV-224/2025","Der Gemeinderat beschloss mit 18 zu 7 Stimmen, dem geplanten Biosphärengebiet Allgäu-Oberschwaben nicht beizutreten (SV-224/2025). Ein eigener Punkt behandelte zusätzlich den Antrag der CDU-Fraktion zum Thema. Es ist die deutlichste inhaltliche Kampfabstimmung des Zeitraums — und eine Absage an ein regionales Großprojekt."],
+["Großspeicher: Antrag von Bündnis 90/Die Grünen","29.09.2025 · GR · SV-136/2025","Einer von nur zwei Fraktionsanträgen, die es im Zeitraum als eigener Punkt auf die Tagesordnung schafften."],
+["Gymnasiumserweiterung mit 9 zu 18 abgelehnt","29.01.2024 · GR · SV-2/2024","Die 10,1-Millionen-Variante der Verwaltung fiel durch; beschlossen wurde die 7,80-Millionen-Alternative. Die größte offene Niederlage einer Verwaltungsvorlage im Zeitraum."],
+["Antrag zur Kampfhundesteuer scheitert 1 zu 17","29.06.2026 · GR · SV-114/2026","Stadträtin Lentes wollte die gesonderte Besteuerung von Kampfhunden streichen. Das Ergebnis ist das einseitigste des gesamten Zeitraums."],
+["Kurtaxe steigt auf 3,00 Euro","29.09.2025 · GR · SV-92/2025","Neukalkulation und Neufassung der Kurtaxesatzung, beschlossen als modifizierter Beschluss — der Rat änderte den Verwaltungsvorschlag."],
+["Bürgerfest 2022 wird 2025 abgerechnet","25.11.2025 · VA · SV-172/2025","Die Endabrechnung eines Festes erreicht das Gremium drei Jahre nach der Veranstaltung."],
+["Zwei Jahresabschlüsse an einem Abend","24.03.2025 · GR · SV-20/2025","Der Gemeinderat stellte die Abschlüsse 2020 und 2021 in derselben Sitzung fest — 39 beziehungsweise 27 Monate nach Ablauf der gesetzlichen Frist."],
+["Stationäre Blitzer werden ausgeschrieben","05.08.2024 · GR · ohne Vorlage","Öffentliche Ausschreibung von Geschwindigkeitsmessanlagen samt Auswertungssoftware. Ein Beschluss mit direkter Wirkung auf jeden Autofahrer im Stadtgebiet."],
+["Windkraft Haisterkirch-Osterhofen","05.08.2024 · GR · SV-138/2024","Erstes von vier gemeindlichen Einvernehmen zu Windenergieanlagen im Zeitraum — der Beginn einer Serie."],
+["Agri-Solarpark Sankt Josef","15.04.2024 · AUT · SV-33/2024","Vorhabenbezogener Bebauungsplan plus 16. Flächennutzungsplan-Änderung für eine Sonderbaufläche: Landwirtschaft und Photovoltaik auf derselben Fläche."],
+["Kiesabbau Mennisweiler","04.11.2024 · GR · SV-183/2024","Gemeindliches Einvernehmen zu Entwicklungen an einem Kiesabbaustandort — Rohstoffabbau ist im Zeitraum sonst kein Thema."],
+["Ein Tagesordnungspunkt über eine Sauna","21.07.2025 · GR · SV-122/2025","„Information über die Sauna der Städtischen Rehakliniken“ — Detailtiefe, die den Betrieb eines städtischen Eigenbetriebs bis auf Einrichtungsebene ins Gremium bringt."],
+["Die Stadt bekommt ein Magazin","02.02.2026 · GR · SV-4/2026","„tut gut – Magazin. Das neue Magazin der Großen Kreisstadt Bad Waldsee“ — eigene Öffentlichkeitsarbeit als Ratsthema."],
+["Gedenken an Gemeinderat Franz Daiber","02.02.2026 · GR · ohne Vorlage","Dem Gedenken folgt im selben Punkt das Nachrücken eines Mitglieds — der einzige Fall eines Mandatswechsels durch Todesfall im Zeitraum."],
+["Schulessen wird teurer","02.02.2026 · GR · SV-279/2025","Anpassung des Abgabepreises für das Mittagessen am Bildungszentrum Döchtbühl und der Durlesbachschule Reute zum 1. April 2026."],
+["Qualifizierter Mietspiegel für Bad Waldsee","21.07.2025 · GR · SV-91/2025","Anerkennung als qualifizierter Mietspiegel — für eine Stadt dieser Größe keine Selbstverständlichkeit und rechtlich folgenreich für jeden Mietvertrag."],
+["Bodo-Ringzug: Mitmachen oder nicht","02.02.2026 · GR · SV-27/2026","Entscheidung über Projektteilnahme und Finanzierungsanteil an einem regionalen Schienenprojekt."],
+["Was der Bürgerbus wirklich kostet","25.11.2024 · AUT · ohne Vorlage","Ein Informationspunkt allein zu den Kosten des Bürgerbusses."],
+["Ein Premium-Wanderweg für Bad Waldsee","14.10.2024 · GR · SV-160/2024","Schaffung eines zertifizierten Wanderwegs als eigener Beschlusspunkt der Tourismusstrategie."],
+["Verkaufsoffener Sonntag, zweimal erweitert","26.02.2024 · GR · SV-246/2023","Erst Erweiterung um den Kultursonntag, im Dezember 2024 dann eine ferien- und feiertagsbedingte Ausweitung des Zeitraums. Ein Thema, das im Zeitraum dreimal wiederkehrt."],
+["Grundsteuerreform: die neuen Hebesätze","09.12.2024 · GR · SV-203/2024","Festlegung der Hebesätze ab 2025 — der Beschluss mit der breitesten Betroffenheit im gesamten Zeitraum."],
+["Zuschuss für die seenema eG","25.11.2025 · VA · SV-219/2025","Antrag einer Genossenschaft auf Verlängerung der städtischen Förderung — Kommunalpolitik als Kulturfinanzierung."],
+["Zwischenfinanzierung für die Bürgerbühne Gaisbeuren","01.12.2025 · GR · SV-248/2025","Die Stadt streckt einem Dorfgemeinschaftshaus-Projekt Geld vor."],
+["Zwei Abrisse, außerplanmäßig bezahlt","10.11.2025 · GR · SV-222/2025","Abriss Augustinerstraße 21 und Haslachstraße 26 über außerplanmäßige Ausgaben — nicht im Haushalt vorgesehen."],
+["Ein Dach, das nicht eingeplant war","16.09.2025 · VA · SV-145/2025","Sanierung des Dachs am Baubetriebshof Schützenstraße 27 über außerplanmäßige Ausgaben."],
+["Überplanmäßig: ein Feuerwehr-Gerätewagen","07.10.2024 · AUT · SV-161/2024","Beschaffung des Gerätewagens Logistik 2 Schlauch als überplanmäßige Ausgabe, in derselben Sitzung wie ein Wechselladerfahrzeug."],
+["Zwei Feldwege verschwinden","25.11.2024 · AUT · SV-150/2024","Entwidmung von Teilflächen der Flurstücke 2021 und 2026 in Michelwinnaden — öffentliche Wege werden dem Verkehr entzogen."],
+["Die Klärschlammpresse muss neu","07.04.2025 · AUT · SV-31/2025","Erneuerung der Klärschlammpresse, in derselben Sitzung wie der Durchführungsbeschluss für ein neues Nachklärbecken."],
+["Reute wird an die Kläranlage angeschlossen","04.11.2024 · GR · SV-172/2024","Vergabe der Planungsleistungen für den Anschluss der Kläranlage Reute an die Kläranlage Bad Waldsee — das Ende eines eigenständigen Ortsteil-Betriebs."],
+["Veränderungssperre Biberacher Straße Nord","06.10.2025 · AUT · SV-168/2025","Eine Veränderungssperre friert die Bebaubarkeit ein, bis der neue Plan steht — ein scharfes Instrument, im Zeitraum nur einmal eingesetzt."],
+["Drei Vorkaufsrechtssatzungen","08.07.2024 · GR · ohne Vorlage","Radweg Reute–Gaisbeuren, später Ortsmitte Haisterkirch und Fuß- und Radweg Frauenberg: Die Stadt sichert sich den Zugriff auf Grundstücke, bevor verhandelt wird."],
+["Der Waldkindergarten zieht um","28.04.2025 · GR · SV-54/2025","Neuer Standort und Erweiterung um eine Gruppe — eine von mehreren Kapazitätsentscheidungen in der Kinderbetreuung."],
+["Digitale Reisemobilstellplätze","21.07.2025 · GR · SV-131/2025","Digitalisierung der Stellplätze an der Waldsee-Therme — Tourismus trifft Verwaltungsdigitalisierung."],
+["Der Rat regelt seine eigene Entschädigung","04.11.2024 · GR · SV-179/2024","Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit; im Dezember 2025 folgte die Ergänzung um Wahlhelfer."],
+["Eine Kommission sucht Einsparpotenziale","03.06.2024 · GR · SV-66/2024","Vorschlag der Haushaltsstrukturkommission zu Einsparungen und Einnahmeerhöhungen — das früheste öffentliche Signal für Haushaltsdruck."],
+["Freibad: erst Rentnertarif, dann Preiserhöhung","26.02.2024 · GR · SV-1/2024","Im Februar 2024 ein ermäßigter Tarif für Rentner und Pensionäre, im Mai 2026 die allgemeine Gebührenerhöhung."],
+["Volkshochschule erhöht die Gebühren","10.11.2025 · GR · SV-217/2025","Neufestsetzung der Teilnehmergebühren samt Änderung der Gebührensatzung."],
+["Pflegesätze im Spital zum Heiligen Geist","21.10.2025 · GR · SV-200/2025","Pflegesatzverhandlungen für das städtische Alten- und Pflegeheim — ein Beschluss, der Heimkosten direkt beeinflusst."],
+["Stellplatzablöse wird angepasst","26.02.2024 · GR · SV-224/2023","Wer keinen Stellplatz baut, zahlt der Stadt einen Ablösebetrag. Die Anpassung wirkt auf jedes Bauvorhaben in der Altstadt."],
+["Breitband: das Graue-Flecken-Programm","23.09.2024 · GR · ohne Vorlage","Vergabe weiterer Baumaßnahmen und Festlegung des weiteren Vorgehens; der Breitbandausbau erscheint im Zeitraum viermal."],
+["ÖPNV-Konzeption 2024 ff.","22.04.2024 · GR · SV-248/2023","Der einzige strategische Nahverkehrspunkt des Zeitraums — bei insgesamt nur sechs Verkehrsthemen."],
+["Zertifizierung „Gesunde Stadt“","23.06.2025 · GR · SV-90/2025","Ein Projekt zur Zertifizierung, das an das Gesundheitsleitbild von Dezember 2024 anschließt — Kurort-Identität als Verwaltungsprogramm."],
+["Schul- und Kindergartenverpflegung wird vergeben","09.06.2026 · VA · SV-85/2026","Eine Vergabe, die bestimmt, was täglich hunderte Kinder auf dem Teller haben."],
+["Ein Bahnübergang, vier Varianten","13.05.2024 · AUT · SV-78/2024","Modernisierung des Bahnübergangs am Kornblumenweg in Mittelurbach durch die DB — Variantenauswahl durch den Ausschuss."],
+["Ganztagsförderung: Rat ändert die Betreuungszeiten","02.02.2026 · GR · SV-1/2026","Information zur Umsetzung des GaFöG und Festlegung der Betreuungszeiten an den kommunalen Grundschulen, beschlossen als modifizierter Beschluss."],
+];
+var ol=document.getElementById("findings");
+F.slice(0,50).forEach(function(f){
+  var li=document.createElement("li");
+  var d=document.createElement("div");
+  d.innerHTML='<p class="f-head"></p><p class="f-meta"></p><p class="f-why"></p>';
+  d.querySelector(".f-head").textContent=f[0];
+  d.querySelector(".f-meta").textContent=f[1];
+  d.querySelector(".f-why").textContent=f[2];
+  li.appendChild(d); ol.appendChild(li);
+});
+
+/* ---------- Top 10 bedenklich ---------- */
+var C=[
+["85 öffentliche Sitzungen ohne jede Dokumentation",
+ ["Die vier Ortschaftsräte tagten im Zeitraum 85 Mal öffentlich. Für keine dieser Sitzungen existiert ein Protokoll — weder im Ratsinformationssystem noch auf der Stadtwebsite. Die Sitzungsseiten im System enthalten ausschließlich Datum und Ort.",
+  "Damit ist für rund die Hälfte aller öffentlichen Sitzungen der Stadt nicht nachvollziehbar, was verhandelt und entschieden wurde. Betroffen sind ausgerechnet die Gremien, die über Baugesuche in den Ortsteilen beraten."],
+ "Belege: 166 erfasste Sitzungen, davon 85 Ortschaftsratssitzungen mit 0 Protokollen und 0 Tagesordnungspunkten im RIS; Stichprobe Ortschaftsrat Reute-Gaisbeuren, 51. Sitzung vom 28.07.2026."],
+
+["Jahresabschlüsse überschreiten die gesetzliche Frist seit Jahren",
+ ["§ 95b der Gemeindeordnung für Baden-Württemberg verlangt die Feststellung des Jahresabschlusses binnen zwölf Monaten nach Ende des Haushaltsjahres. Im gesamten Untersuchungszeitraum wurde diese Frist bei keinem einzigen Abschluss eingehalten.",
+  "Der Abschluss 2018 wurde 53 Monate nach Fristablauf festgestellt, der für 2023 immer noch 15 Monate zu spät. Solange Abschlüsse fehlen, beschließt der Rat Haushalte ohne geprüfte Zahlen der Vorjahre. Anzuerkennen ist: Der Rückstand wird kontinuierlich abgebaut."],
+ "Belege: Feststellungsbeschlüsse vom 03.06.2024 (JA 2018 und 2019), 24.03.2025 (JA 2020 und 2021, SV-20/2025 und SV-21/2025), 01.12.2025 (JA 2022, SV-239/2025), 13.04.2026 (JA 2023, SV-71/2026)."],
+
+["Ein Baugebiet gegen die aufrechterhaltenen Bedenken der Fachbehörde",
+ ["Bei der 21. Änderung des Flächennutzungsplans für „Lohbühl I – Erweiterung“ erklärte das Regierungspräsidium Tübingen ausdrücklich, es bestünden „weiterhin Bedenken“ gegen die Inanspruchnahme hochwertiger landwirtschaftlicher Flächen. Die Fläche liegt nach der Flurbilanz 2022 in einer Vorbehaltsflur I.",
+  "Die Bedenken wurden „zur Kenntnis genommen“, am Beschlussvorschlag änderte sich nichts. Der Gemeinsame Ausschuss beschloss am 21.07.2026 einstimmig. Das Verfahren ist rechtlich zulässig — die Frage ist, welchen Wert eine Fachstellungnahme hat, die folgenlos bleibt."],
+ "Belege: Sitzungsvorlage SV-104/2026; Abwägungs- und Beschlussvorlage vom 09.06.2026, S. 3; Beschlussprotokoll Gemeinsamer Ausschuss vom 21.07.2026."],
+
+["Die Bedarfsbegründung für 3,7 Hektar hat „nur informellen Charakter“",
+ ["Gegen dasselbe Baugebiet wandte eine Privatperson ein, die zugrunde gelegte Bevölkerungsprognose sei veraltet. Die Verwaltung antwortete, die neue Vorausberechnung weise für 2040 statt 3.341 nun 3.347 Einwohner aus — eine Differenz von sechs Personen — und die Bauflächenbedarfsberechnung habe „nur informellen Charakter“.",
+  "Wenn die Bedarfsrechnung informell ist, fehlt der öffentlich nachvollziehbare Nachweis, dass die Umwandlung von 3,7 Hektar Ackerland erforderlich ist. Das ist der Kern des Abwägungsgebots nach § 1 Abs. 7 BauGB."],
+ "Beleg: Abwägungs- und Beschlussvorlage vom 09.06.2026, S. 15."],
+
+["Kita-Beiträge steigen ohne Beschluss des Gemeinderats",
+ ["Die Elternbeiträge für Kindertageseinrichtungen steigen zum Kindergartenjahr 2026/2027 um 4,5 Prozent. Der Gemeinderat stimmt darüber nicht ab: Er hat die Verwaltung mit Beschluss vom 14.03.2005 dauerhaft zur Fortschreibung ermächtigt und diese Ermächtigung am 21.10.2025 auf die Ganztagesbetreuung ausgeweitet.",
+  "Eine 21 Jahre alte Ermächtigung nimmt eine jährlich wiederkehrende Belastung von Familien aus der politischen Debatte. Formal einwandfrei — aber die Vorlage erreicht das Gremium nur noch als Kenntnisnahme."],
+ "Beleg: Sitzungsvorlage SV-132/2026, Gemeinderat 20.07.2026, Beratungsart Kenntnisnahme."],
+
+["Umwelt- und Fachverbände beteiligen sich nicht",
+ ["Im Verfahren zu „Lohbühl I“ wurden 36 Behörden und Träger öffentlicher Belange angeschrieben. 14 äußerten sich überhaupt nicht — darunter BUND, NABU, der Landesnaturschutzverband Baden-Württemberg und der Landesbauernverband.",
+  "Auch die Stadt Bad Waldsee selbst, als beteiligte Kommune angeschrieben, gab keine Stellungnahme ab. Die förmliche Öffentlichkeits- und Behördenbeteiligung erreicht damit einen Teil der Stellen nicht, die sie erreichen soll."],
+ "Beleg: Abwägungs- und Beschlussvorlage vom 09.06.2026, S. 1–2."],
+
+["Nur zwei namentliche Anträge in 333 Abstimmungen",
+ ["In den 72 ausgewerteten Protokollen findet sich exakt zweimal, dass ein Ratsmitglied namentlich einen Antrag stellt. 82 Prozent aller Beschlüsse fallen einstimmig.",
+  "Das kann breiten Konsens abbilden — oder bedeuten, dass die eigentliche Willensbildung außerhalb der öffentlichen Sitzung stattfindet. Aus den Unterlagen allein ist das nicht zu unterscheiden, weil Beschlussprotokolle keine Aussprache festhalten."],
+ "Belege: 333 ausgewertete Abstimmungen, 274 einstimmig; namentliche Anträge am 22.04.2024 (STR Senko) und 29.06.2026 (STRin Lentes)."],
+
+["Der Flächennutzungsplan von 1998 wird seit 28 Jahren nur fortgeschrieben",
+ ["Im Zeitraum wurden acht verschiedene Änderungen des Flächennutzungsplans der Verwaltungsgemeinschaft behandelt — die 12., 15., 16., 17., 18., 20., 21. und 22. Eine Gesamtfortschreibung des Plans von 1998 gibt es nicht.",
+  "Die Verwaltung räumt auf einen Bürgereinwand hin ein, wann eine Fortschreibung erfolgt, liege „in der Entscheidung der beiden Kommunen“. Eine planerische Gesamtschau, an der einzelne Baugebiete gemessen werden könnten, existiert damit nicht."],
+ "Belege: Tagesordnungspunkte der Jahre 2024–2026 zu FNP-Änderungen; Abwägungs- und Beschlussvorlage vom 09.06.2026, Antwort zu Einwand 1."],
+
+["Ausgaben außerhalb des Haushaltsplans",
+ ["Drei Vorhaben des Zeitraums wurden ausdrücklich als außer- oder überplanmäßige Ausgabe beschlossen: der Feuerwehr-Gerätewagen (07.10.2024), die Dachsanierung am Baubetriebshof (16.09.2025) und die Abrisse Augustinerstraße 21 und Haslachstraße 26 (10.11.2025).",
+  "Die Zahl ist für sich genommen unauffällig. Auffällig ist, dass sie in eine Phase fällt, in der eine Haushaltsstrukturkommission nach Einsparpotenzialen sucht und der Haushalt 2025 nur noch 100.000 € Überschuss vorsieht."],
+ "Belege: Tagesordnungspunkte vom 07.10.2024, 16.09.2025 und 10.11.2025; Haushaltssatzung 2025 (Erträge 63.602.500 €, Aufwendungen 63.502.500 €)."],
+
+["Die Belege sind nicht dauerhaft zitierbar",
+ ["Sämtliche Dokumentlinks des Ratsinformationssystems enthalten sitzungsgebundene Token. Sie lassen sich nicht stabil verlinken, nicht archivieren und nicht ohne Weiteres von Dritten nachprüfen. Einen offenen Datenzugang, etwa nach dem OParl-Standard, oder einen funktionierenden Newsfeed gibt es nicht.",
+  "Die Unterlagen sind vollständig öffentlich — aber praktisch nur für den auffindbar, der weiß, wo er suchen muss, und nur solange die Token gültig bleiben. Transparenz endet hier nicht am Zugang, sondern an der Haltbarkeit."],
+ "Belege: URL-Struktur ris.bad-waldsee.de/sdnetrim/<Token>/…; RSS-Feed unter ris.bad-waldsee.de/rss/ ohne Einträge (geprüft am 09.09.2026)."]
+];
+var oc=document.getElementById("concerns");
+C.forEach(function(c){
+  var li=document.createElement("li");
+  var h=document.createElement("p");h.className="c-head";h.textContent=c[0];li.appendChild(h);
+  c[1].forEach(function(t){var p=document.createElement("p");p.textContent=t;li.appendChild(p);});
+  var e=document.createElement("p");e.className="evidence";e.textContent=c[2];li.appendChild(e);
+  oc.appendChild(li);
+});
+})();
+</script>

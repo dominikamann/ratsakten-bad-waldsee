@@ -1,0 +1,113 @@
+{
+  "stichtag": "2026-09-09",
+  "sitzungen": 166,
+  "tagesordnungspunkte": 616,
+  "vorlagen": 300,
+  "dokumente": 625,
+  "protokolle": 72,
+  "gremien": {
+    "Gemeinderat": {
+      "sitzungen": 30,
+      "protokolle": 30,
+      "tops": 385
+    },
+    "Ortschaftsrat Reute-Gaisbeuren": {
+      "sitzungen": 28,
+      "protokolle": 0,
+      "tops": 0
+    },
+    "Ortschaftsrat Mittelurbach": {
+      "sitzungen": 21,
+      "protokolle": 0,
+      "tops": 0
+    },
+    "Ortschaftsrat Michelwinnaden": {
+      "sitzungen": 18,
+      "protokolle": 0,
+      "tops": 0
+    },
+    "Ortschaftsrat Haisterkirch": {
+      "sitzungen": 18,
+      "protokolle": 0,
+      "tops": 0
+    },
+    "Ausschuss Umwelt/Technik": {
+      "sitzungen": 18,
+      "protokolle": 17,
+      "tops": 131
+    },
+    "Verwaltungsausschuss": {
+      "sitzungen": 16,
+      "protokolle": 14,
+      "tops": 63
+    },
+    "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute": {
+      "sitzungen": 11,
+      "protokolle": 11,
+      "tops": 33
+    },
+    "Kulturbeirat (kleine Runde)": {
+      "sitzungen": 2,
+      "protokolle": 0,
+      "tops": 0
+    },
+    "Kulturbeirat (große Runde)": {
+      "sitzungen": 2,
+      "protokolle": 0,
+      "tops": 0
+    },
+    "Arbeitskreis Kinder": {
+      "sitzungen": 1,
+      "protokolle": 0,
+      "tops": 4
+    },
+    "Baumkommission": {
+      "sitzungen": 1,
+      "protokolle": 0,
+      "tops": 0
+    }
+  },
+  "themen": {
+    "Formalia ohne Sachinhalt": 248,
+    "Bauleitplanung": 120,
+    "Finanzen & Haushalt": 78,
+    "Bau & Sanierung": 49,
+    "Energie & Klima": 40,
+    "Sonstige Sachthemen": 32,
+    "Kinder, Schule, Soziales": 28,
+    "Gremien & Wahlen": 8,
+    "Kultur, Tourismus, Sport": 7,
+    "Verkehr & Mobilität": 6
+  },
+  "abstimmungen": {
+    "gesamt": 333,
+    "einstimmig": 274,
+    "nicht_einstimmig": 59,
+    "mit_nein": 24,
+    "mit_enthaltung": 47,
+    "je_jahr": {
+      "2024": {
+        "gesamt": 151,
+        "strittig": 30
+      },
+      "2025": {
+        "gesamt": 105,
+        "strittig": 14
+      },
+      "2026": {
+        "gesamt": 77,
+        "strittig": 15
+      }
+    }
+  },
+  "modifizierte_beschluesse": [
+    "2024-01-29",
+    "2024-12-09",
+    "2025-09-29",
+    "2026-01-19",
+    "2026-01-19",
+    "2026-01-20",
+    "2026-02-02",
+    "2026-04-13"
+  ]
+}

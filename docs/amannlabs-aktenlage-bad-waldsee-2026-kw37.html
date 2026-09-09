@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="de"><head><meta name="viewport" content="width=device-width, initial-scale=1"><meta charset="utf-8">
+<title>Waldseer Aktenlage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">
+
+<style>
+/* Bewusst einfarbig dunkel — keine Themenumschaltung. */
+:root{
+  color-scheme:dark;
+  --plane:#0B0D0F;
+  --surface:#111316;
+  --surface-2:#171A1E;
+  --ink:#EDF1F5;
+  --ink-2:#B4BDC7;
+  --muted:#7F8A96;
+  --rule:#272C32;
+  --s1:#3987e5;
+  --s2:#d95926;
+  --flag:#E08163;
+  --flag-bg:rgba(224,129,99,.10);
+  --bar-bg:#15181C;
+  --bar-ink:#D6DEE7;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--plane);color:var(--ink);
+  font-family:"IBM Plex Serif",Georgia,serif;
+  font-size:17.5px;line-height:1.66;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Marke ---------- */
+.brandbar{
+  background:var(--bar-bg);color:var(--bar-ink);border-bottom:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.brandbar .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;padding:10px 24px}
+.brandbar a{color:var(--s1);text-decoration:none}
+.brandbar a:hover{text-decoration:underline}
+.brandbar b{font-weight:600;letter-spacing:.1em}
+
+/* ---------- Titelkopf ---------- */
+.masthead{padding:52px 0 0}
+.masthead h1{
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:800;
+  font-size:clamp(42px,9vw,84px);line-height:.9;letter-spacing:-.03em;margin:0;
+}
+.masthead .claim{
+  margin:16px 0 0;font-size:18px;color:var(--ink-2);max-width:54ch;
+}
+.issueline{
+  display:flex;flex-wrap:wrap;gap:8px 24px;margin:26px 0 0;padding:13px 0;
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+}
+.issueline b{color:var(--ink);font-weight:600}
+
+/* ---------- Inhalt ---------- */
+.toc{
+  margin:30px 0 0;padding:20px 22px;background:var(--surface);
+  border:1px solid var(--rule);box-shadow:var(--shadow);
+}
+.toc h2{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:500;
+}
+.toc ol{margin:0;padding:0;list-style:none;counter-reset:toc}
+.toc li{
+  display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;
+  padding:6px 0;font-size:16px;
+}
+.toc li::before{
+  counter-increment:toc;content:counter(toc,decimal-leading-zero);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);padding-top:4px;
+}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.toc a:hover{border-bottom-color:var(--s1);color:var(--s1)}
+
+/* ---------- Artikel ---------- */
+article{
+  display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;
+  padding:48px 0;border-bottom:1px solid var(--rule);
+}
+.rail{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.55;
+  color:var(--muted);display:flex;flex-direction:column;gap:15px;
+}
+.rail .field{display:flex;flex-direction:column;gap:2px}
+.rail .lab{font-size:10px;letter-spacing:.13em;text-transform:uppercase;opacity:.8}
+.rail .val{color:var(--ink-2);font-weight:500}
+.body-col{min-width:0}
+.rubrik{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--s2);margin:0 0 12px;
+}
+h2.headline{
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:700;
+  font-size:clamp(26px,3.5vw,36px);line-height:1.1;letter-spacing:-.02em;
+  margin:0 0 16px;text-wrap:balance;
+}
+h3{
+  font-family:Archivo,sans-serif;font-weight:600;font-size:18px;
+  margin:30px 0 9px;letter-spacing:-.005em;
+}
+p{margin:0 0 15px;max-width:66ch}
+a.doc{color:var(--s1);text-decoration:none;border-bottom:1px solid rgba(57,135,229,.4)}
+a.doc:hover{border-bottom-color:var(--s1)}
+a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
+/* ---------- Beschlussliste ---------- */
+ul.beschluesse{margin:20px 0;padding:0;list-style:none}
+ul.beschluesse li{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 18px;
+  padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+}
+ul.beschluesse li:last-child{border-bottom:none}
+ul.beschluesse .sache{font-size:16px;line-height:1.45}
+ul.beschluesse .sache b{font-weight:600}
+ul.beschluesse .sv{
+  display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  color:var(--muted);letter-spacing:.04em;margin-top:3px;
+}
+ul.beschluesse .erg{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
+  color:var(--muted);white-space:nowrap;text-transform:uppercase;
+}
+ul.beschluesse .erg.split{color:var(--flag)}
+
+/* ---------- Kasten ---------- */
+.kasten{
+  margin:24px 0;padding:20px 22px;background:var(--surface);
+  border-left:3px solid var(--s1);box-shadow:var(--shadow);
+}
+.kasten .lab{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--s1);margin:0 0 8px;
+}
+.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
+.kasten.warn .lab{color:var(--flag)}
+.kasten p{margin:0;max-width:62ch}
+.kasten p + p{margin-top:10px}
+
+/* ---------- Tabelle ---------- */
+.tablewrap{overflow-x:auto;margin:22px 0;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:14.5px;font-family:"IBM Plex Serif",serif}
+caption{
+  caption-side:top;text-align:left;padding:12px 15px;background:var(--surface-2);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);
+}
+th,td{padding:9px 15px;text-align:right;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;color:var(--muted)}
+tbody th{font-weight:400;color:var(--ink-2)}
+tbody td{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:13.5px}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
+
+/* ---------- Zahl der Woche ---------- */
+.zahl{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:26px;align-items:center;
+  margin:24px 0;padding:24px 26px;background:var(--surface);
+  border:1px solid var(--rule);box-shadow:var(--shadow);
+}
+.zahl .v{
+  font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(48px,9vw,78px);
+  line-height:.9;letter-spacing:-.035em;color:var(--s2);font-variant-numeric:tabular-nums;
+}
+.zahl p{margin:0;font-size:16px;color:var(--ink-2)}
+.zahl .lab{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 7px;
+}
+
+/* ---------- Vorschau ---------- */
+ol.agenda{margin:18px 0;padding:0;list-style:none;counter-reset:a}
+ol.agenda li{
+  display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:14px;
+  padding:11px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+}
+ol.agenda li:last-child{border-bottom:none}
+ol.agenda li::before{
+  counter-increment:a;content:counter(a);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);
+}
+ol.agenda .art{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap;
+}
+ol.agenda .art.beschluss{color:var(--flag)}
+
+/* ---------- Kolophon / Fuß ---------- */
+.kolophon{padding:46px 0 40px}
+.kolophon h3{margin-top:0}
+.kolophon p,.kolophon li{font-size:15px;color:var(--ink-2)}
+.kolophon ul{padding-left:20px;margin:0 0 16px}
+.kolophon li{margin-bottom:7px;max-width:66ch}
+footer{background:var(--bar-bg);border-top:1px solid var(--rule);padding:32px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline}
+footer p{margin:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.05em;color:var(--muted);max-width:none}
+footer .brand{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bar-ink);font-weight:600}
+footer a{color:var(--s1);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media (max-width:720px){
+  body{font-size:16.5px}
+  article{grid-template-columns:1fr;gap:20px;padding:38px 0}
+  .rail{flex-direction:row;flex-wrap:wrap;gap:8px 22px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+  .zahl{grid-template-columns:1fr;gap:12px}
+  ul.beschluesse li{grid-template-columns:1fr}
+  ol.agenda li{grid-template-columns:24px minmax(0,1fr)}
+  ol.agenda .art{grid-column:2}
+}
+</style>
+
+<meta name="description" content="Waldseer Aktenlage KW 37/2026 — Beschlüsse des Gemeinderats Bad Waldsee."></head><body><div class="brandbar"><div class="wrap">
+  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
+  <span>Alle Angaben und Insights ohne Gewähr</span>
+</div></div>
+
+<div class="wrap">
+
+<!-- ############ TITELKOPF — wöchentlich anpassen ############ -->
+<header class="masthead">
+  <h1>Waldseer Aktenlage</h1>
+  <p class="claim">Was der Gemeinderat und seine Ausschüsse entschieden haben — gelesen aus den Originalunterlagen, Woche für Woche.</p>
+  <div class="issueline">
+    <span><b>Ausgabe</b> KW 37 / 2026</span>
+    <span><b>Stand</b> 09.09.2026</span>
+    <span><b>Berichtszeitraum</b> seit 22.07.2026</span>
+    <span><b>Ausgewertet</b> 3 Protokolle · 28 Beschlüsse</span>
+  </div>
+
+  <nav class="toc">
+    <h2>In dieser Ausgabe</h2>
+    <ol>
+      <li><a href="#sommerpause">Sieben Wochen ohne dokumentierte Entscheidung</a></li>
+      <li><a href="#beschlossen">Was im Juli beschlossen wurde — vier Baugebiete auf einmal</a></li>
+      <li><a href="#nichtoeffentlich">Aus nichtöffentlicher Sitzung: Therme und Schulleitung</a></li>
+      <li><a href="#betrifft">Was Sie betrifft: Kita-Beiträge steigen um 4,5 Prozent</a></li>
+      <li><a href="#blinderfleck">Blinder Fleck: fünf Sitzungen ohne Protokoll</a></li>
+      <li><a href="#demnaechst">Demnächst: Verwaltungsausschuss am 15. September</a></li>
+    </ol>
+  </nav>
+</header>
+
+<!-- ############ AUFMACHER ############ -->
+<article id="sommerpause">
+  <div class="rail">
+    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">22.07.–09.09.2026</span></div>
+    <div class="field"><span class="lab">Letztes Protokoll</span><span class="val">21.07.2026<br>vor 50 Tagen</span></div>
+    <div class="field"><span class="lab">Nächste Sitzung</span><span class="val">15.09.2026<br>in 6 Tagen</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Zur Lage</p>
+    <h2 class="headline">Sieben Wochen, in denen nichts Nachlesbares entschieden wurde</h2>
+
+    <p>Seit dem 21. Juli hat kein Gremium der Stadt Bad Waldsee ein Beschlussprotokoll veröffentlicht. Getagt wurde trotzdem: Die Ortschaftsräte Reute-Gaisbeuren, Mittelurbach und Michelwinnaden kamen im Juli und August zusammen. Was dort beschlossen wurde, ist öffentlich nicht dokumentiert.</p>
+
+    <p>Der Gemeinderat selbst pausiert seit seiner Sitzung am 20. Juli. Die erste Sitzung nach der Sommerpause ist der Verwaltungsausschuss am kommenden Dienstag; der Gemeinderat tagt wieder am 28. September.</p>
+
+    <p>Diese Ausgabe blickt deshalb zurück auf die letzte Sitzungsrunde vor der Pause — und die hatte es in sich: An zwei aufeinanderfolgenden Tagen wurden vier Bauleitplanverfahren abgeschlossen.</p>
+  </div>
+</article>
+
+<!-- ############ BESCHLOSSEN ############ -->
+<article id="beschlossen">
+  <div class="rail">
+    <div class="field"><span class="lab">Sitzung</span><span class="val">Gemeinderat<br>20.07.2026</span></div>
+    <div class="field"><span class="lab">Punkte</span><span class="val">14 · davon 8 mit Beschluss</span></div>
+    <div class="field"><span class="lab">Vorberatung</span><span class="val">AUT 06.07.2026</span></div>
+    <div class="field"><span class="lab">Beleg</span><span class="val">Beschlussprotokoll<br>vom 20.07.2026</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Beschlossen · Bauleitplanung</p>
+    <h2 class="headline">Vier Bauleitplanverfahren an einem Abend abgeschlossen</h2>
+
+    <p>Der Gemeinderat brachte in seiner Julisitzung gleich vier Planverfahren zum Abschluss — zwei Bebauungspläne als Satzung und zwei Flächennutzungsplan-Änderungen als Feststellungsbeschluss. Vorberaten hatte sie der Ausschuss für Umwelt, Technik und Nachhaltigkeit zwei Wochen zuvor.</p>
+
+    <ul class="beschluesse">
+      <li>
+        <span class="sache"><b>Biberacher Straße Nord</b> — 1. Änderung des Bebauungsplans als Satzung beschlossen, Fassung vom 04.05.2026. Vorausgegangen war im Oktober 2025 eine Veränderungssperre für dasselbe Gebiet.<span class="sv">SV-101/2026</span></span>
+        <span class="erg">Einstimmig</span>
+      </li>
+      <li>
+        <span class="sache"><b>Feuerwehrgerätehaus Michelwinnaden</b> — Bebauungsplan als Satzung beschlossen; die zugehörige 22. Änderung des Flächennutzungsplans weist eine Gemeinbedarfsfläche mit der Zweckbestimmung „Feuerwehr“ aus.<span class="sv">SV-102/2026 · SV-103/2026</span></span>
+        <span class="erg">Einstimmig</span>
+      </li>
+      <li>
+        <span class="sache"><b>Lohbühl I – Erweiterung</b>, Gemeinde Bergatreute — 21. Änderung des Flächennutzungsplans festgestellt. Rund 3,7 ha bislang landwirtschaftliche Fläche werden Wohnbaufläche.<span class="sv">SV-104/2026</span></span>
+        <span class="erg split">25 : 0 : 1</span>
+      </li>
+      <li>
+        <span class="sache"><b>Waldseer Straße</b>, Gemarkung Mittelurbach — vorhabenbezogener Bebauungsplan als Satzung beschlossen, dazu die 15. Änderung des Flächennutzungsplans für die Wohnbaufläche.<span class="sv">SV-166/2025 · SV-167/2025</span></span>
+        <span class="erg">Einstimmig</span>
+      </li>
+      <li>
+        <span class="sache"><b>Steinstraße</b> — Planungsbeschluss für die erstmalige, endgültige Herstellung. Die Leistungsphasen 1–4 gehen an das Ing.-Büro Schranz, Bad Saulgau; finanziert aus dem Investitionshaushalt 2026.<span class="sv">SV-130/2026</span></span>
+        <span class="erg">Einstimmig</span>
+      </li>
+      <li>
+        <span class="sache"><b>Spenden und Sponsoring</b> aus dem 1. Halbjahr 2026 — Annahme zugestimmt.<span class="sv">SV-116/2026</span></span>
+        <span class="erg">Einstimmig</span>
+      </li>
+    </ul>
+
+    <div class="kasten warn">
+      <p class="lab">Bemerkenswert</p>
+      <p>Bei <b>Lohbühl I</b> gab es die einzige Enthaltung des Abends — bei allen anderen Punkten war der Rat einstimmig. Es ist genau das Verfahren, in dem das Regierungspräsidium Tübingen seine Bedenken gegen die Inanspruchnahme hochwertiger landwirtschaftlicher Flächen ausdrücklich <em>aufrechterhalten</em> hatte und eine Privatperson fristgerecht Einspruch eingelegt hatte.</p>
+      <p>Im Gemeinsamen Ausschuss der Verwaltungsgemeinschaft, der einen Tag später endgültig entschied, fiel der Beschluss dann einstimmig.</p>
+    </div>
+
+    <h3>Und im Ausschuss</h3>
+    <p>Der Ausschuss für Umwelt, Technik und Nachhaltigkeit ermächtigte die Verwaltung am 6. Juli außerdem einstimmig, die <b>dritte Ausschreibungsrunde für Photovoltaik-Anlagen</b> auszuschreiben, zu vergeben und ausführen zu lassen (SV-51/2026). Es ist die dritte Runde seit November 2024.</p>
+  </div>
+</article>
+
+<!-- ############ NICHTÖFFENTLICH ############ -->
+<article id="nichtoeffentlich">
+  <div class="rail">
+    <div class="field"><span class="lab">Bekanntgabe</span><span class="val">Gemeinderat<br>20.07.2026</span></div>
+    <div class="field"><span class="lab">Entschieden</span><span class="val">nichtöffentlich<br>am 29.06.2026</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Aus nichtöffentlicher Sitzung</p>
+    <h2 class="headline">Wellnessbereich der Therme wird umgebaut, Durlesbachschule bekommt neue Leitung</h2>
+
+    <p>Zu Beginn jeder Sitzung gibt der Gemeinderat bekannt, was er zuvor hinter verschlossenen Türen entschieden hat. Aus der nichtöffentlichen Sitzung vom 29. Juni wurden zwei Beschlüsse mitgeteilt, beide einstimmig gefasst:</p>
+
+    <ul class="beschluesse">
+      <li><span class="sache"><b>Waldsee-Therme</b> — Zustimmung zur Erweiterung der Liegefläche und zur Umgestaltung des Wellnessbereichs.</span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache"><b>Durlesbachschule Reute</b> — Zustimmung zur Stellungnahme zum Besetzungsvorschlag der Auswahlkommission für die Schulleiterstelle.</span><span class="erg">Einstimmig</span></li>
+    </ul>
+
+    <div class="kasten">
+      <p class="lab">Einordnung</p>
+      <p>Diese Bekanntgaben sind das einzige Fenster in den nichtöffentlichen Teil der Ratsarbeit. Sie nennen das Ergebnis, nicht die Begründung, nicht die Kosten und nicht die Alternativen. Wie viel insgesamt nichtöffentlich entschieden wird, lässt sich aus den Unterlagen nicht ermitteln.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ############ WAS SIE BETRIFFT ############ -->
+<article id="betrifft">
+  <div class="rail">
+    <div class="field"><span class="lab">Vorlage</span><span class="val">SV-132/2026</span></div>
+    <div class="field"><span class="lab">Gremium</span><span class="val">Gemeinderat<br>20.07.2026</span></div>
+    <div class="field"><span class="lab">Beratungsart</span><span class="val">ohne Beschluss-<br>fassung</span></div>
+    <div class="field"><span class="lab">Gilt ab</span><span class="val">Kindergartenjahr<br>2026/2027</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Was Sie betrifft</p>
+    <h2 class="headline">Kita-Beiträge steigen um 4,5 Prozent — abgestimmt wird darüber nicht</h2>
+
+    <p>Die Elternbeiträge in den Bad Waldseer Kindertageseinrichtungen steigen zum Kindergartenjahr 2026/2027 um <span class="num">4,5 %</span>. Grundlage ist die gemeinsame Empfehlung der Kirchen und der Kommunalen Landesverbände; begründet wird sie mit allgemeinen Kostensteigerungen und gestiegenen Personalkosten.</p>
+
+    <p>Eine Abstimmung findet nicht statt. Der Gemeinderat hat die Verwaltung bereits mit Beschluss vom <span class="num">14.03.2005</span> zur jährlichen Fortschreibung ermächtigt; am <span class="num">21.10.2025</span> wurde diese Ermächtigung auf die Ganztagesbetreuung ausgeweitet. Die Vorlage lief deshalb als reine Kenntnisnahme.</p>
+
+    <div class="tablewrap">
+      <table>
+        <caption>Elternbeiträge 2026/2027 · Euro je Monat bei Erhebung in 11 Monaten</caption>
+        <thead><tr>
+          <th scope="col">Familie mit …</th><th scope="col">RG 30</th><th scope="col">GT 45</th>
+          <th scope="col">GT 42</th><th scope="col">AM U3 30</th><th scope="col">Krippe 30</th><th scope="col">Krippe GT 42</th>
+        </tr></thead>
+        <tbody>
+          <tr><th scope="row">einem Kind</th><td>181</td><td>329</td><td>307</td><td>362</td><td>537</td><td>752</td></tr>
+          <tr><th scope="row">zwei Kindern unter 18</th><td>141</td><td>281</td><td>262</td><td>282</td><td>399</td><td>559</td></tr>
+          <tr><th scope="row">drei Kindern unter 18</th><td>96</td><td>231</td><td>216</td><td>192</td><td>269</td><td>377</td></tr>
+          <tr><th scope="row">vier und mehr Kindern</th><td>32</td><td>158</td><td>147</td><td>64</td><td>106</td><td>148</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="zahl">
+      <span class="v">752</span>
+      <div>
+        <p class="lab">Zahl der Woche</p>
+        <p>Euro im Monat zahlt eine Familie mit einem Kind für einen Ganztagsplatz in der Krippe — elf Monate im Jahr, also rund <span class="num">8.272 €</span> jährlich. Bei vier Kindern kostet derselbe Platz <span class="num">148 €</span>.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ############ BLINDER FLECK ############ -->
+<article id="blinderfleck">
+  <div class="rail">
+    <div class="field"><span class="lab">Betroffen</span><span class="val">4 Ortschaftsräte</span></div>
+    <div class="field"><span class="lab">Im Zeitraum</span><span class="val">5 Sitzungen</span></div>
+    <div class="field"><span class="lab">Protokolle</span><span class="val">0</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Blinder Fleck</p>
+    <h2 class="headline">Fünf öffentliche Sitzungen, von denen nichts überliefert ist</h2>
+
+    <p>Im Berichtszeitraum tagten die Ortschaftsräte <b>Reute-Gaisbeuren</b> (28.07. und 22.09. angesetzt), <b>Mittelurbach</b> (30.07.) und <b>Michelwinnaden</b> (04.08.). Alle Sitzungen waren öffentlich. Für keine einzige liegt ein Protokoll vor.</p>
+
+    <p>Im Ratsinformationssystem enthalten die Sitzungsseiten der Ortschaftsräte ausschließlich Datum und Ort — keine Tagesordnung, keine Vorlage, kein Dokument. Die Tagesordnungen werden separat als PDF auf der Stadtwebsite bekanntgemacht und bleiben dort grob: typischerweise „Informationen Ortsvorsteher“, „Baugesuche“ und „Bekanntgaben/Verschiedenes“.</p>
+
+    <div class="kasten warn">
+      <p class="lab">Wiederkehrende Rubrik</p>
+      <p>Diese Rubrik erscheint in jeder Ausgabe, solange die Lücke besteht. Über den gesamten von uns ausgewerteten Zeitraum seit Januar 2024 haben die vier Ortschaftsräte <b>85 Mal öffentlich getagt und kein einziges Protokoll veröffentlicht</b> — das ist rund die Hälfte aller öffentlichen Sitzungen der Stadt.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ############ DEMNÄCHST ############ -->
+<article id="demnaechst">
+  <div class="rail">
+    <div class="field"><span class="lab">Termin</span><span class="val">Di, 15.09.2026<br>18:00 Uhr</span></div>
+    <div class="field"><span class="lab">Gremium</span><span class="val">Verwaltungs-<br>ausschuss</span></div>
+    <div class="field"><span class="lab">Ort</span><span class="val">Sitzungssaal<br>Rathaus</span></div>
+    <div class="field"><span class="lab">Danach</span><span class="val">Gemeinderat<br>28.09.2026</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Demnächst · öffentlich</p>
+    <h2 class="headline">Nach der Pause: Integrationsbericht und die Dorfmitte Osterhofen</h2>
+
+    <p>Der Verwaltungsausschuss eröffnet am kommenden Dienstag die Sitzungsrunde nach der Sommerpause. Die Sitzung ist öffentlich, Zuhörer sind zugelassen.</p>
+
+    <ol class="agenda">
+      <li><span>Bekanntgabe der in nichtöffentlicher Sitzung getroffenen Entscheidungen</span><span class="art">—</span></li>
+      <li><span><b>Integrationsbericht</b> — die städtische Integrationsbeauftragte Suzana Vidakovic berichtet über die Arbeit des vergangenen Jahres. Fragen aus dem Gremium sind ausdrücklich vorgesehen. <span class="mono">SV-118/2026</span></span><span class="art">Kenntnisnahme</span></li>
+      <li><span><b>Dorfmitte Osterhofen</b> — Sanierung des Gebäudes auf Flurstück 1623 sowie Gestaltung und Überlassung der Außenanlagen. <span class="mono">SV-152/2026</span></span><span class="art beschluss">Beschluss</span></li>
+      <li><span>Verschiedenes</span><span class="art">—</span></li>
+      <li><span>Bekanntgaben</span><span class="art">—</span></li>
+    </ol>
+
+    <div class="kasten">
+      <p class="lab">Worauf zu achten ist</p>
+      <p>Der einzige echte Beschlusspunkt ist die Dorfmitte Osterhofen. Die zugehörige Vorlage SV-152/2026 war zum Redaktionsschluss noch nicht im Ratsinformationssystem veröffentlicht — der Punkt mit der größten finanziellen Tragweite ist damit zugleich der am schlechtesten belegte.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ############ KOLOPHON ############ -->
+<section class="kolophon">
+  <p class="rubrik">Zur Ausgabe</p>
+  <h3>Wie diese Ausgabe entsteht</h3>
+  <p>Die Aktenlage erscheint wöchentlich und wertet aus, was seit der letzten Ausgabe im <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystem der Stadt Bad Waldsee</a> und in den <a class="doc" href="https://www.bad-waldsee.de/buerger/de/rathaus-service/aktuelles-bekanntmachungen/oeffentliche-bekanntmachungen" rel="noopener">öffentlichen Bekanntmachungen</a> neu erschienen ist. Kein Dokument erfordert einen Zugang; es werden keine Zugangsbeschränkungen umgangen.</p>
+  <ul>
+    <li><b>Jede Aussage ist belegt.</b> Beschlüsse werden mit Vorlagennummer (<span class="mono">SV-000/JJJJ</span>), Gremium und Datum genannt. Damit ist jeder Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar.</li>
+    <li><b>Abstimmungsergebnisse</b> stammen wörtlich aus der Zeile „Ergebnis der Beschlussfassung“ der Beschlussprotokolle. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für Ja : Nein : Enthaltungen.</li>
+    <li><b>Amtsträger stehen mit Namen</b>, soweit sie in den Protokollen namentlich handeln. Namen von Privatpersonen werden nicht wiedergegeben; öffentliche Zustellungen bleiben ausgewertet außen vor.</li>
+    <li><b>Was fehlt, wird benannt.</b> Beschlussprotokolle halten keine Aussprache fest — <em>wie</em> abgestimmt wurde, ist nachlesbar, <em>warum</em> nicht.</li>
+  </ul>
+
+  <div class="kasten warn">
+    <p class="lab">Lernprojekt · keine Gewähr · keine Vorwürfe</p>
+    <p><b>Diese Publikation ist ein privates Lern- und Technikprojekt</b> zur automatisierten Auswertung öffentlich zugänglicher Verwaltungsdokumente. Sie ist kein journalistisches Erzeugnis, kein Prüfbericht und keine rechtliche oder fachliche Bewertung.</p>
+    <p><b>Für Richtigkeit, Vollständigkeit und Aktualität wird keine Gewähr übernommen.</b> Alle Auswertungen beruhen auf maschineller Verarbeitung von PDF-Dokumenten; Fehler bei Texterkennung und Zuordnung sind möglich. Verbindlich ist ausschließlich das jeweilige Originaldokument der Stadt Bad Waldsee.</p>
+    <p><b>Es werden keine Vorwürfe erhoben.</b> Weder der Stadtverwaltung noch einzelnen Personen wird rechtswidriges oder schuldhaftes Verhalten unterstellt. Einordnungen sind als solche gekennzeichnet und stellen die persönliche Einschätzung des Autors dar (Meinungsäußerung im Sinne des Art. 5 Abs. 1 GG).</p>
+    <p><b>Korrekturen sind erwünscht.</b> Wer einen Fehler feststellt, wird gebeten, dies unter Angabe der Stelle und des Originaldokuments zu melden. Berechtigte Korrekturen werden zeitnah und nachvollziehbar eingearbeitet.</p>
+    <p>Es besteht keine Verbindung zur Stadt Bad Waldsee; die Publikation ist von ihr weder beauftragt noch autorisiert oder geprüft. Amtliche Werke sind nach § 5 UrhG gemeinfrei.</p>
+  </div>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+  <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
+  <p>Alle Angaben und Insights ohne Gewähr · Ausgabe KW 37 / 2026 · Redaktionsschluss 09.09.2026</p>
+</div></footer>
+</body></html>
