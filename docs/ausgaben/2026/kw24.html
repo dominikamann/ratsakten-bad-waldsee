@@ -228,6 +228,16 @@ footer a:hover{text-decoration:underline}
   ol.agenda li{grid-template-columns:24px minmax(0,1fr)}
   ol.agenda .art{grid-column:2}
 }
+
+/* ---------- Kompakte Liste in den Auffaelligkeiten ---------- */
+ul.beschluesse.kompakt{margin:12px 0 0}
+ul.beschluesse.kompakt li{
+  grid-template-columns:1fr;padding:7px 0;
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 60%,transparent);
+}
+ul.beschluesse.kompakt .sache{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>

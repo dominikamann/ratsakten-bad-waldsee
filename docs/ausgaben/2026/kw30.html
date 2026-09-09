@@ -228,6 +228,16 @@ footer a:hover{text-decoration:underline}
   ol.agenda li{grid-template-columns:24px minmax(0,1fr)}
   ol.agenda .art{grid-column:2}
 }
+
+/* ---------- Kompakte Liste in den Auffaelligkeiten ---------- */
+ul.beschluesse.kompakt{margin:12px 0 0}
+ul.beschluesse.kompakt li{
+  grid-template-columns:1fr;padding:7px 0;
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 60%,transparent);
+}
+ul.beschluesse.kompakt .sache{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -264,6 +274,42 @@ footer a:hover{text-decoration:underline}
     <p>Der Gemeinderat brachte in seiner Julisitzung gleich vier Planverfahren zum Abschluss: zwei Bebauungspläne als Satzung, zwei Flächennutzungsplan-Änderungen als Feststellungsbeschluss. Vorberaten hatte sie der Ausschuss für Umwelt, Technik und Nachhaltigkeit zwei Wochen zuvor.</p>
     <p>Bei der Erweiterung des Baugebiets „Lohbühl I“ in Bergatreute — rund 3,7 Hektar bislang landwirtschaftliche Fläche werden Wohnbaufläche — gab es die einzige Enthaltung des Abends. Es ist genau das Verfahren, in dem das Regierungspräsidium Tübingen seine Bedenken gegen die Inanspruchnahme hochwertiger landwirtschaftlicher Flächen ausdrücklich aufrechterhalten hatte und eine Privatperson fristgerecht Einspruch eingelegt hatte.</p>
     <p>Im Gemeinsamen Ausschuss der Verwaltungsgemeinschaft, der einen Tag später endgültig entschied, fiel der Beschluss dann einstimmig.</p>
+  </div>
+</article>
+
+<article id="auffaelligkeiten">
+  <div class="rail">
+    <div class="field"><span class="lab">Hinweise</span><span class="val">2</span></div>
+    <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Auffälligkeiten</p>
+    <h2 class="headline">Wo sich Hinschauen lohnt</h2>
+    <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
+    was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
+    nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <div class="kasten warn">
+      <p class="lab">Nicht einstimmig</p>
+      <p>1 von 11 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-104/2026 — 25 : 0 : 1</span></li>
+      </ul>
+    </div>
+    <div class="kasten warn">
+      <p class="lab">Erneut auf der Tagesordnung</p>
+      <p>Diese Vorlagen standen schon früher auf einer Tagesordnung — durch Vorberatung in einem Ausschuss, durch Vertagung oder durch erneute Befassung.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-101/2026 — zuvor am 06.07.2026</span></li>
+        <li><span class="sache">SV-102/2026 — zuvor am 06.07.2026</span></li>
+        <li><span class="sache">SV-103/2026 — zuvor am 06.07.2026</span></li>
+        <li><span class="sache">SV-104/2026 — zuvor am 06.07.2026</span></li>
+        <li><span class="sache">SV-166/2025 — zuvor am 06.07.2026</span></li>
+        <li><span class="sache">SV-167/2025 — zuvor am 06.07.2026</span></li>
+        <li><span class="sache">SV-103/2026 — zuvor am 06.07.2026, 20.07.2026</span></li>
+        <li><span class="sache">SV-104/2026 — zuvor am 06.07.2026, 20.07.2026</span></li>
+        <li><span class="sache">SV-167/2025 — zuvor am 06.07.2026, 20.07.2026</span></li>
+      </ul>
+    </div>
   </div>
 </article>
 

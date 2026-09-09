@@ -228,6 +228,16 @@ footer a:hover{text-decoration:underline}
   ol.agenda li{grid-template-columns:24px minmax(0,1fr)}
   ol.agenda .art{grid-column:2}
 }
+
+/* ---------- Kompakte Liste in den Auffaelligkeiten ---------- */
+ul.beschluesse.kompakt{margin:12px 0 0}
+ul.beschluesse.kompakt li{
+  grid-template-columns:1fr;padding:7px 0;
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 60%,transparent);
+}
+ul.beschluesse.kompakt .sache{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -252,6 +262,29 @@ footer a:hover{text-decoration:underline}
     <span><b>Beschlüsse</b> 7</span>
   </div>
 </header>
+
+<article id="auffaelligkeiten">
+  <div class="rail">
+    <div class="field"><span class="lab">Hinweise</span><span class="val">1</span></div>
+    <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Auffälligkeiten</p>
+    <h2 class="headline">Wo sich Hinschauen lohnt</h2>
+    <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
+    was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
+    nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <div class="kasten warn">
+      <p class="lab">Nicht einstimmig</p>
+      <p>3 von 7 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-165/2025 — 12 : 0 : 2</span></li>
+        <li><span class="sache">SV-276/2025 — 12 : 0 : 2</span></li>
+        <li><span class="sache">SV-17/2026 — 12 : 0 : 2</span></li>
+      </ul>
+    </div>
+  </div>
+</article>
 
 <article>
   <div class="rail">

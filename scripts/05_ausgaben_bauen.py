@@ -40,6 +40,16 @@ VORLAGE = re.compile(r"SV-\d+/\d{4}")
 AUSZAEHLUNG = re.compile(
     r"\s*Ja-Stimme?n?\(?e?n?\)?\s*(\d+)\s*Nein-Stimme?n?\(?e?n?\)?\s*(\d+)\s*"
     r"Enthaltung(?:en|\(en\))?\s*(\d+)")
+BETRAG = re.compile(r"(\d{1,3}(?:\.\d{3})*(?:,\d+)?)\s*(Mio\.?\s*)?(?:€|Euro)")
+
+# Ab diesem Betrag gilt ein Beschluss als finanziell bedeutsam. Bewusst hoch
+# angesetzt: Haushalts- und Wirtschaftsplaene enthalten stets grosse Summen und
+# sollen die Rubrik nicht fluten.
+BETRAGSSCHWELLE = 250_000
+
+# Titelmuster, die auf eine nicht eingeplante Ausgabe hindeuten.
+UNGEPLANT = re.compile(r"au(?:ß|ss)erplanm(?:ä|ae)(?:ß|ss)ig|(?:ü|ue)berplanm(?:ä|ae)(?:ß|ss)ig",
+                       re.I)
 
 KURZ = {
     "Gemeinderat": "GR",
@@ -89,18 +99,39 @@ def ergebnis_lesen(roh: str) -> tuple[str | None, bool]:
     return None, False
 
 
+def betrag_lesen(text: str) -> float | None:
+    """Groesster Geldbetrag in einem Textabschnitt, in Euro."""
+    hoechster = None
+    for m in BETRAG.finditer(text):
+        wert = float(m.group(1).replace(".", "").replace(",", "."))
+        if m.group(2):  # "Mio."
+            wert *= 1_000_000
+        if hoechster is None or wert > hoechster:
+            hoechster = wert
+    return hoechster
+
+
 def beschluesse_lesen(text: str) -> list[dict]:
-    """Jede Abstimmung der zuletzt davor genannten Vorlagennummer zuordnen."""
+    """Jede Abstimmung der zuletzt davor genannten Vorlagennummer zuordnen.
+
+    Der Abschnitt zwischen Vorlagennummer und Abstimmungsergebnis ist der
+    Beschlusstext. Aus ihm lesen wir zusaetzlich, ob der Rat vom Vorschlag der
+    Verwaltung abgewichen ist und welcher Betrag im Beschluss steht.
+    """
     ergebnisse = []
     for treffer in ERGEBNIS.finditer(text):
         wert, strittig = ergebnis_lesen(treffer.group(1))
         if not wert:
             continue
-        vorher = VORLAGE.findall(text[:treffer.start()])
+        vorher = list(VORLAGE.finditer(text[:treffer.start()]))
+        beginn = vorher[-1].start() if vorher else max(0, treffer.start() - 1500)
+        abschnitt = text[beginn:treffer.start()]
         ergebnisse.append({
-            "vorlage": vorher[-1] if vorher else None,
+            "vorlage": vorher[-1].group(0) if vorher else None,
             "ergebnis": wert,
             "strittig": strittig,
+            "modifiziert": "Modifizierter Beschluss" in abschnitt,
+            "betrag": betrag_lesen(abschnitt),
         })
     return ergebnisse
 
@@ -124,6 +155,83 @@ def datum_lang(d: dt.date) -> str:
     return f"{d.day}. {MONATE[d.month - 1]} {d.year}"
 
 
+def euro(betrag: float) -> str:
+    return f"{betrag:,.0f}".replace(",", ".") + " €"
+
+
+def auffaelligkeiten(w: dict) -> list[dict]:
+    """Regelbasierte Hinweise darauf, wo Hinschauen sich lohnt.
+
+    Bewusst nur Regeln, keine Deutung: Jeder Punkt ist am Protokoll überprüfbar.
+    Die Rubrik findet keine Zusammenhänge — sie zeigt, was auffällt.
+    """
+    treffer = []
+
+    strittig = [b for b in w["beschluesse"] if b["strittig"]]
+    if strittig:
+        treffer.append({
+            "art": "Nicht einstimmig",
+            "text": f"{len(strittig)} von {len(w['beschluesse'])} Beschlüssen fielen nicht "
+                    f"einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.",
+            "posten": [f"{b['vorlage']} — {b['ergebnis']}" for b in strittig],
+        })
+
+    modifiziert = [b for b in w["beschluesse"] if b.get("modifiziert")]
+    if modifiziert:
+        treffer.append({
+            "art": "Rat weicht vom Verwaltungsvorschlag ab",
+            "text": "Das Protokoll kennzeichnet diese Beschlüsse als „Modifizierter "
+                    "Beschluss“ — der beschlossene Text weicht vom Vorschlag der "
+                    "Verwaltung ab.",
+            "posten": [f"{b['vorlage']} — {b['titel']}" for b in modifiziert],
+        })
+
+    ungeplant = [b for b in w["beschluesse"] if b["titel"] and UNGEPLANT.search(b["titel"])]
+    if ungeplant:
+        treffer.append({
+            "art": "Nicht im Haushalt vorgesehen",
+            "text": "Diese Ausgaben wurden als außer- oder überplanmäßig beschlossen, "
+                    "standen also nicht im Haushaltsplan.",
+            "posten": [f"{b['vorlage']} — {b['titel']}" for b in ungeplant],
+        })
+
+    teuer = sorted((b for b in w["beschluesse"]
+                    if b.get("betrag") and b["betrag"] >= BETRAGSSCHWELLE),
+                   key=lambda b: -b["betrag"])
+    if teuer:
+        treffer.append({
+            "art": "Größere Beträge",
+            "text": f"In diesen Beschlusstexten steht ein Betrag ab "
+                    f"{euro(BETRAGSSCHWELLE)}. Haushalts- und Wirtschaftspläne "
+                    f"enthalten naturgemäß große Summen.",
+            "posten": [f"{euro(b['betrag'])} — {b['vorlage']} {b['titel']}" for b in teuer[:6]],
+        })
+
+    wieder = [b for b in w["beschluesse"] if b.get("frueher")]
+    if wieder:
+        treffer.append({
+            "art": "Erneut auf der Tagesordnung",
+            "text": "Diese Vorlagen standen schon früher auf einer Tagesordnung — "
+                    "durch Vorberatung in einem Ausschuss, durch Vertagung oder durch "
+                    "erneute Befassung.",
+            "posten": [f"{b['vorlage']} — zuvor am "
+                       f"{', '.join(dt.date.fromisoformat(d).strftime('%d.%m.%Y') for d in b['frueher'][-3:])}"
+                       for b in wieder],
+        })
+
+    if w["blind"]:
+        treffer.append({
+            "art": "Ohne Protokoll",
+            "text": f"{len(w['blind'])} öffentliche "
+                    f"{'Sitzung' if len(w['blind']) == 1 else 'Sitzungen'} im "
+                    f"Berichtszeitraum, zu denen kein Protokoll veröffentlicht wurde.",
+            "posten": [f"{b['gremium']} am {b['datum'].strftime('%d.%m.%Y')}"
+                       for b in w["blind"]],
+        })
+
+    return treffer
+
+
 def einordnungen_laden() -> dict:
     pfad = DATEN / "einordnungen.json"
     if not pfad.exists():
@@ -144,6 +252,15 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
     sitzungen = json.loads(quelle.read_text(encoding="utf-8"))
     punkte = json.loads((DATEN / "topmap.json").read_text(encoding="utf-8"))
     titel_je_vorlage = {p["vorlage"]: p["titel"] for p in punkte if p["vorlage"]}
+
+    # Wann stand eine Vorlage schon einmal auf einer Tagesordnung? Mehrfache
+    # Auftritte deuten auf Vorberatung, Vertagung oder erneute Befassung hin.
+    termine_je_vorlage: dict[str, list[str]] = collections.defaultdict(list)
+    for p in punkte:
+        if p["vorlage"]:
+            termine_je_vorlage[p["vorlage"]].append(p["datum"])
+    for v in termine_je_vorlage.values():
+        v.sort()
 
     protokolle = {p.name[:10]: [] for p in (DATEN / "protokolle").glob("*.pdf")}
     for p in sorted((DATEN / "protokolle").glob("*.pdf")):
@@ -174,6 +291,8 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
             text = pdf_text(pfad)
             for b in beschluesse_lesen(text):
                 b["titel"] = titel_je_vorlage.get(b["vorlage"], None)
+                b["frueher"] = [d for d in termine_je_vorlage.get(b["vorlage"], [])
+                                if d < s["start"][:10]]
                 b["gremium"] = name
                 b["kuerzel"] = kuerzel(name)
                 b["datum"] = tag
@@ -338,6 +457,35 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     <p>In diesem Berichtszeitraum wurde kein Beschlussprotokoll veröffentlicht. Entweder
     hat kein protokollierendes Gremium getagt, oder die Protokolle der stattgefundenen
     Sitzungen lagen zum Redaktionsschluss noch nicht vor.</p>
+  </div>
+</article>""")
+
+    # --- Auffälligkeiten
+    hinweise = auffaelligkeiten(w)
+    if hinweise:
+        bloecke = []
+        for h in hinweise:
+            posten = "".join(
+                f'        <li><span class="sache">{e(p)}</span></li>\n' for p in h["posten"])
+            bloecke.append(f"""    <div class="kasten warn">
+      <p class="lab">{e(h['art'])}</p>
+      <p>{e(h['text'])}</p>
+      <ul class="beschluesse kompakt">
+{posten}      </ul>
+    </div>""")
+        t.append(f"""
+<article id="auffaelligkeiten">
+  <div class="rail">
+    <div class="field"><span class="lab">Hinweise</span><span class="val">{len(hinweise)}</span></div>
+    <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Auffälligkeiten</p>
+    <h2 class="headline">Wo sich Hinschauen lohnt</h2>
+    <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
+    was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
+    nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+{chr(10).join(bloecke)}
   </div>
 </article>""")
 

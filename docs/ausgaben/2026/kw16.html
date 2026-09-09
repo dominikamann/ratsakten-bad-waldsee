@@ -228,6 +228,16 @@ footer a:hover{text-decoration:underline}
   ol.agenda li{grid-template-columns:24px minmax(0,1fr)}
   ol.agenda .art{grid-column:2}
 }
+
+/* ---------- Kompakte Liste in den Auffaelligkeiten ---------- */
+ul.beschluesse.kompakt{margin:12px 0 0}
+ul.beschluesse.kompakt li{
+  grid-template-columns:1fr;padding:7px 0;
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 60%,transparent);
+}
+ul.beschluesse.kompakt .sache{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -252,6 +262,61 @@ footer a:hover{text-decoration:underline}
     <span><b>Beschlüsse</b> 11</span>
   </div>
 </header>
+
+<article id="auffaelligkeiten">
+  <div class="rail">
+    <div class="field"><span class="lab">Hinweise</span><span class="val">5</span></div>
+    <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Auffälligkeiten</p>
+    <h2 class="headline">Wo sich Hinschauen lohnt</h2>
+    <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
+    was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
+    nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <div class="kasten warn">
+      <p class="lab">Nicht einstimmig</p>
+      <p>2 von 11 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-165/2025 — 24 : 0 : 2</span></li>
+        <li><span class="sache">SV-67/2026 — 19 : 5 : 1</span></li>
+      </ul>
+    </div>
+    <div class="kasten warn">
+      <p class="lab">Rat weicht vom Verwaltungsvorschlag ab</p>
+      <p>Das Protokoll kennzeichnet diese Beschlüsse als „Modifizierter Beschluss“ — der beschlossene Text weicht vom Vorschlag der Verwaltung ab.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-66/2026 — Wahl des 2. Stellvertreters des Ortsvorstehers im Ortschaftsrat Reute-Gaisbeuren</span></li>
+      </ul>
+    </div>
+    <div class="kasten warn">
+      <p class="lab">Größere Beträge</p>
+      <p>In diesen Beschlusstexten steht ein Betrag ab 250.000 €. Haushalts- und Wirtschaftspläne enthalten naturgemäß große Summen.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">1.620.000 € — SV-60/2026 Neubau Feuerwehrgebäude Michelwinnaden - Durchführungsbeschluss</span></li>
+      </ul>
+    </div>
+    <div class="kasten warn">
+      <p class="lab">Erneut auf der Tagesordnung</p>
+      <p>Diese Vorlagen standen schon früher auf einer Tagesordnung — durch Vorberatung in einem Ausschuss, durch Vertagung oder durch erneute Befassung.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-269/2025 — zuvor am 23.03.2026</span></li>
+        <li><span class="sache">SV-17/2026 — zuvor am 23.03.2026</span></li>
+        <li><span class="sache">SV-16/2026 — zuvor am 23.03.2026</span></li>
+        <li><span class="sache">SV-165/2025 — zuvor am 23.03.2026</span></li>
+        <li><span class="sache">SV-16/2026 — zuvor am 23.03.2026, 13.04.2026</span></li>
+        <li><span class="sache">SV-17/2026 — zuvor am 23.03.2026, 13.04.2026</span></li>
+      </ul>
+    </div>
+    <div class="kasten warn">
+      <p class="lab">Ohne Protokoll</p>
+      <p>1 öffentliche Sitzung im Berichtszeitraum, zu denen kein Protokoll veröffentlicht wurde.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">Ortschaftsrat Haisterkirch am 15.04.2026</span></li>
+      </ul>
+    </div>
+  </div>
+</article>
 
 <article>
   <div class="rail">

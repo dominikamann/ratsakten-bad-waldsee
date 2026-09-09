@@ -228,6 +228,16 @@ footer a:hover{text-decoration:underline}
   ol.agenda li{grid-template-columns:24px minmax(0,1fr)}
   ol.agenda .art{grid-column:2}
 }
+
+/* ---------- Kompakte Liste in den Auffaelligkeiten ---------- */
+ul.beschluesse.kompakt{margin:12px 0 0}
+ul.beschluesse.kompakt li{
+  grid-template-columns:1fr;padding:7px 0;
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 60%,transparent);
+}
+ul.beschluesse.kompakt .sache{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -263,6 +273,54 @@ footer a:hover{text-decoration:underline}
     <h2 class="headline">Die dichteste Sitzung des Jahres</h2>
     <p>Mit vierzehn Beschlüssen an zwei Tagen ist dies die inhaltsreichste Woche des Jahrgangs. Auf der Tagesordnung standen unter anderem die Wirtschaftspläne der städtischen Eigenbetriebe, die Umsetzung des Ganztagsförderungsgesetzes an den Grundschulen und die Entscheidung über die Teilnahme am Bodo-Ringzug.</p>
     <p>Die Sitzung begann mit dem Gedenken an den verstorbenen Gemeinderat Franz Daiber und dem Nachrücken eines Mitglieds — der einzige Mandatswechsel durch Todesfall im gesamten ausgewerteten Zeitraum.</p>
+  </div>
+</article>
+
+<article id="auffaelligkeiten">
+  <div class="rail">
+    <div class="field"><span class="lab">Hinweise</span><span class="val">4</span></div>
+    <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Auffälligkeiten</p>
+    <h2 class="headline">Wo sich Hinschauen lohnt</h2>
+    <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
+    was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
+    nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <div class="kasten warn">
+      <p class="lab">Nicht einstimmig</p>
+      <p>3 von 14 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-279/2025 — 24 : 3 : 0</span></li>
+        <li><span class="sache">SV-5/2025 — 23 : 0 : 3</span></li>
+        <li><span class="sache">SV-13/2025 — 23 : 0 : 3</span></li>
+      </ul>
+    </div>
+    <div class="kasten warn">
+      <p class="lab">Rat weicht vom Verwaltungsvorschlag ab</p>
+      <p>Das Protokoll kennzeichnet diese Beschlüsse als „Modifizierter Beschluss“ — der beschlossene Text weicht vom Vorschlag der Verwaltung ab.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-1/2026 — Information zur Umsetzung des Ganztagsförderungsgesetzes (GaFöG) sowie Festlegung der Betreuungszeiten an den kommunalen Grundschulen und dem SBBZ-L in Bad Waldsee ab dem Schuljahr 2026/2027</span></li>
+      </ul>
+    </div>
+    <div class="kasten warn">
+      <p class="lab">Größere Beträge</p>
+      <p>In diesen Beschlusstexten steht ein Betrag ab 250.000 €. Haushalts- und Wirtschaftspläne enthalten naturgemäß große Summen.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">9.150.000 € — SV-230/2025 Neubau 2 Feld Sporthalle am Gymnasium Durchführungsbeschluss</span></li>
+        <li><span class="sache">1.622.098 € — SV-27/2026 Bodo-Ringzug: Entscheidung über Projektteilnahme und Finanzierungsanteil</span></li>
+        <li><span class="sache">1.000.000 € — SV-19/2026 Gewährung eines Betriebsmittelkredits nach Bedarf an den Wasserversorgungsverband Obere Schussentalgruppe</span></li>
+      </ul>
+    </div>
+    <div class="kasten warn">
+      <p class="lab">Erneut auf der Tagesordnung</p>
+      <p>Diese Vorlagen standen schon früher auf einer Tagesordnung — durch Vorberatung in einem Ausschuss, durch Vertagung oder durch erneute Befassung.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-5/2025 — zuvor am 07.04.2025</span></li>
+        <li><span class="sache">SV-13/2025 — zuvor am 07.04.2025</span></li>
+        <li><span class="sache">SV-13/2025 — zuvor am 07.04.2025, 02.02.2026</span></li>
+      </ul>
+    </div>
   </div>
 </article>
 
