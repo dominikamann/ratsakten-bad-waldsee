@@ -793,8 +793,12 @@ def main() -> None:
         print(f"  KW {kw:2d}  {len(w['sitzungen'])} Sitzung(en), "
               f"{len(w['beschluesse'])} Beschlüsse, {len(w['blind'])} ohne Protokoll{marke}")
 
+    # Sortiert schreiben, damit die Datei nicht davon abhängt, in welcher
+    # Reihenfolge die Jahrgänge erzeugt wurden — sonst entstehen bei jedem Lauf
+    # Änderungen, die keine sind.
     (DATEN / "ausgaben.json").write_text(
-        json.dumps(register, ensure_ascii=False, indent=1), encoding="utf-8")
+        json.dumps(register, ensure_ascii=False, indent=1, sort_keys=True),
+        encoding="utf-8")
     (AUSGABEN / "index.html").write_text(archiv_bauen(register), encoding="utf-8")
 
     neueste = max(wochen)

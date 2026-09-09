@@ -1,1117 +1,1117 @@
 {
- "2026": {
-  "03": {
-   "zeitraum": "12.01.–18.01.2026",
-   "von_iso": "2026-01-12",
-   "bis_iso": "2026-01-18",
-   "sitzungen": 4,
-   "beschluesse": 0,
-   "ohne_protokoll": 4,
-   "gremien": [
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "04": {
-   "zeitraum": "19.01.–25.01.2026",
-   "von_iso": "2026-01-19",
-   "bis_iso": "2026-01-25",
-   "sitzungen": 2,
-   "beschluesse": 4,
-   "ohne_protokoll": 0,
-   "gremien": [
-    "AUT",
-    "VA"
-   ],
-   "einordnung": false
-  },
-  "06": {
-   "zeitraum": "26.01.–08.02.2026",
-   "von_iso": "2026-01-26",
-   "bis_iso": "2026-02-08",
-   "sitzungen": 2,
-   "beschluesse": 14,
-   "ohne_protokoll": 0,
-   "gremien": [
-    "GA",
-    "GR"
-   ],
-   "einordnung": false
-  },
-  "09": {
-   "zeitraum": "09.02.–01.03.2026",
-   "von_iso": "2026-02-09",
-   "bis_iso": "2026-03-01",
-   "sitzungen": 1,
-   "beschluesse": 0,
-   "ohne_protokoll": 1,
-   "gremien": [
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "10": {
-   "zeitraum": "02.03.–08.03.2026",
-   "von_iso": "2026-03-02",
-   "bis_iso": "2026-03-08",
-   "sitzungen": 2,
-   "beschluesse": 5,
-   "ohne_protokoll": 1,
-   "gremien": [
-    "GR",
-    "OR"
-   ],
-   "einordnung": true
-  },
-  "11": {
-   "zeitraum": "09.03.–15.03.2026",
-   "von_iso": "2026-03-09",
-   "bis_iso": "2026-03-15",
-   "sitzungen": 2,
-   "beschluesse": 0,
-   "ohne_protokoll": 2,
-   "gremien": [
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "12": {
-   "zeitraum": "16.03.–22.03.2026",
-   "von_iso": "2026-03-16",
-   "bis_iso": "2026-03-22",
-   "sitzungen": 1,
-   "beschluesse": 0,
-   "ohne_protokoll": 1,
-   "gremien": [
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "13": {
-   "zeitraum": "23.03.–29.03.2026",
-   "von_iso": "2026-03-23",
-   "bis_iso": "2026-03-29",
-   "sitzungen": 2,
-   "beschluesse": 7,
-   "ohne_protokoll": 0,
-   "gremien": [
-    "AUT",
-    "VA"
-   ],
-   "einordnung": true
-  },
-  "16": {
-   "zeitraum": "30.03.–19.04.2026",
-   "von_iso": "2026-03-30",
-   "bis_iso": "2026-04-19",
-   "sitzungen": 3,
-   "beschluesse": 11,
-   "ohne_protokoll": 1,
-   "gremien": [
-    "GA",
-    "GR",
-    "OR"
-   ],
-   "einordnung": true
-  },
-  "17": {
-   "zeitraum": "20.04.–26.04.2026",
-   "von_iso": "2026-04-20",
-   "bis_iso": "2026-04-26",
-   "sitzungen": 3,
-   "beschluesse": 0,
-   "ohne_protokoll": 3,
-   "gremien": [
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "18": {
-   "zeitraum": "27.04.–03.05.2026",
-   "von_iso": "2026-04-27",
-   "bis_iso": "2026-05-03",
-   "sitzungen": 2,
-   "beschluesse": 1,
-   "ohne_protokoll": 0,
-   "gremien": [
-    "AUT",
-    "VA"
-   ],
-   "einordnung": false
-  },
-  "20": {
-   "zeitraum": "04.05.–17.05.2026",
-   "von_iso": "2026-05-04",
-   "bis_iso": "2026-05-17",
-   "sitzungen": 1,
-   "beschluesse": 6,
-   "ohne_protokoll": 0,
-   "gremien": [
-    "GR"
-   ],
-   "einordnung": true
-  },
-  "21": {
-   "zeitraum": "18.05.–24.05.2026",
-   "von_iso": "2026-05-18",
-   "bis_iso": "2026-05-24",
-   "sitzungen": 2,
-   "beschluesse": 0,
-   "ohne_protokoll": 2,
-   "gremien": [
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "24": {
-   "zeitraum": "25.05.–14.06.2026",
-   "von_iso": "2026-05-25",
-   "bis_iso": "2026-06-14",
-   "sitzungen": 1,
-   "beschluesse": 2,
-   "ohne_protokoll": 0,
-   "gremien": [
-    "VA"
-   ],
-   "einordnung": false
-  },
-  "26": {
-   "zeitraum": "15.06.–28.06.2026",
-   "von_iso": "2026-06-15",
-   "bis_iso": "2026-06-28",
-   "sitzungen": 3,
-   "beschluesse": 0,
-   "ohne_protokoll": 3,
-   "gremien": [
-    "BK",
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "27": {
-   "zeitraum": "29.06.–05.07.2026",
-   "von_iso": "2026-06-29",
-   "bis_iso": "2026-07-05",
-   "sitzungen": 3,
-   "beschluesse": 4,
-   "ohne_protokoll": 2,
-   "gremien": [
-    "GR",
-    "OR"
-   ],
-   "einordnung": true
-  },
-  "28": {
-   "zeitraum": "06.07.–12.07.2026",
-   "von_iso": "2026-07-06",
-   "bis_iso": "2026-07-12",
-   "sitzungen": 1,
-   "beschluesse": 7,
-   "ohne_protokoll": 0,
-   "gremien": [
-    "AUT"
-   ],
-   "einordnung": true
-  },
-  "30": {
-   "zeitraum": "13.07.–26.07.2026",
-   "von_iso": "2026-07-13",
-   "bis_iso": "2026-07-26",
-   "sitzungen": 2,
-   "beschluesse": 11,
-   "ohne_protokoll": 0,
-   "gremien": [
-    "GA",
-    "GR"
-   ],
-   "einordnung": true
-  },
-  "31": {
-   "zeitraum": "27.07.–02.08.2026",
-   "von_iso": "2026-07-27",
-   "bis_iso": "2026-08-02",
-   "sitzungen": 2,
-   "beschluesse": 0,
-   "ohne_protokoll": 2,
-   "gremien": [
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "32": {
-   "zeitraum": "03.08.–09.08.2026",
-   "von_iso": "2026-08-03",
-   "bis_iso": "2026-08-09",
-   "sitzungen": 1,
-   "beschluesse": 0,
-   "ohne_protokoll": 1,
-   "gremien": [
-    "OR"
-   ],
-   "einordnung": false
-  },
-  "37": {
-   "zeitraum": "10.08.–09.09.2026",
-   "von_iso": "2026-08-10",
-   "bis_iso": "2026-09-09",
-   "sitzungen": 0,
-   "beschluesse": 0,
-   "ohne_protokoll": 0,
-   "gremien": [],
-   "einordnung": true
-  }
- },
  "2024": {
   "03": {
-   "zeitraum": "15.01.–21.01.2024",
-   "von_iso": "2024-01-15",
-   "bis_iso": "2024-01-21",
-   "sitzungen": 4,
    "beschluesse": 0,
-   "ohne_protokoll": 4,
+   "bis_iso": "2024-01-21",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 4,
+   "sitzungen": 4,
+   "von_iso": "2024-01-15",
+   "zeitraum": "15.01.–21.01.2024"
   },
   "04": {
-   "zeitraum": "22.01.–28.01.2024",
-   "von_iso": "2024-01-22",
-   "bis_iso": "2024-01-28",
-   "sitzungen": 2,
    "beschluesse": 4,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-01-28",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2024-01-22",
+   "zeitraum": "22.01.–28.01.2024"
   },
   "05": {
-   "zeitraum": "29.01.–04.02.2024",
-   "von_iso": "2024-01-29",
-   "bis_iso": "2024-02-04",
-   "sitzungen": 1,
    "beschluesse": 7,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-02-04",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2024-01-29",
+   "zeitraum": "29.01.–04.02.2024"
   },
   "08": {
-   "zeitraum": "05.02.–25.02.2024",
-   "von_iso": "2024-02-05",
-   "bis_iso": "2024-02-25",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2024-02-25",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2024-02-05",
+   "zeitraum": "05.02.–25.02.2024"
   },
   "09": {
-   "zeitraum": "26.02.–03.03.2024",
-   "von_iso": "2024-02-26",
-   "bis_iso": "2024-03-03",
-   "sitzungen": 2,
    "beschluesse": 12,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-03-03",
+   "einordnung": false,
    "gremien": [
     "GA",
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2024-02-26",
+   "zeitraum": "26.02.–03.03.2024"
   },
   "10": {
-   "zeitraum": "04.03.–10.03.2024",
-   "von_iso": "2024-03-04",
-   "bis_iso": "2024-03-10",
-   "sitzungen": 4,
    "beschluesse": 5,
-   "ohne_protokoll": 2,
+   "bis_iso": "2024-03-10",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "KB",
     "OR",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 4,
+   "von_iso": "2024-03-04",
+   "zeitraum": "04.03.–10.03.2024"
   },
   "11": {
-   "zeitraum": "11.03.–17.03.2024",
-   "von_iso": "2024-03-11",
-   "bis_iso": "2024-03-17",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-03-17",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2024-03-11",
+   "zeitraum": "11.03.–17.03.2024"
   },
   "12": {
-   "zeitraum": "18.03.–24.03.2024",
-   "von_iso": "2024-03-18",
-   "bis_iso": "2024-03-24",
-   "sitzungen": 1,
    "beschluesse": 2,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-03-24",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2024-03-18",
+   "zeitraum": "18.03.–24.03.2024"
   },
   "15": {
-   "zeitraum": "25.03.–14.04.2024",
-   "von_iso": "2024-03-25",
-   "bis_iso": "2024-04-14",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2024-04-14",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2024-03-25",
+   "zeitraum": "25.03.–14.04.2024"
   },
   "16": {
-   "zeitraum": "15.04.–21.04.2024",
-   "von_iso": "2024-04-15",
-   "bis_iso": "2024-04-21",
-   "sitzungen": 3,
    "beschluesse": 5,
-   "ohne_protokoll": 2,
+   "bis_iso": "2024-04-21",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "OR",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 3,
+   "von_iso": "2024-04-15",
+   "zeitraum": "15.04.–21.04.2024"
   },
   "17": {
-   "zeitraum": "22.04.–28.04.2024",
-   "von_iso": "2024-04-22",
-   "bis_iso": "2024-04-28",
-   "sitzungen": 3,
    "beschluesse": 17,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-04-28",
+   "einordnung": false,
    "gremien": [
     "GA",
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 3,
+   "von_iso": "2024-04-22",
+   "zeitraum": "22.04.–28.04.2024"
   },
   "19": {
-   "zeitraum": "29.04.–12.05.2024",
-   "von_iso": "2024-04-29",
-   "bis_iso": "2024-05-12",
-   "sitzungen": 3,
    "beschluesse": 0,
-   "ohne_protokoll": 3,
+   "bis_iso": "2024-05-12",
+   "einordnung": false,
    "gremien": [
     "KB",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 3,
+   "sitzungen": 3,
+   "von_iso": "2024-04-29",
+   "zeitraum": "29.04.–12.05.2024"
   },
   "20": {
-   "zeitraum": "13.05.–19.05.2024",
-   "von_iso": "2024-05-13",
-   "bis_iso": "2024-05-19",
-   "sitzungen": 2,
    "beschluesse": 2,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-05-19",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2024-05-13",
+   "zeitraum": "13.05.–19.05.2024"
   },
   "23": {
-   "zeitraum": "20.05.–09.06.2024",
-   "von_iso": "2024-05-20",
-   "bis_iso": "2024-06-09",
-   "sitzungen": 1,
    "beschluesse": 6,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-06-09",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2024-05-20",
+   "zeitraum": "20.05.–09.06.2024"
   },
   "24": {
-   "zeitraum": "10.06.–16.06.2024",
-   "von_iso": "2024-06-10",
-   "bis_iso": "2024-06-16",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2024-06-16",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2024-06-10",
+   "zeitraum": "10.06.–16.06.2024"
   },
   "25": {
-   "zeitraum": "17.06.–23.06.2024",
-   "von_iso": "2024-06-17",
-   "bis_iso": "2024-06-23",
-   "sitzungen": 2,
    "beschluesse": 8,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-06-23",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2024-06-17",
+   "zeitraum": "17.06.–23.06.2024"
   },
   "27": {
-   "zeitraum": "24.06.–07.07.2024",
-   "von_iso": "2024-06-24",
-   "bis_iso": "2024-07-07",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-07-07",
+   "einordnung": false,
    "gremien": [
     "KB"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2024-06-24",
+   "zeitraum": "24.06.–07.07.2024"
   },
   "28": {
-   "zeitraum": "08.07.–14.07.2024",
-   "von_iso": "2024-07-08",
-   "bis_iso": "2024-07-14",
-   "sitzungen": 2,
    "beschluesse": 6,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-07-14",
+   "einordnung": false,
    "gremien": [
     "GA",
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2024-07-08",
+   "zeitraum": "08.07.–14.07.2024"
   },
   "29": {
-   "zeitraum": "15.07.–21.07.2024",
-   "von_iso": "2024-07-15",
-   "bis_iso": "2024-07-21",
-   "sitzungen": 5,
    "beschluesse": 9,
-   "ohne_protokoll": 4,
+   "bis_iso": "2024-07-21",
+   "einordnung": false,
    "gremien": [
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 4,
+   "sitzungen": 5,
+   "von_iso": "2024-07-15",
+   "zeitraum": "15.07.–21.07.2024"
   },
   "31": {
-   "zeitraum": "22.07.–04.08.2024",
-   "von_iso": "2024-07-22",
-   "bis_iso": "2024-08-04",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-08-04",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2024-07-22",
+   "zeitraum": "22.07.–04.08.2024"
   },
   "32": {
-   "zeitraum": "05.08.–11.08.2024",
-   "von_iso": "2024-08-05",
-   "bis_iso": "2024-08-11",
-   "sitzungen": 1,
    "beschluesse": 8,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-08-11",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2024-08-05",
+   "zeitraum": "05.08.–11.08.2024"
   },
   "37": {
-   "zeitraum": "12.08.–15.09.2024",
-   "von_iso": "2024-08-12",
-   "bis_iso": "2024-09-15",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2024-09-15",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2024-08-12",
+   "zeitraum": "12.08.–15.09.2024"
   },
   "38": {
-   "zeitraum": "16.09.–22.09.2024",
-   "von_iso": "2024-09-16",
-   "bis_iso": "2024-09-22",
-   "sitzungen": 1,
    "beschluesse": 8,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-09-22",
+   "einordnung": false,
    "gremien": [
     "AUT"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2024-09-16",
+   "zeitraum": "16.09.–22.09.2024"
   },
   "39": {
-   "zeitraum": "23.09.–29.09.2024",
-   "von_iso": "2024-09-23",
-   "bis_iso": "2024-09-29",
-   "sitzungen": 2,
    "beschluesse": 5,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-09-29",
+   "einordnung": false,
    "gremien": [
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2024-09-23",
+   "zeitraum": "23.09.–29.09.2024"
   },
   "40": {
-   "zeitraum": "30.09.–06.10.2024",
-   "von_iso": "2024-09-30",
-   "bis_iso": "2024-10-06",
-   "sitzungen": 2,
    "beschluesse": 2,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-10-06",
+   "einordnung": false,
    "gremien": [
     "GA",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2024-09-30",
+   "zeitraum": "30.09.–06.10.2024"
   },
   "41": {
-   "zeitraum": "07.10.–13.10.2024",
-   "von_iso": "2024-10-07",
-   "bis_iso": "2024-10-13",
-   "sitzungen": 1,
    "beschluesse": 3,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-10-13",
+   "einordnung": false,
    "gremien": [
     "AUT"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2024-10-07",
+   "zeitraum": "07.10.–13.10.2024"
   },
   "42": {
-   "zeitraum": "14.10.–20.10.2024",
-   "von_iso": "2024-10-14",
-   "bis_iso": "2024-10-20",
-   "sitzungen": 2,
    "beschluesse": 3,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-10-20",
+   "einordnung": false,
    "gremien": [
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2024-10-14",
+   "zeitraum": "14.10.–20.10.2024"
   },
   "45": {
-   "zeitraum": "21.10.–10.11.2024",
-   "von_iso": "2024-10-21",
-   "bis_iso": "2024-11-10",
-   "sitzungen": 1,
    "beschluesse": 4,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-11-10",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2024-10-21",
+   "zeitraum": "21.10.–10.11.2024"
   },
   "47": {
-   "zeitraum": "11.11.–24.11.2024",
-   "von_iso": "2024-11-11",
-   "bis_iso": "2024-11-24",
-   "sitzungen": 3,
    "beschluesse": 0,
-   "ohne_protokoll": 3,
+   "bis_iso": "2024-11-24",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 3,
+   "sitzungen": 3,
+   "von_iso": "2024-11-11",
+   "zeitraum": "11.11.–24.11.2024"
   },
   "48": {
-   "zeitraum": "25.11.–01.12.2024",
-   "von_iso": "2024-11-25",
-   "bis_iso": "2024-12-01",
-   "sitzungen": 2,
    "beschluesse": 7,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-12-01",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2024-11-25",
+   "zeitraum": "25.11.–01.12.2024"
   },
   "49": {
-   "zeitraum": "02.12.–08.12.2024",
-   "von_iso": "2024-12-02",
-   "bis_iso": "2024-12-08",
-   "sitzungen": 2,
    "beschluesse": 6,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-12-08",
+   "einordnung": false,
    "gremien": [
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2024-12-02",
+   "zeitraum": "02.12.–08.12.2024"
   },
   "50": {
-   "zeitraum": "09.12.–15.12.2024",
-   "von_iso": "2024-12-09",
-   "bis_iso": "2024-12-15",
-   "sitzungen": 1,
    "beschluesse": 9,
-   "ohne_protokoll": 0,
+   "bis_iso": "2024-12-15",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2024-12-09",
+   "zeitraum": "09.12.–15.12.2024"
   },
   "51": {
-   "zeitraum": "16.12.–22.12.2024",
-   "von_iso": "2024-12-16",
-   "bis_iso": "2024-12-22",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2024-12-22",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2024-12-16",
+   "zeitraum": "16.12.–22.12.2024"
   }
  },
  "2025": {
   "03": {
-   "zeitraum": "13.01.–19.01.2025",
-   "von_iso": "2025-01-13",
-   "bis_iso": "2025-01-19",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2025-01-19",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2025-01-13",
+   "zeitraum": "13.01.–19.01.2025"
   },
   "04": {
-   "zeitraum": "20.01.–26.01.2025",
-   "von_iso": "2025-01-20",
-   "bis_iso": "2025-01-26",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2025-01-26",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2025-01-20",
+   "zeitraum": "20.01.–26.01.2025"
   },
   "05": {
-   "zeitraum": "27.01.–02.02.2025",
-   "von_iso": "2025-01-27",
-   "bis_iso": "2025-02-02",
-   "sitzungen": 2,
    "beschluesse": 5,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-02-02",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2025-01-27",
+   "zeitraum": "27.01.–02.02.2025"
   },
   "06": {
-   "zeitraum": "03.02.–09.02.2025",
-   "von_iso": "2025-02-03",
-   "bis_iso": "2025-02-09",
-   "sitzungen": 2,
    "beschluesse": 12,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-02-09",
+   "einordnung": false,
    "gremien": [
     "GA",
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2025-02-03",
+   "zeitraum": "03.02.–09.02.2025"
   },
   "08": {
-   "zeitraum": "10.02.–23.02.2025",
-   "von_iso": "2025-02-10",
-   "bis_iso": "2025-02-23",
-   "sitzungen": 3,
    "beschluesse": 0,
-   "ohne_protokoll": 3,
+   "bis_iso": "2025-02-23",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 3,
+   "sitzungen": 3,
+   "von_iso": "2025-02-10",
+   "zeitraum": "10.02.–23.02.2025"
   },
   "11": {
-   "zeitraum": "24.02.–16.03.2025",
-   "von_iso": "2025-02-24",
-   "bis_iso": "2025-03-16",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-03-16",
+   "einordnung": false,
    "gremien": [
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2025-02-24",
+   "zeitraum": "24.02.–16.03.2025"
   },
   "12": {
-   "zeitraum": "17.03.–23.03.2025",
-   "von_iso": "2025-03-17",
-   "bis_iso": "2025-03-23",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-03-23",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2025-03-17",
+   "zeitraum": "17.03.–23.03.2025"
   },
   "13": {
-   "zeitraum": "24.03.–30.03.2025",
-   "von_iso": "2025-03-24",
-   "bis_iso": "2025-03-30",
-   "sitzungen": 2,
    "beschluesse": 6,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-03-30",
+   "einordnung": false,
    "gremien": [
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2025-03-24",
+   "zeitraum": "24.03.–30.03.2025"
   },
   "14": {
-   "zeitraum": "31.03.–06.04.2025",
-   "von_iso": "2025-03-31",
-   "bis_iso": "2025-04-06",
-   "sitzungen": 3,
    "beschluesse": 0,
-   "ohne_protokoll": 3,
+   "bis_iso": "2025-04-06",
+   "einordnung": false,
    "gremien": [
     "AK",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 3,
+   "sitzungen": 3,
+   "von_iso": "2025-03-31",
+   "zeitraum": "31.03.–06.04.2025"
   },
   "15": {
-   "zeitraum": "07.04.–13.04.2025",
-   "von_iso": "2025-04-07",
-   "bis_iso": "2025-04-13",
-   "sitzungen": 2,
    "beschluesse": 6,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-04-13",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2025-04-07",
+   "zeitraum": "07.04.–13.04.2025"
   },
   "18": {
-   "zeitraum": "14.04.–04.05.2025",
-   "von_iso": "2025-04-14",
-   "bis_iso": "2025-05-04",
-   "sitzungen": 1,
    "beschluesse": 7,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-05-04",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2025-04-14",
+   "zeitraum": "14.04.–04.05.2025"
   },
   "19": {
-   "zeitraum": "05.05.–11.05.2025",
-   "von_iso": "2025-05-05",
-   "bis_iso": "2025-05-11",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2025-05-11",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2025-05-05",
+   "zeitraum": "05.05.–11.05.2025"
   },
   "20": {
-   "zeitraum": "12.05.–18.05.2025",
-   "von_iso": "2025-05-12",
-   "bis_iso": "2025-05-18",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-05-18",
+   "einordnung": false,
    "gremien": [
     "AUT"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2025-05-12",
+   "zeitraum": "12.05.–18.05.2025"
   },
   "21": {
-   "zeitraum": "19.05.–25.05.2025",
-   "von_iso": "2025-05-19",
-   "bis_iso": "2025-05-25",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-05-25",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2025-05-19",
+   "zeitraum": "19.05.–25.05.2025"
   },
   "22": {
-   "zeitraum": "26.05.–01.06.2025",
-   "von_iso": "2025-05-26",
-   "bis_iso": "2025-06-01",
-   "sitzungen": 1,
    "beschluesse": 5,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-06-01",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2025-05-26",
+   "zeitraum": "26.05.–01.06.2025"
   },
   "26": {
-   "zeitraum": "02.06.–29.06.2025",
-   "von_iso": "2025-06-02",
-   "bis_iso": "2025-06-29",
-   "sitzungen": 2,
    "beschluesse": 2,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-06-29",
+   "einordnung": false,
    "gremien": [
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2025-06-02",
+   "zeitraum": "02.06.–29.06.2025"
   },
   "27": {
-   "zeitraum": "30.06.–06.07.2025",
-   "von_iso": "2025-06-30",
-   "bis_iso": "2025-07-06",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2025-07-06",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2025-06-30",
+   "zeitraum": "30.06.–06.07.2025"
   },
   "28": {
-   "zeitraum": "07.07.–13.07.2025",
-   "von_iso": "2025-07-07",
-   "bis_iso": "2025-07-13",
-   "sitzungen": 2,
    "beschluesse": 5,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-07-13",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2025-07-07",
+   "zeitraum": "07.07.–13.07.2025"
   },
   "29": {
-   "zeitraum": "14.07.–20.07.2025",
-   "von_iso": "2025-07-14",
-   "bis_iso": "2025-07-20",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2025-07-20",
+   "einordnung": false,
    "gremien": [
     "KB",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2025-07-14",
+   "zeitraum": "14.07.–20.07.2025"
   },
   "30": {
-   "zeitraum": "21.07.–27.07.2025",
-   "von_iso": "2025-07-21",
-   "bis_iso": "2025-07-27",
-   "sitzungen": 2,
    "beschluesse": 9,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-07-27",
+   "einordnung": false,
    "gremien": [
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2025-07-21",
+   "zeitraum": "21.07.–27.07.2025"
   },
   "31": {
-   "zeitraum": "28.07.–03.08.2025",
-   "von_iso": "2025-07-28",
-   "bis_iso": "2025-08-03",
-   "sitzungen": 2,
    "beschluesse": 3,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-08-03",
+   "einordnung": false,
    "gremien": [
     "GA",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2025-07-28",
+   "zeitraum": "28.07.–03.08.2025"
   },
   "37": {
-   "zeitraum": "04.08.–14.09.2025",
-   "von_iso": "2025-08-04",
-   "bis_iso": "2025-09-14",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-09-14",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2025-08-04",
+   "zeitraum": "04.08.–14.09.2025"
   },
   "38": {
-   "zeitraum": "15.09.–21.09.2025",
-   "von_iso": "2025-09-15",
-   "bis_iso": "2025-09-21",
-   "sitzungen": 2,
    "beschluesse": 3,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-09-21",
+   "einordnung": false,
    "gremien": [
     "AUT",
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2025-09-15",
+   "zeitraum": "15.09.–21.09.2025"
   },
   "39": {
-   "zeitraum": "22.09.–28.09.2025",
-   "von_iso": "2025-09-22",
-   "bis_iso": "2025-09-28",
-   "sitzungen": 2,
    "beschluesse": 0,
-   "ohne_protokoll": 2,
+   "bis_iso": "2025-09-28",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2025-09-22",
+   "zeitraum": "22.09.–28.09.2025"
   },
   "40": {
-   "zeitraum": "29.09.–05.10.2025",
-   "von_iso": "2025-09-29",
-   "bis_iso": "2025-10-05",
-   "sitzungen": 4,
    "beschluesse": 8,
-   "ohne_protokoll": 2,
+   "bis_iso": "2025-10-05",
+   "einordnung": false,
    "gremien": [
     "GA",
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 2,
+   "sitzungen": 4,
+   "von_iso": "2025-09-29",
+   "zeitraum": "29.09.–05.10.2025"
   },
   "41": {
-   "zeitraum": "06.10.–12.10.2025",
-   "von_iso": "2025-10-06",
-   "bis_iso": "2025-10-12",
-   "sitzungen": 1,
    "beschluesse": 5,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-10-12",
+   "einordnung": false,
    "gremien": [
     "AUT"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2025-10-06",
+   "zeitraum": "06.10.–12.10.2025"
   },
   "42": {
-   "zeitraum": "13.10.–19.10.2025",
-   "von_iso": "2025-10-13",
-   "bis_iso": "2025-10-19",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-10-19",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2025-10-13",
+   "zeitraum": "13.10.–19.10.2025"
   },
   "43": {
-   "zeitraum": "20.10.–26.10.2025",
-   "von_iso": "2025-10-20",
-   "bis_iso": "2025-10-26",
-   "sitzungen": 2,
    "beschluesse": 13,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-10-26",
+   "einordnung": false,
    "gremien": [
     "GA",
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2025-10-20",
+   "zeitraum": "20.10.–26.10.2025"
   },
   "45": {
-   "zeitraum": "27.10.–09.11.2025",
-   "von_iso": "2025-10-27",
-   "bis_iso": "2025-11-09",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-11-09",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2025-10-27",
+   "zeitraum": "27.10.–09.11.2025"
   },
   "46": {
-   "zeitraum": "10.11.–16.11.2025",
-   "von_iso": "2025-11-10",
-   "bis_iso": "2025-11-16",
-   "sitzungen": 1,
    "beschluesse": 5,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-11-16",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2025-11-10",
+   "zeitraum": "10.11.–16.11.2025"
   },
   "47": {
-   "zeitraum": "17.11.–23.11.2025",
-   "von_iso": "2025-11-17",
-   "bis_iso": "2025-11-23",
-   "sitzungen": 4,
    "beschluesse": 0,
-   "ohne_protokoll": 4,
+   "bis_iso": "2025-11-23",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 4,
+   "sitzungen": 4,
+   "von_iso": "2025-11-17",
+   "zeitraum": "17.11.–23.11.2025"
   },
   "48": {
-   "zeitraum": "24.11.–30.11.2025",
-   "von_iso": "2025-11-24",
-   "bis_iso": "2025-11-30",
-   "sitzungen": 1,
    "beschluesse": 3,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-11-30",
+   "einordnung": false,
    "gremien": [
     "VA"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2025-11-24",
+   "zeitraum": "24.11.–30.11.2025"
   },
   "49": {
-   "zeitraum": "01.12.–07.12.2025",
-   "von_iso": "2025-12-01",
-   "bis_iso": "2025-12-07",
-   "sitzungen": 1,
    "beschluesse": 8,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-12-07",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2025-12-01",
+   "zeitraum": "01.12.–07.12.2025"
   },
   "50": {
-   "zeitraum": "08.12.–14.12.2025",
-   "von_iso": "2025-12-08",
-   "bis_iso": "2025-12-14",
-   "sitzungen": 1,
    "beschluesse": 1,
-   "ohne_protokoll": 0,
+   "bis_iso": "2025-12-14",
+   "einordnung": false,
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2025-12-08",
+   "zeitraum": "08.12.–14.12.2025"
   },
   "51": {
-   "zeitraum": "15.12.–21.12.2025",
-   "von_iso": "2025-12-15",
-   "bis_iso": "2025-12-21",
-   "sitzungen": 1,
    "beschluesse": 0,
-   "ohne_protokoll": 1,
+   "bis_iso": "2025-12-21",
+   "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "einordnung": false
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2025-12-15",
+   "zeitraum": "15.12.–21.12.2025"
+  }
+ },
+ "2026": {
+  "03": {
+   "beschluesse": 0,
+   "bis_iso": "2026-01-18",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "ohne_protokoll": 4,
+   "sitzungen": 4,
+   "von_iso": "2026-01-12",
+   "zeitraum": "12.01.–18.01.2026"
+  },
+  "04": {
+   "beschluesse": 4,
+   "bis_iso": "2026-01-25",
+   "einordnung": false,
+   "gremien": [
+    "AUT",
+    "VA"
+   ],
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2026-01-19",
+   "zeitraum": "19.01.–25.01.2026"
+  },
+  "06": {
+   "beschluesse": 14,
+   "bis_iso": "2026-02-08",
+   "einordnung": false,
+   "gremien": [
+    "GA",
+    "GR"
+   ],
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2026-01-26",
+   "zeitraum": "26.01.–08.02.2026"
+  },
+  "09": {
+   "beschluesse": 0,
+   "bis_iso": "2026-03-01",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2026-02-09",
+   "zeitraum": "09.02.–01.03.2026"
+  },
+  "10": {
+   "beschluesse": 5,
+   "bis_iso": "2026-03-08",
+   "einordnung": true,
+   "gremien": [
+    "GR",
+    "OR"
+   ],
+   "ohne_protokoll": 1,
+   "sitzungen": 2,
+   "von_iso": "2026-03-02",
+   "zeitraum": "02.03.–08.03.2026"
+  },
+  "11": {
+   "beschluesse": 0,
+   "bis_iso": "2026-03-15",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2026-03-09",
+   "zeitraum": "09.03.–15.03.2026"
+  },
+  "12": {
+   "beschluesse": 0,
+   "bis_iso": "2026-03-22",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2026-03-16",
+   "zeitraum": "16.03.–22.03.2026"
+  },
+  "13": {
+   "beschluesse": 7,
+   "bis_iso": "2026-03-29",
+   "einordnung": true,
+   "gremien": [
+    "AUT",
+    "VA"
+   ],
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2026-03-23",
+   "zeitraum": "23.03.–29.03.2026"
+  },
+  "16": {
+   "beschluesse": 11,
+   "bis_iso": "2026-04-19",
+   "einordnung": true,
+   "gremien": [
+    "GA",
+    "GR",
+    "OR"
+   ],
+   "ohne_protokoll": 1,
+   "sitzungen": 3,
+   "von_iso": "2026-03-30",
+   "zeitraum": "30.03.–19.04.2026"
+  },
+  "17": {
+   "beschluesse": 0,
+   "bis_iso": "2026-04-26",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "ohne_protokoll": 3,
+   "sitzungen": 3,
+   "von_iso": "2026-04-20",
+   "zeitraum": "20.04.–26.04.2026"
+  },
+  "18": {
+   "beschluesse": 1,
+   "bis_iso": "2026-05-03",
+   "einordnung": false,
+   "gremien": [
+    "AUT",
+    "VA"
+   ],
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2026-04-27",
+   "zeitraum": "27.04.–03.05.2026"
+  },
+  "20": {
+   "beschluesse": 6,
+   "bis_iso": "2026-05-17",
+   "einordnung": true,
+   "gremien": [
+    "GR"
+   ],
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2026-05-04",
+   "zeitraum": "04.05.–17.05.2026"
+  },
+  "21": {
+   "beschluesse": 0,
+   "bis_iso": "2026-05-24",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2026-05-18",
+   "zeitraum": "18.05.–24.05.2026"
+  },
+  "24": {
+   "beschluesse": 2,
+   "bis_iso": "2026-06-14",
+   "einordnung": false,
+   "gremien": [
+    "VA"
+   ],
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2026-05-25",
+   "zeitraum": "25.05.–14.06.2026"
+  },
+  "26": {
+   "beschluesse": 0,
+   "bis_iso": "2026-06-28",
+   "einordnung": false,
+   "gremien": [
+    "BK",
+    "OR"
+   ],
+   "ohne_protokoll": 3,
+   "sitzungen": 3,
+   "von_iso": "2026-06-15",
+   "zeitraum": "15.06.–28.06.2026"
+  },
+  "27": {
+   "beschluesse": 4,
+   "bis_iso": "2026-07-05",
+   "einordnung": true,
+   "gremien": [
+    "GR",
+    "OR"
+   ],
+   "ohne_protokoll": 2,
+   "sitzungen": 3,
+   "von_iso": "2026-06-29",
+   "zeitraum": "29.06.–05.07.2026"
+  },
+  "28": {
+   "beschluesse": 7,
+   "bis_iso": "2026-07-12",
+   "einordnung": true,
+   "gremien": [
+    "AUT"
+   ],
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "von_iso": "2026-07-06",
+   "zeitraum": "06.07.–12.07.2026"
+  },
+  "30": {
+   "beschluesse": 11,
+   "bis_iso": "2026-07-26",
+   "einordnung": true,
+   "gremien": [
+    "GA",
+    "GR"
+   ],
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "von_iso": "2026-07-13",
+   "zeitraum": "13.07.–26.07.2026"
+  },
+  "31": {
+   "beschluesse": 0,
+   "bis_iso": "2026-08-02",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "ohne_protokoll": 2,
+   "sitzungen": 2,
+   "von_iso": "2026-07-27",
+   "zeitraum": "27.07.–02.08.2026"
+  },
+  "32": {
+   "beschluesse": 0,
+   "bis_iso": "2026-08-09",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "ohne_protokoll": 1,
+   "sitzungen": 1,
+   "von_iso": "2026-08-03",
+   "zeitraum": "03.08.–09.08.2026"
+  },
+  "37": {
+   "beschluesse": 0,
+   "bis_iso": "2026-09-09",
+   "einordnung": true,
+   "gremien": [],
+   "ohne_protokoll": 0,
+   "sitzungen": 0,
+   "von_iso": "2026-08-10",
+   "zeitraum": "10.08.–09.09.2026"
   }
  }
 }
