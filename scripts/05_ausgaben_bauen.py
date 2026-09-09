@@ -54,11 +54,22 @@ UNGEPLANT = re.compile(r"au(?:ß|ss)erplanm(?:ä|ae)(?:ß|ss)ig|(?:ü|ue)berplan
 KURZ = {
     "Gemeinderat": "GR",
     "Verwaltungsausschuss": "VA",
-    "Ausschuss für Umwelt, Technik und Nachhaltigkeit": "AUT",
-    "Ausschuss für Umwelt und Technik": "AUT",
     "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft "
     "Bad Waldsee-Bergatreute": "GA",
 }
+
+# Die Gremiumsnamen sind beim Einlesen am ersten Komma abgeschnitten. Aus
+# "Ausschuss für Umwelt, Technik und Nachhaltigkeit" wird "Ausschuss für Umwelt".
+# Deshalb wird ueber den Anfang verglichen, nicht ueber Gleichheit.
+PRAEFIXE = (
+    ("Ausschuss für Umwelt", "AUT"),
+    ("Ausschuss für Technik", "AUT"),
+    ("Gemeinsamer Ausschuss", "GA"),
+    ("Ortschaftsrat", "OR"),
+    ("Arbeitskreis", "AK"),
+    ("Kulturbeirat", "KB"),
+    ("Baumkommission", "BK"),
+)
 
 MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
           "August", "September", "Oktober", "November", "Dezember"]
@@ -71,7 +82,12 @@ def gremium(titel: str) -> str:
 
 
 def kuerzel(name: str) -> str:
-    return KURZ.get(name, "OR" if name.startswith("Ortschaftsrat") else "—")
+    if name in KURZ:
+        return KURZ[name]
+    for anfang, kurz in PRAEFIXE:
+        if name.startswith(anfang):
+            return kurz
+    return "—"
 
 
 def dateiname(titel: str) -> str:

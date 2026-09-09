@@ -20,8 +20,8 @@
    "beschluesse": 4,
    "ohne_protokoll": 0,
    "gremien": [
-    "VA",
-    "—"
+    "AUT",
+    "VA"
    ],
    "einordnung": false
   },
@@ -95,8 +95,8 @@
    "beschluesse": 7,
    "ohne_protokoll": 0,
    "gremien": [
-    "VA",
-    "—"
+    "AUT",
+    "VA"
    ],
    "einordnung": true
   },
@@ -134,8 +134,8 @@
    "beschluesse": 1,
    "ohne_protokoll": 0,
    "gremien": [
-    "VA",
-    "—"
+    "AUT",
+    "VA"
    ],
    "einordnung": false
   },
@@ -183,8 +183,8 @@
    "beschluesse": 0,
    "ohne_protokoll": 3,
    "gremien": [
-    "OR",
-    "—"
+    "BK",
+    "OR"
    ],
    "einordnung": false
   },
@@ -209,7 +209,7 @@
    "beschluesse": 7,
    "ohne_protokoll": 0,
    "gremien": [
-    "—"
+    "AUT"
    ],
    "einordnung": true
   },

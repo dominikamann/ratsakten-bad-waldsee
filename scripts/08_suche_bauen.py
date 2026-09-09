@@ -42,11 +42,22 @@ AUSZAEHLUNG = re.compile(
 KURZ = {
     "Gemeinderat": "GR",
     "Verwaltungsausschuss": "VA",
-    "Ausschuss für Umwelt, Technik und Nachhaltigkeit": "AUT",
-    "Ausschuss für Umwelt und Technik": "AUT",
     "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft "
     "Bad Waldsee-Bergatreute": "GA",
 }
+
+# Die Gremiumsnamen sind beim Einlesen am ersten Komma abgeschnitten. Aus
+# "Ausschuss für Umwelt, Technik und Nachhaltigkeit" wird "Ausschuss für Umwelt".
+# Deshalb wird ueber den Anfang verglichen, nicht ueber Gleichheit.
+PRAEFIXE = (
+    ("Ausschuss für Umwelt", "AUT"),
+    ("Ausschuss für Technik", "AUT"),
+    ("Gemeinsamer Ausschuss", "GA"),
+    ("Ortschaftsrat", "OR"),
+    ("Arbeitskreis", "AK"),
+    ("Kulturbeirat", "KB"),
+    ("Baumkommission", "BK"),
+)
 
 
 # Viele Titel nennen das Vorhaben in Anfuehrungszeichen: Bebauungsplan
@@ -74,12 +85,13 @@ def vergleichsform(name: str) -> str:
                   .replace("ß", "ss"))
 
 
-def gremium(titel: str) -> str:
-    return re.sub(r",.*", "", titel)
-
-
 def kuerzel(name: str) -> str:
-    return KURZ.get(name, "OR" if name.startswith("Ortschaftsrat") else "—")
+    if name in KURZ:
+        return KURZ[name]
+    for anfang, kurz in PRAEFIXE:
+        if name.startswith(anfang):
+            return kurz
+    return "—"
 
 
 def dateiname(titel: str) -> str:
@@ -96,9 +108,16 @@ def pdf_text(pfad: Path) -> str:
     return re.sub(r"[­\s]+", " ", roh)
 
 
-def beschluesse_je_sitzung(text: str) -> dict[str, str]:
-    """Vorlagennummer -> Abstimmungsergebnis."""
-    ergebnisse: dict[str, str] = {}
+def beschluesse_je_sitzung(text: str) -> dict[str, list[str]]:
+    """Vorlagennummer -> alle Abstimmungsergebnisse in ihrer Reihenfolge.
+
+    Eine Vorlage kann in derselben Sitzung mehrfach abgestimmt werden: Erst wird
+    ueber einen Aenderungsantrag entschieden, dann ueber den Beschluss. Genau
+    diese Faelle sind die aufschlussreichsten — beim Gymnasium fiel die
+    Verwaltungsvariante mit 9 : 18 durch, bevor die guenstigere mit 20 : 3 : 4
+    angenommen wurde. Wer nur das letzte Ergebnis behaelt, verliert die Ablehnung.
+    """
+    ergebnisse: dict[str, list[str]] = collections.defaultdict(list)
     for treffer in ERGEBNIS.finditer(text):
         roh = treffer.group(1)
         zahlen = AUSZAEHLUNG.match(roh)
@@ -110,8 +129,8 @@ def beschluesse_je_sitzung(text: str) -> dict[str, str]:
             continue
         vorher = VORLAGE.findall(text[:treffer.start()])
         if vorher:
-            ergebnisse[vorher[-1]] = wert
-    return ergebnisse
+            ergebnisse[vorher[-1]].append(wert)
+    return dict(ergebnisse)
 
 
 def vorgaenge_sammeln(stichtag: str) -> list[dict]:
@@ -119,17 +138,34 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
     if not quelle.exists():
         raise SystemExit(
             "data/sitzungen.json fehlt — bitte zuerst Schritt 01 ausführen.")
-    sitzungen = {s["start"][:10]: s for s in json.loads(quelle.read_text(encoding="utf-8"))}
-    punkte = [p for p in json.loads((DATEN / "topmap.json").read_text(encoding="utf-8"))
+    sitzungen = json.loads(quelle.read_text(encoding="utf-8"))
+
+    karte = DATEN / "topmap.json"
+    if not karte.exists():
+        raise SystemExit(
+            "data/topmap.json fehlt — bitte zuerst Schritt 01 ausführen:\n"
+            "  uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py")
+    punkte = [p for p in json.loads(karte.read_text(encoding="utf-8"))
               if p["datum"] <= stichtag]
 
-    # Abstimmungsergebnisse je Datum einsammeln
-    ergebnisse: dict[str, dict[str, str]] = collections.defaultdict(dict)
+    # Abstimmungsergebnisse einsammeln. Die Protokolle werden der jeweiligen
+    # Sitzung ueber den Dateinamen zugeordnet — sonst vermischen sich Ergebnisse
+    # zweier Gremien, die am selben Tag tagen.
+    protokolle: dict[str, list[Path]] = {}
     for pdf in sorted((DATEN / "protokolle").glob("*.pdf")):
-        datum = pdf.name[:10]
-        if datum > stichtag:
+        protokolle.setdefault(pdf.name[:10], []).append(pdf)
+
+    ergebnisse: dict[str, dict[str, list[str]]] = collections.defaultdict(dict)
+    for s in sitzungen:
+        datum = s["start"][:10]
+        if datum > stichtag or not s["protokolle"]:
             continue
-        ergebnisse[datum].update(beschluesse_je_sitzung(pdf_text(pdf)))
+        erwartet = f"{datum}_{dateiname(s['titel'])}"
+        for pdf in protokolle.get(datum, []):
+            if pdf.stem != erwartet and not pdf.stem.startswith(erwartet + "_"):
+                continue
+            for vorlage, werte in beschluesse_je_sitzung(pdf_text(pdf)).items():
+                ergebnisse[datum].setdefault(vorlage, []).extend(werte)
 
     # Punkte zu Vorgängen bündeln: bevorzugt über den Namen des Vorhabens,
     # sonst über die Vorlagennummer, sonst als Einzelpunkt.
@@ -154,16 +190,16 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
 
     vorgaenge = []
     for schluessel, teile in gebuendelt.items():
-        teile.sort(key=lambda p: (p["datum"], p["top"]))
+        teile.sort(key=lambda p: (p["datum"], int(p["top"]) if p["top"].isdigit() else 99))
         stationen = []
         for p in teile:
-            erg = ergebnisse.get(p["datum"], {}).get(p["vorlage"] or "", "")
+            werte = ergebnisse.get(p["datum"], {}).get(p["vorlage"] or "", [])
             stationen.append({
                 "d": p["datum"],
                 "g": kuerzel(p["gremium"]),
                 "gl": p["gremium"],
                 "v": p["vorlage"] or "",
-                "e": erg,
+                "e": " → ".join(werte),
                 "t": p["titel"],
             })
         if schluessel.startswith("@"):
@@ -191,7 +227,10 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
     stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
     schriften = (WURZEL / "scripts" / "schriften.css").read_text(
         encoding="utf-8").replace("{PFAD}", "./")
-    index = json.dumps(vorgaenge, ensure_ascii=False, separators=(",", ":"))
+    # "</script>" im Titel wuerde das Element vorzeitig beenden und die ganze
+    # Seite lahmlegen. Die Titel stammen aus fremdem HTML — also absichern.
+    index = (json.dumps(vorgaenge, ensure_ascii=False, separators=(",", ":"))
+             .replace("</", "<\\/"))
     mit_beschluss = sum(1 for v in vorgaenge if any(s["e"] for s in v["s"]))
     mehrstufig = sum(1 for v in vorgaenge if len(v["s"]) > 1)
 
@@ -346,11 +385,32 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
   var fS = document.getElementById("f-strittig");
   var fM = document.getElementById("f-mehr");
 
-  /* Umlaute und Grossschreibung sollen beim Suchen keine Rolle spielen. */
+  /* Umlaute und Grossschreibung sollen beim Suchen keine Rolle spielen.
+     ä→ae verlaengert die Zeichenkette. Fuer die Hervorhebung brauchen wir
+     deshalb zusaetzlich eine Zuordnung: welche Stelle im normalisierten Text
+     gehoert zu welcher Stelle im Original? Ohne sie verrutschen die Markierungen
+     um ein Zeichen je Umlaut davor. */
+  var ERSATZ = {{ "ä":"ae", "ö":"oe", "ü":"ue", "ß":"ss",
+                 "„":'"', "“":'"', "»":'"', "«":'"' }};
+
   function normal(t){{
-    return t.toLowerCase()
-      .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
-      .replace(/[„“"»«]/g,'"');
+    var aus = "";
+    var lower = t.toLowerCase();
+    for(var i=0;i<lower.length;i++) aus += (ERSATZ[lower[i]] || lower[i]);
+    return aus;
+  }}
+
+  /* Wie normal(), liefert zusaetzlich je Zeichen der Ausgabe den Index im Original. */
+  function normalMitKarte(t){{
+    var aus = "", karte = [];
+    var lower = t.toLowerCase();
+    for(var i=0;i<lower.length;i++){{
+      var e = ERSATZ[lower[i]] || lower[i];
+      for(var j=0;j<e.length;j++) karte.push(i);
+      aus += e;
+    }}
+    karte.push(lower.length);   // Endmarke
+    return [aus, karte];
   }}
   daten.forEach(function(v){{ v._s = normal(v.t + " " + v.v + " " + (v.u||"") + " " + v.s.map(function(s){{return s.t;}}).join(" ")); }});
 
@@ -361,10 +421,10 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
     var muster = new RegExp("(" + woerter.map(function(w){{
       return w.replace(/[.*+?^${{}}()|[\\]\\\\]/g, "\\\\$&");
     }}).join("|") + ")", "gi");
-    // Auf der normalisierten Fassung suchen, im Original markieren
-    var norm = normal(text), treffer = [], m;
+    // Auf der normalisierten Fassung suchen, ueber die Karte im Original markieren
+    var paar = normalMitKarte(text), norm = paar[0], karte = paar[1], treffer = [], m;
     while((m = muster.exec(norm)) !== null){{
-      treffer.push([m.index, m.index + m[0].length]);
+      treffer.push([karte[m.index], karte[m.index + m[0].length]]);
       if(m.index === muster.lastIndex) muster.lastIndex++;
     }}
     treffer.forEach(function(t){{
@@ -479,11 +539,22 @@ def main() -> None:
     ziel.write_text(bauen(vorgaenge, args.stichtag), encoding="utf-8")
 
     mehrstufig = sum(1 for v in vorgaenge if len(v["s"]) > 1)
-    laengste = max(vorgaenge, key=lambda v: len(v["s"]))
     print(f"  {ziel.relative_to(WURZEL)}  —  {len(vorgaenge)} Vorgänge, "
           f"{mehrstufig} mehrstufig, {ziel.stat().st_size / 1024:.0f} KB")
-    print(f"  längster Vorgang: {len(laengste['s'])} Stationen — "
-          f"{laengste['v']} {laengste['t'][:60]}")
+    if vorgaenge:
+        laengste = max(vorgaenge, key=lambda v: len(v["s"]))
+        print(f"  längster Vorgang: {len(laengste['s'])} Stationen — "
+              f"{laengste['v']} {laengste['t'][:60]}")
+    else:
+        print("  Achtung: kein Vorgang bis zum Stichtag — die Seite bleibt leer.")
+
+    # Kennzahlen fuer die Startseite, damit sie nicht aus dem HTML gelesen
+    # werden muessen (Befund aus dem Code-Review).
+    (DATEN / "suche.json").write_text(json.dumps({
+        "vorgaenge": len(vorgaenge),
+        "mehrstufig": mehrstufig,
+        "stichtag": args.stichtag,
+    }, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
 if __name__ == "__main__":

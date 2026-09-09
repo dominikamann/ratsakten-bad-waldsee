@@ -108,18 +108,18 @@ def bauen() -> str:
       <p class="meta">Stand {datum_lang(stand)} &middot; 8 Kapitel &middot; 5 Diagramme</p>
     </a>""")
 
-    suche = DOCS / "suche.html"
-    if suche.exists():
-        import re as _re
-        text = suche.read_text(encoding="utf-8")
-        n_v = _re.search(r"<b>Vorg&auml;nge</b> (\d+)", text)
-        n_m = _re.search(r"<b>mehrstufig</b> (\d+)", text)
+    # Kennzahlen kommen aus data/suche.json, das Schritt 08 schreibt. Sie aus dem
+    # erzeugten HTML zu lesen waere zerbrechlich: Aendert sich dort die Auszeichnung,
+    # stuende hier stillschweigend ein Satz ohne Zahlen.
+    kennwerte = DATEN / "suche.json"
+    if (DOCS / "suche.html").exists() and kennwerte.exists():
+        sk = json.loads(kennwerte.read_text(encoding="utf-8"))
         karten.append(f"""    <a class="karte" href="./suche.html">
       <p class="art">Vorg&auml;nge &middot; durchsuchbar</p>
       <h3>Was wurde zu einem Thema entschieden?</h3>
-      <p>{n_v.group(1) if n_v else ''} Vorg&auml;nge mit ihrem Weg durch die Gremien — von der
-      ersten Beratung bis zum Beschluss, mit Datum, Gremium und Stimmenverh&auml;ltnis.
-      {n_m.group(1) if n_m else ''} davon durchliefen mehrere Stationen.</p>
+      <p>{sk['vorgaenge']} Vorg&auml;nge mit ihrem Weg durch die Gremien — von der ersten
+      Beratung bis zum Beschluss, mit Datum, Gremium und Stimmenverh&auml;ltnis.
+      {sk['mehrstufig']} davon durchliefen mehrere Stationen.</p>
       <p class="meta">Suche nach Stichwort oder Vorlagennummer</p>
     </a>""")
 

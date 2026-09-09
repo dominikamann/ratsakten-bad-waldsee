@@ -53,7 +53,7 @@ uv run --quiet --with pypdf python scripts/05_ausgaben_bauen.py 2>/dev/null | ta
 
 log "5/7  Tabellen und Suche erzeugen"
 uv run --quiet --with pypdf python scripts/07_tabellen_bauen.py 2>/dev/null | tail -4
-uv run --quiet --with pypdf python scripts/08_suche_bauen.py 2>/dev/null
+uv run --quiet --with pypdf python scripts/08_suche_bauen.py
 
 log "6/7  Startseite erzeugen"
 uv run --quiet python scripts/06_startseite_bauen.py
