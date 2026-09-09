@@ -73,6 +73,43 @@ Inhalt:
 | 07 | Was der Report nicht kann |
 | 08 | Quellen |
 
+## Die Seiten im Browser ansehen
+
+Wer hier auf eine `.html`-Datei klickt, sieht **Quelltext statt Seite**. Das ist
+kein Fehler: GitHub liefert HTML absichtlich als reinen Text aus, damit niemand
+fremden Programmcode auf github.com ausführen lassen kann.
+
+Um die Seiten fertig gestaltet zu sehen, gibt es einen kostenlosen Umweg. Der
+Dienst **githack** holt die Datei aus dem Repository und liefert sie so aus, dass
+der Browser sie als Seite darstellt. Man muss dafür nichts installieren und sich
+nirgends anmelden — Link anklicken genügt:
+
+* **[Startseite](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/index.html)**
+* **[Ratsanalyse 2024–2026](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/report/2026-09-09.html)**
+* **[Archiv aller Ausgaben](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/ausgaben/index.html)**
+
+Von der Startseite aus funktioniert alles Weitere ganz normal durch Anklicken.
+
+<details>
+<summary>Wie man sich so einen Link selbst baut</summary>
+
+Man nimmt die normale GitHub-Adresse einer Datei und ersetzt den Anfang:
+
+```
+aus   https://github.com/dominikamann/ratsakten-bad-waldsee/blob/main/docs/index.html
+wird  https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/index.html
+```
+
+Also `github.com` durch `raw.githack.com` ersetzen und das `/blob` herausnehmen.
+
+</details>
+
+**Was man dazu wissen sollte:** githack ist ein fremder Dienst. Er ist seit Jahren
+verfügbar und kostenlos, aber niemand garantiert das. Für einen dauerhaften
+Auftritt wäre GitHub Pages der richtige Weg — dann hätten die Seiten eine feste
+Adresse. Zum Anschauen und Weitergeben reicht githack vollkommen.
+
+
 ## Datenquellen
 
 Ausschließlich öffentlich zugängliche Dokumente. Es wurden **keine Zugangsbeschränkungen
@@ -173,9 +210,11 @@ belasten.
 ## Geplant
 
 - [x] Wöchentliche Ausgaben, Jahrgang 2026 nachgeholt (`scripts/05_ausgaben_bauen.py`)
-- [ ] Automatischer Lauf per GitHub Action
+- [x] Automatischer Lauf per GitHub Action (`.github/workflows/aktenlage.yml`)
 - [x] Archiv der bisherigen Ausgaben
-- [ ] Rohdaten als CSV/JSON zum Nachrechnen
+- [~] Rohdaten zum Nachrechnen — `data/kennzahlen.json` enthält sämtliche Zahlen
+      des Reports, `data/ausgaben.json` das Ausgabenregister. Was noch fehlt: eine
+      Tabelle aller Sitzungen, Tagesordnungspunkte und Beschlüsse als CSV
 - [ ] Übertragung auf weitere Kommunen mit demselben Systemhersteller
 
 ## Haftungsausschluss
