@@ -43,7 +43,7 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Sitzungsvorlagen | 300 |
 | Verlinkte Dokumente | 625 |
 | Ausgewertete Beschlussprotokolle | 72 |
-| Ausgezählte Abstimmungen | 333 |
+| Ausgezählte Abstimmungen | 337 |
 | Gremien | 12 |
 
 **Zeitraum:** 01.01.2024 – 09.09.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
@@ -164,11 +164,11 @@ nötig ist:
 |---|---|---|
 | [`sitzungen.csv`](./data/csv/sitzungen.csv) | 166 | Datum, Gremium, Kalenderwoche, Zahl der Tagesordnungspunkte, ob ein Protokoll vorliegt |
 | [`tagesordnungspunkte.csv`](./data/csv/tagesordnungspunkte.csv) | 616 | jeder Punkt mit Datum, Gremium, Nummer, Titel und Vorlagennummer |
-| [`beschluesse.csv`](./data/csv/beschluesse.csv) | 333 | jede Abstimmung mit Vorlagennummer, Titel und Stimmenverhältnis |
+| [`beschluesse.csv`](./data/csv/beschluesse.csv) | 337 | jede Abstimmung mit Vorlagennummer, Titel und Stimmenverhältnis |
 
 Damit lässt sich jede Zahl des Reports ohne Programmierkenntnisse überprüfen.
 Beispiel: In `beschluesse.csv` nach der Spalte `einstimmig` filtern — es bleiben
-59 Zeilen übrig, genau die im Report genannten nicht einstimmigen Beschlüsse.
+63 Zeilen übrig, genau die im Report genannten nicht einstimmigen Beschlüsse.
 
 Die Tabellen enthalten bewusst keine Dokument-Links: Die URLs des
 Ratsinformationssystems sind nicht dauerhaft gültig. Stabile Kennung ist die

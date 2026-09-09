@@ -53,9 +53,14 @@ THEMEN = [
 ]
 
 ERGEBNIS = re.compile(r"Ergebnis der Beschlussfassung\s*:?\s*(.{0,90})")
+# Die Protokolle schreiben das Ergebnis uneinheitlich: "Ja-Stimme(n) 18",
+# "Ja-Stimmen 18" und "Ja-Stimmen: 18" kommen alle vor, ebenso "Enthaltung: 1"
+# neben "Enthaltung(en) 3". Das Muster muss alle Varianten fassen — sonst fallen
+# einzelne Abstimmungen still aus der Zaehlung.
 AUSZAEHLUNG = re.compile(
-    r"\s*Ja-Stimme?n?\(?e?n?\)?\s*(\d+)\s*Nein-Stimme?n?\(?e?n?\)?\s*(\d+)\s*"
-    r"Enthaltung(?:en|\(en\))?\s*(\d+)")
+    r"\s*Ja-Stimmen?(?:\(n\))?\s*:?\s*(\d+)"
+    r"\s*Nein-Stimmen?(?:\(n\))?\s*:?\s*(\d+)"
+    r"\s*Enthaltung(?:en)?(?:\(en\))?\s*:?\s*(\d+)")
 
 
 def gremium(titel: str) -> str:

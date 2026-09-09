@@ -80,19 +80,19 @@
     "Verkehr & Mobilität": 6
   },
   "abstimmungen": {
-    "gesamt": 333,
+    "gesamt": 337,
     "einstimmig": 274,
-    "nicht_einstimmig": 59,
-    "mit_nein": 24,
-    "mit_enthaltung": 47,
+    "nicht_einstimmig": 63,
+    "mit_nein": 28,
+    "mit_enthaltung": 50,
     "je_jahr": {
       "2024": {
         "gesamt": 151,
         "strittig": 30
       },
       "2025": {
-        "gesamt": 105,
-        "strittig": 14
+        "gesamt": 109,
+        "strittig": 18
       },
       "2026": {
         "gesamt": 77,
