@@ -118,7 +118,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       └── 2026/         kw03.html … kw37.html
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 06
-└── data/       Rohdaten und die 74 heruntergeladenen Protokolle
+└── data/       Kennzahlen, Ausgabenregister und die 74 Beschlussprotokolle
 ```
 
 ## Auswertung selbst nachvollziehen
@@ -155,6 +155,10 @@ uv run                                       python scripts/06_startseite_bauen.
 Mehr ist nicht zu tun — keine Datei wird von Hand angefasst. Jahr und Redaktions-
 schluss nehmen die Skripte vom Tagesdatum.
 
+* Schritt 1 muss immer zuerst laufen: `data/sitzungen.json` und `data/topmap.json`
+  sind Zwischenergebnisse und werden nicht versioniert. Sie enthalten
+  sitzungsgebundene Dokument-Token des Ratsinformationssystems — keine
+  Zugangsdaten, aber nicht dauerhaft gültig und unnötig zu veröffentlichen.
 * Schritt 2 lädt nur, was fehlt. Protokolle erscheinen typischerweise drei bis vier
   Tage nach der Sitzung; ältere Ausgaben füllen sich also nachträglich.
 * Schritt 5 erzeugt die neue Ausgabe und aktualisiert das Archiv. Der Berichtszeitraum

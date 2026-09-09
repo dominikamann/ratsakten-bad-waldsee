@@ -153,7 +153,12 @@ def bauen() -> str:
 
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <span>Alle Angaben und Insights ohne Gew&auml;hr</span>
+  <nav aria-label="Bereiche">
+    <a href="./index.html" aria-current="page">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="./ausgaben/index.html">Archiv</a>
+  </nav>
+  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
 
 <div class="wrap">

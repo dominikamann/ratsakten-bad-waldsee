@@ -135,7 +135,13 @@ def einordnungen_laden() -> dict:
 # ------------------------------------------------------------------ Sammeln
 
 def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[int, dict]:
-    sitzungen = json.loads((DATEN / "sitzungen.json").read_text(encoding="utf-8"))
+    quelle = DATEN / "sitzungen.json"
+    if not quelle.exists():  # HINWEIS_01
+        raise SystemExit(
+            "data/sitzungen.json fehlt. Die Datei ist ein Zwischenergebnis und wird "
+            "nicht versioniert — bitte zuerst Schritt 01 ausführen:\n"
+            "  uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py")
+    sitzungen = json.loads(quelle.read_text(encoding="utf-8"))
     punkte = json.loads((DATEN / "topmap.json").read_text(encoding="utf-8"))
     titel_je_vorlage = {p["vorlage"]: p["titel"] for p in punkte if p["vorlage"]}
 
@@ -225,8 +231,19 @@ def e(t: str) -> str:
     return html.escape(t, quote=False)
 
 
-def kopf(titel: str) -> str:
+def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
+    """Seitenkopf. `hoch` ist der relative Weg zum docs-Verzeichnis, `hier`
+    markiert die aktuelle Seite in der Navigation."""
     stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
+
+    def eintrag(ziel: str, text: str, name: str) -> str:
+        aktuell = ' aria-current="page"' if name == hier else ""
+        return f'<a href="{hoch}{ziel}"{aktuell}>{text}</a>'
+
+    navigation = ("\n    <span aria-hidden=\"true\">/</span>\n    ".join([
+        eintrag("index.html", "Startseite", "start"),
+        eintrag("ausgaben/index.html", "Archiv", "archiv"),
+    ]))
     return f"""<meta charset="utf-8">
 <title>{e(titel)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -235,7 +252,10 @@ def kopf(titel: str) -> str:
 <style>{stil}</style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <span>Alle Angaben und Insights ohne Gew&auml;hr</span>
+  <nav aria-label="Bereiche">
+    {navigation}
+  </nav>
+  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
 """
 
@@ -274,7 +294,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     n_strittig = sum(1 for b in w["beschluesse"] if b["strittig"])
     mit_prot = sum(1 for s in w["sitzungen"] if s["protokoll"])
 
-    t = [kopf(f"Aktenlage KW {kw}/{jahr}"), '<div class="wrap">']
+    t = [kopf(f"Aktenlage KW {kw}/{jahr}", hoch="../../"), '<div class="wrap">']
     t.append(f"""
 <header class="masthead">
   <h1>Waldseer Aktenlage</h1>
@@ -461,7 +481,7 @@ def archiv_bauen(register: dict) -> str:
     ges_b = sum(a["beschluesse"] for j in jahre for a in register[j].values())
     ges_s = sum(a["sitzungen"] for j in jahre for a in register[j].values())
 
-    t = [kopf("Aktenlage — Archiv"), '<div class="wrap">']
+    t = [kopf("Aktenlage — Archiv", hoch="../", hier="archiv"), '<div class="wrap">']
     t.append(f"""
 <header class="masthead">
   <h1>Aktenlage &middot; Archiv</h1>

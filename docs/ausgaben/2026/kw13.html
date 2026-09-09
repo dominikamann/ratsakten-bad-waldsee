@@ -44,6 +44,18 @@ body{
 .brandbar a:hover{text-decoration:underline}
 .brandbar b{font-weight:600;letter-spacing:.1em}
 
+/* ---------- Navigation in der Markenleiste ---------- */
+.brandbar .wrap{align-items:center}
+.brandbar nav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.brandbar nav a{color:var(--bar-ink);text-decoration:none;opacity:.85}
+.brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
+.brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
+.brandbar nav span[aria-hidden]{opacity:.35}
+@media (max-width:620px){
+  .brandbar .disclaimer{display:none}
+}
+
+
 /* ---------- Titelkopf ---------- */
 .masthead{padding:52px 0 0}
 .masthead h1{
@@ -219,7 +231,12 @@ footer a:hover{text-decoration:underline}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <span>Alle Angaben und Insights ohne Gew&auml;hr</span>
+  <nav aria-label="Bereiche">
+    <a href="../../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../ausgaben/index.html">Archiv</a>
+  </nav>
+  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
 
 <div class="wrap">

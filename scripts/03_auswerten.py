@@ -77,7 +77,13 @@ def main() -> None:
                    help="Sitzungen nach diesem Datum werden ausgeschlossen")
     args = p.parse_args()
 
-    alle = json.loads((DATEN / "sitzungen.json").read_text(encoding="utf-8"))
+    quelle = DATEN / "sitzungen.json"
+    if not quelle.exists():  # HINWEIS_01
+        raise SystemExit(
+            "data/sitzungen.json fehlt. Die Datei ist ein Zwischenergebnis und wird "
+            "nicht versioniert — bitte zuerst Schritt 01 ausführen:\n"
+            "  uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py")
+    alle = json.loads(quelle.read_text(encoding="utf-8"))
     sitzungen = [s for s in alle if s["start"][:10] <= args.stichtag]
 
     # --- Gremien -----------------------------------------------------------

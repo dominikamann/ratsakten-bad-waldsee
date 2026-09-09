@@ -11,3 +11,9 @@ __pycache__/
 # System
 .DS_Store
 .DS_Store
+
+# Zwischenergebnis des Crawls. Enthaelt sitzungsgebundene Dokument-Token des
+# Ratsinformationssystems - keine Zugangsdaten, aber unnoetig zu veroeffentlichen
+# und ohnehin nicht dauerhaft gueltig. Schritt 01 erzeugt beide Dateien neu.
+data/sitzungen.json
+data/topmap.json

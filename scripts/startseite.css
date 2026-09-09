@@ -21,6 +21,18 @@ body{margin:0;background:var(--plane);color:var(--ink);
 .brandbar a:hover{text-decoration:underline}
 .brandbar b{font-weight:600;letter-spacing:.1em}
 
+/* ---------- Navigation in der Markenleiste ---------- */
+.brandbar .wrap{align-items:center}
+.brandbar nav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.brandbar nav a{color:var(--bar-ink);text-decoration:none;opacity:.85}
+.brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
+.brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
+.brandbar nav span[aria-hidden]{opacity:.35}
+@media (max-width:620px){
+  .brandbar .disclaimer{display:none}
+}
+
+
 header{padding:64px 0 40px;border-bottom:1px solid var(--rule)}
 .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 16px}

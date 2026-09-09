@@ -49,8 +49,15 @@ h1,h2,h3,h4,.ui{font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif}
 }
 .brandbar a{color:var(--s1);text-decoration:none}
 .brandbar a:hover{text-decoration:underline}
-.brandbar .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;padding-top:10px;padding-bottom:10px}
+.brandbar .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;align-items:center;padding-top:10px;padding-bottom:10px}
 .brandbar b{font-weight:600;letter-spacing:.1em}
+.brandbar a{color:var(--s1);text-decoration:none}
+.brandbar a:hover{text-decoration:underline}
+.brandbar nav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.brandbar nav a{color:var(--bar-ink);opacity:.85}
+.brandbar nav a:hover{color:var(--s1);opacity:1}
+.brandbar nav span[aria-hidden]{opacity:.35}
+@media (max-width:620px){.brandbar .disclaimer{display:none}}
 
 /* ---------- Kopf ---------- */
 header.top{padding:60px 0 36px;border-bottom:1px solid var(--rule)}
@@ -193,7 +200,12 @@ footer a:hover{text-decoration:underline}
 
 <meta name="description" content="Datenanalyse der Gremienarbeit der Stadt Bad Waldsee, Januar 2024 bis September 2026."></head><body><div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <span>Alle Angaben und Insights ohne Gewähr</span>
+  <nav aria-label="Bereiche">
+    <a href="../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../ausgaben/index.html">Archiv</a>
+  </nav>
+  <span class="disclaimer">Alle Angaben und Insights ohne Gewähr</span>
 </div></div>
 
 <div class="wrap">
