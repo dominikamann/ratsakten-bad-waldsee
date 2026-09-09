@@ -6,12 +6,13 @@ nachrechnen will, findet die Rechenregel in dieser Datei.
 
 Ergebnis: data/kennzahlen.json (und eine lesbare Zusammenfassung auf stdout)
 
-    uv run --with pypdf python scripts/03_auswerten.py [--stichtag 2026-09-09]
+    uv run --with pypdf python scripts/03_auswerten.py [--stichtag JJJJ-MM-TT]
 """
 from __future__ import annotations
 
 import argparse
 import collections
+import datetime as dt
 import json
 import re
 from pathlib import Path
@@ -73,8 +74,8 @@ def pdf_text(pfad: Path) -> str:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--stichtag", default="2026-09-09",
-                   help="Sitzungen nach diesem Datum werden ausgeschlossen")
+    p.add_argument("--stichtag", default=dt.date.today().isoformat(),
+                   help="Redaktionsschluss; spätere Sitzungen bleiben unberücksichtigt")
     args = p.parse_args()
 
     quelle = DATEN / "sitzungen.json"

@@ -55,7 +55,12 @@ jobs:
         run: uv run --with requests python scripts/02_protokolle_laden.py
 
       - name: Kennzahlen berechnen
-        run: uv run --with pypdf python scripts/03_auswerten.py
+        run: |
+          if [ -n "${{ github.event.inputs.stichtag }}" ]; then
+            uv run --with pypdf python scripts/03_auswerten.py --stichtag "${{ github.event.inputs.stichtag }}"
+          else
+            uv run --with pypdf python scripts/03_auswerten.py
+          fi
 
       - name: Ausgaben erzeugen
         run: |
@@ -73,7 +78,7 @@ jobs:
           if [ -n "${{ github.event.inputs.stichtag }}" ]; then
             uv run --with pypdf python scripts/07_tabellen_bauen.py --stichtag "${{ github.event.inputs.stichtag }}"
           else
-            uv run --with pypdf python scripts/07_tabellen_bauen.py --stichtag "$(date +%F)"
+            uv run --with pypdf python scripts/07_tabellen_bauen.py
           fi
 
       - name: Report vorrendern

@@ -14,7 +14,7 @@ Ergebnis: data/csv/sitzungen.csv
           data/csv/tagesordnungspunkte.csv
           data/csv/beschluesse.csv
 
-    uv run --with pypdf python scripts/07_tabellen_bauen.py [--stichtag 2026-09-09]
+    uv run --with pypdf python scripts/07_tabellen_bauen.py [--stichtag JJJJ-MM-TT]
 """
 from __future__ import annotations
 
@@ -72,8 +72,8 @@ def schreiben(pfad: Path, spalten: list[str], zeilen: list[dict]) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--stichtag", default="2026-09-09",
-                   help="Sitzungen nach diesem Datum bleiben unberücksichtigt")
+    p.add_argument("--stichtag", default=dt.date.today().isoformat(),
+                   help="Redaktionsschluss; spätere Sitzungen bleiben unberücksichtigt")
     args = p.parse_args()
 
     quelle = DATEN / "sitzungen.json"
