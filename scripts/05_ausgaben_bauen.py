@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Schritt 5 — die wöchentliche „Waldseer Aktenlage“ erzeugen.
 
-Für jede Kalenderwoche, in der mindestens eine Sitzung stattgefunden hat, entsteht
-eine Ausgabe. Wochen ohne Sitzung bekommen keine — eine Zeitung über nichts zu
-erfinden wäre unredlich.
+Eine Ausgabe entsteht für jede Kalenderwoche, in der mindestens eine Sitzung
+stattgefunden hat — und zusätzlich immer für die laufende Woche, damit es stets
+eine aktuelle Ausgabe gibt. Dazwischenliegende sitzungsfreie Wochen bekommen
+keine; eine Zeitung über nichts zu erfinden wäre unredlich.
+
+Redaktionelle Einordnungen kommen optional aus data/einordnungen.json.
 
 Inhalt je Ausgabe:
   * die gefassten Beschlüsse mit Vorlagennummer und Stimmenverhältnis
@@ -11,8 +14,8 @@ Inhalt je Ausgabe:
   * Sitzungen ohne Protokoll („Blinder Fleck“)
   * Vorschau auf die nächste öffentliche Sitzung
 
-Ergebnis: docs/ausgaben/amannlabs-aktenlage-bad-waldsee-JJJJ-kwNN.html
-          docs/ausgaben/index.html (Archivübersicht)
+Ergebnis: docs/ausgaben/JJJJ/kwNN.html   die einzelnen Ausgaben
+          docs/ausgaben/index.html      Archiv über alle Jahrgänge
 
     uv run --with pypdf python scripts/05_ausgaben_bauen.py --jahr 2026 --bis 2026-09-09
 """
@@ -30,7 +33,7 @@ from pypdf import PdfReader
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"
-ZIEL = WURZEL / "docs" / "ausgaben"
+AUSGABEN = WURZEL / "docs" / "ausgaben"
 
 ERGEBNIS = re.compile(r"Ergebnis der Beschlussfassung\s*:?\s*(.{0,70})")
 VORLAGE = re.compile(r"SV-\d+/\d{4}")
@@ -121,6 +124,14 @@ def datum_lang(d: dt.date) -> str:
     return f"{d.day}. {MONATE[d.month - 1]} {d.year}"
 
 
+def einordnungen_laden() -> dict:
+    pfad = DATEN / "einordnungen.json"
+    if not pfad.exists():
+        return {}
+    roh = json.loads(pfad.read_text(encoding="utf-8"))
+    return {k: v for k, v in roh.items() if not k.startswith("_")}
+
+
 # ------------------------------------------------------------------ Sammeln
 
 def wochen_sammeln(jahr: int, bis: str) -> dict[int, dict]:
@@ -167,10 +178,29 @@ def wochen_sammeln(jahr: int, bis: str) -> dict[int, dict]:
                 w["bekanntgaben"].append({"datum": tag, "gremium": name, "text": bg})
             break
 
-    # Vorschau: naechste Sitzung nach dem Ende der jeweiligen Woche
-    for kw, w in wochen.items():
-        ende = dt.date.fromisocalendar(jahr, kw, 7)
-        spaeter = [s for s in alle if dt.date.fromisoformat(s["start"][:10]) > ende]
+    # Die laufende Woche bekommt immer eine Ausgabe, damit stets eine aktuelle
+    # existiert — auch wenn in ihr nicht getagt wurde.
+    stichtag = dt.date.fromisoformat(bis)
+    if stichtag.year == jahr:
+        wochen[stichtag.isocalendar()[1]]  # legt bei Bedarf eine leere Woche an
+
+    # Berichtszeitraum: vom Ende der vorigen Ausgabe bis zum Ende dieser Woche.
+    reihenfolge = sorted(wochen)
+    for i, kw in enumerate(reihenfolge):
+        w = wochen[kw]
+        beginn = (dt.date.fromisocalendar(jahr, reihenfolge[i - 1], 7) + dt.timedelta(days=1)
+                  if i else dt.date.fromisocalendar(jahr, kw, 1))
+        ende = min(dt.date.fromisocalendar(jahr, kw, 7), stichtag)
+        w["von"], w["bis"] = beginn, ende
+        # Sitzungen ohne Protokoll aus dem gesamten Berichtszeitraum aufnehmen,
+        # nicht nur aus der Kalenderwoche selbst.
+        w["blind"] = [
+            {"datum": dt.date.fromisoformat(x["start"][:10]), "gremium": gremium(x["titel"])}
+            for x in alle
+            if not x["protokolle"]
+            and beginn <= dt.date.fromisoformat(x["start"][:10]) <= ende
+        ]
+        spaeter = [x for x in alle if dt.date.fromisoformat(x["start"][:10]) > ende]
         w["naechste"] = spaeter[0] if spaeter else None
         w["kuenftig"] = kuenftig
     return dict(sorted(wochen.items()))
@@ -225,9 +255,8 @@ DISCLAIMER = """
 """
 
 
-def ausgabe_bauen(jahr: int, kw: int, w: dict) -> str:
-    mo = dt.date.fromisocalendar(jahr, kw, 1)
-    so = dt.date.fromisocalendar(jahr, kw, 7)
+def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
+    mo, so = w["von"], w["bis"]
     n_besch = len(w["beschluesse"])
     n_strittig = sum(1 for b in w["beschluesse"] if b["strittig"])
     mit_prot = sum(1 for s in w["sitzungen"] if s["protokoll"])
@@ -240,11 +269,44 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict) -> str:
   gelesen aus den Originalunterlagen.</p>
   <div class="issueline">
     <span><b>Ausgabe</b> KW {kw} / {jahr}</span>
-    <span><b>Berichtswoche</b> {mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span>
+    <span><b>Berichtszeitraum</b> {mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span>
     <span><b>Sitzungen</b> {len(w['sitzungen'])} · {mit_prot} protokolliert</span>
     <span><b>Beschlüsse</b> {n_besch}</span>
   </div>
 </header>""")
+
+    # --- Redaktionelle Einordnung, falls hinterlegt
+    if einordnung:
+        absaetze = "\n".join(f"    <p>{e(a)}</p>" for a in einordnung.get("absaetze", []))
+        t.append(f"""
+<article>
+  <div class="rail">
+    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">{mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span></div>
+    <div class="field"><span class="lab">Sitzungen</span><span class="val">{len(w['sitzungen'])}</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">{e(einordnung.get('rubrik', 'Zur Lage'))}</p>
+    <h2 class="headline">{e(einordnung.get('titel', ''))}</h2>
+{absaetze}
+  </div>
+</article>""")
+
+    # --- Wenn nichts entschieden wurde, das ausdrücklich sagen
+    if not w["beschluesse"] and not einordnung:
+        t.append(f"""
+<article>
+  <div class="rail">
+    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">{mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span></div>
+    <div class="field"><span class="lab">Beschlüsse</span><span class="val">0</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Zur Lage</p>
+    <h2 class="headline">Kein dokumentierter Beschluss in diesem Zeitraum</h2>
+    <p>In diesem Berichtszeitraum wurde kein Beschlussprotokoll veröffentlicht. Entweder
+    hat kein protokollierendes Gremium getagt, oder die Protokolle der stattgefundenen
+    Sitzungen lagen zum Redaktionsschluss noch nicht vor.</p>
+  </div>
+</article>""")
 
     # --- Beschlüsse
     if w["beschluesse"]:
@@ -371,7 +433,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict) -> str:
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 {DISCLAIMER}
-  <p class="note"><a class="doc" href="./index.html">Alle Ausgaben im Archiv</a></p>
+  <p class="note"><a class="doc" href="../index.html">Alle Ausgaben im Archiv</a></p>
 </section>
 </div>""")
     t.append(fuss(f" &middot; Ausgabe KW {kw}/{jahr} &middot; erzeugt am "
@@ -379,65 +441,110 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict) -> str:
     return "\n".join(t)
 
 
-def archiv_bauen(jahr: int, wochen: dict[int, dict]) -> str:
-    t = [kopf(f"Aktenlage — Archiv {jahr}"), '<div class="wrap">']
-    ges_b = sum(len(w["beschluesse"]) for w in wochen.values())
-    ges_s = sum(len(w["sitzungen"]) for w in wochen.values())
+def archiv_bauen(register: dict) -> str:
+    """Archiv über alle Jahrgänge, gespeist aus data/ausgaben.json."""
+    jahre = sorted(register, reverse=True)
+    ges_a = sum(len(register[j]) for j in jahre)
+    ges_b = sum(a["beschluesse"] for j in jahre for a in register[j].values())
+    ges_s = sum(a["sitzungen"] for j in jahre for a in register[j].values())
+
+    t = [kopf("Aktenlage — Archiv"), '<div class="wrap">']
     t.append(f"""
 <header class="masthead">
   <h1>Aktenlage &middot; Archiv</h1>
   <p class="claim">Alle bisher erschienenen Ausgaben der Waldseer Aktenlage.</p>
   <div class="issueline">
-    <span><b>Jahrgang</b> {jahr}</span>
-    <span><b>Ausgaben</b> {len(wochen)}</span>
+    <span><b>Jahrgänge</b> {', '.join(jahre)}</span>
+    <span><b>Ausgaben</b> {ges_a}</span>
     <span><b>Sitzungen</b> {ges_s}</span>
     <span><b>Beschlüsse</b> {ges_b}</span>
   </div>
 </header>
 <section class="kolophon">
-  <p class="rubrik">Ausgaben</p>
-  <h3>Jahrgang {jahr}</h3>
+  <p class="rubrik">Übersicht</p>
+  <h3>Erscheinungsweise</h3>
   <p>Es erscheint eine Ausgabe für jede Kalenderwoche, in der mindestens eine Sitzung
-  stattgefunden hat. Wochen ohne Sitzung bekommen keine Ausgabe.</p>
+  stattgefunden hat, sowie stets eine Ausgabe für die laufende Woche. Dazwischenliegende
+  sitzungsfreie Wochen bekommen keine Ausgabe — deshalb ist die Nummerierung
+  lückenhaft.</p>
+</section>""")
+
+    for jahr in jahre:
+        ausgaben = register[jahr]
+        t.append(f"""
+<section class="kolophon">
+  <p class="rubrik">Jahrgang {jahr}</p>
+  <h3>{len(ausgaben)} Ausgaben</h3>
   <ul class="beschluesse">""")
-    for kw in sorted(wochen, reverse=True):
-        w = wochen[kw]
-        mo = dt.date.fromisocalendar(jahr, kw, 1)
-        so = dt.date.fromisocalendar(jahr, kw, 7)
-        nb, nbl = len(w["beschluesse"]), len(w["blind"])
-        teile = []
-        if nb:
-            teile.append(f"{nb} {'Beschluss' if nb == 1 else 'Beschlüsse'}")
-        if nbl:
-            teile.append(f"{nbl} ohne Protokoll")
-        t.append(f"""    <li><span class="sache"><a class="doc" href="./amannlabs-aktenlage-bad-waldsee-{jahr}-kw{kw:02d}.html">KW {kw} / {jahr}</a>
-      <span class="sv">{mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')} &middot; {', '.join(g['kuerzel'] for g in w['sitzungen'])}</span></span>
-      <span class="erg">{' · '.join(teile) or 'ohne Beschluss'}</span></li>""")
-    t.append(f"""  </ul>
+        for kw in sorted(ausgaben, key=int, reverse=True):
+            a = ausgaben[kw]
+            teile = []
+            if a["beschluesse"]:
+                teile.append(f"{a['beschluesse']} "
+                             f"{'Beschluss' if a['beschluesse'] == 1 else 'Beschlüsse'}")
+            if a["ohne_protokoll"]:
+                teile.append(f"{a['ohne_protokoll']} ohne Protokoll")
+            gremien = " · ".join(a["gremien"]) if a["gremien"] else "keine Sitzung"
+            t.append(f"""    <li><span class="sache">
+      <a class="doc" href="./{jahr}/kw{int(kw):02d}.html">KW {int(kw)} / {jahr}</a>
+      <span class="sv">{e(a['zeitraum'])} &middot; {e(gremien)}</span></span>
+      <span class="erg">{e(' · '.join(teile)) or 'ohne Beschluss'}</span></li>""")
+        t.append("  </ul>\n</section>")
+
+    t.append(f"""
+<section class="kolophon" style="border-bottom:none">
 {DISCLAIMER}
+  <p class="note"><a class="doc" href="../index.html">Zur Startseite</a></p>
 </section>
 </div>""")
-    t.append(fuss(f" &middot; Archiv {jahr}"))
+    t.append(fuss(" &middot; Archiv"))
     return "\n".join(t)
+
+
+def register_lesen() -> dict:
+    pfad = DATEN / "ausgaben.json"
+    return json.loads(pfad.read_text(encoding="utf-8")) if pfad.exists() else {}
 
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--jahr", type=int, default=2026)
-    p.add_argument("--bis", default="2026-09-09")
+    p.add_argument("--jahr", type=int, default=dt.date.today().year)
+    p.add_argument("--bis", default=dt.date.today().isoformat(),
+                   help="Redaktionsschluss; spätere Sitzungen bleiben unberücksichtigt")
     args = p.parse_args()
 
-    ZIEL.mkdir(parents=True, exist_ok=True)
+    ordner = AUSGABEN / str(args.jahr)
+    ordner.mkdir(parents=True, exist_ok=True)
     wochen = wochen_sammeln(args.jahr, args.bis)
+    einordnungen = einordnungen_laden()
+
+    register = register_lesen()
+    register.setdefault(str(args.jahr), {})
 
     for kw, w in wochen.items():
-        datei = ZIEL / f"amannlabs-aktenlage-bad-waldsee-{args.jahr}-kw{kw:02d}.html"
-        datei.write_text(ausgabe_bauen(args.jahr, kw, w), encoding="utf-8")
+        schluessel = f"{args.jahr}-kw{kw:02d}"
+        text = ausgabe_bauen(args.jahr, kw, w, einordnungen.get(schluessel))
+        (ordner / f"kw{kw:02d}.html").write_text(text, encoding="utf-8")
+        register[str(args.jahr)][f"{kw:02d}"] = {
+            "zeitraum": f"{w['von'].strftime('%d.%m.')}–{w['bis'].strftime('%d.%m.%Y')}",
+            "sitzungen": len(w["sitzungen"]),
+            "beschluesse": len(w["beschluesse"]),
+            "ohne_protokoll": len(w["blind"]),
+            "gremien": sorted({s["kuerzel"] for s in w["sitzungen"]}),
+            "einordnung": schluessel in einordnungen,
+        }
+        marke = " ←" if schluessel in einordnungen else ""
         print(f"  KW {kw:2d}  {len(w['sitzungen'])} Sitzung(en), "
-              f"{len(w['beschluesse'])} Beschlüsse, {len(w['blind'])} ohne Protokoll")
+              f"{len(w['beschluesse'])} Beschlüsse, {len(w['blind'])} ohne Protokoll{marke}")
 
-    (ZIEL / "index.html").write_text(archiv_bauen(args.jahr, wochen), encoding="utf-8")
-    print(f"\n{len(wochen)} Ausgaben und ein Archiv in docs/ausgaben/")
+    (DATEN / "ausgaben.json").write_text(
+        json.dumps(register, ensure_ascii=False, indent=1), encoding="utf-8")
+    (AUSGABEN / "index.html").write_text(archiv_bauen(register), encoding="utf-8")
+
+    neueste = max(wochen)
+    print(f"\n{len(wochen)} Ausgaben in docs/ausgaben/{args.jahr}/, "
+          f"Archiv über {len(register)} Jahrgang/Jahrgänge aktualisiert.")
+    print(f"Neueste Ausgabe: KW {neueste}/{args.jahr}")
 
 
 if __name__ == "__main__":

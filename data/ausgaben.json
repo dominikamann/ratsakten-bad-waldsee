@@ -1,0 +1,222 @@
+{
+ "2026": {
+  "03": {
+   "zeitraum": "12.01.–18.01.2026",
+   "sitzungen": 4,
+   "beschluesse": 0,
+   "ohne_protokoll": 4,
+   "gremien": [
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "04": {
+   "zeitraum": "19.01.–25.01.2026",
+   "sitzungen": 2,
+   "beschluesse": 4,
+   "ohne_protokoll": 0,
+   "gremien": [
+    "VA",
+    "—"
+   ],
+   "einordnung": false
+  },
+  "06": {
+   "zeitraum": "26.01.–08.02.2026",
+   "sitzungen": 2,
+   "beschluesse": 14,
+   "ohne_protokoll": 0,
+   "gremien": [
+    "GA",
+    "GR"
+   ],
+   "einordnung": true
+  },
+  "09": {
+   "zeitraum": "09.02.–01.03.2026",
+   "sitzungen": 1,
+   "beschluesse": 0,
+   "ohne_protokoll": 1,
+   "gremien": [
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "10": {
+   "zeitraum": "02.03.–08.03.2026",
+   "sitzungen": 2,
+   "beschluesse": 5,
+   "ohne_protokoll": 1,
+   "gremien": [
+    "GR",
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "11": {
+   "zeitraum": "09.03.–15.03.2026",
+   "sitzungen": 2,
+   "beschluesse": 0,
+   "ohne_protokoll": 2,
+   "gremien": [
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "12": {
+   "zeitraum": "16.03.–22.03.2026",
+   "sitzungen": 1,
+   "beschluesse": 0,
+   "ohne_protokoll": 1,
+   "gremien": [
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "13": {
+   "zeitraum": "23.03.–29.03.2026",
+   "sitzungen": 2,
+   "beschluesse": 7,
+   "ohne_protokoll": 0,
+   "gremien": [
+    "VA",
+    "—"
+   ],
+   "einordnung": false
+  },
+  "16": {
+   "zeitraum": "30.03.–19.04.2026",
+   "sitzungen": 3,
+   "beschluesse": 11,
+   "ohne_protokoll": 1,
+   "gremien": [
+    "GA",
+    "GR",
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "17": {
+   "zeitraum": "20.04.–26.04.2026",
+   "sitzungen": 3,
+   "beschluesse": 0,
+   "ohne_protokoll": 3,
+   "gremien": [
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "18": {
+   "zeitraum": "27.04.–03.05.2026",
+   "sitzungen": 2,
+   "beschluesse": 1,
+   "ohne_protokoll": 0,
+   "gremien": [
+    "VA",
+    "—"
+   ],
+   "einordnung": false
+  },
+  "20": {
+   "zeitraum": "04.05.–17.05.2026",
+   "sitzungen": 1,
+   "beschluesse": 6,
+   "ohne_protokoll": 0,
+   "gremien": [
+    "GR"
+   ],
+   "einordnung": false
+  },
+  "21": {
+   "zeitraum": "18.05.–24.05.2026",
+   "sitzungen": 2,
+   "beschluesse": 0,
+   "ohne_protokoll": 2,
+   "gremien": [
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "24": {
+   "zeitraum": "25.05.–14.06.2026",
+   "sitzungen": 1,
+   "beschluesse": 2,
+   "ohne_protokoll": 0,
+   "gremien": [
+    "VA"
+   ],
+   "einordnung": false
+  },
+  "26": {
+   "zeitraum": "15.06.–28.06.2026",
+   "sitzungen": 3,
+   "beschluesse": 0,
+   "ohne_protokoll": 3,
+   "gremien": [
+    "OR",
+    "—"
+   ],
+   "einordnung": false
+  },
+  "27": {
+   "zeitraum": "29.06.–05.07.2026",
+   "sitzungen": 3,
+   "beschluesse": 4,
+   "ohne_protokoll": 2,
+   "gremien": [
+    "GR",
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "28": {
+   "zeitraum": "06.07.–12.07.2026",
+   "sitzungen": 1,
+   "beschluesse": 7,
+   "ohne_protokoll": 0,
+   "gremien": [
+    "—"
+   ],
+   "einordnung": false
+  },
+  "30": {
+   "zeitraum": "13.07.–26.07.2026",
+   "sitzungen": 2,
+   "beschluesse": 11,
+   "ohne_protokoll": 0,
+   "gremien": [
+    "GA",
+    "GR"
+   ],
+   "einordnung": true
+  },
+  "31": {
+   "zeitraum": "27.07.–02.08.2026",
+   "sitzungen": 2,
+   "beschluesse": 0,
+   "ohne_protokoll": 2,
+   "gremien": [
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "32": {
+   "zeitraum": "03.08.–09.08.2026",
+   "sitzungen": 1,
+   "beschluesse": 0,
+   "ohne_protokoll": 1,
+   "gremien": [
+    "OR"
+   ],
+   "einordnung": false
+  },
+  "37": {
+   "zeitraum": "10.08.–09.09.2026",
+   "sitzungen": 0,
+   "beschluesse": 0,
+   "ohne_protokoll": 0,
+   "gremien": [],
+   "einordnung": true
+  }
+ }
+}

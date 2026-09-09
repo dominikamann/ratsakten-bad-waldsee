@@ -38,13 +38,13 @@ const TOOLTIP_JS = `
   }
 })();`;
 
+/* Die woechentlichen Ausgaben entstehen in Schritt 05 und sind bereits statisch.
+   Hier laufen nur die Seiten durch, die ihren Inhalt per JavaScript aufbauen. */
 const SEITEN = [
   ["index.html", "index.html",
    "Ratsakten Bad Waldsee — Lernprojekt zur Auswertung kommunaler Sitzungsunterlagen."],
-  ["report.html", "amannlabs-ratsanalyse-bad-waldsee-2026-09-09.html",
+  ["report.html", "report/2026-09-09.html",
    "Datenanalyse der Gremienarbeit der Stadt Bad Waldsee, Januar 2024 bis September 2026."],
-  ["aktenlage-kw37.html", "amannlabs-aktenlage-bad-waldsee-2026-kw37.html",
-   "Waldseer Aktenlage KW 37/2026 — Beschlüsse des Gemeinderats Bad Waldsee."],
 ];
 
 function kopfEintrag(d, tag, attrs) {
@@ -99,7 +99,9 @@ function rendern(quelle, ziel, beschreibung) {
   fs.mkdirSync(ZIEL, { recursive: true });
   console.log("Vorrendern src/ → docs/");
   for (const [von, nach, beschreibung] of SEITEN) {
-    await rendern(path.join(QUELLE, von), path.join(ZIEL, nach), beschreibung);
+    const ziel = path.join(ZIEL, nach);
+    fs.mkdirSync(path.dirname(ziel), { recursive: true });
+    await rendern(path.join(QUELLE, von), ziel, beschreibung);
   }
   console.log("Fertig. Die Dokumente in docs/ kommen ohne JavaScript aus.");
 })();

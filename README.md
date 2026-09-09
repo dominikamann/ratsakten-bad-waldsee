@@ -51,9 +51,9 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
 
-➡️ **[Ratsanalyse 2024–2026](./docs/amannlabs-ratsanalyse-bad-waldsee-2026-09-09.html)** — die einmalige Vollauswertung
-➡️ **[Waldseer Aktenlage, KW 37/2026](./docs/amannlabs-aktenlage-bad-waldsee-2026-kw37.html)** — die wöchentliche Ausgabe
-➡️ **[Archiv Jahrgang 2026](./docs/ausgaben/index.html)** — alle 20 Ausgaben seit Januar
+➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
+➡️ **[Aktuelle Ausgabe, KW 37/2026](./docs/ausgaben/2026/kw37.html)** — die wöchentliche Aktenlage
+➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 21 Ausgaben des Jahrgangs 2026
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
 Abhängigkeiten und **funktionieren ohne JavaScript** — auch in der iOS-Dateivorschau,
@@ -110,8 +110,12 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 ## Aufbau des Repositories
 
 ```
-├── docs/       fertige Dokumente — GitHub Pages zeigt diesen Ordner
-│   └── ausgaben/   die wöchentlichen Ausgaben samt Archivübersicht
+├── docs/                 GitHub Pages zeigt diesen Ordner
+│   ├── index.html        Startseite: Report, neueste Ausgabe, Archiv
+│   ├── report/           die datierten Gesamtreports
+│   └── ausgaben/
+│       ├── index.html    Archiv über alle Jahrgänge
+│       └── 2026/         kw03.html … kw37.html
 ├── src/        Vorlagen (bauen Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 04
 └── data/       Rohdaten und die 74 heruntergeladenen Protokolle
@@ -126,6 +130,11 @@ uv run --with pypdf                          python scripts/03_auswerten.py
 uv run --with pypdf                          python scripts/05_ausgaben_bauen.py --jahr 2026
 npm install jsdom && node scripts/04_vorrendern.js
 ```
+
+Schritt 5 erzeugt eine Ausgabe je Kalenderwoche mit Sitzung, dazu stets eine für
+die laufende Woche. Redaktionelle Einordnungen — das, was eine Maschine nicht
+erfinden kann — stehen optional in `data/einordnungen.json` und werden nach
+Schlüssel `JJJJ-kwNN` eingefügt.
 
 Schritt 3 gibt sämtliche Kennzahlen des Reports auf der Konsole aus und schreibt
 sie nach `data/kennzahlen.json`. Wer eine Angabe im Report nachrechnen will,

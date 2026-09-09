@@ -1,0 +1,32 @@
+{
+  "_hinweis": "Optionale redaktionelle Einordnung je Ausgabe. Der Generator liefert Struktur und Fakten; hier steht die Deutung, die eine Maschine nicht erfinden kann. Schlüssel: JJJJ-kwNN. Fehlt ein Eintrag, erscheint die Ausgabe ohne Einordnung.",
+
+  "2026-kw37": {
+    "rubrik": "Zur Lage",
+    "titel": "Sieben Wochen, in denen nichts Nachlesbares entschieden wurde",
+    "absaetze": [
+      "Seit dem 21. Juli hat kein Gremium der Stadt Bad Waldsee ein Beschlussprotokoll veröffentlicht. Getagt wurde trotzdem: Die Ortschaftsräte Reute-Gaisbeuren, Mittelurbach und Michelwinnaden kamen im Juli und August zusammen. Was dort beschlossen wurde, ist öffentlich nicht dokumentiert.",
+      "Der Gemeinderat selbst pausiert seit seiner Sitzung am 20. Juli. Die erste Sitzung nach der Sommerpause ist der Verwaltungsausschuss am 15. September; der Gemeinderat tagt wieder am 28. September.",
+      "Diese Ausgabe blickt deshalb zurück auf die letzte Sitzungsrunde vor der Pause — und die hatte es in sich: An zwei aufeinanderfolgenden Tagen wurden vier Bauleitplanverfahren abgeschlossen."
+    ]
+  },
+
+  "2026-kw30": {
+    "rubrik": "Einordnung",
+    "titel": "Vier Bauleitplanverfahren an einem Abend — und eine einzige Enthaltung",
+    "absaetze": [
+      "Der Gemeinderat brachte in seiner Julisitzung gleich vier Planverfahren zum Abschluss: zwei Bebauungspläne als Satzung, zwei Flächennutzungsplan-Änderungen als Feststellungsbeschluss. Vorberaten hatte sie der Ausschuss für Umwelt, Technik und Nachhaltigkeit zwei Wochen zuvor.",
+      "Bei der Erweiterung des Baugebiets „Lohbühl I“ in Bergatreute — rund 3,7 Hektar bislang landwirtschaftliche Fläche werden Wohnbaufläche — gab es die einzige Enthaltung des Abends. Es ist genau das Verfahren, in dem das Regierungspräsidium Tübingen seine Bedenken gegen die Inanspruchnahme hochwertiger landwirtschaftlicher Flächen ausdrücklich aufrechterhalten hatte und eine Privatperson fristgerecht Einspruch eingelegt hatte.",
+      "Im Gemeinsamen Ausschuss der Verwaltungsgemeinschaft, der einen Tag später endgültig entschied, fiel der Beschluss dann einstimmig."
+    ]
+  },
+
+  "2026-kw06": {
+    "rubrik": "Einordnung",
+    "titel": "Die dichteste Sitzung des Jahres",
+    "absaetze": [
+      "Mit vierzehn Beschlüssen an zwei Tagen ist dies die inhaltsreichste Woche des Jahrgangs. Auf der Tagesordnung standen unter anderem die Wirtschaftspläne der städtischen Eigenbetriebe, die Umsetzung des Ganztagsförderungsgesetzes an den Grundschulen und die Entscheidung über die Teilnahme am Bodo-Ringzug.",
+      "Die Sitzung begann mit dem Gedenken an den verstorbenen Gemeinderat Franz Daiber und dem Nachrücken eines Mitglieds — der einzige Mandatswechsel durch Todesfall im gesamten ausgewerteten Zeitraum."
+    ]
+  }
+}
