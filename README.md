@@ -202,16 +202,34 @@ und nur dort.
 ## Eine neue Woche hinzufügen
 
 ```bash
-uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
-uv run --with requests                       python scripts/02_protokolle_laden.py
-uv run --with pypdf                          python scripts/03_auswerten.py
-uv run --with pypdf                          python scripts/05_ausgaben_bauen.py
-uv run                                       python scripts/06_startseite_bauen.py
-uv run --with pypdf                          python scripts/07_tabellen_bauen.py
+./scripts/wochenlauf.sh
 ```
 
-Mehr ist nicht zu tun — keine Datei wird von Hand angefasst. Jahr und Redaktions-
-schluss nehmen die Skripte vom Tagesdatum.
+Das Skript prüft zuerst, ob das Ratsinformationssystem erreichbar ist, führt dann
+die gesamte Kette aus, kontrolliert das Ergebnis und committet nur, wenn sich
+etwas geändert hat. Mit `--trocken` läuft alles ohne Commit.
+
+**Der Lauf muss lokal stattfinden.** Das Ratsinformationssystem beantwortet
+Anfragen aus Rechenzentrumsnetzen mit `HTTP 503` — aus GitHub Actions heraus ist
+es nicht erreichbar. Von einem normalen Anschluss antwortet es einwandfrei. Diese
+Beschränkung wird nicht umgangen.
+
+Automatisch montags früh laufen lassen:
+
+```bash
+cp scripts/launchd/eu.amannlabs.ratsakten.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/eu.amannlabs.ratsakten.plist
+```
+
+War der Rechner zum Termin aus, holt `launchd` den Lauf beim nächsten Start nach.
+Das Protokoll landet in `~/Library/Logs/ratsakten.log`.
+
+### Was auf GitHub läuft
+
+Bei jedem Push prüft [`.github/workflows/pruefung.yml`](./.github/workflows/pruefung.yml)
+das Ergebnis: tote Verweise, fehlende Schriften, Abrufe bei fremden Servern,
+Lücken in den Berichtszeiträumen und ob die Tabellen zu den Kennzahlen passen.
+Diese Prüfung hat beim ersten Einsatz neun fehlende Abstimmungen aufgedeckt.
 
 * Schritt 1 muss immer zuerst laufen: `data/sitzungen.json` und `data/topmap.json`
   sind Zwischenergebnisse und werden nicht versioniert. Sie enthalten

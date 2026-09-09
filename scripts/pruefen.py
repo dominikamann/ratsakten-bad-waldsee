@@ -1,0 +1,145 @@
+#!/usr/bin/env python3
+"""Prüfung — kontrolliert das erzeugte Ergebnis, bevor es veröffentlicht wird.
+
+Läuft am Ende des Wochenlaufs und zusätzlich bei jedem Push auf GitHub. Findet
+sie einen Fehler, endet sie mit einem Fehlercode und der Lauf bricht ab.
+
+Geprüft wird:
+  1. Jeder interne Verweis in docs/ zeigt auf eine vorhandene Datei
+  2. Jede eingebundene Schriftdatei ist vorhanden
+  3. Keine Seite lädt Ressourcen von fremden Servern
+  4. Die Berichtszeiträume der Ausgaben schließen lückenlos aneinander an
+  5. Die Tabellen unter data/csv/ stimmen mit data/kennzahlen.json überein
+
+Punkt 5 hat beim ersten Einsatz neun fehlende Abstimmungen aufgedeckt.
+
+    uv run --with lxml python scripts/pruefen.py
+"""
+from __future__ import annotations
+
+import csv
+import datetime as dt
+import json
+import re
+import sys
+import urllib.parse
+from pathlib import Path
+
+from lxml import html as H
+
+WURZEL = Path(__file__).resolve().parent.parent
+DOCS = WURZEL / "docs"
+DATEN = WURZEL / "data"
+
+# Server, die in Verweisen vorkommen dürfen — sie werden verlinkt, aber nicht
+# beim Seitenaufruf abgerufen.
+ERLAUBTE_ZIELE = ("amannlabs.eu", "ris.bad-waldsee.de", "www.bad-waldsee.de",
+                  "bad-waldsee.de", "landesrecht-bw.de", "creativecommons.org",
+                  "github.com", "w3.org")
+
+fehler: list[str] = []
+notiz: list[str] = []
+
+
+def pruefe_verweise() -> None:
+    gesamt = 0
+    for f in sorted(DOCS.rglob("*.html")):
+        for ziel in H.parse(str(f)).getroot().xpath("//a/@href"):
+            if ziel.startswith(("http", "mailto:", "#")):
+                continue
+            gesamt += 1
+            if not (f.parent / urllib.parse.unquote(ziel)).resolve().exists():
+                meldung = f"toter Verweis: {f.relative_to(WURZEL)} → {ziel}"
+                if meldung not in fehler:
+                    fehler.append(meldung)
+    notiz.append(f"{gesamt} interne Verweise")
+
+
+def pruefe_schriften() -> None:
+    gesamt = 0
+    for f in sorted(DOCS.rglob("*.html")):
+        for ziel in re.findall(r"url\(([^)]+\.woff2)\)", f.read_text(encoding="utf-8")):
+            gesamt += 1
+            if not (f.parent / ziel).resolve().exists():
+                meldung = f"fehlende Schrift: {f.relative_to(WURZEL)} → {ziel}"
+                if meldung not in fehler:
+                    fehler.append(meldung)
+    notiz.append(f"{gesamt} Schriftverweise")
+
+
+def pruefe_fremde_abrufe() -> None:
+    """Beim Seitenaufruf darf nichts von fremden Servern nachgeladen werden."""
+    treffer = set()
+    muster = re.compile(r'(?:src|href)=["\'](https?://[^"\']+)', re.I)
+    for f in sorted(DOCS.rglob("*.html")):
+        for url in muster.findall(f.read_text(encoding="utf-8")):
+            wirt = urllib.parse.urlparse(url).netloc
+            if not any(wirt.endswith(e) for e in ERLAUBTE_ZIELE):
+                treffer.add(f"{f.relative_to(WURZEL)} lädt von {wirt}")
+    fehler.extend(sorted(treffer))
+    notiz.append("keine fremden Abrufe" if not treffer else f"{len(treffer)} fremde Abrufe")
+
+
+def pruefe_zeitraeume() -> None:
+    pfad = DATEN / "ausgaben.json"
+    if not pfad.exists():
+        notiz.append("kein Ausgabenregister — übersprungen")
+        return
+    register = json.loads(pfad.read_text(encoding="utf-8"))
+    geprueft = 0
+    for jahr, ausgaben in register.items():
+        paare = [(dt.date.fromisoformat(a["von_iso"]), dt.date.fromisoformat(a["bis_iso"]))
+                 for _, a in sorted(ausgaben.items(), key=lambda kv: int(kv[0]))
+                 if a.get("von_iso")]
+        geprueft += len(paare)
+        for (_, ende), (start, _) in zip(paare, paare[1:]):
+            if ende >= start:
+                fehler.append(f"{jahr}: Berichtszeiträume überschneiden sich bei "
+                              f"{ende} / {start}")
+            elif (start - ende).days > 1:
+                fehler.append(f"{jahr}: Lücke zwischen {ende} und {start}")
+    notiz.append(f"{geprueft} Berichtszeiträume")
+
+
+def pruefe_tabellen() -> None:
+    """Die Tabellen müssen dieselben Zahlen ergeben wie die Kennzahlen."""
+    kennzahlen = DATEN / "kennzahlen.json"
+    tabelle = DATEN / "csv" / "beschluesse.csv"
+    if not (kennzahlen.exists() and tabelle.exists()):
+        notiz.append("Kennzahlen oder Tabellen fehlen — übersprungen")
+        return
+    k = json.loads(kennzahlen.read_text(encoding="utf-8"))
+    with tabelle.open(encoding="utf-8-sig") as f:
+        zeilen = list(csv.DictReader(f, delimiter=";"))
+    strittig = sum(1 for z in zeilen if z["einstimmig"] == "nein")
+
+    for was, ist, soll in [
+        ("Abstimmungen", len(zeilen), k["abstimmungen"]["gesamt"]),
+        ("nicht einstimmige Beschlüsse", strittig, k["abstimmungen"]["nicht_einstimmig"]),
+    ]:
+        if ist != soll:
+            fehler.append(f"{was}: Tabelle {ist}, Kennzahlen {soll}")
+    notiz.append(f"{len(zeilen)} Abstimmungen gegengerechnet")
+
+
+def main() -> None:
+    if not DOCS.exists():
+        sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
+
+    for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
+                     pruefe_zeitraeume, pruefe_tabellen):
+        pruefung()
+
+    seiten = len(list(DOCS.rglob("*.html")))
+    print(f"   {seiten} Seiten · " + " · ".join(notiz))
+
+    if fehler:
+        print(f"\n   {len(fehler)} Problem(e):", file=sys.stderr)
+        for f in fehler:
+            print(f"     ✗ {f}", file=sys.stderr)
+        sys.exit(1)
+    print("   alles in Ordnung")
+
+
+if __name__ == "__main__":
+    main()

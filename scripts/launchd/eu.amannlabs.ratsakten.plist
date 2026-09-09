@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Startet den Wochenlauf montags um 7:00 Uhr.
+
+  Einrichten:
+      cp scripts/launchd/eu.amannlabs.ratsakten.plist ~/Library/LaunchAgents/
+      launchctl load ~/Library/LaunchAgents/eu.amannlabs.ratsakten.plist
+
+  Abschalten:
+      launchctl unload ~/Library/LaunchAgents/eu.amannlabs.ratsakten.plist
+
+  War der Mac zum Termin aus, holt launchd den Lauf beim naechsten Start nach.
+  Das Protokoll landet in ~/Library/Logs/ratsakten.log.
+
+  /Users/dominikamannprivat/Documents/amannlabs/badwaldsee unten an das eigene Verzeichnis anpassen.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>eu.amannlabs.ratsakten</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-lc</string>
+    <string>/Users/dominikamannprivat/Documents/amannlabs/badwaldsee/scripts/wochenlauf.sh</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key><integer>1</integer>
+    <key>Hour</key><integer>7</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/dominikamannprivat/Library/Logs/ratsakten.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/dominikamannprivat/Library/Logs/ratsakten.log</string>
+</dict>
+</plist>

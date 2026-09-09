@@ -1,0 +1,38 @@
+name: Prüfung
+
+# Prüft bei jedem Push, was veröffentlicht wurde: tote Verweise, fehlende
+# Schriften, Abrufe bei fremden Servern, Lücken in den Berichtszeiträumen und
+# ob die Tabellen zu den Kennzahlen passen.
+#
+# Bewusst OHNE Abruf des Ratsinformationssystems: Dessen Server beantwortet
+# Anfragen aus Rechenzentrumsnetzen mit HTTP 503. Das Holen der Daten geschieht
+# deshalb lokal über scripts/wochenlauf.sh — die Beschränkung wird nicht umgangen.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v5
+
+      - name: Python bereitstellen
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: uv bereitstellen
+        uses: astral-sh/setup-uv@v6
+
+      - name: Dokumente prüfen
+        run: uv run --with lxml python scripts/pruefen.py
