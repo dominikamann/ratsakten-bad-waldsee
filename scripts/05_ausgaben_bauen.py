@@ -416,10 +416,16 @@ def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
         eintrag("befunde.html", "Befunde", "befunde"),
         eintrag("ausgaben/index.html", "Archiv", "archiv"),
     ]))
-    return f"""<meta charset="utf-8">
+    return f"""<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(titel)}</title>
 <style>{schriften}</style>
 <style>{stil}</style>
+</head>
+<body>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
@@ -436,6 +442,8 @@ def fuss(zusatz: str = "") -> str:
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
   <p>Alle Angaben und Insights ohne Gew&auml;hr{zusatz}</p>
 </div></footer>
+</body>
+</html>
 """
 
 

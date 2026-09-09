@@ -161,10 +161,16 @@ def bauen() -> str:
     heute = dt.date.today()
     stichtag = kennzahlen.get("stichtag", heute.isoformat())
 
-    return f"""<meta charset="utf-8">
+    return f"""<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ratsakten Bad Waldsee</title>
 <style>{schriften}</style>
 <style>{stil}</style>
+</head>
+<body>
 
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -254,6 +260,8 @@ def bauen() -> str:
   <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Datenstand {e(stichtag)}
   &middot; Seite erzeugt am {heute.strftime('%d.%m.%Y')}</p>
 </div></footer>
+</body>
+</html>
 """
 
 

@@ -139,7 +139,11 @@ def bauen() -> str:
     rpfad = f"./report/{report.name}"
     rname = f"Ratsanalyse, Stand {report.stem[8:10]}.{report.stem[5:7]}.{report.stem[:4]}"
 
-    teile = [f"""<meta charset="utf-8">
+    teile = [f"""<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Befunde</title>
 <style>{schriften}</style>
 <style>{stil}</style>
@@ -167,7 +171,15 @@ def bauen() -> str:
   letter-spacing:-.02em;margin:0 0 6px;
 }}
 .gruppe > .einleitung{{color:var(--ink-2);max-width:70ch;margin:0 0 4px}}
+@media (max-width:620px){{
+  .gruppe{{padding-top:32px}}
+  .gruppe > h2{{font-size:22px}}
+  .befundblock h3{{font-size:18px}}
+  .befundblock{{padding:20px 0 18px}}
+}}
 </style>
+</head>
+<body>
 
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -258,7 +270,9 @@ def bauen() -> str:
 <footer><div class="wrap">
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
   <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; sämtlich KI-Deutung</p>
-</div></footer>""")
+</div></footer>
+</body>
+</html>""")
     return "\n".join(teile)
 
 

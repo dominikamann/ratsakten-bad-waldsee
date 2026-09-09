@@ -360,7 +360,11 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
     mit_beschluss = sum(1 for v in sachvorgaenge if any(s["e"] for s in v["s"]))
     mehrstufig = sum(1 for v in sachvorgaenge if len(v["s"]) > 1)
 
-    return f"""<meta charset="utf-8">
+    return f"""<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vorgänge durchsuchen</title>
 <style>{schriften}</style>
 <style>{stil}</style>
@@ -474,6 +478,17 @@ button.mehr:focus-visible{{outline:2px solid var(--s1);outline-offset:2px}}
   font-family:"IBM Plex Mono",monospace;font-size:12px;padding:3px 6px;margin-left:6px;
 }}
 mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
+
+/* Suchfeld und Filter auf schmalen Bildschirmen: alles untereinander, damit
+   nichts aus dem Bild laeuft und die Ziele gross genug zum Antippen sind. */
+@media (max-width:620px){{
+  .suchfeld input{{flex:1 1 100%;font-size:16px;padding:13px 15px}}
+  .filter{{flex-direction:column;gap:10px;align-items:flex-start}}
+  .filter label{{min-height:32px}}
+  .filter select{{margin-left:8px;padding:5px 8px;font-size:13px}}
+  .vorgang .kopf{{gap:6px 10px}}
+  button.mehr{{padding:7px 12px}}
+}}
 .leer{{padding:40px 0;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:14px}}
 .ohnejs{{
   margin:28px 0;padding:20px 22px;background:var(--flag-bg);
@@ -481,6 +496,8 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 }}
 .ohnejs p{{margin:0}}
 </style>
+</head>
+<body>
 
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>

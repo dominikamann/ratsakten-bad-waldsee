@@ -1,4 +1,8 @@
+<!doctype html>
+<html lang="de">
+<head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aktenlage KW 31/2024</title>
 <style>/* Selbst ausgelieferte Schriften. Kein Abruf bei Dritten, damit beim Besuch
    keine IP-Adresse an einen fremden Server geht. ../../ wird beim Erzeugen
@@ -416,7 +420,36 @@ ul.beschluesse .wortlaut{
   color:var(--ink-2);
   padding-left:12px;border-left:2px solid var(--rule);
 }
+
+/* ---------- Schmale Bildschirme ---------- */
+@media (max-width:620px){
+  /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
+     das unlesbar — dort wird sie zur senkrechten Liste mit Zeitstrahl links. */
+  .achse{flex-direction:column;gap:0;border-left:2px solid var(--rule);padding-left:14px}
+  .station{padding:7px 0;flex-wrap:wrap;gap:6px 9px}
+  .station:not(:last-child)::after{content:none}
+  .achse .wortlaut{margin-left:0;padding-left:10px}
+  .achse button.mehr{margin-left:0}
+
+  /* Beschlussliste: Ergebnis unter die Sache statt daneben */
+  ul.beschluesse li{grid-template-columns:1fr;gap:6px}
+  ul.beschluesse .erg{justify-self:start}
+  ul.beschluesse .betrag{margin-left:0;margin-top:6px;display:inline-block}
+
+  .issueline{gap:6px 16px;font-size:10.5px}
+  .masthead h1{font-size:clamp(34px,11vw,52px)}
+  .rail{gap:6px 16px}
+}
+
+/* Sehr schmal: Randspalte und Kopfzeile weiter zusammenruecken */
+@media (max-width:400px){
+  .wrap{padding-left:16px;padding-right:16px}
+  .brandbar .wrap{padding-left:16px;padding-right:16px}
+  .kasten,.befund{padding-left:14px;padding-right:14px}
+}
 </style>
+</head>
+<body>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
@@ -567,3 +600,5 @@ ul.beschluesse .wortlaut{
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
   <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 31/2024 &middot; erzeugt am 09.09.2026</p>
 </div></footer>
+</body>
+</html>

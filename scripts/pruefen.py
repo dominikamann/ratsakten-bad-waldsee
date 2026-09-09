@@ -17,6 +17,7 @@ Punkt 5 hat beim ersten Einsatz neun fehlende Abstimmungen aufgedeckt.
 """
 from __future__ import annotations
 
+import collections
 import csv
 import datetime as dt
 import json
@@ -123,6 +124,28 @@ def pruefe_tabellen() -> None:
     notiz.append(f"{len(zeilen)} Abstimmungen gegengerechnet")
 
 
+def pruefe_seitenkopf() -> None:
+    """Doctype, Sprache und Viewport — ohne sie bricht die Handydarstellung.
+
+    Fehlt die Viewport-Angabe, rendert ein Telefon die Seite auf rund 980 Pixel
+    Breite und skaliert herunter: winzige Schrift, Zoomen nötig. Fehlt der
+    Doctype, rechnet der Browser im Quirks-Modus mit anderen Größen. Beides
+    fällt am Rechner nicht auf — genau deshalb wird es hier geprüft.
+    """
+    ohne = collections.Counter()
+    for f in sorted(DOCS.rglob("*.html")):
+        kopf = f.read_text(encoding="utf-8")[:800]
+        if not kopf.lower().lstrip().startswith("<!doctype"):
+            ohne["Doctype"] += 1
+        if not re.search(r"<html[^>]*lang=", kopf):
+            ohne["Sprachangabe"] += 1
+        if 'name="viewport"' not in kopf:
+            ohne["Viewport"] += 1
+    for was, n in ohne.items():
+        fehler.append(f"{n} Seite(n) ohne {was}")
+    notiz.append("Seitenkopf vollständig" if not ohne else "Seitenkopf unvollständig")
+
+
 def pruefe_reportalter() -> None:
     """Ist der jüngste Report noch auf dem Stand der Daten?
 
@@ -154,7 +177,8 @@ def main() -> None:
         sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
 
     for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
-                     pruefe_zeitraeume, pruefe_tabellen, pruefe_reportalter):
+                     pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
+                     pruefe_reportalter):
         pruefung()
 
     seiten = len(list(DOCS.rglob("*.html")))
