@@ -365,6 +365,7 @@ def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
 
     navigation = ("\n    <span aria-hidden=\"true\">/</span>\n    ".join([
         eintrag("index.html", "Startseite", "start"),
+        eintrag("suche.html", "Suche", "suche"),
         eintrag("ausgaben/index.html", "Archiv", "archiv"),
     ]))
     return f"""<meta charset="utf-8">

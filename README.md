@@ -54,6 +54,7 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
 ➡️ **[Aktuelle Ausgabe, KW 37/2026](./docs/ausgaben/2026/kw37.html)** — die wöchentliche Aktenlage
 ➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 21 Ausgaben des Jahrgangs 2026
+➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 506 Vorgänge mit ihrem Weg durch die Gremien
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
 Abhängigkeiten und **funktionieren ohne JavaScript** — auch in der iOS-Dateivorschau,
@@ -87,6 +88,7 @@ nirgends anmelden — Link anklicken genügt:
 * **[Startseite](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/index.html)**
 * **[Ratsanalyse 2024–2026](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/report/2026-09-09.html)**
 * **[Archiv aller Ausgaben](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/ausgaben/index.html)**
+* **[Vorgänge durchsuchen](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/suche.html)**
 
 Von der Startseite aus funktioniert alles Weitere ganz normal durch Anklicken.
 
@@ -134,6 +136,24 @@ Dokumenten liegen bei der Stadt Bad Waldsee.
 Die Abfragen sind bewusst langsam gehalten (Pause zwischen den Aufrufen), um die Server
 der Stadt nicht zu belasten.
 
+## Vorgänge nachverfolgen
+
+Ein Bauleitplanverfahren erscheint nicht einmal auf einer Tagesordnung, sondern
+über Jahre hinweg immer wieder — mit jeweils eigener Vorlagennummer für
+Aufstellung, Entwurf, Abwägung und Satzung. Aus den Unterlagen allein ist dieser
+Zusammenhang nicht zu sehen.
+
+Die [Vorgangssuche](./docs/suche.html) führt zusammen, was unter demselben
+benannten Vorhaben verhandelt wurde, und zeigt die Kette:
+
+> **Drei Eichen VI** — 13 Vorlagen, 19 Stationen
+> 26.02.2024 GR *18 : 1 : 5* → … → 03.02.2026 GA *einstimmig*
+
+Gesucht wird über Stichwort oder Vorlagennummer; filtern lässt sich nach
+Vorgängen mit Beschluss, nicht einstimmigen Entscheidungen und mehrstufigen
+Verfahren. Der Suchindex steht in der Seite selbst — sie funktioniert also auch
+lokal geöffnet und ruft nichts nach.
+
 ## Selbst nachrechnen
 
 Unter `data/csv/` liegen drei Tabellen, die sich direkt in Excel, LibreOffice
@@ -169,6 +189,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 ```
 ├── docs/                 GitHub Pages zeigt diesen Ordner
 │   ├── index.html        Startseite: Report, neueste Ausgabe, Archiv
+│   ├── suche.html        durchsuchbare Vorgänge mit Zeitachse
 │   ├── report/           die datierten Gesamtreports
 │   └── ausgaben/
 │       ├── index.html    Archiv über alle Jahrgänge
