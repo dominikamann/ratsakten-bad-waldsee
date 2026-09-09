@@ -355,8 +355,10 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
     # Seite lahmlegen. Die Titel stammen aus fremdem HTML — also absichern.
     index = (json.dumps(vorgaenge, ensure_ascii=False, separators=(",", ":"))
              .replace("</", "<\\/"))
-    mit_beschluss = sum(1 for v in vorgaenge if any(s["e"] for s in v["s"]))
-    mehrstufig = sum(1 for v in vorgaenge if len(v["s"]) > 1)
+    einordnungen = sum(1 for v in vorgaenge if v.get("art") == "einordnung")
+    sachvorgaenge = [v for v in vorgaenge if v.get("art") != "einordnung"]
+    mit_beschluss = sum(1 for v in sachvorgaenge if any(s["e"] for s in v["s"]))
+    mehrstufig = sum(1 for v in sachvorgaenge if len(v["s"]) > 1)
 
     return f"""<meta charset="utf-8">
 <title>Vorgänge durchsuchen</title>
@@ -498,11 +500,13 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 <header class="masthead">
   <h1>Vorg&auml;nge</h1>
   <p class="claim">Jeder Vorgang mit seinem Weg durch die Gremien — von der ersten
-  Beratung bis zum Beschluss.</p>
+  Beratung bis zum Beschluss. Mitdurchsucht werden die redaktionellen
+  Einordnungen, die mehrere Vorg&auml;nge &uuml;ber die Zeit verbinden.</p>
   <div class="issueline">
-    <span><b>Vorg&auml;nge</b> {len(vorgaenge)}</span>
+    <span><b>Vorg&auml;nge</b> {len(sachvorgaenge)}</span>
     <span><b>mit Beschluss</b> {mit_beschluss}</span>
     <span><b>mehrstufig</b> {mehrstufig}</span>
+    <span><b>Einordnungen</b> {einordnungen}</span>
     <span><b>Stand</b> {stichtag[8:10]}.{stichtag[5:7]}.{stichtag[:4]}</span>
   </div>
 
@@ -540,10 +544,33 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 
 <section class="kolophon">
   <h3>Was hier steht</h3>
-  <p>Ein Vorgang ist alles, was unter derselben Vorlagennummer verhandelt wurde.
-  Die Kette zeigt jede Station: Datum, Gremium und — wo ein Beschlussprotokoll
+  <p>Ein Vorgang b&uuml;ndelt alles, was zum selben Vorhaben verhandelt wurde. Ist im
+  Titel ein Vorhaben genannt — etwa der Bebauungsplan „Drei Eichen VI" —, dient
+  dieser Name als Klammer; ein Bauleitplanverfahren durchl&auml;uft n&auml;mlich mehrere
+  Vorlagen mit jeweils eigener Nummer. Fehlt ein solcher Name, wird nach
+  Vorlagennummer geb&uuml;ndelt, sonst steht der Punkt f&uuml;r sich.</p>
+  <p>Die Kette zeigt jede Station: Datum, Gremium und — wo ein Beschlussprotokoll
   vorliegt — das Abstimmungsergebnis. Die Schreibweise <span class="mono">25 : 0 : 1</span>
-  steht f&uuml;r Ja : Nein : Enthaltungen.</p>
+  steht f&uuml;r Ja : Nein : Enthaltungen; mehrere Ergebnisse an einer Station bedeuten,
+  dass zuerst &uuml;ber einen &Auml;nderungsantrag und danach &uuml;ber den Beschluss
+  abgestimmt wurde.</p>
+
+  <h3>Einordnungen</h3>
+  <p>Neben den Vorg&auml;ngen sind die <b>redaktionellen Einordnungen</b> der
+  Wochenausgaben durchsuchbar. Sie verbinden mehrere Vorg&auml;nge &uuml;ber die Zeit —
+  etwa den Befund, dass Bad Waldsee binnen elf Monaten dreimal in Folge das
+  Einvernehmen f&uuml;r Windkraft versagt hat. Aus den Einzelpunkten geht das nicht
+  hervor.</p>
+  <p>Solche Treffer sind mit <span class="herkunft ki">KI-Deutung</span> gekennzeichnet:
+  maschinell erzeugt, auf belegten Zahlen beruhend, <b>nicht redaktionell gepr&uuml;ft</b>.
+  Gesammelt stehen sie auf der Seite <a class="doc" href="./befunde.html">Befunde</a>.</p>
+
+  <h3>Reihenfolge der Treffer</h3>
+  <p>Zuerst kommt, was den Suchbegriff in der &Uuml;berschrift oder der Vorlagennummer
+  tr&auml;gt. Treffer, bei denen das Wort nur im Flie&szlig;text vorkommt, stehen dahinter
+  und sind mit <i>Treffer im Text</i> markiert — sonst w&uuml;rde die Suche nach
+  „Feuerwehr" eine Einordnung mit der &Uuml;berschrift „F&uuml;nf Windr&auml;der
+  abgelehnt" nach oben sp&uuml;len, nur weil das Wort in deren Text steht.</p>
   <p>Unter jeder Station steht der <b>beschlossene Wortlaut</b> — der Text, den das
   Gremium tatsächlich gefasst hat. Er ist aussagekräftiger als die Überschrift, die
   nur den Verwaltungsvorgang benennt. Angezeigt werden rund 340 Zeichen;
