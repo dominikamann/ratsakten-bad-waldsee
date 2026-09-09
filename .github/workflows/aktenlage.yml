@@ -1,0 +1,154 @@
+name: Wöchentliche Aktenlage
+
+# Läuft montags früh und holt nach, was seit der letzten Ausgabe erschienen ist.
+# Protokolle liegen typischerweise drei bis vier Tage nach der Sitzung vor —
+# der Montagslauf erfasst damit die Sitzungen der Vorwoche.
+on:
+  schedule:
+    - cron: "0 5 * * 1"        # montags 05:00 UTC (06:00 MEZ / 07:00 MESZ)
+  workflow_dispatch:            # zusätzlich von Hand auslösbar
+    inputs:
+      stichtag:
+        description: "Redaktionsschluss (JJJJ-MM-TT), leer = heute"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aktenlage
+  cancel-in-progress: false
+
+jobs:
+  ausgabe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Python bereitstellen
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: uv bereitstellen
+        uses: astral-sh/setup-uv@v5
+
+      - name: Node bereitstellen
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: jsdom installieren
+        run: npm install --no-save jsdom
+
+      # --- Verarbeitungskette -------------------------------------------------
+      # Die Abfragen an das Ratsinformationssystem sind mit Pausen versehen; ein
+      # vollständiger Lauf dauert dadurch einige Minuten. Das ist beabsichtigt.
+
+      - name: Sitzungen und Tagesordnungen laden
+        run: uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
+
+      - name: Neue Protokolle laden
+        run: uv run --with requests python scripts/02_protokolle_laden.py
+
+      - name: Kennzahlen berechnen
+        run: uv run --with pypdf python scripts/03_auswerten.py
+
+      - name: Ausgaben erzeugen
+        run: |
+          if [ -n "${{ github.event.inputs.stichtag }}" ]; then
+            uv run --with pypdf python scripts/05_ausgaben_bauen.py --bis "${{ github.event.inputs.stichtag }}"
+          else
+            uv run --with pypdf python scripts/05_ausgaben_bauen.py
+          fi
+
+      - name: Startseite erzeugen
+        run: uv run python scripts/06_startseite_bauen.py
+
+      - name: Report vorrendern
+        run: node scripts/04_vorrendern.js
+
+      # --- Prüfen -------------------------------------------------------------
+
+      - name: Interne Links prüfen
+        run: |
+          uv run --with lxml python - <<'PY'
+          from lxml import html as H
+          from pathlib import Path
+          import sys, urllib.parse
+          kaputt = []
+          gesamt = 0
+          for f in sorted(Path("docs").rglob("*.html")):
+              for a in H.parse(str(f)).getroot().xpath("//a/@href"):
+                  if a.startswith(("http", "mailto:", "#")):
+                      continue
+                  gesamt += 1
+                  if not (f.parent / urllib.parse.unquote(a)).resolve().exists():
+                      kaputt.append(f"{f} -> {a}")
+          print(f"{gesamt} interne Links geprüft, {len(kaputt)} kaputt")
+          for k in kaputt:
+              print("  ", k)
+          sys.exit(1 if kaputt else 0)
+          PY
+
+      - name: Berichtszeiträume auf Lücken und Überschneidungen prüfen
+        run: |
+          uv run python - <<'PY'
+          import datetime as dt, json, sys
+          from pathlib import Path
+          register = json.loads(Path("data/ausgaben.json").read_text(encoding="utf-8"))
+          fehler = []
+          for jahr, ausgaben in register.items():
+              paare = [(dt.date.fromisoformat(a["von_iso"]), dt.date.fromisoformat(a["bis_iso"]))
+                       for _, a in sorted(ausgaben.items(), key=lambda kv: int(kv[0]))
+                       if a.get("von_iso")]
+              for (_, ende), (start, _) in zip(paare, paare[1:]):
+                  if ende >= start:
+                      fehler.append(f"{jahr}: Überschneidung bei {ende} / {start}")
+                  elif (start - ende).days > 1:
+                      fehler.append(f"{jahr}: Lücke zwischen {ende} und {start}")
+          print("Berichtszeiträume geprüft:", "in Ordnung" if not fehler else "FEHLER")
+          for f in fehler:
+              print("  ", f)
+          sys.exit(1 if fehler else 0)
+          PY
+
+      # --- Veröffentlichen ----------------------------------------------------
+
+      - name: Änderungen feststellen
+        id: pruefung
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "geaendert=ja" >> "$GITHUB_OUTPUT"
+            KW=$(uv run python -c "
+          import json
+          r = json.load(open('data/ausgaben.json'))
+          jahr = max(r, key=int)
+          kw = max(r[jahr], key=int)
+          print(f'KW {int(kw)}/{jahr}')")
+            echo "ausgabe=$KW" >> "$GITHUB_OUTPUT"
+          else
+            echo "geaendert=nein" >> "$GITHUB_OUTPUT"
+            echo "Keine Änderungen — nichts Neues im Ratsinformationssystem."
+          fi
+
+      - name: Commit und Push
+        if: steps.pruefung.outputs.geaendert == 'ja'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -F - <<EOF
+          Aktenlage aktualisiert: ${{ steps.pruefung.outputs.ausgabe }}
+
+          Automatischer Lauf vom $(date +%d.%m.%Y). Neu geladen wurden Sitzungen,
+          Tagesordnungen und seither veröffentlichte Beschlussprotokolle; Ausgaben,
+          Archiv und Startseite wurden daraus neu erzeugt.
+
+          Ältere Ausgaben können sich mitverändert haben, wenn ein Protokoll
+          nachgereicht wurde.
+          EOF
+          git push
