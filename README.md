@@ -12,7 +12,7 @@ zusammenfasst, was in drei Jahren Gremienarbeit tatsächlich entschieden wurde �
 Quellenangabe und ohne Interpretation dessen, was nicht in den Akten steht.
 
 > [!IMPORTANT]
-> **Dies ist ein privates Lern- und Technikprojekt. Für die Richtigkeit, Vollständigkeit und
+> **Dies ist ein privates Lern- und Technologieprojekt. Für die Richtigkeit, Vollständigkeit und
 > Aktualität der Informationen wird keine Gewähr übernommen.** Verbindlich ist ausschließlich
 > das jeweilige Originaldokument der Stadt Bad Waldsee. Details im Abschnitt
 > [Haftungsausschluss](#haftungsausschluss).
@@ -337,7 +337,7 @@ belasten.
 
 ## Haftungsausschluss
 
-**Lernprojekt.** Dieses Repository ist ein privates Lern- und Technikprojekt zur
+**Lernprojekt.** Dieses Repository ist ein privates Lern- und Technologieprojekt zur
 automatisierten Auswertung öffentlich zugänglicher Verwaltungsdokumente. Es ist kein
 journalistisches Erzeugnis, kein Prüfbericht und keine rechtliche oder fachliche Bewertung.
 

@@ -224,7 +224,7 @@ def bauen() -> str:
   <h2>Hinweise</h2>
   <div class="hinweis">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
-    <p><b>Dies ist ein privates Lern- und Technikprojekt</b> zur automatisierten Auswertung
+    <p><b>Dies ist ein privates Lern- und Technologieprojekt</b> zur automatisierten Auswertung
     &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Es ist kein journalistisches
     Erzeugnis, kein Pr&uuml;fbericht und keine rechtliche oder fachliche Bewertung.</p>
     <p><b>F&uuml;r Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t wird keine

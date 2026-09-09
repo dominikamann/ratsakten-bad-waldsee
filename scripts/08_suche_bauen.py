@@ -437,8 +437,14 @@ article.vorgang{{
 a.station{{text-decoration:none;color:inherit}}
 a.station:hover .dat{{color:var(--s1);text-decoration:underline}}
 a.station:hover .grem{{border-color:var(--s1)}}
-.titellink{{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}}
-.titellink:hover{{color:var(--s1);border-bottom-color:var(--s1)}}
+.titellink{{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--s1)}}
+.titellink:hover{{color:var(--s1)}}
+.titellink:focus-visible{{outline:2px solid var(--s1);outline-offset:3px}}
+.fundort{{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--rule);padding:1px 6px;
+}}
 .vorgang.istEinordnung{{border-left:3px solid var(--flag);padding-left:18px;background:var(--flag-bg)}}
 .vorgang .einleitung{{margin:8px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:74ch}}
 .gekuerzt{{
@@ -637,7 +643,11 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
     karte.push(lower.length);   // Endmarke
     return [aus, karte];
   }}
-  daten.forEach(function(v){{ v._s = normal(v.t + " " + v.v + " " + (v.u||"") + " " + v.s.map(function(s){{return s.t + " " + (s.w||"");}}).join(" ")); }});
+  daten.forEach(function(v){{
+    v._kopf = normal(v.t + " " + v.v);
+    v._voll = normal(v.t + " " + v.v + " " + (v.u||"") + " "
+                     + v.s.map(function(s){{return s.t + " " + (s.w||"");}}).join(" "));
+  }});
 
   function hervorheben(text, woerter){{
     var e = document.createElement("span");
@@ -671,12 +681,34 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
       if(fM.checked && v.s.length < 2) return false;
       var schwelle = parseInt(fG.value, 10);
       if(schwelle && (v.b || 0) < schwelle) return false;
-      return woerter.every(function(w){{ return v._s.indexOf(w) > -1; }});
+      if(!woerter.every(function(w){{ return v._voll.indexOf(w) > -1; }})) return false;
+      // Steht der Suchbegriff in der Überschrift oder nur irgendwo im Text?
+      // Ein Treffer, der nur im Fließtext steckt, wirkt sonst wie ein Irrläufer:
+      // Die Suche nach „Feuerwehr" lieferte einen Fund mit der Überschrift
+      // „Fünf Windräder abgelehnt", weil das Wort in dessen Text vorkam.
+      v._imKopf = woerter.every(function(w){{ return v._kopf.indexOf(w) > -1; }});
+      return true;
     }});
 
-    zahl.textContent = treffer.length === 0 ? "Kein Treffer"
-      : treffer.length + (treffer.length === 1 ? " Vorgang" : " Vorgänge")
-        + (roh ? " für „" + roh + "“" : "");
+    if(woerter.length){{
+      treffer.sort(function(a, b){{
+        if(a._imKopf !== b._imKopf) return a._imKopf ? -1 : 1;
+        return a.letzte < b.letzte ? 1 : (a.letzte > b.letzte ? -1 : 0);
+      }});
+    }}
+
+    if(treffer.length === 0){{
+      zahl.textContent = "Kein Treffer";
+    }} else {{
+      var imKopf = treffer.filter(function(v){{ return v._imKopf; }}).length;
+      var text = treffer.length + (treffer.length === 1 ? " Vorgang" : " Vorgänge")
+                 + (roh ? " für „" + roh + "“" : "");
+      if(roh && imKopf < treffer.length){{
+        text += " — " + imKopf + " in der Überschrift, "
+                + (treffer.length - imKopf) + " nur im Text";
+      }}
+      zahl.textContent = text;
+    }}
 
     liste.textContent = "";
     if(!treffer.length){{
@@ -727,6 +759,12 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
         nr.appendChild(u);
       }}
       if(nr.textContent) kopf.appendChild(nr);
+      if(woerter.length && !v._imKopf){{
+        var wo = document.createElement("span");
+        wo.className = "fundort";
+        wo.textContent = "Treffer im Text";
+        kopf.appendChild(wo);
+      }}
       if(v.b){{
         var geld = document.createElement("span");
         geld.className = "betrag";
