@@ -252,3 +252,11 @@ ul.beschluesse .betrag{
   color:var(--s2);border:1px solid var(--s2);
   background:color-mix(in srgb, var(--s2) 8%, transparent);
 }
+
+/* ---------- Beschlossener Wortlaut ---------- */
+ul.beschluesse .wortlaut{
+  display:block;margin-top:7px;max-width:72ch;
+  font-family:"IBM Plex Serif",Georgia,serif;font-size:14.5px;line-height:1.55;
+  color:var(--ink-2);
+  padding-left:12px;border-left:2px solid var(--rule);
+}

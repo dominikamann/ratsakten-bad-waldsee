@@ -132,6 +132,31 @@ def betrag_lesen(text: str) -> float | None:
     return hoechster
 
 
+# Der Beschlusstext steht im Protokoll zwischen der Einleitung „Beschluss:" und
+# der Ergebniszeile. Er ist das, was tatsaechlich entschieden wurde — waehrend
+# die Ueberschrift nur den Verwaltungsvorgang benennt.
+EINLEITUNG = re.compile(
+    r"(?:Modifizierter Beschluss|Beschlussvorschlag an den [^:]{0,40}|Beschluss)\s*:\s*")
+SEITENFUSS = re.compile(
+    r"Beschlussprotokoll der öffentlichen Sitzung.{0,140}?\d+\s*von\s*\d+\s*")
+# Silbentrennung aus dem PDF zusammenfuehren — aber "Kosten- und Zeitplan" nicht
+# zu "Kostenund" verstuemmeln.
+TRENNUNG = re.compile(r"(\w)-\s+(?!(?:und|oder|bzw|sowie|als|wie)\b)([a-zäöüß])")
+
+
+def beschlusstext(abschnitt: str, grenze: int = 340) -> str:
+    """Den beschlossenen Wortlaut aus dem Protokollabschnitt herausloesen."""
+    treffer = list(EINLEITUNG.finditer(abschnitt))
+    if not treffer:
+        return ""
+    roh = SEITENFUSS.sub(" ", abschnitt[treffer[-1].end():])
+    roh = TRENNUNG.sub(r"\1\2", re.sub(r"\s+", " ", roh)).strip()
+    if len(roh) <= grenze:
+        return roh
+    schnitt = roh.rfind(". ", 0, grenze)
+    return (roh[:schnitt + 1] if schnitt > grenze // 2 else roh[:grenze].rstrip()) + " …"
+
+
 def beschluesse_lesen(text: str) -> list[dict]:
     """Jede Abstimmung der zuletzt davor genannten Vorlagennummer zuordnen.
 
@@ -153,6 +178,7 @@ def beschluesse_lesen(text: str) -> list[dict]:
             "strittig": strittig,
             "modifiziert": "Modifizierter Beschluss" in abschnitt,
             "betrag": betrag_lesen(abschnitt),
+            "wortlaut": beschlusstext(abschnitt),
         })
     return ergebnisse
 
@@ -551,8 +577,11 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 if b.get("betrag") and b["betrag"] >= BETRAGSSCHWELLE:
                     geld = (f"""<span class="betrag" title="größter im Beschlusstext """
                             f"""genannter Betrag">{euro(b['betrag'])}</span>""")
+                wortlaut = (f"""<span class="wortlaut">{e(b['wortlaut'])}</span>"""
+                            if b.get("wortlaut") else "")
                 t.append(f"""      <li><span class="sache">{e(b['titel'])}"""
-                         f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span></span>"""
+                         f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span>"""
+                         f"""{wortlaut}</span>"""
                          f"""<span class="erg{klasse}">{e(b['ergebnis'])}</span></li>""")
             t.append("    </ul>")
             if any(b["strittig"] for b in liste):

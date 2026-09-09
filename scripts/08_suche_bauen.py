@@ -116,6 +116,28 @@ def pdf_text(pfad: Path) -> str:
     return re.sub(r"[­\s]+", " ", roh)
 
 
+# Der Beschlusstext steht zwischen der Einleitung „Beschluss:" und der
+# Ergebniszeile. Die Ueberschrift benennt den Verwaltungsvorgang, dieser Text
+# sagt, was tatsaechlich entschieden wurde.
+EINLEITUNG = re.compile(
+    r"(?:Modifizierter Beschluss|Beschlussvorschlag an den [^:]{0,40}|Beschluss)\s*:\s*")
+SEITENFUSS = re.compile(
+    r"Beschlussprotokoll der öffentlichen Sitzung.{0,140}?\d+\s*von\s*\d+\s*")
+TRENNUNG = re.compile(r"(\w)-\s+(?!(?:und|oder|bzw|sowie|als|wie)\b)([a-zäöüß])")
+
+
+def beschlusstext(abschnitt: str, grenze: int = 900) -> str:
+    treffer = list(EINLEITUNG.finditer(abschnitt))
+    if not treffer:
+        return ""
+    roh = SEITENFUSS.sub(" ", abschnitt[treffer[-1].end():])
+    roh = TRENNUNG.sub(r"\1\2", re.sub(r"\s+", " ", roh)).strip()
+    if len(roh) <= grenze:
+        return roh
+    schnitt = roh.rfind(". ", 0, grenze)
+    return (roh[:schnitt + 1] if schnitt > grenze // 2 else roh[:grenze].rstrip()) + " …"
+
+
 def betrag_lesen(text: str) -> float | None:
     hoechster = None
     for m in BETRAG.finditer(text):
@@ -138,6 +160,7 @@ def beschluesse_je_sitzung(text: str) -> dict[str, list[str]]:
     """
     ergebnisse: dict[str, list[str]] = collections.defaultdict(list)
     betraege: dict[str, float] = {}
+    texte: dict[str, str] = {}
     for treffer in ERGEBNIS.finditer(text):
         roh = treffer.group(1)
         zahlen = AUSZAEHLUNG.match(roh)
@@ -152,10 +175,14 @@ def beschluesse_je_sitzung(text: str) -> dict[str, list[str]]:
             continue
         vorlage = stellen[-1].group(0)
         ergebnisse[vorlage].append(wert)
-        geld = betrag_lesen(text[stellen[-1].start():treffer.start()])
+        abschnitt = text[stellen[-1].start():treffer.start()]
+        geld = betrag_lesen(abschnitt)
         if geld and geld >= BETRAGSSCHWELLE:
             betraege[vorlage] = max(betraege.get(vorlage, 0), geld)
-    return dict(ergebnisse), betraege
+        wortlaut = beschlusstext(abschnitt)
+        if wortlaut and len(wortlaut) > len(texte.get(vorlage, "")):
+            texte[vorlage] = wortlaut
+    return dict(ergebnisse), betraege, texte
 
 
 def einordnungen_laden() -> dict:
@@ -214,6 +241,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
 
     ergebnisse: dict[str, dict[str, list[str]]] = collections.defaultdict(dict)
     betraege: dict[tuple[str, str], float] = {}
+    wortlaute: dict[tuple[str, str], str] = {}
     for s in sitzungen:
         datum = s["start"][:10]
         if datum > stichtag or not s["protokolle"]:
@@ -222,11 +250,14 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
         for pdf in protokolle.get(datum, []):
             if pdf.stem != erwartet and not pdf.stem.startswith(erwartet + "_"):
                 continue
-            werte_je_vorlage, geld_je_vorlage = beschluesse_je_sitzung(pdf_text(pdf))
+            werte_je_vorlage, geld_je_vorlage, texte_je_vorlage = \
+                beschluesse_je_sitzung(pdf_text(pdf))
             for vorlage, werte in werte_je_vorlage.items():
                 ergebnisse[datum].setdefault(vorlage, []).extend(werte)
             for vorlage, geld in geld_je_vorlage.items():
                 betraege[(datum, vorlage)] = max(betraege.get((datum, vorlage), 0), geld)
+            for vorlage, wortlaut in texte_je_vorlage.items():
+                wortlaute[(datum, vorlage)] = wortlaut
 
     # Punkte zu Vorgängen bündeln: bevorzugt über den Namen des Vorhabens,
     # sonst über die Vorlagennummer, sonst als Einzelpunkt.
@@ -264,6 +295,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
                 "t": p["titel"],
                 "a": ausgabe_zu(p["datum"], zeitraeume),
                 "b": betraege.get((p["datum"], p["vorlage"] or ""), 0),
+                "w": wortlaute.get((p["datum"], p["vorlage"] or ""), ""),
             })
         if schluessel.startswith("@"):
             name = namen[schluessel[1:]]
@@ -370,6 +402,12 @@ article.vorgang{{
 }}
 .achse{{
   display:flex;flex-wrap:wrap;gap:0;margin:12px 0 0;
+}}
+.achse .wortlaut{{
+  flex:1 1 100%;margin:2px 0 12px;padding-left:12px;
+  border-left:2px solid var(--rule);max-width:74ch;
+  font-family:"IBM Plex Serif",Georgia,serif;font-size:14.5px;line-height:1.55;
+  color:var(--ink-2);
 }}
 .station{{
   display:flex;align-items:baseline;gap:9px;
@@ -484,6 +522,11 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
   Die Kette zeigt jede Station: Datum, Gremium und — wo ein Beschlussprotokoll
   vorliegt — das Abstimmungsergebnis. Die Schreibweise <span class="mono">25 : 0 : 1</span>
   steht f&uuml;r Ja : Nein : Enthaltungen.</p>
+  <p>Unter jeder Station steht der <b>beschlossene Wortlaut</b> — der Text, den das
+  Gremium tatsächlich gefasst hat. Er ist aussagekräftiger als die Überschrift, die
+  nur den Verwaltungsvorgang benennt. Angezeigt werden rund 340 Zeichen;
+  <b>durchsucht wird der vollständige Beschluss</b>, und wenn der Treffer hinter der
+  Kürzung liegt, erscheint der ganze Text. Maßgeblich bleibt das Protokoll.</p>
   <p><b>Beträge sind Fundstellen, keine Kostenangaben.</b> Angezeigt wird der größte
   im Beschlusstext genannte Betrag ab 250.000 &euro;. Das kann der Preis eines
   Vorhabens sein, aber ebenso ein Haushaltsansatz oder eine Planungsgröße — bei
@@ -524,6 +567,12 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
   var ERSATZ = {{ "ä":"ae", "ö":"oe", "ü":"ue", "ß":"ss",
                  "„":'"', "“":'"', "»":'"', "«":'"' }};
 
+  function kuerzen(t, grenze){{
+    if(t.length <= grenze) return t;
+    var schnitt = t.lastIndexOf(". ", grenze);
+    return (schnitt > grenze / 2 ? t.slice(0, schnitt + 1) : t.slice(0, grenze).trim()) + " …";
+  }}
+
   function euro(n){{
     return n.toLocaleString("de-DE", {{maximumFractionDigits:0}}) + " \u20AC";
   }}
@@ -547,7 +596,7 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
     karte.push(lower.length);   // Endmarke
     return [aus, karte];
   }}
-  daten.forEach(function(v){{ v._s = normal(v.t + " " + v.v + " " + (v.u||"") + " " + v.s.map(function(s){{return s.t;}}).join(" ")); }});
+  daten.forEach(function(v){{ v._s = normal(v.t + " " + v.v + " " + (v.u||"") + " " + v.s.map(function(s){{return s.t + " " + (s.w||"");}}).join(" ")); }});
 
   function hervorheben(text, woerter){{
     var e = document.createElement("span");
@@ -684,6 +733,17 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
           st.appendChild(e);
         }}
         achse.appendChild(st);
+        if(s.w){{
+          var w = document.createElement("p");
+          w.className = "wortlaut";
+          // Gesucht wird im vollen Wortlaut, angezeigt eine gekuerzte Fassung —
+          // es sei denn, der Treffer liegt hinter der Kuerzung.
+          var kurz = kuerzen(s.w, 340);
+          var zeigen = (woerter.length && normal(kurz).indexOf(woerter[0]) === -1
+                        && normal(s.w).indexOf(woerter[0]) > -1) ? s.w : kurz;
+          w.appendChild(hervorheben(zeigen, woerter));
+          achse.appendChild(w);
+        }}
       }});
       d.appendChild(achse);
       liste.appendChild(d);

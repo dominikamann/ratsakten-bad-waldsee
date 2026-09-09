@@ -155,6 +155,13 @@ Verfahren. Zusätzlich lässt sich nach der Höhe des im Beschluss genannten Bet
 filtern — 21 Vorgänge nennen eine Million Euro oder mehr. Jeder Treffer und jede
 Station führt zur Ausgabe der jeweiligen Woche.
 
+Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
+tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst
+der Beschlusstext sagt, worum es geht. Aus „Sanierungsgebiet Altstadt III –
+3. Änderungssatzung" wird so: *„Die Durchführungsfrist für das Erweiterungsgebiet
+wird bis zum 30.04.2028 festgelegt."* Angezeigt werden rund 340 Zeichen,
+durchsucht wird der vollständige Beschluss.
+
 Mitdurchsucht werden auch die redaktionellen **Einordnungen**. Sie verbinden
 mehrere Vorgänge über die Zeit — etwa den Befund, dass Bad Waldsee binnen elf
 Monaten dreimal in Folge das Einvernehmen für Windkraft versagt hat. Aus den
