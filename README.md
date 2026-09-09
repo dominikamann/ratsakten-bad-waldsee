@@ -236,7 +236,6 @@ belasten.
 - [x] Automatischer Lauf per GitHub Action (`.github/workflows/aktenlage.yml`)
 - [x] Archiv der bisherigen Ausgaben
 - [x] Rohdaten zum Nachrechnen (`data/csv/`, siehe unten)
-- [ ] Übertragung auf weitere Kommunen mit demselben Systemhersteller
 
 ## Haftungsausschluss
 
