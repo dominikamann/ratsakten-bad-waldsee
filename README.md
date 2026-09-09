@@ -116,8 +116,8 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │   └── ausgaben/
 │       ├── index.html    Archiv über alle Jahrgänge
 │       └── 2026/         kw03.html … kw37.html
-├── src/        Vorlagen (bauen Diagramme und Listen per JavaScript auf)
-├── scripts/    die Verarbeitungskette, Schritt 01 bis 04
+├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
+├── scripts/    die Verarbeitungskette, Schritt 01 bis 06
 └── data/       Rohdaten und die 74 heruntergeladenen Protokolle
 ```
 
@@ -127,7 +127,8 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 uv run --with requests                       python scripts/02_protokolle_laden.py
 uv run --with pypdf                          python scripts/03_auswerten.py
-uv run --with pypdf                          python scripts/05_ausgaben_bauen.py --jahr 2026
+uv run --with pypdf                          python scripts/05_ausgaben_bauen.py
+uv run                                       python scripts/06_startseite_bauen.py
 npm install jsdom && node scripts/04_vorrendern.js
 ```
 
@@ -140,6 +141,27 @@ Schritt 3 gibt sämtliche Kennzahlen des Reports auf der Konsole aus und schreib
 sie nach `data/kennzahlen.json`. Wer eine Angabe im Report nachrechnen will,
 findet die Rechenregel in `scripts/03_auswerten.py` — jede Zahl entsteht dort
 und nur dort.
+
+## Eine neue Woche hinzufügen
+
+```bash
+uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
+uv run --with requests                       python scripts/02_protokolle_laden.py
+uv run --with pypdf                          python scripts/03_auswerten.py
+uv run --with pypdf                          python scripts/05_ausgaben_bauen.py
+uv run                                       python scripts/06_startseite_bauen.py
+```
+
+Mehr ist nicht zu tun — keine Datei wird von Hand angefasst. Jahr und Redaktions-
+schluss nehmen die Skripte vom Tagesdatum.
+
+* Schritt 2 lädt nur, was fehlt. Protokolle erscheinen typischerweise drei bis vier
+  Tage nach der Sitzung; ältere Ausgaben füllen sich also nachträglich.
+* Schritt 5 erzeugt die neue Ausgabe und aktualisiert das Archiv. Der Berichtszeitraum
+  schließt lückenlos an die vorige Ausgabe an, auch wenn Wochen ohne Sitzung
+  dazwischenliegen.
+* Schritt 6 zieht Kennzahlen und den Link auf die neueste Ausgabe nach.
+* Schritt 4 wird nur gebraucht, wenn der Report neu gebaut werden soll.
 
 Die Abfragen sind bewusst mit Pausen versehen, um die Server der Stadt nicht zu
 belasten.

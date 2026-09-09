@@ -134,7 +134,7 @@ def einordnungen_laden() -> dict:
 
 # ------------------------------------------------------------------ Sammeln
 
-def wochen_sammeln(jahr: int, bis: str) -> dict[int, dict]:
+def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[int, dict]:
     sitzungen = json.loads((DATEN / "sitzungen.json").read_text(encoding="utf-8"))
     punkte = json.loads((DATEN / "topmap.json").read_text(encoding="utf-8"))
     titel_je_vorlage = {p["vorlage"]: p["titel"] for p in punkte if p["vorlage"]}
@@ -184,13 +184,26 @@ def wochen_sammeln(jahr: int, bis: str) -> dict[int, dict]:
     if stichtag.year == jahr:
         wochen[stichtag.isocalendar()[1]]  # legt bei Bedarf eine leere Woche an
 
-    # Berichtszeitraum: vom Ende der vorigen Ausgabe bis zum Ende dieser Woche.
-    reihenfolge = sorted(wochen)
-    for i, kw in enumerate(reihenfolge):
+    # Berichtszeitraum: vom Ende der vorigen erschienenen Ausgabe bis zum Ende
+    # dieser Woche. Der Anschluss haengt am tatsaechlichen Ende der Vorgaenger-
+    # ausgabe aus dem Register, nicht am Sonntag ihrer Kalenderwoche — sonst
+    # entsteht eine Luecke, wenn eine Ausgabe vor dem Wochenende Redaktions-
+    # schluss hatte, oder eine Ueberschneidung, wenn eine sitzungsfreie Woche
+    # in diesem Lauf nicht noch einmal erzeugt wird.
+    enden = {int(k): dt.date.fromisoformat(v["bis_iso"])
+             for k, v in (erschienen or {}).items() if v.get("bis_iso")}
+
+    letztes_ende: dt.date | None = None
+    for kw in sorted(wochen):
         w = wochen[kw]
-        beginn = (dt.date.fromisocalendar(jahr, reihenfolge[i - 1], 7) + dt.timedelta(days=1)
-                  if i else dt.date.fromisocalendar(jahr, kw, 1))
+        frueher = [d for k, d in enden.items() if k < kw]
+        anker = max(frueher) if frueher else None
+        if letztes_ende and (anker is None or letztes_ende > anker):
+            anker = letztes_ende
+        beginn = (anker + dt.timedelta(days=1) if anker
+                  else dt.date.fromisocalendar(jahr, kw, 1))
         ende = min(dt.date.fromisocalendar(jahr, kw, 7), stichtag)
+        letztes_ende = ende
         w["von"], w["bis"] = beginn, ende
         # Sitzungen ohne Protokoll aus dem gesamten Berichtszeitraum aufnehmen,
         # nicht nur aus der Kalenderwoche selbst.
@@ -515,11 +528,11 @@ def main() -> None:
 
     ordner = AUSGABEN / str(args.jahr)
     ordner.mkdir(parents=True, exist_ok=True)
-    wochen = wochen_sammeln(args.jahr, args.bis)
     einordnungen = einordnungen_laden()
 
     register = register_lesen()
     register.setdefault(str(args.jahr), {})
+    wochen = wochen_sammeln(args.jahr, args.bis, register[str(args.jahr)])
 
     for kw, w in wochen.items():
         schluessel = f"{args.jahr}-kw{kw:02d}"
@@ -527,6 +540,8 @@ def main() -> None:
         (ordner / f"kw{kw:02d}.html").write_text(text, encoding="utf-8")
         register[str(args.jahr)][f"{kw:02d}"] = {
             "zeitraum": f"{w['von'].strftime('%d.%m.')}–{w['bis'].strftime('%d.%m.%Y')}",
+            "von_iso": w["von"].isoformat(),
+            "bis_iso": w["bis"].isoformat(),
             "sitzungen": len(w["sitzungen"]),
             "beschluesse": len(w["beschluesse"]),
             "ohne_protokoll": len(w["blind"]),

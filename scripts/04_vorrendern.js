@@ -38,11 +38,9 @@ const TOOLTIP_JS = `
   }
 })();`;
 
-/* Die woechentlichen Ausgaben entstehen in Schritt 05 und sind bereits statisch.
-   Hier laufen nur die Seiten durch, die ihren Inhalt per JavaScript aufbauen. */
+/* Die woechentlichen Ausgaben entstehen in Schritt 05, die Startseite in Schritt 06 —
+   beide sind bereits statisch. Hier laeuft nur durch, was Inhalt per JavaScript aufbaut. */
 const SEITEN = [
-  ["index.html", "index.html",
-   "Ratsakten Bad Waldsee — Lernprojekt zur Auswertung kommunaler Sitzungsunterlagen."],
   ["report.html", "report/2026-09-09.html",
    "Datenanalyse der Gremienarbeit der Stadt Bad Waldsee, Januar 2024 bis September 2026."],
 ];
