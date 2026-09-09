@@ -174,6 +174,21 @@ Die Tabellen enthalten bewusst keine Dokument-Links: Die URLs des
 Ratsinformationssystems sind nicht dauerhaft gültig. Stabile Kennung ist die
 Vorlagennummer.
 
+## Woher eine Aussage stammt
+
+Jede Aussage ist einer von drei Arten zugeordnet:
+
+| Marke | Bedeutung | Belastbarkeit |
+|---|---|---|
+| **Beleg** | wörtlich aus einem Dokument | am Original nachprüfbar |
+| **Regelbasiert** | maschinell gezählt, ohne Bewertung | durch erneutes Ausführen reproduzierbar |
+| **KI-Deutung** | maschinell erzeugte Einordnung — Auswahl, Verknüpfung, Gewichtung | **nicht redaktionell geprüft** |
+
+Die Kapitel 01 bis 04 des Reports und die Rubrik „Auffälligkeiten“ der Ausgaben
+sind regelbasiert. Die Befunde, die 50 Fundstücke, die zehn kritischen
+Beobachtungen und die wöchentlichen Einordnungen sind **KI-Deutungen**: Ihre
+Zahlen sind belegt, die daraus gezogene Schlussfolgerung ist es nicht.
+
 ## Belegbarkeit
 
 Jede Aussage im Report ist auf ein Originaldokument zurückführbar:

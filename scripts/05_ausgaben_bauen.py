@@ -433,6 +433,14 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # --- Redaktionelle Einordnung, falls hinterlegt
     if einordnung:
         absaetze = "\n".join(f"    <p>{e(a)}</p>" for a in einordnung.get("absaetze", []))
+        geprueft = einordnung.get("status") == "geprueft"
+        marke = ('<p class="herkunft geprueft">Redaktionell geprüft</p>' if geprueft else
+                 '<p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>')
+        fussnote = ("" if geprueft else
+                    '\n    <p class="note">Dieser Abschnitt ist eine maschinell erzeugte '
+                    'Einordnung. Die genannten Zahlen und Beschlüsse stammen aus den '
+                    'Protokollen und sind dort nachprüfbar; die Verknüpfung und Gewichtung '
+                    'wurde nicht von einem Menschen geprüft.</p>')
         t.append(f"""
 <article>
   <div class="rail">
@@ -441,8 +449,9 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
   <div class="body-col">
     <p class="rubrik">{e(einordnung.get('rubrik', 'Zur Lage'))}</p>
+    {marke}
     <h2 class="headline">{e(einordnung.get('titel', ''))}</h2>
-{absaetze}
+{absaetze}{fussnote}
   </div>
 </article>""")
 
@@ -484,6 +493,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
   <div class="body-col">
     <p class="rubrik">Auffälligkeiten</p>
+    <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
     <h2 class="headline">Wo sich Hinschauen lohnt</h2>
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit

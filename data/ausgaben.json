@@ -36,7 +36,7 @@
     "GA",
     "GR"
    ],
-   "einordnung": true
+   "einordnung": false
   },
   "09": {
    "zeitraum": "09.02.–01.03.2026",
@@ -61,7 +61,7 @@
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "einordnung": true
   },
   "11": {
    "zeitraum": "09.03.–15.03.2026",
@@ -98,7 +98,7 @@
     "VA",
     "—"
    ],
-   "einordnung": false
+   "einordnung": true
   },
   "16": {
    "zeitraum": "30.03.–19.04.2026",
@@ -112,7 +112,7 @@
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "einordnung": true
   },
   "17": {
    "zeitraum": "20.04.–26.04.2026",
@@ -149,7 +149,7 @@
    "gremien": [
     "GR"
    ],
-   "einordnung": false
+   "einordnung": true
   },
   "21": {
    "zeitraum": "18.05.–24.05.2026",
@@ -199,7 +199,7 @@
     "GR",
     "OR"
    ],
-   "einordnung": false
+   "einordnung": true
   },
   "28": {
    "zeitraum": "06.07.–12.07.2026",
@@ -211,7 +211,7 @@
    "gremien": [
     "—"
    ],
-   "einordnung": false
+   "einordnung": true
   },
   "30": {
    "zeitraum": "13.07.–26.07.2026",

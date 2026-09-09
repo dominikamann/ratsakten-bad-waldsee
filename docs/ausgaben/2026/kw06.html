@@ -389,6 +389,16 @@ ul.beschluesse.kompakt li{
 ul.beschluesse.kompakt .sache{
   font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
 }
+
+/* ---------- Herkunft einer Aussage ---------- */
+.herkunft{
+  display:inline-block;margin:0 0 12px;padding:3px 9px;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;
+  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
+}
+.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
+.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
+.herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -416,19 +426,6 @@ ul.beschluesse.kompakt .sache{
   </div>
 </header>
 
-<article>
-  <div class="rail">
-    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">26.01.–08.02.2026</span></div>
-    <div class="field"><span class="lab">Sitzungen</span><span class="val">2</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">Einordnung</p>
-    <h2 class="headline">Die dichteste Sitzung des Jahres</h2>
-    <p>Mit vierzehn Beschlüssen an zwei Tagen ist dies die inhaltsreichste Woche des Jahrgangs. Auf der Tagesordnung standen unter anderem die Wirtschaftspläne der städtischen Eigenbetriebe, die Umsetzung des Ganztagsförderungsgesetzes an den Grundschulen und die Entscheidung über die Teilnahme am Bodo-Ringzug.</p>
-    <p>Die Sitzung begann mit dem Gedenken an den verstorbenen Gemeinderat Franz Daiber und dem Nachrücken eines Mitglieds — der einzige Mandatswechsel durch Todesfall im gesamten ausgewerteten Zeitraum.</p>
-  </div>
-</article>
-
 <article id="auffaelligkeiten">
   <div class="rail">
     <div class="field"><span class="lab">Hinweise</span><span class="val">4</span></div>
@@ -436,6 +433,7 @@ ul.beschluesse.kompakt .sache{
   </div>
   <div class="body-col">
     <p class="rubrik">Auffälligkeiten</p>
+    <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
     <h2 class="headline">Wo sich Hinschauen lohnt</h2>
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit

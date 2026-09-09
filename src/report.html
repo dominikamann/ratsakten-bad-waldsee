@@ -278,6 +278,14 @@ svg{display:block;max-width:100%;height:auto}
 
 /* ---------- Befund ---------- */
 .befund{margin:26px 0;padding:20px 22px;border-left:3px solid var(--flag);background:var(--flag-bg)}
+.herkunft{
+  display:inline-block;margin:0 0 14px;padding:3px 9px;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;
+  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
+}
+.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
+.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
+.herkunft.beleg{color:var(--muted);border-color:var(--rule)}
 .befund .lab{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--flag);margin:0 0 8px;font-weight:500;
@@ -384,6 +392,25 @@ footer a:hover{text-decoration:underline}
   <h2>Woher die Daten stammen</h2>
   <p class="lead-p">Alle Zahlen dieses Reports stammen aus zwei öffentlich erreichbaren Quellen: dem <a href="https://ris.bad-waldsee.de/">Ratsinformationssystem der Stadt Bad Waldsee</a> und den <a href="https://www.bad-waldsee.de/buerger/de/rathaus-service/aktuelles-bekanntmachungen/oeffentliche-bekanntmachungen">öffentlichen Bekanntmachungen</a>. Kein Dokument erforderte einen Zugang, keine Zugangsbeschränkung wurde umgangen.</p>
   <p>Erfasst wurden sämtliche Sitzungstermine des Zeitraums samt Tagesordnungen, Sitzungsvorlagen, Anlagen und Beschlussprotokollen. Die Protokolle wurden im Volltext ausgewertet; Abstimmungsergebnisse stammen aus der Zeile „Ergebnis der Beschlussfassung“, Geldbeträge und Jahresabschlusszahlen aus den Beschlusstexten selbst.</p>
+  <h3>Woher eine Aussage stammt</h3>
+  <p>Jede Aussage in diesem Projekt ist einer von drei Arten zugeordnet, damit
+  erkennbar bleibt, wie belastbar sie ist:</p>
+  <ul class="plain">
+    <li><span class="herkunft beleg">Beleg</span> — wörtlich aus einem Dokument
+    übernommen, etwa ein Beschlusstext oder ein Abstimmungsergebnis. Nachprüfbar
+    am Original.</li>
+    <li><span class="herkunft regel">Regelbasiert</span> — maschinell gezählt oder
+    zugeordnet, nach festen Regeln ohne Bewertung. Reproduzierbar durch erneutes
+    Ausführen der Skripte.</li>
+    <li><span class="herkunft ki">KI-Deutung</span> — maschinell erzeugte
+    Einordnung: Auswahl, Verknüpfung und Gewichtung von Fakten. <b>Nicht
+    redaktionell geprüft.</b> Die zugrunde liegenden Zahlen sind belegt, die
+    daraus gezogene Schlussfolgerung ist es nicht.</li>
+  </ul>
+  <p class="note">Wo keine Marke steht, handelt es sich um beschreibenden Text
+  ohne eigene Tatsachenbehauptung.</p>
+
+  <h3>Weitere Festlegungen</h3>
   <ul class="plain">
     <li><b>Stichtag:</b> 9. September 2026. Bereits terminierte Sitzungen nach diesem Datum sind ausgeschlossen, damit die Protokollquote nicht durch Zukunftstermine verfälscht wird.</li>
     <li><b>Themenzuordnung</b> erfolgt regelbasiert über Stichwörter in den Punktüberschriften, in fester Reihenfolge. Ein Punkt zählt genau einmal, beim ersten Treffer. Mischthemen landen deshalb im zuerst passenden Feld.</li>
@@ -395,6 +422,7 @@ footer a:hover{text-decoration:underline}
 <!-- ===================== TRANSPARENZ ===================== -->
 <section id="transparenz">
   <p class="sec-no">Kapitel 01 — Transparenz</p>
+  <p class="herkunft regel">Regelbasiert ausgezählt · Deutungen sind gesondert gekennzeichnet</p>
   <h2>Wo Beschlüsse nachlesbar sind — und wo nicht</h2>
   <p class="lead-p">Bad Waldsee dokumentiert seine Kerngremien vorbildlich. Der Gemeinderat hat für jede einzelne der 30 Sitzungen im Zeitraum ein öffentliches Beschlussprotokoll veröffentlicht. Beim Gemeinsamen Ausschuss sind es ebenfalls 100 Prozent.</p>
   <p>Unterhalb dieser Ebene bricht die Dokumentation vollständig ab.</p>
@@ -411,6 +439,7 @@ footer a:hover{text-decoration:underline}
 
   <div class="befund">
     <p class="lab">Befund 1 — die Ortschaftsräte sind eine Dokumentationslücke</p>
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
     <p>Die vier Ortschaftsräte <b>Reute-Gaisbeuren, Mittelurbach, Michelwinnaden und Haisterkirch</b> haben im Untersuchungszeitraum zusammen <b>85 Mal öffentlich getagt</b>. Für keine einzige dieser Sitzungen existiert ein Protokoll im Ratsinformationssystem. Ihre Sitzungsseiten enthalten ausschließlich Datum und Ort — keine Tagesordnung, keine Vorlage, kein Dokument.</p>
     <p>Tagesordnungen werden separat als PDF auf der Stadtwebsite bekanntgemacht, bleiben dort aber sehr grob: Ein typischer Ortschaftsrat verhandelt unter den drei Punkten „Informationen Ortsvorsteher“, „Baugesuche“ und „Bekanntgaben/Verschiedenes“. Was zu einem Baugesuch beschlossen wurde, ist nirgends öffentlich nachlesbar.</p>
     <p>Praktisch heißt das: Rund die Hälfte aller öffentlichen Sitzungen der Stadt hinterlässt keine nachvollziehbare Spur — und zwar genau jene, die den Ortsteilen am nächsten sind.</p>
@@ -422,6 +451,7 @@ footer a:hover{text-decoration:underline}
 <!-- ===================== THEMEN ===================== -->
 <section id="themen">
   <p class="sec-no">Kapitel 02 — Themen</p>
+  <p class="herkunft regel">Regelbasiert ausgezählt · Deutungen sind gesondert gekennzeichnet</p>
   <h2>Womit sich die Gremien tatsächlich beschäftigen</h2>
   <p class="lead-p">Vier von zehn Tagesordnungspunkten haben keinen eigenen Sachinhalt. Sie sind Bekanntgaben, Informationen des Oberbürgermeisters, Ehrungen, Verabschiedungen, „Verschiedenes“ oder die Einwohnerfragestunde.</p>
 
@@ -438,6 +468,7 @@ footer a:hover{text-decoration:underline}
 
   <div class="befund">
     <p class="lab">Befund 2 — die Stadt plant vor allem Flächen</p>
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
     <p>Bauleitplanung, Bau und Sanierung zusammen ergeben <b>169 von 616 Punkten</b>. Rechnet man die Formalia heraus, befasst sich der öffentlich dokumentierte Teil der Gremienarbeit zu <b>46 Prozent</b> mit Flächen und Gebäuden. Bad Waldsee verhandelt öffentlich in erster Linie darüber, wo gebaut werden darf.</p>
   </div>
 </section>
@@ -445,6 +476,7 @@ footer a:hover{text-decoration:underline}
 <!-- ===================== ABSTIMMUNGEN ===================== -->
 <section id="abstimmungen">
   <p class="sec-no">Kapitel 03 — Entscheidungsverhalten</p>
+  <p class="herkunft regel">Regelbasiert ausgezählt · Deutungen sind gesondert gekennzeichnet</p>
   <h2>82 Prozent aller Beschlüsse fallen einstimmig</h2>
   <p class="lead-p">Aus den 72 Protokollen ließen sich 333 Abstimmungen auswerten. 274 davon endeten einstimmig. Nur in 59 Fällen gab es Gegenstimmen oder Enthaltungen, in lediglich 24 Fällen mindestens ein Nein.</p>
 
@@ -461,6 +493,7 @@ footer a:hover{text-decoration:underline}
 
   <div class="befund">
     <p class="lab">Befund 3 — 2,3 Millionen Euro gegen den Verwaltungsvorschlag</p>
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
     <p>Am <b>29. Januar 2024</b> lehnte der Gemeinderat die von der Verwaltung vorgeschlagene Variante 1 zur Erweiterung des Gymnasiums mit Kosten von rund <b>10,1 Millionen Euro</b> mit <b>9 zu 18 Stimmen</b> ab. Angenommen wurde stattdessen mit 20 zu 3 Stimmen bei 4 Enthaltungen die Variante 03 mit rund <b>7,80 Millionen Euro</b> — verbunden mit dem Auftrag, Bühne und Nebenräume in die neue Sporthalle zu verlagern.</p>
     <p>Es ist die einzige Entscheidung im gesamten Zeitraum, bei der ein Verwaltungsvorschlag dieser Größenordnung offen durchfiel.</p>
   </div>
@@ -477,6 +510,7 @@ footer a:hover{text-decoration:underline}
 <!-- ===================== FINANZEN ===================== -->
 <section id="finanzen">
   <p class="sec-no">Kapitel 04 — Finanzen</p>
+  <p class="herkunft regel">Regelbasiert ausgezählt · Deutungen sind gesondert gekennzeichnet</p>
   <h2>Ein Haushalt, der wächst, und Abschlüsse, die hinterherhinken</h2>
   <p class="lead-p">Die in den Protokollen festgestellten Jahresabschlüsse ergeben eine durchgehende Zeitreihe von 2018 bis 2023. Die ordentlichen Erträge der Stadt sind in diesen sechs Jahren um gut ein Viertel gestiegen.</p>
 
@@ -504,6 +538,7 @@ footer a:hover{text-decoration:underline}
 
   <div class="befund">
     <p class="lab">Befund 4 — vier Jahre Rückstand, konsequent aufgeholt</p>
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
     <p>Der Jahresabschluss <b>2018</b> wurde erst am <b>3. Juni 2024</b> festgestellt — rund <b>53 Monate</b> nach Fristablauf. Am selben Tag folgte der Abschluss 2019. Am <b>24. März 2025</b> stellte der Gemeinderat die Abschlüsse <b>2020 und 2021 in einer einzigen Sitzung</b> fest, im Dezember 2025 den für 2022, im April 2026 den für 2023.</p>
     <p>Der Verzug schrumpft dabei kontinuierlich: von 53 auf 41, 39, 27, 23 und zuletzt 15 Monate. Die Stadt holt den Rückstand nachweislich auf — eingehalten ist die gesetzliche Frist damit aber weiterhin nicht.</p>
     <p>Die Eigenbetriebe stehen deutlich besser da: Ihre Abschlüsse für 2024 lagen dem Gemeinderat bereits im Oktober 2025 vor, also fristgerecht.</p>
@@ -515,6 +550,7 @@ footer a:hover{text-decoration:underline}
   <p class="sec-no">Kapitel 05 — Fundstücke</p>
   <h2>Die 50 auffälligsten Tagesordnungspunkte</h2>
   <p class="lead-p">Aus 616 Punkten ausgewählt nach Ungewöhnlichkeit, Tragweite, Streitwert oder schlichter Kuriosität. Jeder Eintrag nennt Datum und Gremium; die zugehörigen Unterlagen sind über das Ratsinformationssystem auffindbar.</p>
+  <p class="herkunft ki">KI-Deutung · Auswahl und Begründung nicht redaktionell geprüft</p>
   <p class="note">Abkürzungen: <span class="mono">GR</span> Gemeinderat · <span class="mono">VA</span> Verwaltungsausschuss · <span class="mono">AUT</span> Ausschuss für Umwelt, Technik und Nachhaltigkeit · <span class="mono">GA</span> Gemeinsamer Ausschuss der Verwaltungsgemeinschaft · <span class="mono">AK</span> Arbeitskreis</p>
 
   <ol class="findings" id="findings"></ol>
@@ -526,6 +562,7 @@ footer a:hover{text-decoration:underline}
   <h2>Zehn Punkte, die Fragen aufwerfen</h2>
   <p class="lead-p">Die folgenden Beobachtungen sind <b>keine Vorwürfe</b> und unterstellen niemandem ein Fehlverhalten. Sie benennen Stellen, an denen die Aktenlage Fragen offenlässt, an denen Verfahren formal korrekt, aber in ihrer Wirkung fragwürdig sind, oder an denen die öffentliche Nachvollziehbarkeit endet. Jeder Punkt nennt den Beleg, auf dem er beruht.</p>
 
+  <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
   <ol class="concerns" id="concerns"></ol>
 </section>
 

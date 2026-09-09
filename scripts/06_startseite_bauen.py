@@ -232,6 +232,12 @@ def bauen() -> str:
     <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Weder der Stadtverwaltung noch einzelnen
     Personen wird rechtswidriges oder schuldhaftes Verhalten unterstellt. Einordnungen sind
     gekennzeichnet und stellen die pers&ouml;nliche Einsch&auml;tzung des Autors dar.</p>
+    <p><b>Deutungen sind gekennzeichnet.</b> Wo eine Aussage &uuml;ber das reine
+    Z&auml;hlen hinausgeht — also Fakten ausw&auml;hlt, verkn&uuml;pft oder
+    gewichtet — steht die Marke <i>KI-Deutung</i> daneben. Diese Abschnitte sind
+    maschinell erzeugt und <b>nicht redaktionell gepr&uuml;ft</b>. Die
+    zugrunde liegenden Zahlen stammen aus den Protokollen und sind dort
+    nachpr&uuml;fbar.</p>
     <p><b>Korrekturen sind erw&uuml;nscht</b> und werden zeitnah eingearbeitet. Es besteht
     keine Verbindung zur Stadt Bad Waldsee.</p>
   </div>

@@ -389,6 +389,16 @@ ul.beschluesse.kompakt li{
 ul.beschluesse.kompakt .sache{
   font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
 }
+
+/* ---------- Herkunft einer Aussage ---------- */
+.herkunft{
+  display:inline-block;margin:0 0 12px;padding:3px 9px;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;
+  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
+}
+.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
+.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
+.herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -416,6 +426,22 @@ ul.beschluesse.kompakt .sache{
   </div>
 </header>
 
+<article>
+  <div class="rail">
+    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">04.05.–17.05.2026</span></div>
+    <div class="field"><span class="lab">Sitzungen</span><span class="val">1</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Einordnung</p>
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h2 class="headline">Neues Wohngebiet an der Friedhofstraße, Freibad wird teurer</h2>
+    <p>Der Gemeinderat fasste den Aufstellungsbeschluss für den vorhabenbezogenen Bebauungsplan „Friedhofstraße“ — vorgesehen ist ein allgemeines Wohngebiet nach § 4 BauNVO, die Planung übernimmt das Büro Sieber Consult aus Lindau. Der Beschluss fiel mit 24 Ja-Stimmen bei 3 Enthaltungen.</p>
+    <p>Ebenfalls auf der Tagesordnung: die Gebührenerhöhung für das Strand- und Freibad und die Neuplanung der Tourist-Information. Im Februar 2024 hatte derselbe Rat noch einen ermäßigten Freibad-Tarif für Rentner eingeführt.</p>
+    <p>Der Punkt mit dem größten Bauvolumen war die Erweiterung der Klinik Mayenbad.</p>
+    <p class="note">Dieser Abschnitt ist eine maschinell erzeugte Einordnung. Die genannten Zahlen und Beschlüsse stammen aus den Protokollen und sind dort nachprüfbar; die Verknüpfung und Gewichtung wurde nicht von einem Menschen geprüft.</p>
+  </div>
+</article>
+
 <article id="auffaelligkeiten">
   <div class="rail">
     <div class="field"><span class="lab">Hinweise</span><span class="val">1</span></div>
@@ -423,6 +449,7 @@ ul.beschluesse.kompakt .sache{
   </div>
   <div class="body-col">
     <p class="rubrik">Auffälligkeiten</p>
+    <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
     <h2 class="headline">Wo sich Hinschauen lohnt</h2>
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit

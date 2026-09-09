@@ -1,7 +1,8 @@
 {
-  "_hinweis": "Optionale redaktionelle Einordnung je Ausgabe. Der Generator liefert Struktur und Fakten; hier steht die Deutung, die eine Maschine nicht erfinden kann. Schlüssel: JJJJ-kwNN. Fehlt ein Eintrag, erscheint die Ausgabe ohne Einordnung.",
+  "_hinweis": "Redaktionelle Einordnung je Ausgabe. Der Generator liefert Struktur und Fakten; hier steht die Deutung. Schlüssel: JJJJ-kwNN. Feld 'status': 'ki-deutung' = maschinell erzeugter, noch nicht redaktionell geprüfter Entwurf. 'geprueft' = von einem Menschen kontrolliert und freigegeben. Alle Zahlen stammen aus den Beschlussprotokollen und sind dort nachprüfbar.",
 
   "2026-kw37": {
+    "status": "ki-deutung",
     "rubrik": "Zur Lage",
     "titel": "Sieben Wochen, in denen nichts Nachlesbares entschieden wurde",
     "absaetze": [
@@ -12,21 +13,79 @@
   },
 
   "2026-kw30": {
+    "status": "ki-deutung",
     "rubrik": "Einordnung",
     "titel": "Vier Bauleitplanverfahren an einem Abend — und eine einzige Enthaltung",
     "absaetze": [
       "Der Gemeinderat brachte in seiner Julisitzung gleich vier Planverfahren zum Abschluss: zwei Bebauungspläne als Satzung, zwei Flächennutzungsplan-Änderungen als Feststellungsbeschluss. Vorberaten hatte sie der Ausschuss für Umwelt, Technik und Nachhaltigkeit zwei Wochen zuvor.",
-      "Bei der Erweiterung des Baugebiets „Lohbühl I“ in Bergatreute — rund 3,7 Hektar bislang landwirtschaftliche Fläche werden Wohnbaufläche — gab es die einzige Enthaltung des Abends. Es ist genau das Verfahren, in dem das Regierungspräsidium Tübingen seine Bedenken gegen die Inanspruchnahme hochwertiger landwirtschaftlicher Flächen ausdrücklich aufrechterhalten hatte und eine Privatperson fristgerecht Einspruch eingelegt hatte.",
+      "Bei der Erweiterung des Baugebiets „Lohbühl I“ in Bergatreute — rund 3,7 Hektar bislang landwirtschaftliche Fläche werden Wohnbaufläche — gab es die einzige Enthaltung des Abends (25 : 0 : 1). Es ist genau das Verfahren, in dem das Regierungspräsidium Tübingen seine Bedenken gegen die Inanspruchnahme hochwertiger landwirtschaftlicher Flächen ausdrücklich aufrechterhalten hatte und eine Privatperson fristgerecht Einspruch eingelegt hatte.",
       "Im Gemeinsamen Ausschuss der Verwaltungsgemeinschaft, der einen Tag später endgültig entschied, fiel der Beschluss dann einstimmig."
     ]
   },
 
-  "2026-kw06": {
+  "2026-kw28": {
+    "status": "ki-deutung",
     "rubrik": "Einordnung",
-    "titel": "Die dichteste Sitzung des Jahres",
+    "titel": "Die Enthaltung bei Lohbühl fiel schon im Ausschuss",
     "absaetze": [
-      "Mit vierzehn Beschlüssen an zwei Tagen ist dies die inhaltsreichste Woche des Jahrgangs. Auf der Tagesordnung standen unter anderem die Wirtschaftspläne der städtischen Eigenbetriebe, die Umsetzung des Ganztagsförderungsgesetzes an den Grundschulen und die Entscheidung über die Teilnahme am Bodo-Ringzug.",
-      "Die Sitzung begann mit dem Gedenken an den verstorbenen Gemeinderat Franz Daiber und dem Nachrücken eines Mitglieds — der einzige Mandatswechsel durch Todesfall im gesamten ausgewerteten Zeitraum."
+      "Der Ausschuss für Umwelt, Technik und Nachhaltigkeit beriet sieben Punkte vor, darunter alle vier Bauleitplanverfahren, die der Gemeinderat zwei Wochen später abschloss. Sechs davon gingen einstimmig durch.",
+      "Die Ausnahme war die 21. Änderung des Flächennutzungsplans für „Lohbühl I – Erweiterung“: 11 Ja-Stimmen bei einer Enthaltung. Dieselbe Zurückhaltung wiederholte sich am 20. Juli im Gemeinderat (25 : 0 : 1) — bei allen anderen Punkten beider Sitzungen gab es keine einzige abweichende Stimme.",
+      "Ebenfalls beschlossen: die dritte Ausschreibungsrunde für Photovoltaik-Anlagen auf städtischen Gebäuden, einstimmig. Es ist die dritte Runde seit November 2024."
+    ]
+  },
+
+  "2026-kw27": {
+    "status": "ki-deutung",
+    "rubrik": "Einordnung",
+    "titel": "Die Kampfhundesteuer bleibt — auch die Satzung selbst war nicht unumstritten",
+    "absaetze": [
+      "Stadträtin Lentes beantragte, die gesonderte Besteuerung von Kampfhunden aus der neuen Hundesteuersatzung zu streichen. Der Antrag fiel mit 1 zu 17 Stimmen bei 4 Enthaltungen durch — das deutlichste Abstimmungsergebnis des gesamten Jahrgangs.",
+      "Bemerkenswert ist der zweite Teil: Die Satzung wurde anschließend zwar beschlossen, aber ebenfalls nicht einstimmig (21 : 1 : 0). Es blieb also eine Gegenstimme, nachdem der Änderungsantrag gescheitert war.",
+      "In derselben Sitzung beschloss der Rat einstimmig die Betriebsplanung für den Stadtwald bis 2035 und die Anpassung der Vergnügungssteuersatzung."
+    ]
+  },
+
+  "2026-kw20": {
+    "status": "ki-deutung",
+    "rubrik": "Einordnung",
+    "titel": "Neues Wohngebiet an der Friedhofstraße, Freibad wird teurer",
+    "absaetze": [
+      "Der Gemeinderat fasste den Aufstellungsbeschluss für den vorhabenbezogenen Bebauungsplan „Friedhofstraße“ — vorgesehen ist ein allgemeines Wohngebiet nach § 4 BauNVO, die Planung übernimmt das Büro Sieber Consult aus Lindau. Der Beschluss fiel mit 24 Ja-Stimmen bei 3 Enthaltungen.",
+      "Ebenfalls auf der Tagesordnung: die Gebührenerhöhung für das Strand- und Freibad und die Neuplanung der Tourist-Information. Im Februar 2024 hatte derselbe Rat noch einen ermäßigten Freibad-Tarif für Rentner eingeführt.",
+      "Der Punkt mit dem größten Bauvolumen war die Erweiterung der Klinik Mayenbad."
+    ]
+  },
+
+  "2026-kw16": {
+    "status": "ki-deutung",
+    "rubrik": "Einordnung",
+    "titel": "Fünf Windräder abgelehnt — die dritte Verweigerung in Folge",
+    "absaetze": [
+      "Der Gemeinderat versagte das gemeindliche Einvernehmen zur Errichtung von fünf Windkraftanlagen bei Osterhofen. Der Beschluss fiel mit 19 zu 5 Stimmen bei einer Enthaltung — es ist die dritte Windkraft-Verweigerung binnen elf Monaten und jedes Mal gab es Gegenstimmen.",
+      "Zuvor hatte die Stadt bereits im Mai 2025 das Einvernehmen für eine Anlage im Vorranggebiet Aulendorf-Ost versagt (18 : 7) und im März 2026 für Anlagen zwischen Oberurbach und Hittisweiler (21 : 4 : 1). Die Zahl der Gegenstimmen bewegt sich seither zwischen vier und sieben.",
+      "In derselben Sitzung beschloss der Rat den Durchführungsbeschluss für das neue Feuerwehrgebäude Michelwinnaden — mit rund 1,62 Millionen Euro der größte Einzelbetrag der Woche — sowie die Satzung für den Sport- und Gesundheitspark Hopfenweiler (24 : 0 : 2)."
+    ]
+  },
+
+  "2026-kw13": {
+    "status": "ki-deutung",
+    "rubrik": "Einordnung",
+    "titel": "Klimaschutzbudget beschlossen — mit Gebäudesteckbriefen und einer App",
+    "absaetze": [
+      "Der Ausschuss für Umwelt, Technik und Nachhaltigkeit stimmte dem Klimaschutzbudget 2026 zu: Gebäudesteckbriefe zur Erkennung von Sanierungspotenzial für alle Gebäude in Bad Waldsee, eine Sammelbestellung von Photovoltaikanlagen und Wärmepumpen sowie die Einführung der App „Klimataler“, die nachhaltiges Verhalten mit Förderungen belohnen soll.",
+      "Alle drei strittigen Abstimmungen dieser Sitzung endeten mit demselben Ergebnis: 12 Ja-Stimmen bei 2 Enthaltungen. Betroffen waren neben dem Klimaschutzbudget die Satzung für den Sport- und Gesundheitspark Hopfenweiler und ein Entwurfsbeschluss zum Flächennutzungsplan.",
+      "Zwei Enthaltungen bei drei aufeinanderfolgenden Punkten desselben Gremiums — ob es dieselben Personen waren, hält das Beschlussprotokoll nicht fest."
+    ]
+  },
+
+  "2026-kw10": {
+    "status": "ki-deutung",
+    "rubrik": "Einordnung",
+    "titel": "Windkraft zwischen Oberurbach und Hittisweiler abgelehnt",
+    "absaetze": [
+      "Die Große Kreisstadt Bad Waldsee verweigerte den beantragten Windenergieanlagen zwischen Oberurbach und Hittisweiler das gemeindliche Einvernehmen nach § 36 BauGB. Der Beschluss fiel mit 21 zu 4 Stimmen bei einer Enthaltung.",
+      "Es ist die zweite Verweigerung dieser Art: Im Mai 2025 hatte der Rat bereits das Einvernehmen für eine Anlage im Vorranggebiet Aulendorf-Ost versagt, damals mit 18 zu 7 Stimmen. Sechs Wochen nach diesem Beschluss folgte die dritte Ablehnung für Osterhofen.",
+      "Weiter auf der Tagesordnung: die Förderung einer zusätzlichen Großtagespflegestelle, die Sportlerehrung und die vierte Änderungssatzung zur Teilaufhebung des Sanierungsgebiets „Altstadt III“."
     ]
   }
 }

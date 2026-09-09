@@ -389,6 +389,16 @@ ul.beschluesse.kompakt li{
 ul.beschluesse.kompakt .sache{
   font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
 }
+
+/* ---------- Herkunft einer Aussage ---------- */
+.herkunft{
+  display:inline-block;margin:0 0 12px;padding:3px 9px;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;
+  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
+}
+.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
+.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
+.herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -416,6 +426,22 @@ ul.beschluesse.kompakt .sache{
   </div>
 </header>
 
+<article>
+  <div class="rail">
+    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">30.03.–19.04.2026</span></div>
+    <div class="field"><span class="lab">Sitzungen</span><span class="val">3</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Einordnung</p>
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h2 class="headline">Fünf Windräder abgelehnt — die dritte Verweigerung in Folge</h2>
+    <p>Der Gemeinderat versagte das gemeindliche Einvernehmen zur Errichtung von fünf Windkraftanlagen bei Osterhofen. Der Beschluss fiel mit 19 zu 5 Stimmen bei einer Enthaltung — es ist die dritte Windkraft-Verweigerung binnen elf Monaten und jedes Mal gab es Gegenstimmen.</p>
+    <p>Zuvor hatte die Stadt bereits im Mai 2025 das Einvernehmen für eine Anlage im Vorranggebiet Aulendorf-Ost versagt (18 : 7) und im März 2026 für Anlagen zwischen Oberurbach und Hittisweiler (21 : 4 : 1). Die Zahl der Gegenstimmen bewegt sich seither zwischen vier und sieben.</p>
+    <p>In derselben Sitzung beschloss der Rat den Durchführungsbeschluss für das neue Feuerwehrgebäude Michelwinnaden — mit rund 1,62 Millionen Euro der größte Einzelbetrag der Woche — sowie die Satzung für den Sport- und Gesundheitspark Hopfenweiler (24 : 0 : 2).</p>
+    <p class="note">Dieser Abschnitt ist eine maschinell erzeugte Einordnung. Die genannten Zahlen und Beschlüsse stammen aus den Protokollen und sind dort nachprüfbar; die Verknüpfung und Gewichtung wurde nicht von einem Menschen geprüft.</p>
+  </div>
+</article>
+
 <article id="auffaelligkeiten">
   <div class="rail">
     <div class="field"><span class="lab">Hinweise</span><span class="val">5</span></div>
@@ -423,6 +449,7 @@ ul.beschluesse.kompakt .sache{
   </div>
   <div class="body-col">
     <p class="rubrik">Auffälligkeiten</p>
+    <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
     <h2 class="headline">Wo sich Hinschauen lohnt</h2>
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
