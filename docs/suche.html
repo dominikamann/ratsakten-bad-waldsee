@@ -496,6 +496,20 @@ a.station:hover .grem{border-color:var(--s1)}
 .titellink:hover{color:var(--s1);border-bottom-color:var(--s1)}
 .vorgang.istEinordnung{border-left:3px solid var(--flag);padding-left:18px;background:var(--flag-bg)}
 .vorgang .einleitung{margin:8px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:74ch}
+.gekuerzt{
+  display:-webkit-box;-webkit-box-orient:vertical;
+  -webkit-line-clamp:var(--zeilen,4);line-clamp:var(--zeilen,4);overflow:hidden;
+}
+.gekuerzt.offen{-webkit-line-clamp:unset;line-clamp:unset;display:block}
+button.mehr{
+  display:block;margin:6px 0 0;padding:3px 9px;
+  background:transparent;color:var(--s1);border:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;
+  text-transform:uppercase;cursor:pointer;
+}
+button.mehr:hover{border-color:var(--s1)}
+button.mehr:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.achse button.mehr{flex:0 0 auto;margin-left:12px}
 .betrag{
   padding:1px 7px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
   font-variant-numeric:tabular-nums;color:var(--s2);border:1px solid var(--s2);
@@ -521,6 +535,8 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
     <a href="./index.html">Startseite</a>
     <span aria-hidden="true">/</span>
     <a href="./suche.html" aria-current="page">Suche</a>
+    <span aria-hidden="true">/</span>
+    <a href="./befunde.html">Befunde</a>
     <span aria-hidden="true">/</span>
     <a href="./ausgaben/index.html">Archiv</a>
   </nav>
@@ -622,10 +638,35 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
   var ERSATZ = { "ä":"ae", "ö":"oe", "ü":"ue", "ß":"ss",
                  "„":'"', "“":'"', "»":'"', "«":'"' };
 
-  function kuerzen(t, grenze){
-    if(t.length <= grenze) return t;
-    var schnitt = t.lastIndexOf(". ", grenze);
-    return (schnitt > grenze / 2 ? t.slice(0, schnitt + 1) : t.slice(0, grenze).trim()) + " …";
+  /* Der volle Text steht immer im Dokument — er wird nur optisch auf wenige
+     Zeilen begrenzt. So bleibt er durchsuchbar und kopierbar, und ein Klick
+     zeigt ihn ganz. Liegt ein Suchtreffer hinter der Begrenzung, klappt der
+     Text von selbst auf. */
+  function aufklappbar(behaelter, element, zeilen){
+    element.style.setProperty("--zeilen", zeilen);
+    element.classList.add("gekuerzt");
+    var knopf = document.createElement("button");
+    knopf.type = "button";
+    knopf.className = "mehr";
+    knopf.textContent = "vollständig anzeigen";
+    knopf.addEventListener("click", function(){
+      var offen = element.classList.toggle("offen");
+      knopf.textContent = offen ? "weniger anzeigen" : "vollständig anzeigen";
+      knopf.setAttribute("aria-expanded", offen ? "true" : "false");
+    });
+    knopf.setAttribute("aria-expanded", "false");
+    behaelter.appendChild(knopf);
+    // Nach dem Einfuegen pruefen, ob ueberhaupt gekuerzt wird
+    requestAnimationFrame(function(){
+      var beschnitten = element.scrollHeight - element.clientHeight > 4;
+      var treffer = element.querySelector("mark");
+      if(!beschnitten){ knopf.remove(); element.classList.remove("gekuerzt"); return; }
+      if(treffer && treffer.offsetTop > element.clientHeight - 8){
+        element.classList.add("offen");
+        knopf.textContent = "weniger anzeigen";
+        knopf.setAttribute("aria-expanded", "true");
+      }
+    });
   }
 
   function euro(n){
@@ -734,7 +775,7 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
       } else if(teile.length){
         nr.appendChild(hervorheben(v.v, woerter));
       }
-      if(v.u && v.u !== v.t){
+      if(v.art !== "einordnung" && v.u && v.u !== v.t){
         var u = document.createElement("span");
         u.className = "untertitel";
         u.textContent = (teile.length ? " — " : "") + v.u;
@@ -752,8 +793,9 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
       if(v.art === "einordnung"){
         var txt = document.createElement("p");
         txt.className = "einleitung";
-        txt.appendChild(hervorheben(v.u.slice(0, 320) + (v.u.length > 320 ? " …" : ""), woerter));
+        txt.appendChild(hervorheben(v.u, woerter));
         d.appendChild(txt);
+        aufklappbar(d, txt, 6);
         liste.appendChild(d);
         return;
       }
@@ -791,13 +833,9 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
         if(s.w){
           var w = document.createElement("p");
           w.className = "wortlaut";
-          // Gesucht wird im vollen Wortlaut, angezeigt eine gekuerzte Fassung —
-          // es sei denn, der Treffer liegt hinter der Kuerzung.
-          var kurz = kuerzen(s.w, 340);
-          var zeigen = (woerter.length && normal(kurz).indexOf(woerter[0]) === -1
-                        && normal(s.w).indexOf(woerter[0]) > -1) ? s.w : kurz;
-          w.appendChild(hervorheben(zeigen, woerter));
+          w.appendChild(hervorheben(s.w, woerter));
           achse.appendChild(w);
+          aufklappbar(achse, w, 4);
         }
       });
       d.appendChild(achse);

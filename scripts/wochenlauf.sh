@@ -39,26 +39,29 @@ case "$CODE" in
 esac
 
 # --- Verarbeitungskette -------------------------------------------------------
-log "1/7  Sitzungen und Tagesordnungen laden"
+log "1/8  Sitzungen und Tagesordnungen laden"
 uv run --quiet --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 
-log "2/7  Neue Protokolle laden"
+log "2/8  Neue Protokolle laden"
 uv run --quiet --with requests python scripts/02_protokolle_laden.py
 
-log "3/7  Kennzahlen berechnen"
+log "3/8  Kennzahlen berechnen"
 uv run --quiet --with pypdf python scripts/03_auswerten.py 2>/dev/null | head -3
 
-log "4/7  Ausgaben erzeugen"
+log "4/8  Ausgaben erzeugen"
 uv run --quiet --with pypdf python scripts/05_ausgaben_bauen.py 2>/dev/null | tail -2
 
-log "5/7  Tabellen und Suche erzeugen"
+log "5/8  Tabellen und Suche erzeugen"
 uv run --quiet --with pypdf python scripts/07_tabellen_bauen.py 2>/dev/null | tail -4
 uv run --quiet --with pypdf python scripts/08_suche_bauen.py
 
-log "6/7  Startseite erzeugen"
+log "6/8  Befunde sammeln"
+uv run --quiet --with lxml python scripts/09_befunde_bauen.py
+
+log "7/8  Startseite erzeugen"
 uv run --quiet python scripts/06_startseite_bauen.py
 
-log "7/7  Report vorrendern"
+log "8/8  Report vorrendern"
 node scripts/04_vorrendern.js | tail -1
 
 # --- Pruefen ------------------------------------------------------------------

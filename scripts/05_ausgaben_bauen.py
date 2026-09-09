@@ -144,7 +144,7 @@ SEITENFUSS = re.compile(
 TRENNUNG = re.compile(r"(\w)-\s+(?!(?:und|oder|bzw|sowie|als|wie)\b)([a-zäöüß])")
 
 
-def beschlusstext(abschnitt: str, grenze: int = 340) -> str:
+def beschlusstext(abschnitt: str, grenze: int = 1400) -> str:
     """Den beschlossenen Wortlaut aus dem Protokollabschnitt herausloesen."""
     treffer = list(EINLEITUNG.finditer(abschnitt))
     if not treffer:
@@ -413,6 +413,7 @@ def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
     navigation = ("\n    <span aria-hidden=\"true\">/</span>\n    ".join([
         eintrag("index.html", "Startseite", "start"),
         eintrag("suche.html", "Suche", "suche"),
+        eintrag("befunde.html", "Befunde", "befunde"),
         eintrag("ausgaben/index.html", "Archiv", "archiv"),
     ]))
     return f"""<meta charset="utf-8">

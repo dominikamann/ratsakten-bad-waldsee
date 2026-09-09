@@ -1,0 +1,693 @@
+<meta charset="utf-8">
+<title>Befunde</title>
+<style>/* Selbst ausgelieferte Schriften. Kein Abruf bei Dritten, damit beim Besuch
+   keine IP-Adresse an einen fremden Server geht. ./ wird beim Erzeugen
+   durch den relativen Weg zum docs-Verzeichnis ersetzt. */
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:500;font-display:swap;
+  src:url(./fonts/Archivo-500-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:500;font-display:swap;
+  src:url(./fonts/Archivo-500-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:600;font-display:swap;
+  src:url(./fonts/Archivo-600-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:600;font-display:swap;
+  src:url(./fonts/Archivo-600-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:700;font-display:swap;
+  src:url(./fonts/Archivo-700-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:700;font-display:swap;
+  src:url(./fonts/Archivo-700-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:800;font-display:swap;
+  src:url(./fonts/Archivo-800-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'Archivo';font-style:normal;font-weight:800;font-display:swap;
+  src:url(./fonts/Archivo-800-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url(./fonts/IBMPlexMono-400-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url(./fonts/IBMPlexMono-400-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url(./fonts/IBMPlexMono-500-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url(./fonts/IBMPlexMono-500-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;
+  src:url(./fonts/IBMPlexMono-600-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;
+  src:url(./fonts/IBMPlexMono-600-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Serif';font-style:italic;font-weight:400;font-display:swap;
+  src:url(./fonts/IBMPlexSerif-400i-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Serif';font-style:italic;font-weight:400;font-display:swap;
+  src:url(./fonts/IBMPlexSerif-400i-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Serif';font-style:normal;font-weight:400;font-display:swap;
+  src:url(./fonts/IBMPlexSerif-400-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Serif';font-style:normal;font-weight:400;font-display:swap;
+  src:url(./fonts/IBMPlexSerif-400-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Serif';font-style:normal;font-weight:500;font-display:swap;
+  src:url(./fonts/IBMPlexSerif-500-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Serif';font-style:normal;font-weight:500;font-display:swap;
+  src:url(./fonts/IBMPlexSerif-500-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Serif';font-style:normal;font-weight:600;font-display:swap;
+  src:url(./fonts/IBMPlexSerif-600-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Serif';font-style:normal;font-weight:600;font-display:swap;
+  src:url(./fonts/IBMPlexSerif-600-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;
+  src:url(./fonts/IBMPlexSans-400-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;
+  src:url(./fonts/IBMPlexSans-400-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;
+  src:url(./fonts/IBMPlexSans-500-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;
+  src:url(./fonts/IBMPlexSans-500-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;
+  src:url(./fonts/IBMPlexSans-600-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;
+  src:url(./fonts/IBMPlexSans-600-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:700;font-display:swap;
+  src:url(./fonts/IBMPlexSans-700-latin-ext.woff2) format('woff2');
+  unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:700;font-display:swap;
+  src:url(./fonts/IBMPlexSans-700-latin.woff2) format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>
+/* Bewusst einfarbig dunkel — keine Themenumschaltung. */
+:root{
+  color-scheme:dark;
+  --plane:#0B0D0F;
+  --surface:#111316;
+  --surface-2:#171A1E;
+  --ink:#EDF1F5;
+  --ink-2:#B4BDC7;
+  --muted:#7F8A96;
+  --rule:#272C32;
+  --s1:#3987e5;
+  --s2:#d95926;
+  --flag:#E08163;
+  --flag-bg:rgba(224,129,99,.10);
+  --bar-bg:#15181C;
+  --bar-ink:#D6DEE7;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--plane);color:var(--ink);
+  font-family:"IBM Plex Serif",Georgia,serif;
+  font-size:17.5px;line-height:1.66;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Marke ---------- */
+.brandbar{
+  background:var(--bar-bg);color:var(--bar-ink);border-bottom:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.brandbar .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;padding:10px 24px}
+.brandbar a{color:var(--s1);text-decoration:none}
+.brandbar a:hover{text-decoration:underline}
+.brandbar b{font-weight:600;letter-spacing:.1em}
+
+/* ---------- Navigation in der Markenleiste ---------- */
+.brandbar .wrap{align-items:center}
+.brandbar nav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.brandbar nav a{color:var(--bar-ink);text-decoration:none;opacity:.85}
+.brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
+.brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
+.brandbar nav span[aria-hidden]{opacity:.35}
+@media (max-width:620px){
+  .brandbar .disclaimer{display:none}
+}
+
+
+/* ---------- Titelkopf ---------- */
+.masthead{padding:52px 0 0}
+.masthead h1{
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:800;
+  font-size:clamp(42px,9vw,84px);line-height:.9;letter-spacing:-.03em;margin:0;
+}
+.masthead .claim{
+  margin:16px 0 0;font-size:18px;color:var(--ink-2);max-width:54ch;
+}
+.issueline{
+  display:flex;flex-wrap:wrap;gap:8px 24px;margin:26px 0 0;padding:13px 0;
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+}
+.issueline b{color:var(--ink);font-weight:600}
+
+/* ---------- Inhalt ---------- */
+.toc{
+  margin:30px 0 0;padding:20px 22px;background:var(--surface);
+  border:1px solid var(--rule);box-shadow:var(--shadow);
+}
+.toc h2{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:500;
+}
+.toc ol{margin:0;padding:0;list-style:none;counter-reset:toc}
+.toc li{
+  display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;
+  padding:6px 0;font-size:16px;
+}
+.toc li::before{
+  counter-increment:toc;content:counter(toc,decimal-leading-zero);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);padding-top:4px;
+}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.toc a:hover{border-bottom-color:var(--s1);color:var(--s1)}
+
+/* ---------- Artikel ---------- */
+article{
+  display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;
+  padding:48px 0;border-bottom:1px solid var(--rule);
+}
+.rail{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.55;
+  color:var(--muted);display:flex;flex-direction:column;gap:15px;
+}
+.rail .field{display:flex;flex-direction:column;gap:2px}
+.rail .lab{font-size:10px;letter-spacing:.13em;text-transform:uppercase;opacity:.8}
+.rail .val{color:var(--ink-2);font-weight:500}
+.body-col{min-width:0}
+.rubrik{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--s2);margin:0 0 12px;
+}
+h2.headline{
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:700;
+  font-size:clamp(26px,3.5vw,36px);line-height:1.1;letter-spacing:-.02em;
+  margin:0 0 16px;text-wrap:balance;
+}
+h3{
+  font-family:Archivo,sans-serif;font-weight:600;font-size:18px;
+  margin:30px 0 9px;letter-spacing:-.005em;
+}
+p{margin:0 0 15px;max-width:66ch}
+a.doc{color:var(--s1);text-decoration:none;border-bottom:1px solid rgba(57,135,229,.4)}
+a.doc:hover{border-bottom-color:var(--s1)}
+a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
+/* ---------- Beschlussliste ---------- */
+ul.beschluesse{margin:20px 0;padding:0;list-style:none}
+ul.beschluesse li{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 18px;
+  padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+}
+ul.beschluesse li:last-child{border-bottom:none}
+ul.beschluesse .sache{font-size:16px;line-height:1.45}
+ul.beschluesse .sache b{font-weight:600}
+ul.beschluesse .sv{
+  display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  color:var(--muted);letter-spacing:.04em;margin-top:3px;
+}
+ul.beschluesse .erg{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
+  color:var(--muted);white-space:nowrap;text-transform:uppercase;
+}
+ul.beschluesse .erg.split{color:var(--flag)}
+
+/* ---------- Kasten ---------- */
+.kasten{
+  margin:24px 0;padding:20px 22px;background:var(--surface);
+  border-left:3px solid var(--s1);box-shadow:var(--shadow);
+}
+.kasten .lab{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--s1);margin:0 0 8px;
+}
+.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
+.kasten.warn .lab{color:var(--flag)}
+.kasten p{margin:0;max-width:62ch}
+.kasten p + p{margin-top:10px}
+
+/* ---------- Tabelle ---------- */
+.tablewrap{overflow-x:auto;margin:22px 0;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:14.5px;font-family:"IBM Plex Serif",serif}
+caption{
+  caption-side:top;text-align:left;padding:12px 15px;background:var(--surface-2);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);
+}
+th,td{padding:9px 15px;text-align:right;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;color:var(--muted)}
+tbody th{font-weight:400;color:var(--ink-2)}
+tbody td{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:13.5px}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
+
+/* ---------- Zahl der Woche ---------- */
+.zahl{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:26px;align-items:center;
+  margin:24px 0;padding:24px 26px;background:var(--surface);
+  border:1px solid var(--rule);box-shadow:var(--shadow);
+}
+.zahl .v{
+  font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(48px,9vw,78px);
+  line-height:.9;letter-spacing:-.035em;color:var(--s2);font-variant-numeric:tabular-nums;
+}
+.zahl p{margin:0;font-size:16px;color:var(--ink-2)}
+.zahl .lab{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 7px;
+}
+
+/* ---------- Vorschau ---------- */
+ol.agenda{margin:18px 0;padding:0;list-style:none;counter-reset:a}
+ol.agenda li{
+  display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:14px;
+  padding:11px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+}
+ol.agenda li:last-child{border-bottom:none}
+ol.agenda li::before{
+  counter-increment:a;content:counter(a);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);
+}
+ol.agenda .art{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap;
+}
+ol.agenda .art.beschluss{color:var(--flag)}
+
+/* ---------- Kolophon / Fuß ---------- */
+.kolophon{padding:46px 0 40px}
+.kolophon h3{margin-top:0}
+.kolophon p,.kolophon li{font-size:15px;color:var(--ink-2)}
+.kolophon ul{padding-left:20px;margin:0 0 16px}
+.kolophon li{margin-bottom:7px;max-width:66ch}
+footer{background:var(--bar-bg);border-top:1px solid var(--rule);padding:32px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline}
+footer p{margin:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.05em;color:var(--muted);max-width:none}
+footer .brand{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bar-ink);font-weight:600}
+footer a{color:var(--s1);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media (max-width:720px){
+  body{font-size:16.5px}
+  article{grid-template-columns:1fr;gap:20px;padding:38px 0}
+  .rail{flex-direction:row;flex-wrap:wrap;gap:8px 22px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+  .zahl{grid-template-columns:1fr;gap:12px}
+  ul.beschluesse li{grid-template-columns:1fr}
+  ol.agenda li{grid-template-columns:24px minmax(0,1fr)}
+  ol.agenda .art{grid-column:2}
+}
+
+/* ---------- Kompakte Liste in den Auffaelligkeiten ---------- */
+ul.beschluesse.kompakt{margin:12px 0 0}
+ul.beschluesse.kompakt li{
+  grid-template-columns:1fr;padding:7px 0;
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 60%,transparent);
+}
+ul.beschluesse.kompakt .sache{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
+}
+
+/* ---------- Herkunft einer Aussage ---------- */
+.herkunft{
+  display:inline-block;margin:0 0 12px;padding:3px 9px;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;
+  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
+}
+.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
+.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
+.herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+
+/* ---------- Im Beschlusstext genannter Betrag ---------- */
+ul.beschluesse .betrag{
+  margin-left:12px;padding:1px 7px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  color:var(--s2);border:1px solid var(--s2);
+  background:color-mix(in srgb, var(--s2) 8%, transparent);
+}
+
+/* ---------- Beschlossener Wortlaut ---------- */
+ul.beschluesse .wortlaut{
+  display:block;margin-top:7px;max-width:72ch;
+  font-family:"IBM Plex Serif",Georgia,serif;font-size:14.5px;line-height:1.55;
+  color:var(--ink-2);
+  padding-left:12px;border-left:2px solid var(--rule);
+}
+</style>
+<style>
+.befundblock{
+  display:block;padding:26px 0 22px;border-bottom:1px solid var(--rule);gap:0;
+}
+.befundblock h3{
+  font-family:Archivo,sans-serif;font-weight:600;font-size:20px;line-height:1.3;
+  margin:0 0 12px;color:var(--ink);letter-spacing:-.01em;
+}
+.befundblock p{max-width:72ch}
+.befundblock .quelle{
+  margin:14px 0 0;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.05em;color:var(--muted);
+}
+.befundblock .evidence{
+  margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.02em;max-width:74ch;
+}
+.gruppe{padding:44px 0 0}
+.gruppe > h2{
+  font-family:Archivo,sans-serif;font-weight:700;font-size:26px;
+  letter-spacing:-.02em;margin:0 0 6px;
+}
+.gruppe > .einleitung{color:var(--ink-2);max-width:70ch;margin:0 0 4px}
+</style>
+
+<div class="brandbar"><div class="wrap">
+  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
+  <nav aria-label="Bereiche">
+    <a href="./index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="./suche.html">Suche</a>
+    <span aria-hidden="true">/</span>
+    <a href="./befunde.html" aria-current="page">Befunde</a>
+    <span aria-hidden="true">/</span>
+    <a href="./ausgaben/index.html">Archiv</a>
+  </nav>
+  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
+</div></div>
+
+<div class="wrap">
+<header class="masthead">
+  <h1>Befunde</h1>
+  <p class="claim">Alles, was über das Auszählen hinausgeht — an einem Ort statt
+  verstreut über Report und Wochenausgaben.</p>
+  <div class="issueline">
+    <span><b>Befunde</b> 4</span>
+    <span><b>kritische Beobachtungen</b> 10</span>
+    <span><b>Einordnungen</b> 8</span>
+    <span><b>Herkunft</b> KI-Deutung</span>
+  </div>
+
+  <div class="kasten warn">
+    <p class="lab">Was auf dieser Seite steht</p>
+    <p>Ausschließlich <b>KI-Deutungen</b>: Auswahl, Verknüpfung und Gewichtung von
+    Fakten, maschinell erzeugt und <b>nicht redaktionell geprüft</b>. Die zugrunde
+    liegenden Zahlen stammen aus den Beschlussprotokollen und sind dort nachprüfbar
+    — die daraus gezogene Schlussfolgerung ist es nicht.</p>
+    <p>Diese Seite erzeugt nichts Neues. Jeder Eintrag verweist auf die Stelle, an
+    der er im Zusammenhang steht.</p>
+  </div>
+</header>
+
+<section class="gruppe">
+  <h2>Kritische Beobachtungen</h2>
+  <p class="einleitung">Stellen, an denen die Aktenlage Fragen offenlässt oder ein
+  Verfahren formal korrekt, in seiner Wirkung aber fragwürdig ist. Keine Vorwürfe —
+  jeder Punkt nennt seinen Beleg.</p>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>85 öffentliche Sitzungen ohne jede Dokumentation</h3>
+    <p>Die vier Ortschaftsräte tagten im Zeitraum 85 Mal öffentlich. Für keine dieser Sitzungen existiert ein Protokoll — weder im Ratsinformationssystem noch auf der Stadtwebsite. Die Sitzungsseiten im System enthalten ausschließlich Datum und Ort.</p>
+    <p>Damit ist für rund die Hälfte aller öffentlichen Sitzungen der Stadt nicht nachvollziehbar, was verhandelt und entschieden wurde. Betroffen sind ausgerechnet die Gremien, die über Baugesuche in den Ortsteilen beraten.</p>
+    <p class="evidence">Belege: 166 erfasste Sitzungen, davon 85 Ortschaftsratssitzungen mit 0 Protokollen und 0 Tagesordnungspunkten im RIS; Stichprobe Ortschaftsrat Reute-Gaisbeuren, 51. Sitzung vom 28.07.2026.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Jahresabschlüsse überschreiten die gesetzliche Frist seit Jahren</h3>
+    <p>§ 95b der Gemeindeordnung für Baden-Württemberg verlangt die Feststellung des Jahresabschlusses binnen zwölf Monaten nach Ende des Haushaltsjahres. Im gesamten Untersuchungszeitraum wurde diese Frist bei keinem einzigen Abschluss eingehalten.</p>
+    <p>Der Abschluss 2018 wurde 53 Monate nach Fristablauf festgestellt, der für 2023 immer noch 15 Monate zu spät. Solange Abschlüsse fehlen, beschließt der Rat Haushalte ohne geprüfte Zahlen der Vorjahre. Anzuerkennen ist: Der Rückstand wird kontinuierlich abgebaut.</p>
+    <p class="evidence">Belege: Feststellungsbeschlüsse vom 03.06.2024 (JA 2018 und 2019), 24.03.2025 (JA 2020 und 2021, SV-20/2025 und SV-21/2025), 01.12.2025 (JA 2022, SV-239/2025), 13.04.2026 (JA 2023, SV-71/2026).</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Ein Baugebiet gegen die aufrechterhaltenen Bedenken der Fachbehörde</h3>
+    <p>Bei der 21. Änderung des Flächennutzungsplans für „Lohbühl I – Erweiterung“ erklärte das Regierungspräsidium Tübingen ausdrücklich, es bestünden „weiterhin Bedenken“ gegen die Inanspruchnahme hochwertiger landwirtschaftlicher Flächen. Die Fläche liegt nach der Flurbilanz 2022 in einer Vorbehaltsflur I.</p>
+    <p>Die Bedenken wurden „zur Kenntnis genommen“, am Beschlussvorschlag änderte sich nichts. Der Gemeinsame Ausschuss beschloss am 21.07.2026 einstimmig. Das Verfahren ist rechtlich zulässig — die Frage ist, welchen Wert eine Fachstellungnahme hat, die folgenlos bleibt.</p>
+    <p class="evidence">Belege: Sitzungsvorlage SV-104/2026; Abwägungs- und Beschlussvorlage vom 09.06.2026, S. 3; Beschlussprotokoll Gemeinsamer Ausschuss vom 21.07.2026.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Die Bedarfsbegründung für 3,7 Hektar hat „nur informellen Charakter“</h3>
+    <p>Gegen dasselbe Baugebiet wandte eine Privatperson ein, die zugrunde gelegte Bevölkerungsprognose sei veraltet. Die Verwaltung antwortete, die neue Vorausberechnung weise für 2040 statt 3.341 nun 3.347 Einwohner aus — eine Differenz von sechs Personen — und die Bauflächenbedarfsberechnung habe „nur informellen Charakter“.</p>
+    <p>Wenn die Bedarfsrechnung informell ist, fehlt der öffentlich nachvollziehbare Nachweis, dass die Umwandlung von 3,7 Hektar Ackerland erforderlich ist. Das ist der Kern des Abwägungsgebots nach § 1 Abs. 7 BauGB.</p>
+    <p class="evidence">Beleg: Abwägungs- und Beschlussvorlage vom 09.06.2026, S. 15.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Kita-Beiträge steigen ohne Beschluss des Gemeinderats</h3>
+    <p>Die Elternbeiträge für Kindertageseinrichtungen steigen zum Kindergartenjahr 2026/2027 um 4,5 Prozent. Der Gemeinderat stimmt darüber nicht ab: Er hat die Verwaltung mit Beschluss vom 14.03.2005 dauerhaft zur Fortschreibung ermächtigt und diese Ermächtigung am 21.10.2025 auf die Ganztagesbetreuung ausgeweitet.</p>
+    <p>Eine 21 Jahre alte Ermächtigung nimmt eine jährlich wiederkehrende Belastung von Familien aus der politischen Debatte. Formal einwandfrei — aber die Vorlage erreicht das Gremium nur noch als Kenntnisnahme.</p>
+    <p class="evidence">Beleg: Sitzungsvorlage SV-132/2026, Gemeinderat 20.07.2026, Beratungsart Kenntnisnahme.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Umwelt- und Fachverbände beteiligen sich nicht</h3>
+    <p>Im Verfahren zu „Lohbühl I“ wurden 36 Behörden und Träger öffentlicher Belange angeschrieben. 14 äußerten sich überhaupt nicht — darunter BUND, NABU, der Landesnaturschutzverband Baden-Württemberg und der Landesbauernverband.</p>
+    <p>Auch die Stadt Bad Waldsee selbst, als beteiligte Kommune angeschrieben, gab keine Stellungnahme ab. Die förmliche Öffentlichkeits- und Behördenbeteiligung erreicht damit einen Teil der Stellen nicht, die sie erreichen soll.</p>
+    <p class="evidence">Beleg: Abwägungs- und Beschlussvorlage vom 09.06.2026, S. 1–2.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Nur zwei namentliche Anträge in 337 Abstimmungen</h3>
+    <p>In den 72 ausgewerteten Protokollen findet sich exakt zweimal, dass ein Ratsmitglied namentlich einen Antrag stellt. 81 Prozent aller Beschlüsse fallen einstimmig.</p>
+    <p>Das kann breiten Konsens abbilden — oder bedeuten, dass die eigentliche Willensbildung außerhalb der öffentlichen Sitzung stattfindet. Aus den Unterlagen allein ist das nicht zu unterscheiden, weil Beschlussprotokolle keine Aussprache festhalten.</p>
+    <p class="evidence">Belege: 337 ausgewertete Abstimmungen, 274 einstimmig; namentliche Anträge am 22.04.2024 (STR Senko) und 29.06.2026 (STRin Lentes).</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Der Flächennutzungsplan von 1998 wird seit 28 Jahren nur fortgeschrieben</h3>
+    <p>Im Zeitraum wurden acht verschiedene Änderungen des Flächennutzungsplans der Verwaltungsgemeinschaft behandelt — die 12., 15., 16., 17., 18., 20., 21. und 22. Eine Gesamtfortschreibung des Plans von 1998 gibt es nicht.</p>
+    <p>Die Verwaltung räumt auf einen Bürgereinwand hin ein, wann eine Fortschreibung erfolgt, liege „in der Entscheidung der beiden Kommunen“. Eine planerische Gesamtschau, an der einzelne Baugebiete gemessen werden könnten, existiert damit nicht.</p>
+    <p class="evidence">Belege: Tagesordnungspunkte der Jahre 2024–2026 zu FNP-Änderungen; Abwägungs- und Beschlussvorlage vom 09.06.2026, Antwort zu Einwand 1.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Ausgaben außerhalb des Haushaltsplans</h3>
+    <p>Drei Vorhaben des Zeitraums wurden ausdrücklich als außer- oder überplanmäßige Ausgabe beschlossen: der Feuerwehr-Gerätewagen (07.10.2024), die Dachsanierung am Baubetriebshof (16.09.2025) und die Abrisse Augustinerstraße 21 und Haslachstraße 26 (10.11.2025).</p>
+    <p>Die Zahl ist für sich genommen unauffällig. Auffällig ist, dass sie in eine Phase fällt, in der eine Haushaltsstrukturkommission nach Einsparpotenzialen sucht und der Haushalt 2025 nur noch 100.000 € Überschuss vorsieht.</p>
+    <p class="evidence">Belege: Tagesordnungspunkte vom 07.10.2024, 16.09.2025 und 10.11.2025; Haushaltssatzung 2025 (Erträge 63.602.500 €, Aufwendungen 63.502.500 €).</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Die Belege sind nicht dauerhaft zitierbar</h3>
+    <p>Sämtliche Dokumentlinks des Ratsinformationssystems enthalten sitzungsgebundene Token. Sie lassen sich nicht stabil verlinken, nicht archivieren und nicht ohne Weiteres von Dritten nachprüfen. Einen offenen Datenzugang, etwa nach dem OParl-Standard, oder einen funktionierenden Newsfeed gibt es nicht.</p>
+    <p>Die Unterlagen sind vollständig öffentlich — aber praktisch nur für den auffindbar, der weiß, wo er suchen muss, und nur solange die Token gültig bleiben. Transparenz endet hier nicht am Zugang, sondern an der Haltbarkeit.</p>
+    <p class="evidence">Belege: URL-Struktur ris.bad-waldsee.de/sdnetrim/&lt;Token&gt;/…; RSS-Feed unter ris.bad-waldsee.de/rss/ ohne Einträge (geprüft am 09.09.2026).</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026</a></p>
+  </article>
+</section>
+
+<section class="gruppe">
+  <h2>Befunde aus der Gesamtauswertung</h2>
+  <p class="einleitung">Was beim Auszählen aller Sitzungen sichtbar wurde und in
+  einer einzelnen Woche nicht zu erkennen ist.</p>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Befund 1 — die Ortschaftsräte sind eine Dokumentationslücke</h3>
+    <p>Die vier Ortschaftsräte  Reute-Gaisbeuren, Mittelurbach, Michelwinnaden und Haisterkirch  haben im Untersuchungszeitraum zusammen  85 Mal öffentlich getagt . Für keine einzige dieser Sitzungen existiert ein Protokoll im Ratsinformationssystem. Ihre Sitzungsseiten enthalten ausschließlich Datum und Ort — keine Tagesordnung, keine Vorlage, kein Dokument.</p>
+    <p>Tagesordnungen werden separat als PDF auf der Stadtwebsite bekanntgemacht, bleiben dort aber sehr grob: Ein typischer Ortschaftsrat verhandelt unter den drei Punkten „Informationen Ortsvorsteher“, „Baugesuche“ und „Bekanntgaben/Verschiedenes“. Was zu einem Baugesuch beschlossen wurde, ist nirgends öffentlich nachlesbar.</p>
+    <p>Praktisch heißt das: Rund die Hälfte aller öffentlichen Sitzungen der Stadt hinterlässt keine nachvollziehbare Spur — und zwar genau jene, die den Ortsteilen am nächsten sind.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026 · Kapitel 01 — Transparenz</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Befund 2 — die Stadt plant vor allem Flächen</h3>
+    <p>Bauleitplanung, Bau und Sanierung zusammen ergeben  169 von 616 Punkten . Rechnet man die Formalia heraus, befasst sich der öffentlich dokumentierte Teil der Gremienarbeit zu  46 Prozent  mit Flächen und Gebäuden. Bad Waldsee verhandelt öffentlich in erster Linie darüber, wo gebaut werden darf.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026 · Kapitel 02 — Themen</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Befund 3 — 2,3 Millionen Euro gegen den Verwaltungsvorschlag</h3>
+    <p>Am  29. Januar 2024  lehnte der Gemeinderat die von der Verwaltung vorgeschlagene Variante 1 zur Erweiterung des Gymnasiums mit Kosten von rund  10,1 Millionen Euro  mit  9 zu 18 Stimmen  ab. Angenommen wurde stattdessen mit 20 zu 3 Stimmen bei 4 Enthaltungen die Variante 03 mit rund  7,80 Millionen Euro  — verbunden mit dem Auftrag, Bühne und Nebenräume in die neue Sporthalle zu verlagern.</p>
+    <p>Es ist die einzige Entscheidung im gesamten Zeitraum, bei der ein Verwaltungsvorschlag dieser Größenordnung offen durchfiel.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026 · Kapitel 03 — Entscheidungsverhalten</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Befund 4 — vier Jahre Rückstand, konsequent aufgeholt</h3>
+    <p>Der Jahresabschluss  2018  wurde erst am  3. Juni 2024  festgestellt — rund  53 Monate  nach Fristablauf. Am selben Tag folgte der Abschluss 2019. Am  24. März 2025  stellte der Gemeinderat die Abschlüsse  2020 und 2021 in einer einzigen Sitzung  fest, im Dezember 2025 den für 2022, im April 2026 den für 2023.</p>
+    <p>Der Verzug schrumpft dabei kontinuierlich: von 53 auf 41, 39, 27, 23 und zuletzt 15 Monate. Die Stadt holt den Rückstand nachweislich auf — eingehalten ist die gesetzliche Frist damit aber weiterhin nicht.</p>
+    <p>Die Eigenbetriebe stehen deutlich besser da: Ihre Abschlüsse für 2024 lagen dem Gemeinderat bereits im Oktober 2025 vor, also fristgerecht.</p>
+    <p class="quelle"><a class="doc" href="./report/2026-09-09.html">Ratsanalyse, Stand 09.09.2026 · Kapitel 04 — Finanzen</a></p>
+  </article>
+</section>
+
+<section class="gruppe">
+  <h2>Einordnungen aus den Wochenausgaben</h2>
+  <p class="einleitung">Was in der jeweiligen Woche bemerkenswert war — oft erst
+  im Vergleich mit früheren Sitzungen erkennbar.</p>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Sieben Wochen, in denen nichts Nachlesbares entschieden wurde</h3>
+    <p>Seit dem 21. Juli hat kein Gremium der Stadt Bad Waldsee ein Beschlussprotokoll veröffentlicht. Getagt wurde trotzdem: Die Ortschaftsräte Reute-Gaisbeuren, Mittelurbach und Michelwinnaden kamen im Juli und August zusammen. Was dort beschlossen wurde, ist öffentlich nicht dokumentiert.</p>
+    <p>Der Gemeinderat selbst pausiert seit seiner Sitzung am 20. Juli. Die erste Sitzung nach der Sommerpause ist der Verwaltungsausschuss am 15. September; der Gemeinderat tagt wieder am 28. September.</p>
+    <p>Diese Ausgabe blickt deshalb zurück auf die letzte Sitzungsrunde vor der Pause — und die hatte es in sich: An zwei aufeinanderfolgenden Tagen wurden vier Bauleitplanverfahren abgeschlossen.</p>
+    <p class="quelle"><a class="doc" href="./ausgaben/2026/kw37.html">Aktenlage KW 37/2026 · 10.08.–09.09.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Vier Bauleitplanverfahren an einem Abend — und eine einzige Enthaltung</h3>
+    <p>Der Gemeinderat brachte in seiner Julisitzung gleich vier Planverfahren zum Abschluss: zwei Bebauungspläne als Satzung, zwei Flächennutzungsplan-Änderungen als Feststellungsbeschluss. Vorberaten hatte sie der Ausschuss für Umwelt, Technik und Nachhaltigkeit zwei Wochen zuvor.</p>
+    <p>Bei der Erweiterung des Baugebiets „Lohbühl I“ in Bergatreute — rund 3,7 Hektar bislang landwirtschaftliche Fläche werden Wohnbaufläche — gab es die einzige Enthaltung des Abends (25 : 0 : 1). Es ist genau das Verfahren, in dem das Regierungspräsidium Tübingen seine Bedenken gegen die Inanspruchnahme hochwertiger landwirtschaftlicher Flächen ausdrücklich aufrechterhalten hatte und eine Privatperson fristgerecht Einspruch eingelegt hatte.</p>
+    <p>Im Gemeinsamen Ausschuss der Verwaltungsgemeinschaft, der einen Tag später endgültig entschied, fiel der Beschluss dann einstimmig.</p>
+    <p class="quelle"><a class="doc" href="./ausgaben/2026/kw30.html">Aktenlage KW 30/2026 · 13.07.–26.07.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Die Enthaltung bei Lohbühl fiel schon im Ausschuss</h3>
+    <p>Der Ausschuss für Umwelt, Technik und Nachhaltigkeit beriet sieben Punkte vor, darunter alle vier Bauleitplanverfahren, die der Gemeinderat zwei Wochen später abschloss. Sechs davon gingen einstimmig durch.</p>
+    <p>Die Ausnahme war die 21. Änderung des Flächennutzungsplans für „Lohbühl I – Erweiterung“: 11 Ja-Stimmen bei einer Enthaltung. Dieselbe Zurückhaltung wiederholte sich am 20. Juli im Gemeinderat (25 : 0 : 1) — bei allen anderen Punkten beider Sitzungen gab es keine einzige abweichende Stimme.</p>
+    <p>Ebenfalls beschlossen: die dritte Ausschreibungsrunde für Photovoltaik-Anlagen auf städtischen Gebäuden, einstimmig. Es ist die dritte Runde seit November 2024.</p>
+    <p class="quelle"><a class="doc" href="./ausgaben/2026/kw28.html">Aktenlage KW 28/2026 · 06.07.–12.07.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Die Kampfhundesteuer bleibt — auch die Satzung selbst war nicht unumstritten</h3>
+    <p>Stadträtin Lentes beantragte, die gesonderte Besteuerung von Kampfhunden aus der neuen Hundesteuersatzung zu streichen. Der Antrag fiel mit 1 zu 17 Stimmen bei 4 Enthaltungen durch — das deutlichste Abstimmungsergebnis des gesamten Jahrgangs.</p>
+    <p>Bemerkenswert ist der zweite Teil: Die Satzung wurde anschließend zwar beschlossen, aber ebenfalls nicht einstimmig (21 : 1 : 0). Es blieb also eine Gegenstimme, nachdem der Änderungsantrag gescheitert war.</p>
+    <p>In derselben Sitzung beschloss der Rat einstimmig die Betriebsplanung für den Stadtwald bis 2035 und die Anpassung der Vergnügungssteuersatzung.</p>
+    <p class="quelle"><a class="doc" href="./ausgaben/2026/kw27.html">Aktenlage KW 27/2026 · 29.06.–05.07.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Neues Wohngebiet an der Friedhofstraße, Freibad wird teurer</h3>
+    <p>Der Gemeinderat fasste den Aufstellungsbeschluss für den vorhabenbezogenen Bebauungsplan „Friedhofstraße“ — vorgesehen ist ein allgemeines Wohngebiet nach § 4 BauNVO, die Planung übernimmt das Büro Sieber Consult aus Lindau. Der Beschluss fiel mit 24 Ja-Stimmen bei 3 Enthaltungen.</p>
+    <p>Ebenfalls auf der Tagesordnung: die Gebührenerhöhung für das Strand- und Freibad und die Neuplanung der Tourist-Information. Im Februar 2024 hatte derselbe Rat noch einen ermäßigten Freibad-Tarif für Rentner eingeführt.</p>
+    <p>Der Punkt mit dem größten Bauvolumen war die Erweiterung der Klinik Mayenbad.</p>
+    <p class="quelle"><a class="doc" href="./ausgaben/2026/kw20.html">Aktenlage KW 20/2026 · 04.05.–17.05.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Fünf Windräder abgelehnt — die dritte Verweigerung in Folge</h3>
+    <p>Der Gemeinderat versagte das gemeindliche Einvernehmen zur Errichtung von fünf Windkraftanlagen bei Osterhofen. Der Beschluss fiel mit 19 zu 5 Stimmen bei einer Enthaltung — es ist die dritte Windkraft-Verweigerung binnen elf Monaten und jedes Mal gab es Gegenstimmen.</p>
+    <p>Zuvor hatte die Stadt bereits im Mai 2025 das Einvernehmen für eine Anlage im Vorranggebiet Aulendorf-Ost versagt (18 : 7) und im März 2026 für Anlagen zwischen Oberurbach und Hittisweiler (21 : 4 : 1). Die Zahl der Gegenstimmen bewegt sich seither zwischen vier und sieben.</p>
+    <p>In derselben Sitzung beschloss der Rat den Durchführungsbeschluss für das neue Feuerwehrgebäude Michelwinnaden — mit rund 1,62 Millionen Euro der größte Einzelbetrag der Woche — sowie die Satzung für den Sport- und Gesundheitspark Hopfenweiler (24 : 0 : 2).</p>
+    <p class="quelle"><a class="doc" href="./ausgaben/2026/kw16.html">Aktenlage KW 16/2026 · 30.03.–19.04.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Klimaschutzbudget beschlossen — mit Gebäudesteckbriefen und einer App</h3>
+    <p>Der Ausschuss für Umwelt, Technik und Nachhaltigkeit stimmte dem Klimaschutzbudget 2026 zu: Gebäudesteckbriefe zur Erkennung von Sanierungspotenzial für alle Gebäude in Bad Waldsee, eine Sammelbestellung von Photovoltaikanlagen und Wärmepumpen sowie die Einführung der App „Klimataler“, die nachhaltiges Verhalten mit Förderungen belohnen soll.</p>
+    <p>Alle drei strittigen Abstimmungen dieser Sitzung endeten mit demselben Ergebnis: 12 Ja-Stimmen bei 2 Enthaltungen. Betroffen waren neben dem Klimaschutzbudget die Satzung für den Sport- und Gesundheitspark Hopfenweiler und ein Entwurfsbeschluss zum Flächennutzungsplan.</p>
+    <p>Zwei Enthaltungen bei drei aufeinanderfolgenden Punkten desselben Gremiums — ob es dieselben Personen waren, hält das Beschlussprotokoll nicht fest.</p>
+    <p class="quelle"><a class="doc" href="./ausgaben/2026/kw13.html">Aktenlage KW 13/2026 · 23.03.–29.03.2026</a></p>
+  </article>
+  <article class="befundblock">
+    <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
+    <h3>Windkraft zwischen Oberurbach und Hittisweiler abgelehnt</h3>
+    <p>Die Große Kreisstadt Bad Waldsee verweigerte den beantragten Windenergieanlagen zwischen Oberurbach und Hittisweiler das gemeindliche Einvernehmen nach § 36 BauGB. Der Beschluss fiel mit 21 zu 4 Stimmen bei einer Enthaltung.</p>
+    <p>Es ist die zweite Verweigerung dieser Art: Im Mai 2025 hatte der Rat bereits das Einvernehmen für eine Anlage im Vorranggebiet Aulendorf-Ost versagt, damals mit 18 zu 7 Stimmen. Sechs Wochen nach diesem Beschluss folgte die dritte Ablehnung für Osterhofen.</p>
+    <p>Weiter auf der Tagesordnung: die Förderung einer zusätzlichen Großtagespflegestelle, die Sportlerehrung und die vierte Änderungssatzung zur Teilaufhebung des Sanierungsgebiets „Altstadt III“.</p>
+    <p class="quelle"><a class="doc" href="./ausgaben/2026/kw10.html">Aktenlage KW 10/2026 · 02.03.–08.03.2026</a></p>
+  </article>
+</section>
+
+<section class="kolophon" style="border-bottom:none">
+  <h3>Warum diese Seite existiert</h3>
+  <p>Die Zahlen dieses Projekts sind auszählbar und reproduzierbar. Was darüber
+  hinausgeht — dass eine Enthaltung ausgerechnet bei dem Verfahren fiel, gegen das
+  eine Fachbehörde Bedenken hatte, oder dass dreimal in Folge dasselbe abgelehnt
+  wurde — entsteht erst durch Vergleich über die Zeit.</p>
+  <p>Solche Aussagen lagen verstreut in einzelnen Wochenausgaben und Kapiteln. Wer
+  sie finden wollte, musste das richtige Stichwort raten. Hier stehen sie
+  zusammen, klar als Deutung gekennzeichnet und jeweils mit Weg zur Quelle.</p>
+  <p class="note">Erzeugt am 09.09.2026 aus
+  <span class="mono">docs/report/2026-09-09.html</span> und
+  <span class="mono">data/einordnungen.json</span>.</p>
+</section>
+</div>
+
+<footer><div class="wrap">
+  <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; sämtlich KI-Deutung</p>
+</div></footer>

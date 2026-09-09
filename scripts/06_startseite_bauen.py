@@ -173,6 +173,8 @@ def bauen() -> str:
     <span aria-hidden="true">/</span>
     <a href="./suche.html">Suche</a>
     <span aria-hidden="true">/</span>
+    <a href="./befunde.html">Befunde</a>
+    <span aria-hidden="true">/</span>
     <a href="./ausgaben/index.html">Archiv</a>
   </nav>
   <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>

@@ -39,6 +39,7 @@ ERLAUBTE_ZIELE = ("amannlabs.eu", "ris.bad-waldsee.de", "www.bad-waldsee.de",
 
 fehler: list[str] = []
 notiz: list[str] = []
+hinweise: list[str] = []
 
 
 def pruefe_verweise() -> None:
@@ -122,16 +123,45 @@ def pruefe_tabellen() -> None:
     notiz.append(f"{len(zeilen)} Abstimmungen gegengerechnet")
 
 
+def pruefe_reportalter() -> None:
+    """Ist der jüngste Report noch auf dem Stand der Daten?
+
+    Kein Fehler, sondern ein Hinweis: Der Report ist ein datiertes Standbild.
+    Sobald neue Sitzungen dazukommen, weichen seine Zahlen ab — dann gehört ein
+    neuer, datierter Report erzeugt. Ohne Erinnerung fällt das niemandem auf,
+    weil die Seite weiterhin einwandfrei aussieht.
+    """
+    kennzahlen = DATEN / "kennzahlen.json"
+    berichte = sorted((DOCS / "report").glob("*.html")) if (DOCS / "report").exists() else []
+    if not (kennzahlen.exists() and berichte):
+        return
+    stand = json.loads(kennzahlen.read_text(encoding="utf-8")).get("stichtag", "")
+    try:
+        datiert = berichte[-1].stem
+        dt.date.fromisoformat(datiert)
+    except ValueError:
+        return
+    if stand > datiert:
+        hinweise.append(
+            f"Der Report ist vom {datiert}, die Daten reichen bis {stand}. "
+            f"Ein neuer Report gehört nach docs/report/{stand}.html — "
+            f"Stichtag in src/report.html nachziehen und Schritt 04 ausführen.")
+    notiz.append(f"Report vom {datiert}")
+
+
 def main() -> None:
     if not DOCS.exists():
         sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
 
     for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
-                     pruefe_zeitraeume, pruefe_tabellen):
+                     pruefe_zeitraeume, pruefe_tabellen, pruefe_reportalter):
         pruefung()
 
     seiten = len(list(DOCS.rglob("*.html")))
     print(f"   {seiten} Seiten · " + " · ".join(notiz))
+
+    for h in hinweise:
+        print(f"   Hinweis: {h}")
 
     if fehler:
         print(f"\n   {len(fehler)} Problem(e):", file=sys.stderr)

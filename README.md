@@ -54,7 +54,8 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
 ➡️ **[Aktuelle Ausgabe, KW 37/2026](./docs/ausgaben/2026/kw37.html)** — die wöchentliche Aktenlage
 ➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 89 Ausgaben der Jahrgänge 2024 bis 2026
-➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 506 Vorgänge mit ihrem Weg durch die Gremien
+➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 514 Vorgänge mit ihrem Weg durch die Gremien
+➡️ **[Befunde](./docs/befunde.html)** — alle 22 Erkenntnisse an einem Ort
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
 Abhängigkeiten und **funktionieren ohne JavaScript** — auch in der iOS-Dateivorschau,
@@ -169,6 +170,19 @@ Einzelpunkten geht das nicht hervor. Solche Treffer sind als **KI-Deutung**
 gekennzeichnet. Der Suchindex steht in der Seite selbst — sie funktioniert also auch
 lokal geöffnet und ruft nichts nach.
 
+## Befunde
+
+Die Zahlen sind auszählbar. Was darüber hinausgeht — dass eine Enthaltung
+ausgerechnet bei dem Verfahren fiel, gegen das eine Fachbehörde Bedenken hatte,
+oder dass dreimal in Folge dasselbe abgelehnt wurde — entsteht erst durch
+Vergleich über die Zeit.
+
+Solche Aussagen lagen verstreut in einzelnen Wochenausgaben und Kapiteln. Die
+Seite [Befunde](./docs/befunde.html) sammelt sie: zehn kritische Beobachtungen,
+vier Befunde aus der Gesamtauswertung und acht Einordnungen aus den
+Wochenausgaben. Sämtlich als **KI-Deutung** gekennzeichnet, jeweils mit Weg zur
+Quelle.
+
 ## Selbst nachrechnen
 
 Unter `data/csv/` liegen drei Tabellen, die sich direkt in Excel, LibreOffice
@@ -226,6 +240,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 ├── docs/                 GitHub Pages zeigt diesen Ordner
 │   ├── index.html        Startseite: Report, neueste Ausgabe, Archiv
 │   ├── suche.html        durchsuchbare Vorgänge mit Zeitachse
+│   ├── befunde.html      alle Befunde und Einordnungen gesammelt
 │   ├── report/           die datierten Gesamtreports
 │   └── ausgaben/
 │       ├── index.html    Archiv über alle Jahrgänge
@@ -233,7 +248,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── 2025/         35 Ausgaben
 │       └── 2026/         21 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
-├── scripts/    die Verarbeitungskette, Schritt 01 bis 08
+├── scripts/    die Verarbeitungskette, Schritt 01 bis 09
 │   ├── wochenlauf.sh   ein Befehl für den ganzen Wochenlauf
 │   ├── pruefen.py      Kontrolle vor der Veröffentlichung
 │   └── launchd/        Vorlage für den automatischen Montagslauf
