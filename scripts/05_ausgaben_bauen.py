@@ -354,6 +354,8 @@ def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
     """Seitenkopf. `hoch` ist der relative Weg zum docs-Verzeichnis, `hier`
     markiert die aktuelle Seite in der Navigation."""
     stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
+    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
+        encoding="utf-8").replace("{PFAD}", hoch)
 
     def eintrag(ziel: str, text: str, name: str) -> str:
         aktuell = ' aria-current="page"' if name == hier else ""
@@ -365,9 +367,7 @@ def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
     ]))
     return f"""<meta charset="utf-8">
 <title>{e(titel)}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">
+<style>{schriften}</style>
 <style>{stil}</style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>

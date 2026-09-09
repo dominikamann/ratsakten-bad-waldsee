@@ -79,6 +79,8 @@ def bauen() -> str:
     kennzahlen = json.loads((DATEN / "kennzahlen.json").read_text(encoding="utf-8"))
     register = json.loads((DATEN / "ausgaben.json").read_text(encoding="utf-8"))
     stil = (WURZEL / "scripts" / "startseite.css").read_text(encoding="utf-8")
+    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
+        encoding="utf-8").replace("{PFAD}", "./")
 
     a = kennzahlen["abstimmungen"]
     kacheln = [
@@ -146,9 +148,7 @@ def bauen() -> str:
 
     return f"""<meta charset="utf-8">
 <title>Ratsakten Bad Waldsee</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>{schriften}</style>
 <style>{stil}</style>
 
 <div class="brandbar"><div class="wrap">
