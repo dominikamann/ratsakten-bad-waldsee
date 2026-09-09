@@ -399,6 +399,15 @@ ul.beschluesse.kompakt .sache{
 .herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
 .herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
 .herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+
+/* ---------- Im Beschlusstext genannter Betrag ---------- */
+ul.beschluesse .betrag{
+  margin-left:12px;padding:1px 7px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  color:var(--s2);border:1px solid var(--s2);
+  background:color-mix(in srgb, var(--s2) 8%, transparent);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -515,7 +524,7 @@ ul.beschluesse.kompakt .sache{
       <li><span class="sache">21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplans "Lohbühl I - Erweiterung", Gemarkung Bergatreute – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-17/2026</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-16/2026</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss<span class="sv">SV-165/2025</span></span><span class="erg split">24 : 0 : 2</span></li>
-      <li><span class="sache">Neubau Feuerwehrgebäude Michelwinnaden - Durchführungsbeschluss<span class="sv">SV-60/2026</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Neubau Feuerwehrgebäude Michelwinnaden - Durchführungsbeschluss<span class="sv">SV-60/2026<span class="betrag" title="größter im Beschlusstext genannter Betrag">1.620.000 €</span></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Gemeindliches Einvernehmen zu Windenergieanlagen bei Osterhofen<span class="sv">SV-67/2026</span></span><span class="erg split">19 : 5 : 1</span></li>
     </ul>
     <div class="kasten warn">

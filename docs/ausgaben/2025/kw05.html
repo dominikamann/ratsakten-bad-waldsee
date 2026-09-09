@@ -399,6 +399,15 @@ ul.beschluesse.kompakt .sache{
 .herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
 .herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
 .herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+
+/* ---------- Im Beschlusstext genannter Betrag ---------- */
+ul.beschluesse .betrag{
+  margin-left:12px;padding:1px 7px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  color:var(--s2);border:1px solid var(--s2);
+  background:color-mix(in srgb, var(--s2) 8%, transparent);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -474,8 +483,8 @@ ul.beschluesse.kompakt .sache{
     <p class="rubrik">Beschlossen · AUT</p>
     <h2 class="headline">4 Beschlüsse am 27. Januar 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Wirtschaftsplan 2025 - Eigenbetrieb städt. Abwasserbeseitigung<span class="sv">SV-199/2024</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Haushaltsplan und Haushaltssatzung 2025 – Große Kreisstadt Bad Waldsee<span class="sv">SV-202/2024</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Wirtschaftsplan 2025 - Eigenbetrieb städt. Abwasserbeseitigung<span class="sv">SV-199/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">6.300.000 €</span></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Haushaltsplan und Haushaltssatzung 2025 – Große Kreisstadt Bad Waldsee<span class="sv">SV-202/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">63.602.500 €</span></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R 18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung der frühzeitigen Beteiligung, Aufstellungs- und Entwurfsbeschluss<span class="sv">SV-249/2024</span></span><span class="erg split">11 : 0 : 2</span></li>
       <li><span class="sache">18. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreuge für die Sonderbaufläche großflächiger Einzelhandel im Bereich des "Lebensmittelmarkts" an der Roßberger Straße, Gemarkung Bergatreute - Abwägung und Feststellungsbeschluss<span class="sv">SV-250/2024</span></span><span class="erg">Einstimmig</span></li>
     </ul>
@@ -498,7 +507,7 @@ ul.beschluesse.kompakt .sache{
     <p class="rubrik">Beschlossen · VA</p>
     <h2 class="headline">1 Beschluss am 28. Januar 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Haushaltsplan und Haushaltssatzung 2025 – Große Kreisstadt Bad Waldsee<span class="sv">SV-202/2024</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Haushaltsplan und Haushaltssatzung 2025 – Große Kreisstadt Bad Waldsee<span class="sv">SV-202/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">63.602.500 €</span></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

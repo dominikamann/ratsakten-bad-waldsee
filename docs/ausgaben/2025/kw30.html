@@ -399,6 +399,15 @@ ul.beschluesse.kompakt .sache{
 .herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
 .herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
 .herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+
+/* ---------- Im Beschlusstext genannter Betrag ---------- */
+ul.beschluesse .betrag{
+  margin-left:12px;padding:1px 7px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  color:var(--s2);border:1px solid var(--s2);
+  background:color-mix(in srgb, var(--s2) 8%, transparent);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -487,7 +496,7 @@ ul.beschluesse.kompakt .sache{
       <li><span class="sache">Annahme und Vermittlung von Spenden und Sponsoring aus dem 1. Halbjahr 2025<span class="sv">SV-112/2025</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Mietspiegel Bad Waldsee 2025 - Anerkennung als qualifizierter Mietspiegel<span class="sv">SV-91/2025</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Änderung der Satzung zur Offenhaltung der Einzelhandelsgeschäfte in Bad Waldsee am Sonntag der "Zukunftstage Bad Waldsee"<span class="sv">SV-103/2025</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Jubiläumsjahr 2026<span class="sv">SV-132/2025</span></span><span class="erg split">23 : 3 : 0</span></li>
+      <li><span class="sache">Jubiläumsjahr 2026<span class="sv">SV-132/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">300.000 €</span></span></span><span class="erg split">23 : 3 : 0</span></li>
       <li><span class="sache">Digitalisierung von Reisemobilstellplätzen bei der Waldsee-Therme<span class="sv">SV-131/2025</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Neubau Erweiterung Gymnasium Bad Waldsee- aktueller Stand Planung und Baustelle<span class="sv">SV-117/2025</span></span><span class="erg">Einstimmig</span></li>
     </ul>

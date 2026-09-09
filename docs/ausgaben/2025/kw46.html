@@ -399,6 +399,15 @@ ul.beschluesse.kompakt .sache{
 .herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
 .herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
 .herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+
+/* ---------- Im Beschlusstext genannter Betrag ---------- */
+ul.beschluesse .betrag{
+  margin-left:12px;padding:1px 7px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  color:var(--s2);border:1px solid var(--s2);
+  background:color-mix(in srgb, var(--s2) 8%, transparent);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -476,7 +485,7 @@ ul.beschluesse.kompakt .sache{
       <li><span class="sache">Volkshochschule Bad Waldsee - Neufestsetzung der Teilnehmergebühren und Änderung des § 3 Abs. 2 der Gebührensatzung sowie Neufestsetzung der Dozentenhonorare und Änderung des § 3 Abs. 2 der Honorarordnung<span class="sv">SV-217/2025</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Flächenmanagement – Aktivierung von Bestandspotentiale – Einführung Förderlinien<span class="sv">SV-179/2025</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Abriss Augustinerstr. 21, Haslachstr. 26 - außerplanmäßige Ausgaben<span class="sv">SV-222/2025</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Barrierefreier Neubau Verbindungsbau Ravensburger Str.1 zu Ravensburger Str. 2<span class="sv">SV-223/2025</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Barrierefreier Neubau Verbindungsbau Ravensburger Str.1 zu Ravensburger Str. 2<span class="sv">SV-223/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">1.450.000 €</span></span></span><span class="erg">Einstimmig</span></li>
     </ul>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>

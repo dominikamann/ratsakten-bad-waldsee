@@ -399,6 +399,15 @@ ul.beschluesse.kompakt .sache{
 .herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
 .herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
 .herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+
+/* ---------- Im Beschlusstext genannter Betrag ---------- */
+ul.beschluesse .betrag{
+  margin-left:12px;padding:1px 7px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  font-variant-numeric:tabular-nums;letter-spacing:.03em;
+  color:var(--s2);border:1px solid var(--s2);
+  background:color-mix(in srgb, var(--s2) 8%, transparent);
+}
 </style>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -467,7 +476,7 @@ ul.beschluesse.kompakt .sache{
     <h2 class="headline">5 Beschlüsse am 7. April 2025</h2>
     <ul class="beschluesse">
       <li><span class="sache">Kläranlage Bad Waldsee: Durchführungsbeschluss für den Bau eines Nachklärbeckens<span class="sv">SV-29/2025</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Kläranlage Bad Waldsee: Erneuerung der Klärschlammpresse<span class="sv">SV-31/2025</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Kläranlage Bad Waldsee: Erneuerung der Klärschlammpresse<span class="sv">SV-31/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">335.000 €</span></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Vorhabenbezogener Bebauungsplan "Frauenbergstraße-Friedhofstraße" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Entwurfsbeschluss<span class="sv">SV-4/2025</span></span><span class="erg split">7 : 0 : 5</span></li>
       <li><span class="sache">Bebauungsplan "Drei-Eichen VI" (Teilbereich B) und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren - Abwägung und Satzungsbeschluss<span class="sv">SV-5/2025</span></span><span class="erg split">10 : 0 : 2</span></li>
       <li><span class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung und Feststellungsbeschluss<span class="sv">SV-13/2025</span></span><span class="erg">Einstimmig</span></li>

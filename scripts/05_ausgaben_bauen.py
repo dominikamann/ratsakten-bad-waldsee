@@ -543,8 +543,16 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     <ul class="beschluesse">""")
             for b in liste:
                 klasse = " split" if b["strittig"] else ""
+                # Der groesste im Beschlusstext genannte Betrag. Bewusst neutral
+                # bezeichnet: Es ist die hoechste dort vorkommende Summe, nicht
+                # zwingend "die Kosten" — bei Haushaltspunkten etwa eine
+                # Planungsgroesse.
+                geld = ""
+                if b.get("betrag") and b["betrag"] >= BETRAGSSCHWELLE:
+                    geld = (f"""<span class="betrag" title="größter im Beschlusstext """
+                            f"""genannter Betrag">{euro(b['betrag'])}</span>""")
                 t.append(f"""      <li><span class="sache">{e(b['titel'])}"""
-                         f"""<span class="sv">{e(b['vorlage'] or '—')}</span></span>"""
+                         f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span></span>"""
                          f"""<span class="erg{klasse}">{e(b['ergebnis'])}</span></li>""")
             t.append("    </ul>")
             if any(b["strittig"] for b in liste):
