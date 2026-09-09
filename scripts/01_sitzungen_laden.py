@@ -29,16 +29,53 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
 
 
-def sitzung_starten() -> tuple[requests.Session, str]:
-    """Session aufbauen und das CSRF-Token aus der Kalenderseite ziehen."""
+def sitzung_starten(versuche: int = 3) -> tuple[requests.Session, str]:
+    """Session aufbauen und das CSRF-Token aus der Kalenderseite ziehen.
+
+    Das Ratsinformationssystem antwortet nicht immer beim ersten Aufruf mit der
+    vollstaendigen Seite. Deshalb mehrere Versuche mit wachsender Wartezeit — und
+    wenn es endgueltig scheitert, eine Fehlermeldung, mit der man etwas anfangen
+    kann statt nur "nicht gefunden".
+    """
     s = requests.Session()
-    s.headers["User-Agent"] = UA
-    html = s.get(f"{BASIS}/termine", timeout=30).text
-    treffer = (re.search(r"X-CSRF-Token'\s*:\s*'([0-9a-f]{32,})'", html)
-               or re.search(r"csrfToken'\s*,\s*'([0-9a-f]{32,})'", html))
-    if not treffer:
-        sys.exit("CSRF-Token nicht gefunden — hat sich das Ratsinfosystem geändert?")
-    return s, treffer.group(1)
+    s.headers.update({
+        "User-Agent": UA,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "de-DE,de;q=0.9",
+    })
+
+    letzte = None
+    for versuch in range(1, versuche + 1):
+        try:
+            antwort = s.get(f"{BASIS}/termine", timeout=45)
+            letzte = antwort
+            treffer = (re.search(r"X-CSRF-Token'\s*:\s*'([0-9a-f]{32,})'", antwort.text)
+                       or re.search(r"csrfToken'\s*,\s*'([0-9a-f]{32,})'", antwort.text)
+                       or re.search(r"name=[\"']csrftoken[\"']\s+value=[\"']([0-9a-f]{32,})[\"']",
+                                    antwort.text))
+            if treffer:
+                return s, treffer.group(1)
+            print(f"  Versuch {versuch}/{versuche}: kein Token in der Antwort "
+                  f"(HTTP {antwort.status_code}, {len(antwort.text)} Zeichen)", file=sys.stderr)
+        except requests.RequestException as fehler:
+            print(f"  Versuch {versuch}/{versuche}: {fehler}", file=sys.stderr)
+        if versuch < versuche:
+            time.sleep(5 * versuch)
+
+    # Endgueltig gescheitert: alles ausgeben, was bei der Fehlersuche hilft.
+    print("\nCSRF-Token nicht gefunden. Diagnose:", file=sys.stderr)
+    if letzte is None:
+        print("  Es kam ueberhaupt keine Antwort zustande.", file=sys.stderr)
+    else:
+        titel = re.search(r"<title>(.*?)</title>", letzte.text, re.S | re.I)
+        print(f"  HTTP-Status:   {letzte.status_code}", file=sys.stderr)
+        print(f"  Inhaltstyp:    {letzte.headers.get('content-type', '?')}", file=sys.stderr)
+        print(f"  Laenge:        {len(letzte.text)} Zeichen", file=sys.stderr)
+        print(f"  Seitentitel:   {titel.group(1).strip() if titel else '—'}", file=sys.stderr)
+        print(f"  'csrf' im Text: {'ja' if 'csrf' in letzte.text.lower() else 'nein'}",
+              file=sys.stderr)
+        print(f"  Anfang der Antwort:\n    {letzte.text[:400].strip()[:400]}", file=sys.stderr)
+    sys.exit(1)
 
 
 def termine_holen(s: requests.Session, token: str) -> list[dict]:
