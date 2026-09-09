@@ -23,7 +23,7 @@
   <array>
     <string>/bin/bash</string>
     <string>-lc</string>
-    <string>/Users/dominikamannprivat/Documents/amannlabs/badwaldsee/scripts/wochenlauf.sh</string>
+    <string>/Users/dominikamannprivat/Documents/AmannLabs/ratsakten-bad-waldsee/scripts/wochenlauf.sh</string>
   </array>
 
   <key>StartCalendarInterval</key>

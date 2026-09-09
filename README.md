@@ -319,6 +319,17 @@ launchctl load ~/Library/LaunchAgents/eu.amannlabs.ratsakten.plist
 War der Rechner zum Termin aus, holt `launchd` den Lauf beim nächsten Start nach.
 Das Protokoll landet in `~/Library/Logs/ratsakten.log`.
 
+> [!WARNING]
+> **Liegt das Projekt unter `~/Documents`, `~/Desktop` oder `~/Downloads`,
+> scheitert der geplante Lauf** mit `Operation not permitted`. macOS verwehrt von
+> `launchd` gestarteten Prozessen den Zugriff auf diese Ordner. Von Hand
+> ausgeführt funktioniert dasselbe Skript einwandfrei — der Schutz greift nur bei
+> Hintergrunddiensten.
+>
+> Zwei Wege: entweder in *Systemeinstellungen → Datenschutz & Sicherheit →
+> Festplattenvollzugriff* `/bin/bash` freigeben, oder auf die Zeitsteuerung
+> verzichten und den Wochenlauf von Hand starten. Das ist ein Befehl.
+
 ### Was auf GitHub läuft
 
 Bei jedem Push prüft [`.github/workflows/pruefung.yml`](./.github/workflows/pruefung.yml)
