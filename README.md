@@ -222,6 +222,9 @@ wünscht, kann das ebenfalls über ein Issue oder per E-Mail tun.
 
 - **Code:** MIT
 - **Report und Texte:** CC BY 4.0
+- **Schriften** (`docs/fonts/`): SIL Open Font License 1.1 — Archivo und IBM Plex,
+  unverändert weitergegeben. Lizenztext und Copyright-Vermerke in
+  [`docs/fonts/OFL.txt`](./docs/fonts/OFL.txt)
 - **Zugrunde liegende Verwaltungsdokumente:** amtliche Werke, § 5 UrhG, Rechte bei der
   Stadt Bad Waldsee
 
