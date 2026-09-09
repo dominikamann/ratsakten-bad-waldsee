@@ -138,6 +138,37 @@ def beschluesse_je_sitzung(text: str) -> dict[str, list[str]]:
     return dict(ergebnisse)
 
 
+def einordnungen_laden() -> dict:
+    """Redaktionelle Einordnungen aus data/einordnungen.json."""
+    pfad = DATEN / "einordnungen.json"
+    if not pfad.exists():
+        return {}
+    roh = json.loads(pfad.read_text(encoding="utf-8"))
+    return {k: v for k, v in roh.items() if not k.startswith("_")}
+
+
+def ausgaben_register() -> list[tuple[str, str, str]]:
+    """(von, bis, Pfad) je erschienener Ausgabe — für die Verlinkung der Stationen."""
+    pfad = DATEN / "ausgaben.json"
+    if not pfad.exists():
+        return []
+    register = json.loads(pfad.read_text(encoding="utf-8"))
+    zeitraeume = []
+    for jahr, ausgaben in register.items():
+        for kw, a in ausgaben.items():
+            if a.get("von_iso"):
+                zeitraeume.append((a["von_iso"], a["bis_iso"],
+                                   f"./ausgaben/{jahr}/kw{int(kw):02d}.html"))
+    return sorted(zeitraeume)
+
+
+def ausgabe_zu(datum: str, zeitraeume: list[tuple[str, str, str]]) -> str:
+    for von, bis, pfad in zeitraeume:
+        if von <= datum <= bis:
+            return pfad
+    return ""
+
+
 def vorgaenge_sammeln(stichtag: str) -> list[dict]:
     quelle = DATEN / "sitzungen.json"
     if not quelle.exists():
@@ -152,6 +183,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
             "  uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py")
     punkte = [p for p in json.loads(karte.read_text(encoding="utf-8"))
               if p["datum"] <= stichtag]
+    zeitraeume = ausgaben_register()
 
     # Abstimmungsergebnisse einsammeln. Die Protokolle werden der jeweiligen
     # Sitzung ueber den Dateinamen zugeordnet — sonst vermischen sich Ergebnisse
@@ -206,6 +238,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
                 "v": p["vorlage"] or "",
                 "e": " → ".join(werte),
                 "t": p["titel"],
+                "a": ausgabe_zu(p["datum"], zeitraeume),
             })
         if schluessel.startswith("@"):
             name = namen[schluessel[1:]]
@@ -222,6 +255,33 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
             "letzte": teile[-1]["datum"],
             "strittig": any(st["e"] and st["e"] != "einstimmig" and
                             not st["e"].endswith(": 0 : 0") for st in stationen),
+        })
+
+    # Die redaktionellen Einordnungen mit aufnehmen. Sie verbinden mehrere
+    # Vorgaenge ueber die Zeit — genau das, was aus den Einzelpunkten nicht
+    # hervorgeht. Wer nach „Windkraft" sucht, soll auch den Befund finden,
+    # dass dreimal in Folge das Einvernehmen versagt wurde.
+    einordnungen = einordnungen_laden()
+    ende_je_ausgabe = {}
+    for von, bis, pfad in zeitraeume:
+        teile = pfad.rstrip(".html").split("/")
+        ende_je_ausgabe[f"{teile[-2]}-kw{int(teile[-1][2:]):02d}"] = bis
+    for schluessel, ein in sorted(einordnungen.items(), reverse=True):
+        jahr, kw = schluessel.split("-kw")
+        pfad = f"./ausgaben/{jahr}/kw{int(kw):02d}.html"
+        volltext = " ".join(ein.get("absaetze", []))
+        vorgaenge.append({
+            "art": "einordnung",
+            "v": f"Ausgabe KW {int(kw)}/{jahr}",
+            "t": ein.get("titel", ""),
+            "u": volltext,
+            "s": [],
+            "a": pfad,
+            "geprueft": ein.get("status") == "geprueft",
+            # Nach dem Ende ihres Berichtszeitraums einsortieren, damit sie
+            # zwischen den Vorgaengen derselben Zeit auftauchen.
+            "letzte": ende_je_ausgabe.get(schluessel, f"{jahr}-01-01"),
+            "strittig": False,
         })
 
     vorgaenge.sort(key=lambda v: v["letzte"], reverse=True)
@@ -263,8 +323,15 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
   font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;
   text-transform:uppercase;color:var(--muted);margin:22px 0 0;
 }}
-.vorgang{{
-  padding:20px 0;border-bottom:1px solid var(--rule);
+/* Das Stylesheet der Ausgaben legt fuer <article> ein zweispaltiges Raster mit
+   Randspalte fest. Fuer Suchtreffer gilt das nicht — sonst wird der Titel in
+   186 Pixel gequetscht und daneben bleibt die halbe Zeile leer. */
+article.vorgang{{
+  display:block;padding:20px 0;gap:0;
+  border-bottom:1px solid var(--rule);
+}}
+.vorgang .kopf{{
+  display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;
 }}
 .vorgang h3{{
   font-family:Archivo,sans-serif;font-weight:600;font-size:17.5px;line-height:1.35;
@@ -302,6 +369,13 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
   opacity:.75;white-space:nowrap;
 }}
 .vorgang .untertitel{{color:var(--muted);font-family:"IBM Plex Serif",serif;font-size:13px}}
+a.station{{text-decoration:none;color:inherit}}
+a.station:hover .dat{{color:var(--s1);text-decoration:underline}}
+a.station:hover .grem{{border-color:var(--s1)}}
+.titellink{{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}}
+.titellink:hover{{color:var(--s1);border-bottom-color:var(--s1)}}
+.vorgang.istEinordnung{{border-left:3px solid var(--flag);padding-left:18px;background:var(--flag-bg)}}
+.vorgang .einleitung{{margin:8px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:74ch}}
 mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 .leer{{padding:40px 0;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:14px}}
 .ohnejs{{
@@ -468,10 +542,28 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
     var zeigen = treffer.slice(0, 300);
     zeigen.forEach(function(v){{
       var d = document.createElement("article");
-      d.className = "vorgang";
+      d.className = "vorgang" + (v.art === "einordnung" ? " istEinordnung" : "");
+
+      var kopf = document.createElement("div");
+      kopf.className = "kopf";
       var h = document.createElement("h3");
-      h.appendChild(hervorheben(v.t, woerter));
-      d.appendChild(h);
+      if(v.art === "einordnung"){{
+        var marke = document.createElement("span");
+        marke.className = "herkunft ki";
+        marke.textContent = v.geprueft ? "Einordnung" : "KI-Deutung";
+        d.appendChild(marke);
+      }}
+      var ziel = v.a || (v.s.length ? v.s[v.s.length-1].a : "");
+      if(ziel){{
+        var link = document.createElement("a");
+        link.href = ziel; link.className = "titellink";
+        link.appendChild(hervorheben(v.t, woerter));
+        h.appendChild(link);
+      }} else {{
+        h.appendChild(hervorheben(v.t, woerter));
+      }}
+      kopf.appendChild(h);
+      d.appendChild(kopf);
       var teile = v.v ? v.v.split(" · ") : [];
       var nr = document.createElement("p");
       nr.className = "nr";
@@ -486,12 +578,22 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
         u.textContent = (teile.length ? " — " : "") + v.u;
         nr.appendChild(u);
       }}
-      if(nr.textContent) d.appendChild(nr);
+      if(nr.textContent) kopf.appendChild(nr);
+
+      if(v.art === "einordnung"){{
+        var txt = document.createElement("p");
+        txt.className = "einleitung";
+        txt.appendChild(hervorheben(v.u.slice(0, 320) + (v.u.length > 320 ? " …" : ""), woerter));
+        d.appendChild(txt);
+        liste.appendChild(d);
+        return;
+      }}
       var achse = document.createElement("div");
       achse.className = "achse";
       v.s.forEach(function(s){{
-        var st = document.createElement("div");
+        var st = document.createElement(s.a ? "a" : "div");
         st.className = "station";
+        if(s.a){{ st.href = s.a; st.title = "Zur Ausgabe dieser Woche"; }}
         var dat = document.createElement("span");
         dat.className = "dat";
         dat.textContent = s.d.slice(8,10) + "." + s.d.slice(5,7) + "." + s.d.slice(0,4);

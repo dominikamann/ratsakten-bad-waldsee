@@ -53,7 +53,7 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
 ➡️ **[Aktuelle Ausgabe, KW 37/2026](./docs/ausgaben/2026/kw37.html)** — die wöchentliche Aktenlage
-➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 21 Ausgaben des Jahrgangs 2026
+➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 89 Ausgaben der Jahrgänge 2024 bis 2026
 ➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 506 Vorgänge mit ihrem Weg durch die Gremien
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
@@ -151,7 +151,13 @@ benannten Vorhaben verhandelt wurde, und zeigt die Kette:
 
 Gesucht wird über Stichwort oder Vorlagennummer; filtern lässt sich nach
 Vorgängen mit Beschluss, nicht einstimmigen Entscheidungen und mehrstufigen
-Verfahren. Der Suchindex steht in der Seite selbst — sie funktioniert also auch
+Verfahren. Jeder Treffer und jede Station führt zur Ausgabe der jeweiligen Woche.
+
+Mitdurchsucht werden auch die redaktionellen **Einordnungen**. Sie verbinden
+mehrere Vorgänge über die Zeit — etwa den Befund, dass Bad Waldsee binnen elf
+Monaten dreimal in Folge das Einvernehmen für Windkraft versagt hat. Aus den
+Einzelpunkten geht das nicht hervor. Solche Treffer sind als **KI-Deutung**
+gekennzeichnet. Der Suchindex steht in der Seite selbst — sie funktioniert also auch
 lokal geöffnet und ruft nichts nach.
 
 ## Selbst nachrechnen
@@ -208,7 +214,9 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │   ├── report/           die datierten Gesamtreports
 │   └── ausgaben/
 │       ├── index.html    Archiv über alle Jahrgänge
-│       └── 2026/         kw03.html … kw37.html
+│       ├── 2024/         33 Ausgaben
+│       ├── 2025/         35 Ausgaben
+│       └── 2026/         21 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 08
 │   ├── wochenlauf.sh   ein Befehl für den ganzen Wochenlauf
@@ -289,7 +297,7 @@ belasten.
 
 ## Geplant
 
-- [x] Wöchentliche Ausgaben, Jahrgang 2026 nachgeholt (`scripts/05_ausgaben_bauen.py`)
+- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (89 Stück)
 - [x] Wöchentlicher Lauf als ein Befehl (`scripts/wochenlauf.sh`, `launchd`-Vorlage)
 - [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)
 - [x] Vorgangssuche mit Zeitachse (`docs/suche.html`)
