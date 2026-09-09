@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -510,9 +523,9 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · VA</p>
     <h2 class="headline">3 Beschlüsse am 25. November 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Bürgerfest 2022 – Endabrechnung<span class="sv">SV-172/2025</span><span class="wortlaut">Der Endabrechnung für das Bürgerfest 2022 wird zugestimmt.</span></span><span class="erg split">11 : 0 : 1</span></li>
-      <li><span class="sache">Verteilung des Fördertopfs "Soziale Hilfen" | Zuschüsse für sozial caritativ tätige Vereine und Gruppierungen<span class="sv">SV-214/2025</span><span class="wortlaut">Der Verwaltungsausschuss stimmt der Gewährung von Zuschüssen und deren Höhe an die in der Anlage aufgeführten Vereine und Gruppierungen zu.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Antrag der seenema eG auf Verlängerung des Zuschusses durch die Stadt<span class="sv">SV-219/2025</span><span class="wortlaut">Der bisherige Zuschuss in Höhe von 5.000 Euro wird für die kommenden zwei Jahre (2026-2027) weiter gewährt.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Bürgerfest 2022 – Endabrechnung<span class="sv">SV-172/2025</span><span class="wortlaut">Der Endabrechnung für das Bürgerfest 2022 wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZfwfc8Y9NGKa1EXdyqM7a5pK65j3sLOgOuNE1sFZtI5o/Sitzungsvorlage_SV-172-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-172/2025</a></span></span><span class="erg split">11 : 0 : 1</span></li>
+      <li><span class="sache">Verteilung des Fördertopfs "Soziale Hilfen" | Zuschüsse für sozial caritativ tätige Vereine und Gruppierungen<span class="sv">SV-214/2025</span><span class="wortlaut">Der Verwaltungsausschuss stimmt der Gewährung von Zuschüssen und deren Höhe an die in der Anlage aufgeführten Vereine und Gruppierungen zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaB7qdT4egCK9uyxS5-LcfUrQXr8BpsM_nk8t5thZwwW/Sitzungsvorlage_SV-214-2025_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-214/2025 1. Nachtrag (aktualisiert: 19.11.2025)</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZb9ZF4GwYuyEUjLe4l0gE28G74A93EsvnfJlU5TZk7QW/2025-11-19_2025_Anlage_VA_Soziale_Hilfen.pdf" target="_blank" rel="noopener noreferrer">2025-11-19 2025_Anlage VA Soziale Hilfen</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Antrag der seenema eG auf Verlängerung des Zuschusses durch die Stadt<span class="sv">SV-219/2025</span><span class="wortlaut">Der bisherige Zuschuss in Höhe von 5.000 Euro wird für die kommenden zwei Jahre (2026-2027) weiter gewährt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWUsyu8N2G99RLkZPmOENy6IOLJM0ftlEKk1buqPn4Ej/Sitzungsvorlage_SV-219-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-219/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVKEvylePbOipqCOWnOAtZmDcnHFQo-UkORW9_Iq-TPJ/Antrag_auf_Zuschuss_-_seenema_Stadtkino_Bad_Waldsee_eG.pdf" target="_blank" rel="noopener noreferrer">Antrag auf Zuschuss - seenema Stadtkino Bad Waldsee eG</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>

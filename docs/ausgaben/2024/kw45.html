@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -510,10 +523,10 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · GR</p>
     <h2 class="headline">4 Beschlüsse am 4. November 2024</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Ausschreibung PV-Anlagen<span class="sv">SV-174/2024</span><span class="wortlaut">Die Stadtverwaltung wird ermächtigt die Installation der PV-Anlagen auszuschreiben, zu vergeben und auszuführen zu lassen.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Vergabe der Planungsleistungen für den Anschluss der Kläranlage Reute an die Kläranlage Bad Waldsee<span class="sv">SV-172/2024</span><span class="wortlaut">Der Gemeinderat stimmt der Vergabe der in einem europaweiten VgV-Verfahren ausgeschriebenen Planungsleistungen für den Anschluss der Kläranlage Reute an die Kläranlage Bad Waldsee an die Fassnacht-Ingenieure aus Bad Wurzach zu.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit<span class="sv">SV-179/2024</span><span class="wortlaut">Der vorgeschlagenen Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit wird zugestimmt.</span></span><span class="erg split">26 : 0 : 1</span></li>
-      <li><span class="sache">Bestätigung des Verfahrens für Kreditaufnahmen<span class="sv">SV-178/2024</span><span class="wortlaut">Die Verwaltung wird ermächtigt, die im Haushaltsplan der Stadt sowie die in den Wirtschaftsplänen der Eigenbetriebe vorgesehenen Kredite aufzunehmen. Es sind Angebote einzuholen. Der Zuschlag ist dem wirtschaftlichsten Anbieter zu erteilen. Dem Gemeinderat ist jeweils in der nächsten Sitzung zu berichten.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Ausschreibung PV-Anlagen<span class="sv">SV-174/2024</span><span class="wortlaut">Die Stadtverwaltung wird ermächtigt die Installation der PV-Anlagen auszuschreiben, zu vergeben und auszuführen zu lassen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZsYFbkhhVndx0FYf5549MYyI8FHjVmtSeVOYHY3Pt70/Sitzungsvorlage_SV-174-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-174/2024</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Vergabe der Planungsleistungen für den Anschluss der Kläranlage Reute an die Kläranlage Bad Waldsee<span class="sv">SV-172/2024</span><span class="wortlaut">Der Gemeinderat stimmt der Vergabe der in einem europaweiten VgV-Verfahren ausgeschriebenen Planungsleistungen für den Anschluss der Kläranlage Reute an die Kläranlage Bad Waldsee an die Fassnacht-Ingenieure aus Bad Wurzach zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcDxZJCeGE6qfjtRXAkEivwdAsymRUeiHz7lZJI4SQrj/Sitzungsvorlage_SV-172-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-172/2024</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit<span class="sv">SV-179/2024</span><span class="wortlaut">Der vorgeschlagenen Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYAdu7Tw-pnWsoS55ObrXWfnoBrmJKlJN_Y_XpIV-nGo/Sitzungsvorlage_SV-179-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-179/2024</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTNYTEoOeRaSOwZNfRzL79JNm5QSuiWyZjgjuSzOh7rP/Satzung_zur_Aenderung_der_Entschaedigungssatzung.pdf" target="_blank" rel="noopener noreferrer">Satzung zur Änderung der Entschädigungssatzung</a></span></span><span class="erg split">26 : 0 : 1</span></li>
+      <li><span class="sache">Bestätigung des Verfahrens für Kreditaufnahmen<span class="sv">SV-178/2024</span><span class="wortlaut">Die Verwaltung wird ermächtigt, die im Haushaltsplan der Stadt sowie die in den Wirtschaftsplänen der Eigenbetriebe vorgesehenen Kredite aufzunehmen. Es sind Angebote einzuholen. Der Zuschlag ist dem wirtschaftlichsten Anbieter zu erteilen. Dem Gemeinderat ist jeweils in der nächsten Sitzung zu berichten.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZa66QHeZT58JSzQcwG9UZgn3fecWXY_CFlZjfqb_UXiW/Sitzungsvorlage_SV-178-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-178/2024</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>

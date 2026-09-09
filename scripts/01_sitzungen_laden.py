@@ -89,6 +89,28 @@ def termine_holen(s: requests.Session, token: str) -> list[dict]:
     return antwort.json().get("events", [])
 
 
+EXPORTVERMERK = re.compile(r"\s*\(exportiert:[^)]*\)\s*|\s*\(\d[\d.]*\s*KB\)\s*")
+
+
+def dokumente_der_zeile(zeile) -> list[dict]:
+    """Die an einem Tagesordnungspunkt hängenden Dokumente.
+
+    Sitzungsvorlage, Planteil, Umweltbericht und was sonst beiliegt. Der
+    Linktext enthält Exportdatum und Dateigröße — beides ist für den Leser
+    ohne Belang und wird entfernt.
+    """
+    gefunden, gesehen = [], set()
+    for a in zeile.select('a[href*="/sdnetrim/"]'):
+        url = a["href"]
+        if url in gesehen:
+            continue
+        gesehen.add(url)
+        titel = EXPORTVERMERK.sub(" ", a.get_text(" ", strip=True)).strip(" ·-")
+        if titel:
+            gefunden.append({"titel": titel, "url": url})
+    return gefunden
+
+
 def sitzung_auslesen(s: requests.Session, termin: dict) -> tuple[dict, list[dict]]:
     """Eine Sitzungsseite parsen: Tagesordnung, Vorlagen, Dokumente, Protokoll."""
     soup = BeautifulSoup(s.get(termin["url"], timeout=30).text, "html.parser")
@@ -116,6 +138,7 @@ def sitzung_auslesen(s: requests.Session, termin: dict) -> tuple[dict, list[dict
             "titel": titel,
             "vorlage": vorlage.group(0) if vorlage else None,
             "url": termin["url"],
+            "dokumente": dokumente_der_zeile(zeile),
         })
 
     sitzung = {
@@ -159,8 +182,10 @@ def main() -> None:
         json.dumps(topmap, ensure_ascii=False, indent=1), encoding="utf-8")
 
     mit_vorlage = sum(1 for p in topmap if p["vorlage"])
+    dokumente = sum(len(p["dokumente"]) for p in topmap)
     print(f"\nGespeichert: {len(sitzungen)} Sitzungen, {len(topmap)} Tagesordnungspunkte "
-          f"({mit_vorlage} mit Vorlagennummer)", file=sys.stderr)
+          f"({mit_vorlage} mit Vorlagennummer), {dokumente} verlinkte Dokumente",
+          file=sys.stderr)
 
 
 if __name__ == "__main__":

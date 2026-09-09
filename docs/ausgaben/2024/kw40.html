@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -518,8 +531,8 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · GA</p>
     <h2 class="headline">2 Beschlüsse am 2. Oktober 2024</h2>
     <ul class="beschluesse">
-      <li><span class="sache">16. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Waldsee-Bergatreute für die Sonderbaufläche "Agri-Solarpark Sankt Josef", Gemarkung Mittelurbach - Abwägung und Feststellungsbeschluss<span class="sv">SV-99/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 30.08.2024 enthaltenen Beschlussvorschlägen abgewogen 2. Die 16. Änderung des Flächennutzungsplans für die Sonderbaufläche „Agri-Solarpark Sankt Josef“, Gemarkung Mittelurbach wird in der übersandten Planfassung vom 15.05.2024 festgestellt. 3. Die Verwaltung wird beauftragt, beim Regierungspräsidium Tübingen die Genehmigung zu beantragen und die Bekanntmachung zu veranlassen.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">18. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Sonderbaufläche großflächiger Einzelhandel im Bereich des "Lebensmittelmarkts" an der Roßberger Straße, Gemarkung Bergatreute - Abwägung und Entwurfsbeschluss<span class="sv">SV-102/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 01.08.2024 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 18. Änderung des Flächennutzungsplans für die Sonderbaufläche großflächiger Einzelhandel im Bereich des „Lebensmittelmarkts“ an der Roßberger Straße, Gemarkung Bergatreute wird in der übersandten Planfassung vom 01.08.2024 in Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">16. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Waldsee-Bergatreute für die Sonderbaufläche "Agri-Solarpark Sankt Josef", Gemarkung Mittelurbach - Abwägung und Feststellungsbeschluss<span class="sv">SV-99/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 30.08.2024 enthaltenen Beschlussvorschlägen abgewogen 2. Die 16. Änderung des Flächennutzungsplans für die Sonderbaufläche „Agri-Solarpark Sankt Josef“, Gemarkung Mittelurbach wird in der übersandten Planfassung vom 15.05.2024 festgestellt. 3. Die Verwaltung wird beauftragt, beim Regierungspräsidium Tübingen die Genehmigung zu beantragen und die Bekanntmachung zu veranlassen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVCzt2DFeIcslyp-lJ8QcrmxX5xUTPaUcrt_ZxN-Cqi4/Sitzungsvorlage_SV-99-2024_1._Ergaenzung.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-99/2024 1. Ergänzung</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">18. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Sonderbaufläche großflächiger Einzelhandel im Bereich des "Lebensmittelmarkts" an der Roßberger Straße, Gemarkung Bergatreute - Abwägung und Entwurfsbeschluss<span class="sv">SV-102/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 01.08.2024 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 18. Änderung des Flächennutzungsplans für die Sonderbaufläche großflächiger Einzelhandel im Bereich des „Lebensmittelmarkts“ an der Roßberger Straße, Gemarkung Bergatreute wird in der übersandten Planfassung vom 01.08.2024 in Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVnEdL4lGBKKP7WXd0ZeRDKiVUWKBJsmiDpucbTaAZGc/Sitzungsvorlage_SV-102-2024_1._Ergaenzung.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-102/2024 1. Ergänzung</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

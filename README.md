@@ -41,7 +41,7 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Erfasste Sitzungen | 166 |
 | Tagesordnungspunkte | 616 |
 | Sitzungsvorlagen | 300 |
-| Verlinkte Dokumente | 625 |
+| Dokumente | 625 |
 | Ausgewertete Beschlussprotokolle | 72 |
 | Ausgezählte Abstimmungen | 337 |
 | Gremien | 12 |
@@ -156,6 +156,13 @@ Verfahren. Zusätzlich lässt sich nach der Höhe des im Beschluss genannten Bet
 filtern — 21 Vorgänge nennen eine Million Euro oder mehr. Jeder Treffer und jede
 Station führt zur Ausgabe der jeweiligen Woche.
 
+Wo Unterlagen am Tagesordnungspunkt hängen — Sitzungsvorlage, Planteil,
+Umweltbericht —, sind sie **verlinkt und öffnen in einem neuen Tab**. Die
+Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum die
+Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
+Diese Begründung wird **nicht wiedergegeben** — wer sie lesen will, liest sie im
+Original. 436 Dokumente sind so erreichbar.
+
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst
 der Beschlusstext sagt, worum es geht. Aus „Sanierungsgebiet Altstadt III –
@@ -208,6 +215,17 @@ Euro, der Ertrag der gesamten Stadt. Maßgeblich ist der Beschlusstext.
 Die Tabellen enthalten bewusst keine Dokument-Links: Die URLs des
 Ratsinformationssystems sind nicht dauerhaft gültig. Stabile Kennung ist die
 Vorlagennummer.
+
+## Am Telefon lesbar
+
+Alle Seiten tragen Doctype, Sprachangabe und Viewport und sind für schmale
+Bildschirme eingerichtet: Die Zeitachse eines Vorgangs läuft am Rechner waagerecht
+mit Pfeilen, auf dem Telefon senkrecht mit Zeitstrahl. Beschlussergebnisse rücken
+unter die Sache statt daneben, Suchfeld und Filter stehen untereinander mit
+größeren Tippzielen.
+
+Die Prüfung kontrolliert den Seitenkopf bei jedem Push — ohne Viewport-Angabe
+rendert ein Telefon auf rund 980 Pixel Breite und skaliert herunter.
 
 ## Woher eine Aussage stammt
 
@@ -319,7 +337,7 @@ Diese Prüfung hat beim ersten Einsatz neun fehlende Abstimmungen aufgedeckt.
   dazwischenliegen.
 * Schritt 6 zieht Kennzahlen und den Link auf die neueste Ausgabe nach.
 * Schritt 4 wird nur gebraucht, wenn der Report neu gebaut werden soll.
-* Schritt 7 schreibt die Tabellen unter `data/csv/` neu und rechnet zum Schluss
+* Schritt 9 sammelt die Befunde; Schritt 7 schreibt die Tabellen unter `data/csv/` neu und rechnet zum Schluss
   gegen `data/kennzahlen.json` gegen. Weichen die Zahlen ab, stimmt etwas nicht.
 
 Die Abfragen sind bewusst mit Pausen versehen, um die Server der Stadt nicht zu

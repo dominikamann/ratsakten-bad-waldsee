@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -488,7 +501,7 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · AUT</p>
     <h2 class="headline">1 Beschluss am 27. April 2026</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Carlensteichweg - erstmalige, endgültige Herstellung Planungsbeschluss<span class="sv">SV-80/2026</span><span class="wortlaut">1. Die erschließungsbeitragsrechtlich erstmalige, endgültige Herstellung des Carlensteichwegs soll geplant werden. Das Planungskonzept wird befürwortet. 2. Die Planungsleistungen zum Ausbau des Carlensteichwegs für die Leistungsphase 3 HOAI sowie evtl. Vermessungsleistungen werden im Wege der stufenweisen Beauftragung an das Ing.-Büro Kohler in Berg vergeben. Weitere Beratungsleistungen z.B. geotechnische Untersuchungen werden bei Bedarf ebenfalls an externe Partner beauftragt. 3. Die Finanzierung der Planungsleistungen erfolgt über die im Haushalt 2026 unter Konto I5410- 2210 bereitgestellten Mittel.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Carlensteichweg - erstmalige, endgültige Herstellung Planungsbeschluss<span class="sv">SV-80/2026</span><span class="wortlaut">1. Die erschließungsbeitragsrechtlich erstmalige, endgültige Herstellung des Carlensteichwegs soll geplant werden. Das Planungskonzept wird befürwortet. 2. Die Planungsleistungen zum Ausbau des Carlensteichwegs für die Leistungsphase 3 HOAI sowie evtl. Vermessungsleistungen werden im Wege der stufenweisen Beauftragung an das Ing.-Büro Kohler in Berg vergeben. Weitere Beratungsleistungen z.B. geotechnische Untersuchungen werden bei Bedarf ebenfalls an externe Partner beauftragt. 3. Die Finanzierung der Planungsleistungen erfolgt über die im Haushalt 2026 unter Konto I5410- 2210 bereitgestellten Mittel.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXkvPVoGn_VfdEtBnKzGIsLjg9tlvGy_785GVHtdbkUb/Sitzungsvorlage_SV-80-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-80/2026</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYgRxAvuBB0wPF2UBzXrTy3g_boINBuhbM0pVV6as_TR/Carlensteichweg_Ausbaukonzept.pdf" target="_blank" rel="noopener noreferrer">Carlensteichweg Ausbaukonzept</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

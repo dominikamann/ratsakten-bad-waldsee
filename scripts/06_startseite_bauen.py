@@ -89,6 +89,7 @@ def bauen() -> str:
         (kennzahlen["vorlagen"], "Vorlagen"),
         (kennzahlen["protokolle"], "Protokolle"),
         (a["gesamt"], "Abstimmungen"),
+        (kennzahlen["dokumente"], "Dokumente"),
     ]
     kachel_html = "\n".join(
         f'    <div class="tile"><span class="v">{v}</span><span class="k">{t}</span></div>'

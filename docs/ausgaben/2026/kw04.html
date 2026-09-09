@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -519,8 +532,8 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · AUT</p>
     <h2 class="headline">2 Beschlüsse am 19. Januar 2026</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Haushalt 2026 - Große Kreisstadt Bad Waldsee<span class="sv">SV-270/2025</span><span class="wortlaut">Der Haushalt 2026 inkl. Haushaltsplan, Haushaltssatzung und den geplanten Investitionen wird zur Kenntnis genommen. Dem Gemeinderat wird empfohlen dem Haushalt 2026 der großen Kreisstadt Bad Waldsee zuzustimmen.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Wirtschaftsplan 2026 - Eigenbetrieb Städtische Abwasserbeseitigung<span class="sv">SV-273/2025</span><span class="wortlaut">Der Wirtschaftsplan und die geplanten Investitionen 2026 werden zur Kenntnis genommen. Dem Gemeinderat wird empfohlen dem Wirtschaftsplan 2026 des Eigenbetriebs Städtische Abwasser beseitigung zuzustimmen.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Haushalt 2026 - Große Kreisstadt Bad Waldsee<span class="sv">SV-270/2025</span><span class="wortlaut">Der Haushalt 2026 inkl. Haushaltsplan, Haushaltssatzung und den geplanten Investitionen wird zur Kenntnis genommen. Dem Gemeinderat wird empfohlen dem Haushalt 2026 der großen Kreisstadt Bad Waldsee zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWj6Z_P6P5_CzEgsO4f8Iu3mrqmf3YtnaKRPbIckyRvi/Sitzungsvorlage_SV-270-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-270/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaW4BZOScjYIuvUDl-Ujk67PQ5Mb2H5hiHl1DmFcpBXT/Haushaltsplan_2026.pdf" target="_blank" rel="noopener noreferrer">Haushaltsplan 2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Wirtschaftsplan 2026 - Eigenbetrieb Städtische Abwasserbeseitigung<span class="sv">SV-273/2025</span><span class="wortlaut">Der Wirtschaftsplan und die geplanten Investitionen 2026 werden zur Kenntnis genommen. Dem Gemeinderat wird empfohlen dem Wirtschaftsplan 2026 des Eigenbetriebs Städtische Abwasser beseitigung zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQ3gHcmg3p0WMrEFoGQaTR7qixD_L0sXMdl9ATyqqCCJ/Sitzungsvorlage_SV-273-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-273/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZV0NyIHxvxu5cYOS0CWpEkpqn-F44WzQHOL-J6XHr8uV/WP_2026_Staedt._Abwasserbeseitigung.pdf" target="_blank" rel="noopener noreferrer">WP 2026 Städt. Abwasserbeseitigung</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>
@@ -535,8 +548,8 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · VA</p>
     <h2 class="headline">2 Beschlüsse am 20. Januar 2026</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Antrag auf Kultuförderung – Spektrum K - UMANAND 2026<span class="sv">SV-277/2025</span><span class="wortlaut">Der Verwaltungsausschuss stimmt der Kulturförderung von SpektrumK für UMANAND 2026 zu</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Haushalt 2026 - Große Kreisstadt Bad Waldsee<span class="sv">SV-270/2025</span><span class="wortlaut">Der Haushalt 2026 inkl. Haushaltsplan, Haushaltssatzung und den geplanten Investitionen wird zur Kenntnis genommen. Dem Gemeinderat wird empfohlen dem Haushalt 2026 der großen Kreisstadt Bad Waldsee zuzustimmen.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Antrag auf Kultuförderung – Spektrum K - UMANAND 2026<span class="sv">SV-277/2025</span><span class="wortlaut">Der Verwaltungsausschuss stimmt der Kulturförderung von SpektrumK für UMANAND 2026 zu</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYPewyq68YEKvVK5Iw7bytaF3rAzAUO_1emQuqVEEEf-/Sitzungsvorlage_SV-277-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-277/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZDPipxlKm3gzmYAII_T2R8GXWwFJ-yPh1O059H_Of9M/UMANAND_Foerderantrag_fuer_2026_Formular_Foerderantrag.pdf" target="_blank" rel="noopener noreferrer">UMANAND Förderantrag für 2026 Formular_Förderantrag</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Haushalt 2026 - Große Kreisstadt Bad Waldsee<span class="sv">SV-270/2025</span><span class="wortlaut">Der Haushalt 2026 inkl. Haushaltsplan, Haushaltssatzung und den geplanten Investitionen wird zur Kenntnis genommen. Dem Gemeinderat wird empfohlen dem Haushalt 2026 der großen Kreisstadt Bad Waldsee zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWj6Z_P6P5_CzEgsO4f8Iu3mrqmf3YtnaKRPbIckyRvi/Sitzungsvorlage_SV-270-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-270/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaW4BZOScjYIuvUDl-Ujk67PQ5Mb2H5hiHl1DmFcpBXT/Haushaltsplan_2026.pdf" target="_blank" rel="noopener noreferrer">Haushaltsplan 2026</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

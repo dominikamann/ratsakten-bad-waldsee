@@ -296,6 +296,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
                 "a": ausgabe_zu(p["datum"], zeitraeume),
                 "b": betraege.get((p["datum"], p["vorlage"] or ""), 0),
                 "w": wortlaute.get((p["datum"], p["vorlage"] or ""), ""),
+                "dok": p.get("dokumente", []),
             })
         if schluessel.startswith("@"):
             name = namen[schluessel[1:]]
@@ -409,6 +410,16 @@ article.vorgang{{
 .achse{{
   display:flex;flex-wrap:wrap;gap:0;margin:12px 0 0;
 }}
+.achse .unterlagen{{
+  flex:1 1 100%;display:flex;flex-wrap:wrap;gap:6px 10px;margin:4px 0 8px;
+}}
+.achse .unterlagen a{{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;border:1px solid var(--rule);padding:3px 8px;
+}}
+.achse .unterlagen a::before{{content:"↗ ";opacity:.6}}
+.achse .unterlagen a:hover{{border-color:var(--s1)}}
+.achse .unterlagen a:focus-visible{{outline:2px solid var(--s1);outline-offset:2px}}
 .achse .wortlaut{{
   flex:1 1 100%;margin:2px 0 12px;padding-left:12px;
   border-left:2px solid var(--rule);max-width:74ch;
@@ -593,6 +604,12 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
   nur den Verwaltungsvorgang benennt. Angezeigt werden rund 340 Zeichen;
   <b>durchsucht wird der vollständige Beschluss</b>, und wenn der Treffer hinter der
   Kürzung liegt, erscheint der ganze Text. Maßgeblich bleibt das Protokoll.</p>
+  <p>Wo Unterlagen am Tagesordnungspunkt hängen — Sitzungsvorlage, Planteil,
+  Umweltbericht —, sind sie <b>verlinkt und öffnen in einem neuen Tab</b>. Die
+  Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum die
+  Verwaltung etwas vorschlägt. Das ist oft aufschlussreicher als der Beschluss
+  selbst. Wir geben diese Begründung nicht wieder — wer sie lesen will, liest sie
+  im Original.</p>
   <p><b>Beträge sind Fundstellen, keine Kostenangaben.</b> Angezeigt wird der größte
   im Beschlusstext genannte Betrag ab 250.000 &euro;. Das kann der Preis eines
   Vorhabens sein, aber ebenso ein Haushaltsansatz oder eine Planungsgröße — bei
@@ -857,6 +874,17 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
           st.appendChild(e);
         }}
         achse.appendChild(st);
+        if(s.dok && s.dok.length){{
+          var u = document.createElement("p");
+          u.className = "unterlagen";
+          s.dok.forEach(function(d){{
+            var a = document.createElement("a");
+            a.href = d.url; a.target = "_blank"; a.rel = "noopener noreferrer";
+            a.textContent = d.titel;
+            u.appendChild(a);
+          }});
+          achse.appendChild(u);
+        }}
         if(s.w){{
           var w = document.createElement("p");
           w.className = "wortlaut";

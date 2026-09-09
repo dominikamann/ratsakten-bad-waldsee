@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -535,10 +548,10 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · GR</p>
     <h2 class="headline">4 Beschlüsse am 29. Juni 2026</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Betriebsplanung der Forsteinrichtung im Stadtwald Bad Waldsee für die Jahre 2026 - 2035<span class="sv">SV-68/2026</span><span class="wortlaut">1. Der Gemeinderat nimmt den Bericht zur Forsteinrichtungserneuerung 2026 – 2035 zur Kenntnis. 2. Der Gemeinderat stimmt der Betriebsplanung 2026 – 2035 und den darin enthaltenen Zielen für den Stadtwald Bad Waldsee zu.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Anpassung der Vergnügungssteuersatzung<span class="sv">SV-113/2026</span><span class="wortlaut">Die Satzung zur Änderung der Satzung über die Erhebung einer Vergnügungssteuer (Vergnügungs steuersatzung) wird beschlossen.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Anpassung der Hundesteuersatzung<span class="sv">SV-114/2026</span><span class="wortlaut">STRin Lentes stellt den Antrag, die gesonderte Besteuerung von Kampfhunden zu streichen und damit den Satzungsentwurf über die Erhebung der Hundesteuer zu ändern.</span></span><span class="erg split">1 : 17 : 4</span></li>
-      <li><span class="sache">Anpassung der Hundesteuersatzung<span class="sv">SV-114/2026</span><span class="wortlaut">Die Satzung zur Änderung der Satzung über die Erhebung der Hundesteuer (Hundesteuersatzung) wird beschlossen.</span></span><span class="erg split">21 : 1 : 0</span></li>
+      <li><span class="sache">Betriebsplanung der Forsteinrichtung im Stadtwald Bad Waldsee für die Jahre 2026 - 2035<span class="sv">SV-68/2026</span><span class="wortlaut">1. Der Gemeinderat nimmt den Bericht zur Forsteinrichtungserneuerung 2026 – 2035 zur Kenntnis. 2. Der Gemeinderat stimmt der Betriebsplanung 2026 – 2035 und den darin enthaltenen Zielen für den Stadtwald Bad Waldsee zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZe-y8O6htTvLyx4xgPXC6UIbQl5JB9Nqx0XP6I5PII1x/Sitzungsvorlage_SV-68-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-68/2026</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZiuj73WDTXg0x-KivzxqRb8LSQ9V2dK9zV4MS4-LdG0/Tischvorlage_-_Forsteinrichtungsplanung_2026-2035.pdf" target="_blank" rel="noopener noreferrer">Tischvorlage - Forsteinrichtungsplanung 2026-2035</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Anpassung der Vergnügungssteuersatzung<span class="sv">SV-113/2026</span><span class="wortlaut">Die Satzung zur Änderung der Satzung über die Erhebung einer Vergnügungssteuer (Vergnügungs steuersatzung) wird beschlossen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWXnJItZVBuVfsTwtSdQW1PFhAtf5j6yKGab6s8yUrZl/Sitzungsvorlage_SV-113-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-113/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Anpassung der Hundesteuersatzung<span class="sv">SV-114/2026</span><span class="wortlaut">STRin Lentes stellt den Antrag, die gesonderte Besteuerung von Kampfhunden zu streichen und damit den Satzungsentwurf über die Erhebung der Hundesteuer zu ändern.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcf5H7EqGIKZBFuWx767Y1W4rp9UCN7H6P_rFmCdi5r0/Sitzungsvorlage_SV-114-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-114/2026</a></span></span><span class="erg split">1 : 17 : 4</span></li>
+      <li><span class="sache">Anpassung der Hundesteuersatzung<span class="sv">SV-114/2026</span><span class="wortlaut">Die Satzung zur Änderung der Satzung über die Erhebung der Hundesteuer (Hundesteuersatzung) wird beschlossen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcf5H7EqGIKZBFuWx767Y1W4rp9UCN7H6P_rFmCdi5r0/Sitzungsvorlage_SV-114-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-114/2026</a></span></span><span class="erg split">21 : 1 : 0</span></li>
     </ul>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>

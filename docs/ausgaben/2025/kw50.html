@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -488,7 +501,7 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · GR</p>
     <h2 class="headline">1 Beschluss am 8. Dezember 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Änderung der Entschädigungssatzung | Ergänzung um Wahlhelfer in § 3a<span class="sv">SV-259/2025</span><span class="wortlaut">Der Satzung über die Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit wird zugestimmt.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Änderung der Entschädigungssatzung | Ergänzung um Wahlhelfer in § 3a<span class="sv">SV-259/2025</span><span class="wortlaut">Der Satzung über die Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXLTV0C2nT7sDPlfUgqm317fLXUVsbRrUGP5AvnJ0tm5/Sitzungsvorlage_SV-259-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-259/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYV8KpuufISEX6gFoIY6wGS0JPxcuB_Uvg-EdLgbwxt1/Aenderung_der_Entschaedigungssatzung_-_Wahlhelfer_--_3a.pdf" target="_blank" rel="noopener noreferrer">Änderung der Entschädigungssatzung - Wahlhelfer § 3a</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

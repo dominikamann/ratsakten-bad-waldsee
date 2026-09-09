@@ -302,6 +302,13 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
 
     # Wann stand eine Vorlage schon einmal auf einer Tagesordnung? Mehrfache
     # Auftritte deuten auf Vorberatung, Vertagung oder erneute Befassung hin.
+    # Die an einem Punkt haengenden Dokumente — Sitzungsvorlage, Planteil,
+    # Umweltbericht. Wer es genau wissen will, liest im Original nach.
+    dokumente_je_punkt: dict[tuple[str, str], list[dict]] = {}
+    for p in punkte:
+        if p.get("dokumente"):
+            dokumente_je_punkt[(p["datum"], p["vorlage"] or "")] = p["dokumente"]
+
     termine_je_vorlage: dict[str, list[str]] = collections.defaultdict(list)
     for p in punkte:
         if p["vorlage"]:
@@ -343,6 +350,8 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
                 b["titel"] = titel_je_vorlage.get(b["vorlage"], None)
                 b["frueher"] = [d for d in termine_je_vorlage.get(b["vorlage"], [])
                                 if d < s["start"][:10]]
+                b["dokumente"] = dokumente_je_punkt.get(
+                    (s["start"][:10], b["vorlage"] or ""), [])
                 b["gremium"] = name
                 b["kuerzel"] = kuerzel(name)
                 b["datum"] = tag
@@ -588,9 +597,15 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                             f"""genannter Betrag">{euro(b['betrag'])}</span>""")
                 wortlaut = (f"""<span class="wortlaut">{e(b['wortlaut'])}</span>"""
                             if b.get("wortlaut") else "")
+                unterlagen = ""
+                if b.get("dokumente"):
+                    verweise = "".join(
+                        f'<a href="{d["url"]}" target="_blank" rel="noopener noreferrer">'
+                        f'{e(d["titel"])}</a>' for d in b["dokumente"])
+                    unterlagen = f'<span class="unterlagen">{verweise}</span>' 
                 t.append(f"""      <li><span class="sache">{e(b['titel'])}"""
                          f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span>"""
-                         f"""{wortlaut}</span>"""
+                         f"""{wortlaut}{unterlagen}</span>"""
                          f"""<span class="erg{klasse}">{e(b['ergebnis'])}</span></li>""")
             t.append("    </ul>")
             if any(b["strittig"] for b in liste):

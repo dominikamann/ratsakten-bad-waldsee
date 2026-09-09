@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -510,8 +523,8 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · AUT</p>
     <h2 class="headline">2 Beschlüsse am 15. September 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Bebauungsplan "Feuerwehrgerätehaus Michelwinnaden" und die örtlichen Bauvorschriften hierzu, Gemarkung Michelwinnaden - Aufstellungsbeschluss<span class="sv">SV-137/2025</span><span class="wortlaut">1. Für den im Lageplan vom 16.07.2025 dargestellten Geltungsbereich mit ca. 0,15 ha wird der Bebauungsplan „Feuerwehrgerätehaus Michelwinnaden“ und die örtlichen Bauvorschriften hierzu, Gemarkung Michelwinnaden im Regelverfahren aufgestellt. 2. Für den Bebauungsplan soll eine Fläche für den Gemeinbedarf nach § 9 Abs. 1 Nr. 5 Baugesetzbuch (BauGB) festgesetzt werden. 3. Die planerischen Leistungen für den Bebauungsplan werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 4. Die Verwaltung wird beauftragt, den Aufstellungsbeschluss bekanntzumachen und das weitere Verfahren durchzuführen.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich der Gemeinbedarfsfläche "Feuerwehrgerätehaus Michelwinnaden"-  Gemarkung Michelwinnaden - Aufstellungsbeschluss<span class="sv">SV-138/2025</span><span class="wortlaut">1. Im Westen des Ortsteiles Michelwinnaden wird die Teilfläche des Grundstücks Flst. Nr. 456, Gemarkung Michelwinnaden, im Bereich nördlich der Sportplatzflächen, von einer Grünfläche in eine Gemeinbedarfsfläche nach § 5 Abs. 2 Nr. 2d Baugesetzbuch (BauGB) geändert. Grundlage ist die Darstellung des Änderungsbereiches im beiliegenden Lageplan vom 16.07.2025. 2. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 3. Die Verwaltung wird beauftragt, im weiteren Verfahren die frühzeitige Beteiligung der Öffentlichkeit nach § 3 Abs. 1 Baugesetzbuch (BauGB) sowie die Beteiligung der Behörden und Träger öffentlicher Belange nach § 4 Abs. 1 BauGB durchzuführen. 4. Die Vertreter der Stadt Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 22. Änderung des Flächennutzungsplanes der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute zuzustimmen.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Bebauungsplan "Feuerwehrgerätehaus Michelwinnaden" und die örtlichen Bauvorschriften hierzu, Gemarkung Michelwinnaden - Aufstellungsbeschluss<span class="sv">SV-137/2025</span><span class="wortlaut">1. Für den im Lageplan vom 16.07.2025 dargestellten Geltungsbereich mit ca. 0,15 ha wird der Bebauungsplan „Feuerwehrgerätehaus Michelwinnaden“ und die örtlichen Bauvorschriften hierzu, Gemarkung Michelwinnaden im Regelverfahren aufgestellt. 2. Für den Bebauungsplan soll eine Fläche für den Gemeinbedarf nach § 9 Abs. 1 Nr. 5 Baugesetzbuch (BauGB) festgesetzt werden. 3. Die planerischen Leistungen für den Bebauungsplan werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 4. Die Verwaltung wird beauftragt, den Aufstellungsbeschluss bekanntzumachen und das weitere Verfahren durchzuführen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdYh5o1i_DwMD_MBumP49sne0-PMBvuFEp6AULLAkHap/Sitzungsvorlage_SV-137-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-137/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZb-04NHzkyFU9m7BkPT3GAdtyMEVEOxFQfOIUBafMp2B/Lageplan_vom_16.07.2025.pdf" target="_blank" rel="noopener noreferrer">Lageplan vom 16.07.2025</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich der Gemeinbedarfsfläche "Feuerwehrgerätehaus Michelwinnaden"-  Gemarkung Michelwinnaden - Aufstellungsbeschluss<span class="sv">SV-138/2025</span><span class="wortlaut">1. Im Westen des Ortsteiles Michelwinnaden wird die Teilfläche des Grundstücks Flst. Nr. 456, Gemarkung Michelwinnaden, im Bereich nördlich der Sportplatzflächen, von einer Grünfläche in eine Gemeinbedarfsfläche nach § 5 Abs. 2 Nr. 2d Baugesetzbuch (BauGB) geändert. Grundlage ist die Darstellung des Änderungsbereiches im beiliegenden Lageplan vom 16.07.2025. 2. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 3. Die Verwaltung wird beauftragt, im weiteren Verfahren die frühzeitige Beteiligung der Öffentlichkeit nach § 3 Abs. 1 Baugesetzbuch (BauGB) sowie die Beteiligung der Behörden und Träger öffentlicher Belange nach § 4 Abs. 1 BauGB durchzuführen. 4. Die Vertreter der Stadt Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 22. Änderung des Flächennutzungsplanes der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTYVvnF7GU0B_C0ZT5ixY0og7sMc6E5u_MfheRy6Gd0w/Sitzungsvorlage_SV-138-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-138/2025 (aktualisiert: 16.09.2025)</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVAudUMzhnkUpAxES5Dj8_byn7Gi06uzrY6xlyftKTSn/Lageplan_vom_16.07.2025.pdf" target="_blank" rel="noopener noreferrer">Lageplan vom 16.07.2025</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>
@@ -526,7 +539,7 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · VA</p>
     <h2 class="headline">1 Beschluss am 16. September 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Sanierung Dach Baubetriebshof Schützenstraße 27 - außerplanmäßige Ausgaben<span class="sv">SV-145/2025</span><span class="wortlaut">1. Den vorgetragenen Maßnahmen zur Dachsanierung des Sozial- und Verwaltungstrakts wird zugestimmt. 2. Die Verwaltung wird ermächtigt die Arbeiten zu beauftragen. 3. Die außerplanmäßigen Kosten von ca. 65.000 € werden genehmigt und aus dem laufenden Haushalt finanziert.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Sanierung Dach Baubetriebshof Schützenstraße 27 - außerplanmäßige Ausgaben<span class="sv">SV-145/2025</span><span class="wortlaut">1. Den vorgetragenen Maßnahmen zur Dachsanierung des Sozial- und Verwaltungstrakts wird zugestimmt. 2. Die Verwaltung wird ermächtigt die Arbeiten zu beauftragen. 3. Die außerplanmäßigen Kosten von ca. 65.000 € werden genehmigt und aus dem laufenden Haushalt finanziert.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZeRkCgN55ToY9RydTJ-9th68DvdyFJ3Jx9rCGq_twFnt/Sitzungsvorlage_SV-145-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-145/2025</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

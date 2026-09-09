@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -513,11 +526,11 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · GR</p>
     <h2 class="headline">5 Beschlüsse am 26. Mai 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Stellungnahme zum Teilregionalplan Energie - 2. Anhörung<span class="sv">SV-74/2025</span><span class="wortlaut">1. Die Informationen zur Fortschreibung des Regionalplans Bodensee-Oberschwaben, Regionale Infrastruktur – Teilregionalplan Energie (Kap. 4.2) wird zur Kenntnis genommen. 2. Der Gemeinderat beschließt die Stellungnahme der Großen Kreisstadt Bad Waldsee im Rahmen des 2. Beteiligungsverfahrens zum Teilregionalplan Energie. 3. Die Verwaltung wird beauftragt, die Stellungnahme an den Regionalverband Bodensee-Ober - schwaben zu übermitteln.</span></span><span class="erg split">19 : 5 : 1</span></li>
-      <li><span class="sache">Gemeindliches Einvernehmen zum Antrag einer Windenergieanlage im Vorranggebiet Aulendorf-Ost auf der Gemarkung Waldsee<span class="sv">SV-82/2025</span><span class="wortlaut">1. Der Gemeinderat nimmt die Informationen zur Kenntnis. 2. Das gemeindliche Einvernehmen zum Antrag einer Windenergieanlage im Vorranggebiet Aulendorf-Ost auf der Gemarkung Waldsee wird versagt.</span></span><span class="erg split">18 : 7 : 0</span></li>
-      <li><span class="sache">Weiterentwicklung Friedhof am Schorren- neue Grabarten<span class="sv">SV-83/2025</span><span class="wortlaut">1. Der Gemeinderat stimmt der vorgestellten Planung und Erläuterung zur Weiterentwicklung des Friedhofes am Schorren zu. 2. Die Verwaltung wird mit der zügigen Umsetzung beauftragt.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Weiteres Vorhaben European Energy Award<span class="sv">SV-239/2024</span><span class="wortlaut">1. Der Sachstandsbericht zu den Veränderungen des European Energy Awards wird zur Kenntnis genommen. 2. Dem Vorschlag zum Ausstieg aus dem European Energy Award zum 31.12.2025 wird zuge - stimmt. 3. Dem Vorschlag zum Einstieg bei dem Programm „Zukunftskommune Oberschwaben“ der Energieagentur Oberschwaben wird zugestimmt.</span></span><span class="erg split">18 : 4 : 3</span></li>
-      <li><span class="sache">Anreizprogramme Klimaschutz 2025<span class="sv">SV-73/2025</span><span class="wortlaut">Das vorhandene Klimaschutzbudget 2025 wird für Bad Waldseer Vereine zur Umrüstung bestehender Flutlichtanlagen verwendet.</span></span><span class="erg split">19 : 1 : 5</span></li>
+      <li><span class="sache">Stellungnahme zum Teilregionalplan Energie - 2. Anhörung<span class="sv">SV-74/2025</span><span class="wortlaut">1. Die Informationen zur Fortschreibung des Regionalplans Bodensee-Oberschwaben, Regionale Infrastruktur – Teilregionalplan Energie (Kap. 4.2) wird zur Kenntnis genommen. 2. Der Gemeinderat beschließt die Stellungnahme der Großen Kreisstadt Bad Waldsee im Rahmen des 2. Beteiligungsverfahrens zum Teilregionalplan Energie. 3. Die Verwaltung wird beauftragt, die Stellungnahme an den Regionalverband Bodensee-Ober - schwaben zu übermitteln.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaKqQxX0dSvsdatfHp-1Z-tuRSHLjgB9vzcJ8BB14Is9/Sitzungsvorlage_SV-74-2025_1._Ergaenzung_2._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-74/2025 1. Ergänzung 2. Nachtrag</a></span></span><span class="erg split">19 : 5 : 1</span></li>
+      <li><span class="sache">Gemeindliches Einvernehmen zum Antrag einer Windenergieanlage im Vorranggebiet Aulendorf-Ost auf der Gemarkung Waldsee<span class="sv">SV-82/2025</span><span class="wortlaut">1. Der Gemeinderat nimmt die Informationen zur Kenntnis. 2. Das gemeindliche Einvernehmen zum Antrag einer Windenergieanlage im Vorranggebiet Aulendorf-Ost auf der Gemarkung Waldsee wird versagt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZT_pNA_d-8wL4tkIHwdhOxU9GZlY_fBB9t9OSa6mDL8g/Sitzungsvorlage_SV-82-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-82/2025</a></span></span><span class="erg split">18 : 7 : 0</span></li>
+      <li><span class="sache">Weiterentwicklung Friedhof am Schorren- neue Grabarten<span class="sv">SV-83/2025</span><span class="wortlaut">1. Der Gemeinderat stimmt der vorgestellten Planung und Erläuterung zur Weiterentwicklung des Friedhofes am Schorren zu. 2. Die Verwaltung wird mit der zügigen Umsetzung beauftragt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVGXSUzFVZL8xkF4Lc1xBXnbRFY637axgvTvE7BBXJW_/Sitzungsvorlage_SV-83-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-83/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTuqSFo5yHcEjOTahqyoz4n3wOMKUz1ZS83tZaBWJSA3/Uebersicht_Schorren.pdf" target="_blank" rel="noopener noreferrer">Übersicht Schorren</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Weiteres Vorhaben European Energy Award<span class="sv">SV-239/2024</span><span class="wortlaut">1. Der Sachstandsbericht zu den Veränderungen des European Energy Awards wird zur Kenntnis genommen. 2. Dem Vorschlag zum Ausstieg aus dem European Energy Award zum 31.12.2025 wird zuge - stimmt. 3. Dem Vorschlag zum Einstieg bei dem Programm „Zukunftskommune Oberschwaben“ der Energieagentur Oberschwaben wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWXTj8BEgmy15T2IguHcQtsI8VHdwvWWbUWpxOjUZuZu/Sitzungsvorlage_SV-239-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-239/2024</a></span></span><span class="erg split">18 : 4 : 3</span></li>
+      <li><span class="sache">Anreizprogramme Klimaschutz 2025<span class="sv">SV-73/2025</span><span class="wortlaut">Das vorhandene Klimaschutzbudget 2025 wird für Bad Waldseer Vereine zur Umrüstung bestehender Flutlichtanlagen verwendet.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZJvc5kd9mFCnJCVl8Ck3TvmABkhyZ9g6RoQtW6qsKYW/Sitzungsvorlage_SV-73-2025_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-73/2025 1. Nachtrag</a></span></span><span class="erg split">19 : 1 : 5</span></li>
     </ul>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>

@@ -421,6 +421,19 @@ ul.beschluesse .wortlaut{
   padding-left:12px;border-left:2px solid var(--rule);
 }
 
+/* ---------- Unterlagen zum Beschluss ---------- */
+ul.beschluesse .unterlagen{
+  display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
+}
+ul.beschluesse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;
+  border:1px solid var(--rule);padding:3px 8px;
+}
+ul.beschluesse .unterlagen a::before{content:"↗ ";opacity:.6}
+ul.beschluesse .unterlagen a:hover{border-color:var(--s1)}
+ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
 /* ---------- Schmale Bildschirme ---------- */
 @media (max-width:620px){
   /* Die Zeitachse laeuft am Rechner waagerecht mit Pfeilen. Auf dem Handy ist
@@ -488,8 +501,8 @@ ul.beschluesse .wortlaut{
     <p class="rubrik">Beschlossen · VA</p>
     <h2 class="headline">2 Beschlüsse am 9. Juni 2026</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Abrechnung Stadtsee Aktivweg<span class="sv">SV-106/2026</span><span class="wortlaut">Der Verwaltungsausschuss stimmt der Bauabrechnung für das Projekt Stadtsee-Aktiv-Weg zu.</span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Vergabe der Schul- und Kindergartenverpflegung<span class="sv">SV-85/2026</span><span class="wortlaut">1. Der Verwaltungsausschuss stimmt der Vergabe der Schul- und Kindergartenverpflegung für das Schulzentrum Döchtbühl, die Grundschule Reute sowie das Kinderhaus Döchtbühl an die Firma Apetito ab dem 01.09.2026 zu. 2. Der Vertrag endet nach zwei Jahren mit der Option um ein weiteres Jahr zu verlängern. Das Vertragsverhältnis endet spätestens am 31.08.2029.</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Abrechnung Stadtsee Aktivweg<span class="sv">SV-106/2026</span><span class="wortlaut">Der Verwaltungsausschuss stimmt der Bauabrechnung für das Projekt Stadtsee-Aktiv-Weg zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZat_56_SScFS6MDNWBS3qrtPAuypL0gWeWGQIvH0neYD/Sitzungsvorlage_SV-106-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-106/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Vergabe der Schul- und Kindergartenverpflegung<span class="sv">SV-85/2026</span><span class="wortlaut">1. Der Verwaltungsausschuss stimmt der Vergabe der Schul- und Kindergartenverpflegung für das Schulzentrum Döchtbühl, die Grundschule Reute sowie das Kinderhaus Döchtbühl an die Firma Apetito ab dem 01.09.2026 zu. 2. Der Vertrag endet nach zwei Jahren mit der Option um ein weiteres Jahr zu verlängern. Das Vertragsverhältnis endet spätestens am 31.08.2029.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRslOp3J2vB23Z206Ry-dmyeUleihv09r_-KiC39HGii/Sitzungsvorlage_SV-85-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-85/2026</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>
