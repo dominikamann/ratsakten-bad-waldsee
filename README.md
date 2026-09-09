@@ -210,7 +210,10 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── index.html    Archiv über alle Jahrgänge
 │       └── 2026/         kw03.html … kw37.html
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
-├── scripts/    die Verarbeitungskette, Schritt 01 bis 06
+├── scripts/    die Verarbeitungskette, Schritt 01 bis 08
+│   ├── wochenlauf.sh   ein Befehl für den ganzen Wochenlauf
+│   ├── pruefen.py      Kontrolle vor der Veröffentlichung
+│   └── launchd/        Vorlage für den automatischen Montagslauf
 └── data/       Kennzahlen, Ausgabenregister und die 74 Beschlussprotokolle
 ```
 
@@ -287,7 +290,10 @@ belasten.
 ## Geplant
 
 - [x] Wöchentliche Ausgaben, Jahrgang 2026 nachgeholt (`scripts/05_ausgaben_bauen.py`)
-- [x] Automatischer Lauf per GitHub Action (`.github/workflows/aktenlage.yml`)
+- [x] Wöchentlicher Lauf als ein Befehl (`scripts/wochenlauf.sh`, `launchd`-Vorlage)
+- [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)
+- [x] Vorgangssuche mit Zeitachse (`docs/suche.html`)
+- [x] Herkunft jeder Aussage gekennzeichnet (Beleg · Regelbasiert · KI-Deutung)
 - [x] Archiv der bisherigen Ausgaben
 - [x] Rohdaten zum Nachrechnen (`data/csv/`, siehe unten)
 
@@ -306,9 +312,13 @@ Bad Waldsee.**
 
 **Keine Vorwürfe.** Der Report unterstellt weder der Stadtverwaltung noch einzelnen Personen
 ein rechtswidriges oder schuldhaftes Verhalten. Er benennt ausschließlich, was sich aus den
-öffentlich vorliegenden Unterlagen ergibt und was daraus offenbleibt. Wertungen sind als
-solche gekennzeichnet und stellen die persönliche Einschätzung des Autors dar
-(Meinungsäußerung im Sinne des Art. 5 Abs. 1 GG).
+öffentlich vorliegenden Unterlagen ergibt und was daraus offenbleibt.
+
+**Einordnungen sind maschinell erzeugt.** Alle Aussagen, die über das Auszählen hinausgehen,
+sind als **KI-Deutung** gekennzeichnet: Auswahl, Verknüpfung und Gewichtung von Fakten
+entstehen automatisiert und sind **nicht redaktionell geprüft**. Die zugrunde liegenden Zahlen
+stammen aus den Protokollen und sind dort nachprüfbar; die daraus gezogene Schlussfolgerung
+ist es nicht.
 
 **Personenbezogene Daten.** Namen werden ausschließlich dort genannt, wo Personen in
 amtlicher oder mandatsbezogener Funktion öffentlich gehandelt haben und dies in den
@@ -321,7 +331,7 @@ noch von ihr autorisiert oder geprüft.
 ## Korrekturen
 
 Fehler zu finden ist ausdrücklich erwünscht. Bitte ein
-[Issue eröffnen](../../issues/new) mit:
+[Issue eröffnen](https://github.com/dominikamann/ratsakten-bad-waldsee/issues/new) mit:
 
 - der betroffenen Stelle im Report,
 - dem Originaldokument, das etwas anderes aussagt,

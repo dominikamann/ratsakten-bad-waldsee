@@ -230,8 +230,10 @@ def bauen() -> str:
     von PDF-Dokumenten; Fehler bei Texterkennung und Zuordnung sind m&ouml;glich. Verbindlich
     ist ausschlie&szlig;lich das jeweilige Originaldokument der Stadt Bad Waldsee.</p>
     <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Weder der Stadtverwaltung noch einzelnen
-    Personen wird rechtswidriges oder schuldhaftes Verhalten unterstellt. Einordnungen sind
-    gekennzeichnet und stellen die pers&ouml;nliche Einsch&auml;tzung des Autors dar.</p>
+    Personen wird rechtswidriges oder schuldhaftes Verhalten unterstellt. Einordnungen und
+    Wertungen sind als <b>KI-Deutung</b> gekennzeichnet: maschinell erzeugt, auf belegten
+    Zahlen beruhend, nicht redaktionell gepr&uuml;ft. Es sind Schlussfolgerungen, keine
+    Tatsachenbehauptungen.</p>
     <p><b>Deutungen sind gekennzeichnet.</b> Wo eine Aussage &uuml;ber das reine
     Z&auml;hlen hinausgeht — also Fakten ausw&auml;hlt, verkn&uuml;pft oder
     gewichtet — steht die Marke <i>KI-Deutung</i> daneben. Diese Abschnitte sind
