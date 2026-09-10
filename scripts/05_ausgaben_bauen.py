@@ -660,17 +660,23 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
   <div class="body-col">
     <p class="rubrik">Blinder Fleck</p>
-    <h2 class="headline">{len(w['blind'])} öffentliche {'Sitzung' if len(w['blind']) == 1 else 'Sitzungen'} ohne Überlieferung</h2>
-    <p>In dieser Woche tagten folgende Gremien öffentlich, ohne dass ein Protokoll
-    veröffentlicht wurde:</p>
+    <h2 class="headline">{len(w['blind'])} öffentliche {'Sitzung' if len(w['blind']) == 1 else 'Sitzungen'} ohne online abrufbare Unterlagen</h2>
+    <p>Diese Gremien tagten öffentlich; im Ratsinformationssystem ist zu ihnen keine
+    Niederschrift abrufbar:</p>
     <ul class="beschluesse">
 {zeilen}    </ul>
     <div class="kasten warn">
       <p class="lab">Wiederkehrende Rubrik</p>
-      <p>Im gesamten ausgewerteten Zeitraum seit Januar 2024 haben die vier Ortschaftsräte
-      <b>85 Mal öffentlich getagt und kein einziges Protokoll veröffentlicht</b> — rund die
-      Hälfte aller öffentlichen Sitzungen der Stadt. Ihre Sitzungsseiten im
-      Ratsinformationssystem enthalten nur Datum und Ort.</p>
+      <p>Seit Januar 2024 tagten die vier Ortschaftsräte <b>85 Mal öffentlich</b> — rund die
+      Hälfte aller öffentlichen Sitzungen der Stadt. Zu keiner dieser Sitzungen ist im
+      Ratsinformationssystem eine Niederschrift abrufbar; die Sitzungsseiten enthalten
+      Datum und Ort.</p>
+      <p>Über den Bestand der Niederschriften sagt das nichts: § 38 Abs. 1 GemO verlangt
+      sie, § 38 Abs. 2 Satz 4 GemO gibt Einwohnern ein Einsichtsrecht, eine Pflicht zur
+      Veröffentlichung im Internet besteht nicht. Es geht um Zugänglichkeit.</p>
+      <p>Nach § 16 Abs. 4 der Hauptsatzung entscheiden die Ortschaftsräte allerdings auch
+      selbst — etwa über Haushaltsmittel bis 26.000 € und Grundstücksgeschäfte bis
+      52.000 € im Einzelfall.</p>
     </div>
   </div>
 </article>""")

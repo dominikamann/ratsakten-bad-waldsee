@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Woechentliche Erinnerung an den Wochenlauf, montags 9:00 Uhr.
+
+  Bewusst nur eine Mitteilung, kein Lauf: Ein von launchd gestarteter Prozess
+  darf nicht auf ~/Documents zugreifen. Eine Mitteilung braucht diesen Zugriff
+  nicht — sie funktioniert also zuverlaessig, waehrend der Lauf selbst per
+  Doppelklick auf dem Schreibtisch gestartet wird.
+
+  Einrichten:
+      cp scripts/launchd/eu.amannlabs.ratsakten-erinnerung.plist ~/Library/LaunchAgents/
+      launchctl load ~/Library/LaunchAgents/eu.amannlabs.ratsakten-erinnerung.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>eu.amannlabs.ratsakten-erinnerung</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/osascript</string>
+    <string>-e</string>
+    <string>display notification "Wochenlauf starten: Doppelklick auf „Ratsakten Wochenlauf“ auf dem Schreibtisch." with title "Ratsakten Bad Waldsee" subtitle "Neue Sitzungsunterlagen abholen" sound name "Glass"</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key><integer>1</integer>
+    <key>Hour</key><integer>9</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+</dict>
+</plist>

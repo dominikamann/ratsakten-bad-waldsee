@@ -1,0 +1,65 @@
+{
+ "abgerufen": "2026-09-10",
+ "proben": [
+  {
+   "gremium": "Ortschaftsrat Reute-Gaisbeuren",
+   "datum": "2024-06-11",
+   "tops": 0,
+   "pdfs": 0,
+   "hat_sitzung": true,
+   "hat_ort": true,
+   "hat_tagesordnung": false,
+   "hat_niederschrift": false,
+   "datei": "2024-06-11_Ortschaftsrat-Reute-Gaisbeuren-29-Sitzung.html",
+   "zeichen": 21023
+  },
+  {
+   "gremium": "Ortschaftsrat Mittelurbach",
+   "datum": "2025-07-03",
+   "tops": 0,
+   "pdfs": 0,
+   "hat_sitzung": true,
+   "hat_ort": true,
+   "hat_tagesordnung": false,
+   "hat_niederschrift": false,
+   "datei": "2025-07-03_Ortschaftsrat-Mittelurbach-25-Sitzung.html",
+   "zeichen": 21015
+  },
+  {
+   "gremium": "Ortschaftsrat Michelwinnaden",
+   "datum": "2026-06-30",
+   "tops": 0,
+   "pdfs": 0,
+   "hat_sitzung": true,
+   "hat_ort": true,
+   "hat_tagesordnung": false,
+   "hat_niederschrift": false,
+   "datei": "2026-06-30_Ortschaftsrat-Michelwinnaden-30-Sitzung.html",
+   "zeichen": 20993
+  },
+  {
+   "gremium": "Ortschaftsrat Haisterkirch",
+   "datum": "2025-07-16",
+   "tops": 0,
+   "pdfs": 0,
+   "hat_sitzung": true,
+   "hat_ort": true,
+   "hat_tagesordnung": false,
+   "hat_niederschrift": false,
+   "datei": "2025-07-16_Ortschaftsrat-Haisterkirch-24-Sitzung.html",
+   "zeichen": 21005
+  },
+  {
+   "gremium": "Gemeinderat",
+   "datum": "2025-07-21",
+   "tops": 17,
+   "pdfs": 18,
+   "hat_sitzung": true,
+   "hat_ort": true,
+   "hat_tagesordnung": true,
+   "hat_niederschrift": true,
+   "datei": "2025-07-21_Gemeinderat-45-Sitzung.html",
+   "zeichen": 52979
+  }
+ ]
+}

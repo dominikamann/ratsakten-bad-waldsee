@@ -146,6 +146,41 @@ def pruefe_seitenkopf() -> None:
     notiz.append("Seitenkopf vollständig" if not ohne else "Seitenkopf unvollständig")
 
 
+# Formulierungen, die eine Aussage über den BESTAND einer Unterlage treffen,
+# obwohl nur deren Abrufbarkeit geprüft wurde. Nach § 38 Abs. 1 GemO ist über
+# jede Sitzung eine Niederschrift zu fertigen — dass keine online steht, heißt
+# nicht, dass keine existiert. Die Unterscheidung ist der Kern der Belastbarkeit
+# dieses Projekts und darf nicht unbemerkt zurückfallen.
+BEHAUPTUNGEN = [
+    (r"existiert (?:ein|kein)\s+Protokoll", "„existiert kein Protokoll“ — geprüft ist nur die Abrufbarkeit"),
+    (r"ohne jede Dokumentation", "„ohne jede Dokumentation“ — sagt etwas über den Bestand aus"),
+    (r"Dokumentationsl(?:ü|ue)cke", "„Dokumentationslücke“ — wertend und bestandsbezogen"),
+    (r"nicht dokumentiert", "„nicht dokumentiert“ — gemeint ist: nicht online abrufbar"),
+    (r"ohne (?:jede )?(?:Überlieferung|Ueberlieferung)", "„ohne Überlieferung“ — bestandsbezogen"),
+    (r"keine nachvollziehbare Spur", "„keine nachvollziehbare Spur“ — zu stark"),
+    (r"kein einziges Protokoll ver(?:ö|oe)ffentlicht", "Formulierung legt ein Versäumnis nahe"),
+]
+
+
+def pruefe_wortwahl() -> None:
+    """Keine Aussage über den Bestand von Unterlagen, die nicht geprüft wurde."""
+    treffer = []
+    for f in sorted(DOCS.rglob("*.html")):
+        text = f.read_text(encoding="utf-8")
+        for muster, erklaerung in BEHAUPTUNGEN:
+            if re.search(muster, text, re.I):
+                treffer.append(f"{f.relative_to(WURZEL)}: {erklaerung}")
+    # Je Formulierung nur einmal melden, sonst 89 gleichlautende Zeilen
+    gesehen = set()
+    for t in treffer:
+        kern = t.split(": ", 1)[1]
+        if kern in gesehen:
+            continue
+        gesehen.add(kern)
+        fehler.append(f"Bestandsbehauptung: {t}")
+    notiz.append("Wortwahl geprüft" if not gesehen else "Wortwahl beanstandet")
+
+
 def pruefe_reportalter() -> None:
     """Ist der jüngste Report noch auf dem Stand der Daten?
 
@@ -178,7 +213,7 @@ def main() -> None:
 
     for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
-                     pruefe_reportalter):
+                     pruefe_wortwahl, pruefe_reportalter):
         pruefung()
 
     seiten = len(list(DOCS.rglob("*.html")))
