@@ -155,6 +155,15 @@ h1{
 }
 .issueline b{color:var(--ink);font-weight:600}
 
+/* Der erste Block nach dem Seitenkopf braucht Luft, und zwar überall gleich
+   viel. Abschnitte und Artikel bringen eigene Polsterung mit; Überschriften und
+   Absätze nicht — die klebten unter der Kennzahlenzeile, als gehörten sie noch
+   dazu. Die Klassenselektoren der Bausteine kommen aus später geladenen
+   Vorlagen, deshalb hier die genauere Auszeichnung. */
+header + h2,header + h3,header + p,header + ol,header + ul,
+header + h2.headline,header + .sprungmarken,header + .suchfeld,
+header + .kasten,header + .gremienzeile{margin-top:32px}
+
 /* ---------- Herkunft einer Aussage ----------
    Drei Stufen, auf jeder Seite dieselben: belegt, regelbasiert, gedeutet.
 
