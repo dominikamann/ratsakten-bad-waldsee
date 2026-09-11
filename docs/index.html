@@ -4,216 +4,366 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ratsakten Bad Waldsee</title>
+<meta name="description" content="Maschinelle Auswertung der öffentlich zugänglichen Sitzungsunterlagen der Stadt Bad Waldsee.">
 <style>/* Selbst ausgelieferte Schriften. Kein Abruf bei Dritten, damit beim Besuch
-   keine IP-Adresse an einen fremden Server geht. ./ wird beim Erzeugen
+   keine IP-Adresse an einen fremden Server geht.  wird beim Erzeugen
    durch den relativen Weg zum docs-Verzeichnis ersetzt. */
 @font-face{
   font-family:'Archivo';font-style:normal;font-weight:500;font-display:swap;
-  src:url(./fonts/Archivo-500-latin-ext.woff2) format('woff2');
+  src:url(fonts/Archivo-500-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'Archivo';font-style:normal;font-weight:500;font-display:swap;
-  src:url(./fonts/Archivo-500-latin.woff2) format('woff2');
+  src:url(fonts/Archivo-500-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'Archivo';font-style:normal;font-weight:600;font-display:swap;
-  src:url(./fonts/Archivo-600-latin-ext.woff2) format('woff2');
+  src:url(fonts/Archivo-600-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'Archivo';font-style:normal;font-weight:600;font-display:swap;
-  src:url(./fonts/Archivo-600-latin.woff2) format('woff2');
+  src:url(fonts/Archivo-600-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'Archivo';font-style:normal;font-weight:700;font-display:swap;
-  src:url(./fonts/Archivo-700-latin-ext.woff2) format('woff2');
+  src:url(fonts/Archivo-700-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'Archivo';font-style:normal;font-weight:700;font-display:swap;
-  src:url(./fonts/Archivo-700-latin.woff2) format('woff2');
+  src:url(fonts/Archivo-700-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'Archivo';font-style:normal;font-weight:800;font-display:swap;
-  src:url(./fonts/Archivo-800-latin-ext.woff2) format('woff2');
+  src:url(fonts/Archivo-800-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'Archivo';font-style:normal;font-weight:800;font-display:swap;
-  src:url(./fonts/Archivo-800-latin.woff2) format('woff2');
+  src:url(fonts/Archivo-800-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
-  src:url(./fonts/IBMPlexMono-400-latin-ext.woff2) format('woff2');
+  src:url(fonts/IBMPlexMono-400-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
-  src:url(./fonts/IBMPlexMono-400-latin.woff2) format('woff2');
+  src:url(fonts/IBMPlexMono-400-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
-  src:url(./fonts/IBMPlexMono-500-latin-ext.woff2) format('woff2');
+  src:url(fonts/IBMPlexMono-500-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
-  src:url(./fonts/IBMPlexMono-500-latin.woff2) format('woff2');
+  src:url(fonts/IBMPlexMono-500-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;
-  src:url(./fonts/IBMPlexMono-600-latin-ext.woff2) format('woff2');
+  src:url(fonts/IBMPlexMono-600-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;
-  src:url(./fonts/IBMPlexMono-600-latin.woff2) format('woff2');
+  src:url(fonts/IBMPlexMono-600-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'IBM Plex Serif';font-style:italic;font-weight:400;font-display:swap;
-  src:url(./fonts/IBMPlexSerif-400i-latin-ext.woff2) format('woff2');
+  src:url(fonts/IBMPlexSerif-400i-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'IBM Plex Serif';font-style:italic;font-weight:400;font-display:swap;
-  src:url(./fonts/IBMPlexSerif-400i-latin.woff2) format('woff2');
+  src:url(fonts/IBMPlexSerif-400i-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'IBM Plex Serif';font-style:normal;font-weight:400;font-display:swap;
-  src:url(./fonts/IBMPlexSerif-400-latin-ext.woff2) format('woff2');
+  src:url(fonts/IBMPlexSerif-400-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'IBM Plex Serif';font-style:normal;font-weight:400;font-display:swap;
-  src:url(./fonts/IBMPlexSerif-400-latin.woff2) format('woff2');
+  src:url(fonts/IBMPlexSerif-400-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'IBM Plex Serif';font-style:normal;font-weight:500;font-display:swap;
-  src:url(./fonts/IBMPlexSerif-500-latin-ext.woff2) format('woff2');
+  src:url(fonts/IBMPlexSerif-500-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'IBM Plex Serif';font-style:normal;font-weight:500;font-display:swap;
-  src:url(./fonts/IBMPlexSerif-500-latin.woff2) format('woff2');
+  src:url(fonts/IBMPlexSerif-500-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face{
   font-family:'IBM Plex Serif';font-style:normal;font-weight:600;font-display:swap;
-  src:url(./fonts/IBMPlexSerif-600-latin-ext.woff2) format('woff2');
+  src:url(fonts/IBMPlexSerif-600-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face{
   font-family:'IBM Plex Serif';font-style:normal;font-weight:600;font-display:swap;
-  src:url(./fonts/IBMPlexSerif-600-latin.woff2) format('woff2');
+  src:url(fonts/IBMPlexSerif-600-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face{
-  font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;
-  src:url(./fonts/IBMPlexSans-400-latin-ext.woff2) format('woff2');
+fonts/IBMPlexSans-400-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-@font-face{
-  font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;
-  src:url(./fonts/IBMPlexSans-400-latin.woff2) format('woff2');
+fonts/IBMPlexSans-400-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face{
-  font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;
-  src:url(./fonts/IBMPlexSans-500-latin-ext.woff2) format('woff2');
+fonts/IBMPlexSans-500-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-@font-face{
-  font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;
-  src:url(./fonts/IBMPlexSans-500-latin.woff2) format('woff2');
+fonts/IBMPlexSans-500-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face{
-  font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;
-  src:url(./fonts/IBMPlexSans-600-latin-ext.woff2) format('woff2');
+fonts/IBMPlexSans-600-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-@font-face{
-  font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;
-  src:url(./fonts/IBMPlexSans-600-latin.woff2) format('woff2');
+fonts/IBMPlexSans-600-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face{
-  font-family:'IBM Plex Sans';font-style:normal;font-weight:700;font-display:swap;
-  src:url(./fonts/IBMPlexSans-700-latin-ext.woff2) format('woff2');
+fonts/IBMPlexSans-700-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-@font-face{
-  font-family:'IBM Plex Sans';font-style:normal;font-weight:700;font-display:swap;
-  src:url(./fonts/IBMPlexSans-700-latin.woff2) format('woff2');
+fonts/IBMPlexSans-700-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-</style>
-<style>
+
+/* Das gemeinsame Fundament aller Seiten dieser Website.
+
+   Farben, Grundschrift, Markenleiste, Seitenkopf und Fuß standen bis hierher
+   vierfach im Projekt — in ausgabe.css, startseite.css, src/report.html und
+   verstreut in den Bauskripten. Vier Kopien derselben Regel laufen zuverlässig
+   auseinander: Die Überschrift war je nach Seite 40px, 48px oder 58px groß, die
+   Kategoriezeile mal blau, mal orange, und der Report setzte seine
+   Überschriften in einer anderen Schrift als alle übrigen Seiten.
+
+   Diese Datei ist deshalb die einzige Quelle für alles, was auf jeder Seite
+   gleich aussehen muss. Seitenspezifisches gehört in ausgabe.css,
+   startseite.css oder in den Kopf der jeweiligen Seite — nicht hierher. */
+
+/* ---------- Farben und Maße ---------- */
+/* Bewusst einfarbig dunkel — keine Themenumschaltung. */
 :root{
   color-scheme:dark;
-  --plane:#0B0D0F; --surface:#111316; --surface-2:#171A1E;
-  --ink:#EDF1F5; --ink-2:#B4BDC7; --muted:#7F8A96;
-  --rule:#272C32; --s1:#3987e5; --s2:#d95926;
-  --bar-bg:#15181C; --bar-ink:#D6DEE7;
+  --plane:#0B0D0F;
+  --surface:#111316;
+  --surface-2:#171A1E;
+  --ink:#EDF1F5;
+  --ink-2:#B4BDC7;
+  --muted:#7F8A96;
+  --rule:#272C32;
+  --grid:#22262B;
+  --s1:#3987e5;              /* Hinweis, Verweis, Zahl */
+  --s2:#d95926;              /* Ein einziger Akzent: die Zahl der Woche.
+                                Sonst nirgends — als Signalfarbe an Rubriken und
+                                Befunden gelesen wirken Auffaelligkeiten wie
+                                Warnungen, und genau das sollen sie nicht. */
+  --absent:#3C444D;
+  --flag:#E08163;            /* KI-Deutung — auffällig, aber kein Alarm */
+  --flag-bg:rgba(224,129,99,.10);
+  --bar-bg:#15181C;
+  --bar-ink:#D6DEE7;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+  --serif:"IBM Plex Serif",Georgia,serif;
+  --sans:Archivo,"Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,monospace;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--plane);color:var(--ink);
-  font-family:"IBM Plex Serif",Georgia,serif;font-size:17.5px;line-height:1.65;
-  -webkit-font-smoothing:antialiased;}
-.wrap{max-width:880px;margin:0 auto;padding:0 24px}
-.mono{font-family:"IBM Plex Mono",monospace}
 
-.brandbar{background:var(--bar-bg);color:var(--bar-ink);border-bottom:1px solid var(--rule);
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;}
-.brandbar .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;padding:10px 24px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--plane);color:var(--ink);
+  font-family:var(--serif);
+  font-size:17.5px;line-height:1.66;-webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(57,135,229,.3)}
+
+/* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
+   der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
+[id]{scroll-margin-top:18px}
+
+/* Zwei Breiten, nach Anlage der Seite — nicht nach Zufall: 1020px für die
+   zweispaltigen Seiten (Randspalte plus Textkörper), 880px für die
+   einspaltigen Lese- und Nachschlageseiten. Die Lesbarkeit hängt ohnehin nicht
+   an der Containerbreite, sondern an der Zeilenlänge — dafür steht auf den
+   Absätzen max-width:62ch. */
+.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+body.lesen .wrap{max-width:880px}
+
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
+  outline:2px solid var(--s1);outline-offset:2px;
+}
+
+/* ---------- Markenleiste mit Navigation ---------- */
+.brandbar{
+  background:var(--bar-bg);color:var(--bar-ink);border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.brandbar .wrap{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;
+  justify-content:space-between;padding:10px 24px;min-width:0;
+}
 .brandbar a{color:var(--s1);text-decoration:none}
 .brandbar a:hover{text-decoration:underline}
 .brandbar b{font-weight:600;letter-spacing:.1em}
-
-/* ---------- Navigation in der Markenleiste ---------- */
-.brandbar .wrap{align-items:center}
-.brandbar nav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.brandbar nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0}
 .brandbar nav a{color:var(--bar-ink);text-decoration:none;opacity:.85}
 .brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
 .brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
 .brandbar nav span[aria-hidden]{opacity:.35}
-@media (max-width:620px){
-  .brandbar .disclaimer{display:none}
+/* Sieben Einträge und zwei Randtexte passen nicht in jede Fensterbreite. Statt
+   den letzten Eintrag abzuschneiden, weicht zuerst der Hinweistext, dann
+   bekommt die Navigation eine eigene Zeile. */
+@media (max-width:1000px){.brandbar .disclaimer{display:none}}
+@media (max-width:620px){.brandbar nav{flex-basis:100%}}
+
+/* ---------- Seitenkopf ----------
+   Jede Seite trägt denselben Kopf: Kategorie, Titel, Vorspann, Kennzahlenzeile.
+   Genau in dieser Reihenfolge und in diesen Größen — hier und nirgends sonst. */
+header{padding:52px 0 0}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-2);margin:0 0 10px;
+}
+h1{
+  font-family:var(--sans);font-weight:700;
+  font-size:clamp(30px,4vw,40px);line-height:1.1;letter-spacing:-.02em;
+  margin:0 0 8px;text-wrap:balance;
+}
+.lede{
+  margin:14px 0 0;font-size:18px;line-height:1.55;color:var(--ink-2);
+  max-width:62ch;text-wrap:pretty;
 }
 
+/* Die Kennzahlenzeile schließt jeden Seitenkopf ab. Sie steht waagerecht, damit
+   die Breite genutzt wird — untereinander gestapelt schob sie den Inhalt unter
+   die Falz. */
+.issueline{
+  display:flex;flex-wrap:wrap;gap:8px 24px;margin:26px 0 0;padding:13px 0;
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+}
+.issueline b{color:var(--ink);font-weight:600}
 
-header{padding:64px 0 40px;border-bottom:1px solid var(--rule)}
-/* Wortgleich mit den Regeln in ausgabe.css — die Startseite laedt ein eigenes
-   Stylesheet, der Seitenkopf muss aber derselbe sein. Aenderungen hier und dort
-   gemeinsam vornehmen. */
-.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--s2);margin:0 0 10px}
-h1{font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:700;
-  font-size:clamp(30px,4vw,40px);line-height:1.1;letter-spacing:-.02em;
-  margin:0 0 8px;text-wrap:balance}
-.lede{margin:14px 0 0;font-size:18px;line-height:1.55;color:var(--ink-2);max-width:62ch}
+/* ---------- Herkunft einer Aussage ----------
+   Drei Stufen, auf jeder Seite dieselben: belegt, regelbasiert, gedeutet. */
+.herkunft{
+  display:inline-block;margin:0;padding:3px 9px;
+  font-family:var(--mono);font-size:10px;font-style:normal;
+  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
+}
+.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
+.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
+.herkunft.beleg,.herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+
+/* ---------- Fuß ---------- */
+footer{background:var(--bar-bg);border-top:1px solid var(--rule);padding:32px 0;margin-top:48px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline}
+footer p{
+  margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
+  color:var(--muted);max-width:none;
+}
+footer .brand{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bar-ink);font-weight:600}
+footer a{color:var(--s1);text-decoration:none}
+footer a:hover{text-decoration:underline}
+/* Die Seiten sind lang. Wer unten ankommt, soll nicht zurückscrollen müssen. */
+footer nav{
+  flex-basis:100%;order:-1;display:flex;flex-wrap:wrap;gap:6px 16px;
+  padding-bottom:14px;margin-bottom:2px;border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+}
+footer nav a{color:var(--bar-ink);opacity:.85}
+footer nav a:hover{color:var(--s1);opacity:1}
+footer nav span[aria-hidden]{opacity:.35}
+
+/* ---------- Zurueck nach oben ----------
+   Die Seiten sind lang; der Weg zur Menueleiste soll nicht am Scrollrad
+   haengen. Klein, zurueckhaltend, immer an derselben Stelle. Wo der Browser
+   scrollgesteuerte Animationen kennt, erscheint der Knopf erst nach der ersten
+   Bildschirmhoehe; sonst steht er von Anfang an da. */
+.hoch{
+  position:fixed;right:18px;bottom:18px;z-index:20;
+  display:grid;place-items:center;width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--rule);background:var(--bar-bg);
+  color:var(--muted);text-decoration:none;font-size:15px;line-height:1;opacity:.7;
+  transition:opacity .15s,color .15s,border-color .15s;
+}
+.hoch:hover{opacity:1;color:var(--s1);border-color:var(--s1)}
+@supports (animation-timeline:scroll()){
+  .hoch{
+    opacity:0;visibility:hidden;
+    animation:hoch-ein linear both;animation-timeline:scroll();
+    animation-range:120px 420px;
+  }
+  @keyframes hoch-ein{to{opacity:.7;visibility:visible}}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+
+/* ---------- Druck ----------
+   Gemeinderäte drucken Sitzungsunterlagen. Auf Papier ist der dunkle Grund
+   weder lesbar noch zumutbar; Navigation und Flächen entfallen, Verweise auf
+   fremde Server werden ausgeschrieben, damit sie auf dem Ausdruck auffindbar
+   bleiben. */
+@media print{
+  :root{
+    --plane:#fff;--surface:#fff;--surface-2:#f4f4f4;--ink:#000;--ink-2:#222;
+    --muted:#555;--rule:#bbb;--grid:#ddd;--shadow:none;--bar-bg:#fff;--bar-ink:#000;
+  }
+  body{font-size:10.5pt;line-height:1.45}
+  .brandbar,footer nav,.sprungmarken,.zeitleiste,.hoch{display:none}
+  footer{border-top:1px solid var(--rule);margin-top:24px;padding:12px 0}
+  header{padding-top:0}
+  a{color:#000;text-decoration:none}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555;word-break:break-all}
+  article,section,li,tr{break-inside:avoid}
+  h1,h2,h3{break-after:avoid}
+}
+
+/* Die Startseite.
+
+   Voraussetzung ist basis.css — dort stehen Farben, Grundschrift,
+   Markenleiste, Seitenkopf und Fuß. Hier steht nur, was die Startseite
+   zusätzlich braucht: Kennzahlenkacheln, Einstiegskarten, Zeitleiste und die
+   Liste der nächsten Termine.
+
+   Der Seitenkopf schließt hier mit den Kacheln ab, wo die übrigen Seiten ihre
+   Kennzahlenzeile tragen — dieselbe Rolle, der Übersicht wegen als Raster. */
 
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;
   background:var(--rule);border:1px solid var(--rule);margin:34px 0 0;box-shadow:var(--shadow)}
 .tile{background:var(--surface);padding:16px 18px}
-.tile .v{font-family:Archivo,sans-serif;font-weight:700;font-size:30px;line-height:1;
+.tile .v{font-family:var(--sans);font-weight:700;font-size:30px;line-height:1;
   letter-spacing:-.025em;font-variant-numeric:tabular-nums;display:block}
-.tile .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;line-height:1.45;
+.tile .k{font-family:var(--mono);font-size:10.5px;line-height:1.45;
   color:var(--muted);display:block;margin-top:8px}
 
 section{padding:48px 0;border-bottom:1px solid var(--rule)}
-h2{font-family:Archivo,sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em;margin:0 0 16px}
+h2{font-family:var(--sans);font-weight:700;font-size:26px;letter-spacing:-.02em;margin:0 0 16px}
 p{margin:0 0 16px;max-width:66ch}
 a{color:var(--s1)}
 
@@ -224,12 +374,12 @@ a{color:var(--s1)}
 /* Beim Ueberfahren heller werden, nicht die Farbe wechseln: Ein Wechsel ins
    Rotorange sah aus, als stimme mit dem Ziel etwas nicht. */
 .karte:hover{border-left-color:#649fee;background:var(--surface-2);transform:translateX(2px)}
-.karte .art{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+.karte .art{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted);margin:0 0 7px}
-.karte h3{font-family:Archivo,sans-serif;font-weight:700;font-size:21px;margin:0 0 8px;
+.karte h3{font-family:var(--sans);font-weight:700;font-size:21px;margin:0 0 8px;
   letter-spacing:-.015em;color:var(--ink)}
 .karte p{margin:0;font-size:15.5px;color:var(--ink-2);max-width:60ch}
-.karte .meta{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);margin-top:10px}
+.karte .meta{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:10px}
 
 ul.plain{padding-left:20px;font-size:16px;color:var(--ink-2)}
 ul.plain li{margin-bottom:8px;max-width:66ch}
@@ -238,29 +388,10 @@ ul.plain li{margin-bottom:8px;max-width:66ch}
    der Seite und die Infofarbe, kein Signalton. */
 .hinweis{margin:24px 0 0;padding:20px 22px;background:var(--surface);
   border-left:3px solid var(--s1)}
-.hinweis .lab{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+.hinweis .lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px}
 .hinweis p{margin:0;font-size:15.5px;color:var(--ink-2)}
 .hinweis p + p{margin-top:9px}
-
-footer{background:var(--bar-bg);border-top:1px solid var(--rule);padding:32px 0}
-footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline}
-footer p{margin:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.05em;
-  color:var(--muted);max-width:none}
-footer .brand{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--bar-ink);font-weight:600}
-footer a{color:var(--s1);text-decoration:none}
-footer a:hover{text-decoration:underline}
-
-/* ---------- Herkunft einer Aussage ---------- */
-.herkunft{
-  display:inline-block;padding:2px 8px;
-  font-family:"IBM Plex Mono",monospace;font-size:10px;font-style:normal;
-  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
-}
-.herkunft.ki{color:#E08163;border-color:#E08163;background:rgba(224,129,99,.10)}
-.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
-.herkunft.beleg{color:var(--muted);border-color:var(--rule)}
 
 /* ---------- Zeitleiste: eine Zelle je Kalenderwoche ----------
    Sequenzielle Faerbung, ein Farbton, vier Stufen. Die Stufen sind gegen den
@@ -269,7 +400,7 @@ footer a:hover{text-decoration:underline}
 .zeitleiste{overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
 .jahrzeile{display:flex;align-items:center;gap:12px;margin-bottom:5px}
 .jahrzeile .jahr{
-  flex:0 0 auto;width:34px;font-family:"IBM Plex Mono",monospace;
+  flex:0 0 auto;width:34px;font-family:var(--mono);
   font-size:11px;letter-spacing:.08em;color:var(--muted);
 }
 .wochen{display:flex;gap:3px}
@@ -284,10 +415,9 @@ footer a:hover{text-decoration:underline}
 .w.s4{background:#a3cdf7}
 a.w:hover{outline:2px solid var(--ink);outline-offset:1px}
 a.w:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skala{
   display:flex;align-items:center;gap:6px;margin:2px 0 0;
-  font-family:"IBM Plex Mono",monospace;font-size:11px;
+  font-family:var(--mono);font-size:11px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
 }
 .skala .trenn{opacity:.5;margin:0 2px}
@@ -301,79 +431,100 @@ a.w:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
 .jahrzeile.kopf .jahr{color:var(--muted);opacity:.7}
 .kw{
   display:block;width:11px;flex:0 0 auto;position:relative;
-  font-family:"IBM Plex Mono",monospace;font-size:10px;line-height:1.2;
+  font-family:var(--mono);font-size:10px;line-height:1.2;
   color:var(--muted);overflow:visible;white-space:nowrap;
 }
 
-/* ---------- Was als Naechstes ansteht ---------- */
+/* ---------- Was als Naechstes ansteht ----------
+   Zeilen und Tagesordnung kommen aus termine.css, gemeinsam mit der
+   Terminseite. Hier steht nur die Umrandung der Liste. */
 ol.termine{list-style:none;margin:20px 0 12px;padding:0}
 ol.termine > li{padding:14px 0 16px;border-top:1px solid var(--rule)}
 ol.termine > li:last-child{border-bottom:1px solid var(--rule)}
-ol.termine .wann{
-  margin:0 0 3px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
-}
-ol.termine .uhr{margin-left:10px}
-ol.termine .bald{margin-left:10px;color:var(--s1)}
-ol.termine .gremium{margin:0 0 8px;font-size:17px;color:var(--ink)}
 
+.fussnote{
+  margin:14px 0 0;font-size:14px;line-height:1.6;color:var(--muted);max-width:62ch;
+}
+
+
+/* Sitzungstermine — auf der Startseite und auf der Terminseite.
+
+   Beide zeigen dieselbe Sache: Datum, Gremium, aufklappbare Tagesordnung. Bis
+   hierher waren die Regeln dafür zweimal geschrieben, in leicht verschiedenen
+   Größen — dieselbe Sitzung sah auf den beiden Seiten unterschiedlich aus. */
+
+/* Eine Terminzeile: Wann, wer, und was daraus geworden ist. */
+.wann{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 3px;
+}
+.uhr{margin-left:10px}
+.bald{margin-left:10px;color:var(--s1)}
+.gremium{margin:0 0 8px;font-size:16.5px;color:var(--ink)}
+.zustand{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);
+}
+.zustand a{color:var(--s1);text-decoration:none}
+.zustand a:hover{text-decoration:underline}
+
+/* Die Tagesordnung steht zugeklappt da: Wer die Liste durchsieht, will die
+   Termine sehen; wer einen Termin prüft, klappt ihn auf. Ohne JavaScript. */
+details.agenda{margin-top:7px}
 details.agenda > summary{
   cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:7px;
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.06em;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;
   text-transform:uppercase;color:var(--s1);
 }
 details.agenda > summary::-webkit-details-marker{display:none}
-details.agenda > summary::before{content:"▸";font-size:13px}
-details.agenda[open] > summary::before{content:"▾"}
+details.agenda > summary::before{content:"\25B8";font-size:13px}
+details.agenda[open] > summary::before{content:"\25BE"}
 details.agenda > summary:hover{text-decoration:underline}
-ol.tops{margin:10px 0 0;padding:0 0 0 20px;color:var(--ink-2)}
-ol.tops li{margin:0 0 7px;font-size:15px;line-height:1.5}
-ol.tops .sv{
-  margin-left:9px;font-family:"IBM Plex Mono",monospace;font-size:11px;
-  color:var(--muted);white-space:nowrap;
-}
-ol.tops .unterlagen{display:block;margin-top:3px}
-ol.tops .doc{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--s1);
-  text-decoration:none;border-bottom:1px solid rgba(57,135,229,.35);
-}
-ol.tops .doc:hover{border-bottom-color:var(--s1)}
 details.agenda .quelle{
-  margin:10px 0 0;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  margin:10px 0 0;font-family:var(--mono);font-size:11px;
   letter-spacing:.06em;text-transform:uppercase;
 }
 details.agenda .quelle a{color:var(--s1);text-decoration:none}
 details.agenda .quelle a:hover{text-decoration:underline}
 p.agenda.offen{
-  margin:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  margin:0;font-family:var(--mono);font-size:11.5px;
   letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
 }
 p.agenda.offen a{color:var(--s1);text-decoration:none}
 p.agenda.offen a:hover{text-decoration:underline}
-.fussnote{
-  margin:14px 0 0;font-size:14px;line-height:1.6;color:var(--muted);max-width:62ch;
-}
 
+ol.tops{margin:10px 0 0;padding:0 0 0 20px;color:var(--ink-2)}
+ol.tops li{margin:0 0 7px;font-size:15px;line-height:1.5}
+ol.tops .sache{display:inline}
+ol.tops .sv{
+  margin-left:9px;font-family:var(--mono);font-size:11px;
+  color:var(--muted);white-space:nowrap;
+}
+ol.tops .unterlagen{display:block;margin-top:3px}
+ol.tops .doc{
+  font-family:var(--mono);font-size:11px;color:var(--s1);
+  text-decoration:none;border-bottom:1px solid rgba(57,135,229,.35);
+}
+ol.tops .doc:hover{border-bottom-color:var(--s1)}
 </style>
 </head>
-<body>
+<body class="lesen">
 
-<div class="brandbar"><div class="wrap">
-  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
+<div class="brandbar" id="seitenanfang"><div class="wrap">
   <nav aria-label="Bereiche">
-    <a href="./index.html" aria-current="page">Startseite</a>
+    <a href="index.html" aria-current="page">Startseite</a>
     <span aria-hidden="true">/</span>
-    <a href="./termine.html#heute">Termine</a>
+    <a href="termine.html#heute">Termine</a>
     <span aria-hidden="true">/</span>
-    <a href="./themen/index.html">Themen</a>
+    <a href="themen/index.html">Themen</a>
     <span aria-hidden="true">/</span>
-    <a href="./suche.html">Suche</a>
+    <a href="suche.html">Suche</a>
     <span aria-hidden="true">/</span>
-    <a href="./befunde.html">Befunde</a>
+    <a href="befunde.html">Erkenntnisse</a>
     <span aria-hidden="true">/</span>
-    <a href="./ausgaben/index.html">Archiv</a>
+    <a href="ausgaben/index.html">Archiv</a>
     <span aria-hidden="true">/</span>
-    <a href="./gremien.html">Wer entscheidet was</a>
+    <a href="gremien.html">Wer entscheidet was</a>
   </nav>
   <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
@@ -432,9 +583,9 @@ p.agenda.offen a:hover{text-decoration:underline}
     </a>
     <a class="karte" href="./befunde.html">
       <p class="art">Erkenntnisse &middot; gesammelt</p>
-      <h3>Was aufgefallen ist — und was eingehalten wird</h3>
+      <h3>Was aufgefallen ist</h3>
       <p>25 Eintr&auml;ge an einem Ort statt verstreut &uuml;ber Report und Wochenausgaben:
-      eingehaltene Pflichten und abgeschlossene Verfahren ebenso wie die Stellen,
+      eingehaltene Fristen und abgeschlossene Verfahren ebenso wie die Stellen,
       an denen die Aktenlage Fragen offenl&auml;sst.</p>
       <p class="meta">Regelbasiert gez&auml;hlt und maschinell gedeutet, jeweils gekennzeichnet</p>
     </a>
@@ -596,9 +747,24 @@ p.agenda.offen a:hover{text-decoration:underline}
 </div>
 
 <footer><div class="wrap">
+  <nav aria-label="Bereiche">
+    <a href="index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="termine.html#heute">Termine</a>
+    <span aria-hidden="true">/</span>
+    <a href="themen/index.html">Themen</a>
+    <span aria-hidden="true">/</span>
+    <a href="suche.html">Suche</a>
+    <span aria-hidden="true">/</span>
+    <a href="befunde.html">Erkenntnisse</a>
+    <span aria-hidden="true">/</span>
+    <a href="ausgaben/index.html">Archiv</a>
+    <span aria-hidden="true">/</span>
+    <a href="gremien.html">Wer entscheidet was</a>
+  </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Datenstand 2026-09-11
-  &middot; Seite erzeugt am 11.09.2026</p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Datenstand 11.09.2026 &middot; Seite erzeugt am 11.09.2026</p>
 </div></footer>
+<a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>
 </html>

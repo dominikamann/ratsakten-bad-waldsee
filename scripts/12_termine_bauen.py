@@ -4,10 +4,10 @@ Die Startseite zeigt die naechsten zehn Termine, das Archiv die erschienenen
 Ausgaben. Was fehlte, war der Kalender selbst: alle Sitzungen, vergangene wie
 kuenftige, an einem Ort.
 
-Die Seite beginnt bei dem, was ansteht, und geht darunter rueckwaerts durch das
-Vergangene. Damit ist der heutige Tag der Anfang der Seite — ohne dass etwas
-springen muss, ohne JavaScript und unabhaengig davon, wie die Seite geoeffnet
-wird. Ein Anker „#heute" fuehrt zusaetzlich genau auf die Trennlinie.
+Eine durchgehende Reihe, aelteste Sitzung zuerst, mit dem heutigen Tag an seiner
+Stelle darin. Zwei gegenlaeufige Listen — Kuenftiges vorwaerts, Vergangenes
+rueckwaerts — lasen sich beim Scrollen wie ein Bruch. Der Anker „#heute" fuehrt
+auf den heutigen Tag; darauf zeigt auch der Menueeintrag.
 
 Jede vergangene Sitzung verweist auf die Wochenausgabe, in der sie ausgewertet
 ist; jede Sitzung mit veroeffentlichter Tagesordnung laesst diese aufklappen.
@@ -19,110 +19,63 @@ import datetime as dt
 import json
 from pathlib import Path
 
-from seite import navigation
+from seite import e, fuss, kopf, kurz, lang
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"
 DOCS = WURZEL / "docs"
 
-TAGE = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
-MONATE = ["Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni", "Juli",
-          "August", "September", "Oktober", "November", "Dezember"]
-
-
-def e(s: str) -> str:
-    return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-
-
-def lang(d: dt.date) -> str:
-    return f"{TAGE[d.weekday()]}, {d.day}. {MONATE[d.month - 1]} {d.year}"
-
-
-def kopf(titel: str) -> str:
-    stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
-    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
-        encoding="utf-8").replace("{PFAD}", "")
-    return f"""<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(titel)}</title>
-<style>{schriften}</style>
-<style>{stil}</style>
-<style>
-/* Nur diese Seite braucht die Kalenderliste. */
-ol.kalender{{list-style:none;margin:18px 0 0;padding:0}}
-ol.kalender > li{{padding:13px 0 15px;border-top:1px solid var(--rule)}}
-ol.kalender > li:last-child{{border-bottom:1px solid var(--rule)}}
-.zeile{{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}}
-.wann{{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--muted)}}
-.gremium{{font-size:16.5px;color:var(--fg)}}
-.zustand{{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--muted);margin-left:auto}}
-.zustand a{{color:var(--s1);text-decoration:none}}
-.zustand a:hover{{text-decoration:underline}}
-details.agenda{{margin-top:7px}}
-details.agenda > summary{{
-  cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:7px;
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--s1);
-}}
-details.agenda > summary::-webkit-details-marker{{display:none}}
-details.agenda > summary::before{{content:"\\25B8";font-size:12px}}
-details.agenda[open] > summary::before{{content:"\\25BE"}}
-details.agenda > summary:hover{{text-decoration:underline}}
-ol.tops{{margin:9px 0 0;padding:0 0 0 20px;color:var(--muted)}}
-ol.tops li{{margin:0 0 6px;font-size:14.5px;line-height:1.5}}
-ol.tops .sv{{margin-left:9px;font-family:"IBM Plex Mono",monospace;font-size:11px;
-  color:var(--muted);white-space:nowrap}}
-ol.tops .unterlagen{{display:block;margin-top:3px}}
-ol.tops .doc{{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--s1);
-  text-decoration:none;border-bottom:1px solid rgba(57,135,229,.35)}}
-.heute{{
-  display:flex;align-items:center;gap:14px;margin:30px 0 6px;
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--s1);scroll-margin-top:16px;
-}}
-.heute::before,.heute::after{{content:"";flex:1;height:1px;background:var(--s1);opacity:.4}}
-li.marke,li.jahrmarke{{
+EIGEN = """
+/* Nur diese Seite braucht die Kalenderliste: eine durchgehende Reihe mit
+   Jahresmarken und dem heutigen Tag an seiner Stelle darin. */
+ol.kalender{list-style:none;margin:18px 0 0;padding:0}
+ol.kalender > li{padding:13px 0 15px;border-top:1px solid var(--rule)}
+ol.kalender > li:last-child{border-bottom:1px solid var(--rule)}
+.zeile{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.zeile .wann,.zeile .gremium{margin:0}
+.zeile .zustand{margin-left:auto}
+/* Der heutige Tag steht als Marke in der Reihe — nicht am Anfang der Seite,
+   sondern dort, wo er chronologisch hingehoert. */
+li.marke{
   border-top:none;padding:22px 0 8px;display:flex;align-items:center;gap:14px;
-  font-family:"IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
-}}
-li.marke::before,li.marke::after,li.jahrmarke::after{{
+  font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--s1);font-size:11.5px;
+}
+li.marke::before,li.marke::after{
   content:"";flex:1;height:1px;background:currentColor;opacity:.3;
-}}
-li.marke{{color:var(--s1);font-size:11.5px;scroll-margin-top:14px}}
-li.jahrmarke{{color:var(--s2);font-size:12px;scroll-margin-top:14px}}
-li.jahrmarke span{{order:-1}}
-.sprungmarken{{
+}
+/* Jahresmarke: das laufende Jahr als Ueberschrift, die zurueckliegenden als
+   zugeklappter Block. Beide sehen gleich aus, damit die Reihe nicht bricht. */
+h2.jahrmarke,details.jahrblock > summary{
+  display:flex;align-items:baseline;gap:14px;margin:34px 0 0;padding:10px 0;
+  border-bottom:1px solid var(--rule);
+  font-family:var(--sans);font-weight:700;font-size:20px;letter-spacing:-.01em;
+  color:var(--ink);
+}
+details.jahrblock > summary{cursor:pointer;list-style:none}
+details.jahrblock > summary::-webkit-details-marker{display:none}
+details.jahrblock > summary::after{
+  content:"aufklappen";margin-left:auto;font-family:var(--mono);font-weight:400;
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--s1);
+}
+details.jahrblock[open] > summary::after{content:"zuklappen"}
+details.jahrblock > summary:hover{color:var(--s1)}
+.anzahl{
+  font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+}
+.sprungmarken{
   display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:22px 0 0;
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
   text-transform:uppercase;
-}}
-.sprungmarken .jetzt{{
+}
+.sprungmarken .jetzt{
   padding:7px 14px;border:1px solid var(--s1);color:var(--s1);text-decoration:none;
-}}
-.sprungmarken .jetzt:hover{{background:rgba(57,135,229,.10)}}
-.sprungmarken .jahre{{display:flex;gap:12px;color:var(--muted)}}
-.sprungmarken .jahre a{{color:var(--muted);text-decoration:none}}
-.sprungmarken .jahre a:hover{{color:var(--s1)}}
-h2.abschnitt{{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--s2);margin:34px 0 0;font-weight:400;
-}}
-</style>
-</head>
-<body class="lesen">
-
-<div class="brandbar"><div class="wrap">
-  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <nav aria-label="Bereiche">
-    {navigation("./", "termine")}
-  </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
-</div></div>
+}
+.sprungmarken .jetzt:hover{background:rgba(57,135,229,.10)}
+.sprungmarken .jahre{display:flex;gap:12px;color:var(--muted)}
+.sprungmarken .jahre a{color:var(--muted);text-decoration:none}
+.sprungmarken .jahre a:hover{color:var(--s1)}
 """
 
 
@@ -187,27 +140,43 @@ def main() -> None:
     kuenftig = [t for t in termine if dt.date.fromisoformat(t["datum"]) > heute]
     mit_agenda = sum(1 for t in kuenftig if t.get("punkte"))
 
-    zeilen: list[str] = []
-    jahr_gesetzt: set[int] = set()
+    # Jahrgaenge, die nicht das laufende Jahr sind, stehen zugeklappt da. Sonst
+    # scrollt man durch zwei volle Jahre, ehe das laufende beginnt — die Reihe
+    # bleibt durchgehend, sie faengt nur nicht mehr 2024 an.
+    jahre = sorted({dt.date.fromisoformat(x["datum"]).year for x in termine} | {heute.year})
+    je_jahr: dict[int, list[str]] = {j: [] for j in jahre}
     heute_gesetzt = False
+    marke = (f'  <li class="marke" id="heute"><span>Heute &middot; '
+             f'{lang(heute)}</span></li>')
     for x in termine:
         d = dt.date.fromisoformat(x["datum"])
         if not heute_gesetzt and d > heute:
-            zeilen.append(f'  <li class="marke" id="heute"><span>Heute &middot; '
-                          f'{lang(heute)}</span></li>')
+            je_jahr[heute.year].append(marke)
             heute_gesetzt = True
-        if d.year not in jahr_gesetzt:
-            jahr_gesetzt.add(d.year)
-            zeilen.append(f'  <li class="jahrmarke" id="jahr{d.year}"><span>{d.year}</span></li>')
-        zeilen.append(eintrag(x, register, d <= heute))
+        je_jahr[d.year].append(eintrag(x, register, d <= heute))
     if not heute_gesetzt:                     # alle Termine liegen zurueck
-        zeilen.append(f'  <li class="marke" id="heute"><span>Heute &middot; '
-                      f'{lang(heute)}</span></li>')
+        je_jahr[heute.year].append(marke)
 
-    jahre = sorted(jahr_gesetzt)
+    bloecke: list[str] = []
+    for j in jahre:
+        liste = f'<ol class="kalender">\n{chr(10).join(je_jahr[j])}\n</ol>'
+        anzahl = sum(1 for x in termine if x["datum"].startswith(str(j)))
+        wort = "Sitzung" if anzahl == 1 else "Sitzungen"
+        if j == heute.year:
+            bloecke.append(f'<h2 class="jahrmarke" id="jahr{j}">{j}'
+                           f'<span class="anzahl">{anzahl} {wort}</span></h2>\n{liste}')
+        else:
+            bloecke.append(
+                f'<details class="jahrblock" id="jahr{j}">\n'
+                f'  <summary>{j}<span class="anzahl">{anzahl} {wort}</span></summary>\n'
+                f'{liste}\n</details>')
+
     sprung = " &middot; ".join(f'<a href="#jahr{j}">{j}</a>' for j in jahre)
 
-    t = [kopf("Termine"), '<div class="wrap">']
+    t = [kopf("Termine · Ratsakten Bad Waldsee", hier="termine",
+          beschreibung="Alle öffentlichen Sitzungen der Stadt Bad Waldsee — vergangene wie angekündigte — in einer durchgehenden Reihe.",
+          stile=("ausgabe.css", "termine.css"), eigen=EIGEN),
+     '<div class="wrap">']
     t.append(f"""
 <header>
   <p class="eyebrow">Sitzungskalender</p>
@@ -216,34 +185,22 @@ def main() -> None:
   von der ersten erfassten Sitzung bis zum letzten angekündigten Termin. Die Sitzungen
   sind öffentlich, soweit nicht ausdrücklich nichtöffentlich beraten wird; wer hingehen
   möchte, kann das ohne Anmeldung.</p>
+  <div class="issueline">
+    <span><b>Termine</b> {len(termine)}</span>
+    <span><b>angekündigt</b> {len(kuenftig)}</span>
+    <span><b>mit Tagesordnung</b> {mit_agenda}</span>
+    <span><b>Stand</b> {kurz(heute)}</span>
+    <span><b>Herkunft</b> regelbasiert gezählt</span>
+  </div>
 </header>
-
-<div class="issueline">
-  <span><b>Termine</b> {len(termine)}</span>
-  <span><b>angekündigt</b> {len(kuenftig)}</span>
-  <span><b>mit Tagesordnung</b> {mit_agenda}</span>
-  <span><b>Stand</b> {lang(heute)}</span>
-  <span><b>Herkunft</b> regelbasiert gezählt</span>
-</div>
 
 <p class="sprungmarken"><a class="jetzt" href="#heute">Zum heutigen Tag</a>
 <span class="jahre">{sprung}</span></p>
 
-<ol class="kalender">
-{chr(10).join(zeilen)}
-</ol>
+{chr(10).join(bloecke)}
 """)
     t.append("</div>")
-    t.append("""
-<footer class="kolophon"><div class="wrap">
-  <p>Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a>
-  &middot; Alle Angaben und Insights ohne Gew&auml;hr</p>
-  <p><a href="./index.html">Startseite</a> &middot;
-     <a href="./ausgaben/index.html">Archiv</a> &middot;
-     <a href="https://ris.bad-waldsee.de/termine" rel="noopener">Ratsinformationssystem</a></p>
-</div></footer>
-</body>
-</html>""")
+    t.append(fuss(meta=f"Stand {lang(heute)}"))
 
     ziel = DOCS / "termine.html"
     ziel.write_text("\n".join(t), encoding="utf-8")

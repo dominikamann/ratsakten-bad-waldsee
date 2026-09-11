@@ -1,0 +1,200 @@
+/* Das gemeinsame Fundament aller Seiten dieser Website.
+
+   Farben, Grundschrift, Markenleiste, Seitenkopf und Fuß standen bis hierher
+   vierfach im Projekt — in ausgabe.css, startseite.css, src/report.html und
+   verstreut in den Bauskripten. Vier Kopien derselben Regel laufen zuverlässig
+   auseinander: Die Überschrift war je nach Seite 40px, 48px oder 58px groß, die
+   Kategoriezeile mal blau, mal orange, und der Report setzte seine
+   Überschriften in einer anderen Schrift als alle übrigen Seiten.
+
+   Diese Datei ist deshalb die einzige Quelle für alles, was auf jeder Seite
+   gleich aussehen muss. Seitenspezifisches gehört in ausgabe.css,
+   startseite.css oder in den Kopf der jeweiligen Seite — nicht hierher. */
+
+/* ---------- Farben und Maße ---------- */
+/* Bewusst einfarbig dunkel — keine Themenumschaltung. */
+:root{
+  color-scheme:dark;
+  --plane:#0B0D0F;
+  --surface:#111316;
+  --surface-2:#171A1E;
+  --ink:#EDF1F5;
+  --ink-2:#B4BDC7;
+  --muted:#7F8A96;
+  --rule:#272C32;
+  --grid:#22262B;
+  --s1:#3987e5;              /* Hinweis, Verweis, Zahl */
+  --s2:#d95926;              /* Ein einziger Akzent: die Zahl der Woche.
+                                Sonst nirgends — als Signalfarbe an Rubriken und
+                                Befunden gelesen wirken Auffaelligkeiten wie
+                                Warnungen, und genau das sollen sie nicht. */
+  --absent:#3C444D;
+  --flag:#E08163;            /* KI-Deutung — auffällig, aber kein Alarm */
+  --flag-bg:rgba(224,129,99,.10);
+  --bar-bg:#15181C;
+  --bar-ink:#D6DEE7;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+  --serif:"IBM Plex Serif",Georgia,serif;
+  --sans:Archivo,"Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,monospace;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--plane);color:var(--ink);
+  font-family:var(--serif);
+  font-size:17.5px;line-height:1.66;-webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(57,135,229,.3)}
+
+/* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
+   der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
+[id]{scroll-margin-top:18px}
+
+/* Zwei Breiten, nach Anlage der Seite — nicht nach Zufall: 1020px für die
+   zweispaltigen Seiten (Randspalte plus Textkörper), 880px für die
+   einspaltigen Lese- und Nachschlageseiten. Die Lesbarkeit hängt ohnehin nicht
+   an der Containerbreite, sondern an der Zeilenlänge — dafür steht auf den
+   Absätzen max-width:62ch. */
+.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+body.lesen .wrap{max-width:880px}
+
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
+  outline:2px solid var(--s1);outline-offset:2px;
+}
+
+/* ---------- Markenleiste mit Navigation ---------- */
+.brandbar{
+  background:var(--bar-bg);color:var(--bar-ink);border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.brandbar .wrap{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;
+  justify-content:space-between;padding:10px 24px;min-width:0;
+}
+.brandbar a{color:var(--s1);text-decoration:none}
+.brandbar a:hover{text-decoration:underline}
+.brandbar b{font-weight:600;letter-spacing:.1em}
+.brandbar nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0}
+.brandbar nav a{color:var(--bar-ink);text-decoration:none;opacity:.85}
+.brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
+.brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
+.brandbar nav span[aria-hidden]{opacity:.35}
+/* Sieben Einträge und zwei Randtexte passen nicht in jede Fensterbreite. Statt
+   den letzten Eintrag abzuschneiden, weicht zuerst der Hinweistext, dann
+   bekommt die Navigation eine eigene Zeile. */
+@media (max-width:1000px){.brandbar .disclaimer{display:none}}
+@media (max-width:620px){.brandbar nav{flex-basis:100%}}
+
+/* ---------- Seitenkopf ----------
+   Jede Seite trägt denselben Kopf: Kategorie, Titel, Vorspann, Kennzahlenzeile.
+   Genau in dieser Reihenfolge und in diesen Größen — hier und nirgends sonst. */
+header{padding:52px 0 0}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-2);margin:0 0 10px;
+}
+h1{
+  font-family:var(--sans);font-weight:700;
+  font-size:clamp(30px,4vw,40px);line-height:1.1;letter-spacing:-.02em;
+  margin:0 0 8px;text-wrap:balance;
+}
+.lede{
+  margin:14px 0 0;font-size:18px;line-height:1.55;color:var(--ink-2);
+  max-width:62ch;text-wrap:pretty;
+}
+
+/* Die Kennzahlenzeile schließt jeden Seitenkopf ab. Sie steht waagerecht, damit
+   die Breite genutzt wird — untereinander gestapelt schob sie den Inhalt unter
+   die Falz. */
+.issueline{
+  display:flex;flex-wrap:wrap;gap:8px 24px;margin:26px 0 0;padding:13px 0;
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+}
+.issueline b{color:var(--ink);font-weight:600}
+
+/* ---------- Herkunft einer Aussage ----------
+   Drei Stufen, auf jeder Seite dieselben: belegt, regelbasiert, gedeutet. */
+.herkunft{
+  display:inline-block;margin:0;padding:3px 9px;
+  font-family:var(--mono);font-size:10px;font-style:normal;
+  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
+}
+.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
+.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
+.herkunft.beleg,.herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+
+/* ---------- Fuß ---------- */
+footer{background:var(--bar-bg);border-top:1px solid var(--rule);padding:32px 0;margin-top:48px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline}
+footer p{
+  margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
+  color:var(--muted);max-width:none;
+}
+footer .brand{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bar-ink);font-weight:600}
+footer a{color:var(--s1);text-decoration:none}
+footer a:hover{text-decoration:underline}
+/* Die Seiten sind lang. Wer unten ankommt, soll nicht zurückscrollen müssen. */
+footer nav{
+  flex-basis:100%;order:-1;display:flex;flex-wrap:wrap;gap:6px 16px;
+  padding-bottom:14px;margin-bottom:2px;border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+}
+footer nav a{color:var(--bar-ink);opacity:.85}
+footer nav a:hover{color:var(--s1);opacity:1}
+footer nav span[aria-hidden]{opacity:.35}
+
+/* ---------- Zurueck nach oben ----------
+   Die Seiten sind lang; der Weg zur Menueleiste soll nicht am Scrollrad
+   haengen. Klein, zurueckhaltend, immer an derselben Stelle. Wo der Browser
+   scrollgesteuerte Animationen kennt, erscheint der Knopf erst nach der ersten
+   Bildschirmhoehe; sonst steht er von Anfang an da. */
+.hoch{
+  position:fixed;right:18px;bottom:18px;z-index:20;
+  display:grid;place-items:center;width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--rule);background:var(--bar-bg);
+  color:var(--muted);text-decoration:none;font-size:15px;line-height:1;opacity:.7;
+  transition:opacity .15s,color .15s,border-color .15s;
+}
+.hoch:hover{opacity:1;color:var(--s1);border-color:var(--s1)}
+@supports (animation-timeline:scroll()){
+  .hoch{
+    opacity:0;visibility:hidden;
+    animation:hoch-ein linear both;animation-timeline:scroll();
+    animation-range:120px 420px;
+  }
+  @keyframes hoch-ein{to{opacity:.7;visibility:visible}}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+
+/* ---------- Druck ----------
+   Gemeinderäte drucken Sitzungsunterlagen. Auf Papier ist der dunkle Grund
+   weder lesbar noch zumutbar; Navigation und Flächen entfallen, Verweise auf
+   fremde Server werden ausgeschrieben, damit sie auf dem Ausdruck auffindbar
+   bleiben. */
+@media print{
+  :root{
+    --plane:#fff;--surface:#fff;--surface-2:#f4f4f4;--ink:#000;--ink-2:#222;
+    --muted:#555;--rule:#bbb;--grid:#ddd;--shadow:none;--bar-bg:#fff;--bar-ink:#000;
+  }
+  body{font-size:10.5pt;line-height:1.45}
+  .brandbar,footer nav,.sprungmarken,.zeitleiste,.hoch{display:none}
+  footer{border-top:1px solid var(--rule);margin-top:24px;padding:12px 0}
+  header{padding-top:0}
+  a{color:#000;text-decoration:none}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555;word-break:break-all}
+  article,section,li,tr{break-inside:avoid}
+  h1,h2,h3{break-after:avoid}
+}

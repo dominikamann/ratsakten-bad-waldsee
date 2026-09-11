@@ -27,7 +27,7 @@ import logging
 import re
 from pathlib import Path
 
-from seite import navigation
+from seite import fuss, kopf, kurz
 
 from vorhaben import seiten_je_vorgang, vergleichsname
 from textwerk import pdf_text as roh_text, trennung_reparieren, wortschatz_laden
@@ -110,9 +110,9 @@ def vergleichsform(name: str) -> str:
 def kuerzel(name: str) -> str:
     if name in KURZ:
         return KURZ[name]
-    for anfang, kurz in PRAEFIXE:
+    for anfang, zeichen in PRAEFIXE:
         if name.startswith(anfang):
-            return kurz
+            return zeichen
     return "—"
 
 
@@ -376,10 +376,153 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
     return vorgaenge
 
 
+EIGEN = """
+.suchfeld{
+  display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 0;
+}
+.suchfeld input{
+  flex:1 1 320px;background:var(--surface);color:var(--ink);
+  border:1px solid var(--rule);border-left:3px solid var(--s1);
+  padding:15px 18px;font-family:"IBM Plex Serif",Georgia,serif;font-size:18px;
+}
+.suchfeld input:focus{outline:2px solid var(--s1);outline-offset:2px}
+.suchfeld input::placeholder{color:var(--muted)}
+.filter{
+  display:flex;gap:8px 18px;flex-wrap:wrap;margin:14px 0 0;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2);
+}
+.filter label{cursor:pointer;display:flex;align-items:center;gap:7px}
+.trefferzahl{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);margin:22px 0 0;
+}
+/* Das Stylesheet der Ausgaben legt fuer <article> ein zweispaltiges Raster mit
+   Randspalte fest. Fuer Suchtreffer gilt das nicht — sonst wird der Titel in
+   186 Pixel gequetscht und daneben bleibt die halbe Zeile leer. */
+article.vorgang{
+  display:block;padding:20px 0;gap:0;
+  border-bottom:1px solid var(--rule);
+}
+.vorgang .kopf{
+  display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;
+}
+.vorgang h3{
+  font-family:Archivo,sans-serif;font-weight:600;font-size:17.5px;line-height:1.35;
+  margin:0 0 4px;color:var(--ink);
+}
+.vorgang .nr{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
+  color:var(--muted);
+}
+.achse{
+  display:flex;flex-wrap:wrap;gap:0;margin:12px 0 0;
+}
+.achse .unterlagen{
+  flex:1 1 100%;display:flex;flex-wrap:wrap;gap:6px 10px;margin:4px 0 8px;
+}
+.achse .unterlagen a{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  color:var(--s1);text-decoration:none;border:1px solid var(--rule);padding:3px 8px;
+}
+.achse .unterlagen a::before{content:"↗ ";opacity:.6}
+.achse .unterlagen a:hover{border-color:var(--s1)}
+.achse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.achse .wortlaut{
+  flex:1 1 100%;margin:2px 0 12px;padding-left:12px;
+  border-left:2px solid var(--rule);max-width:74ch;
+  font-family:"IBM Plex Serif",Georgia,serif;font-size:14.5px;line-height:1.55;
+  color:var(--ink-2);
+}
+.station{
+  display:flex;align-items:baseline;gap:9px;
+  padding:6px 14px 6px 0;position:relative;
+}
+.station:not(:last-child)::after{
+  content:"→";color:var(--muted);opacity:.5;padding-left:14px;
+}
+.station .dat{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.station .grem{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;
+  color:var(--muted);border:1px solid var(--rule);padding:1px 5px;
+}
+.station .erg{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.04em;
+  color:var(--s1);white-space:nowrap;
+}
+.station .erg.split{color:var(--s1)}
+.station .svnr{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--muted);
+  opacity:.75;white-space:nowrap;
+}
+.vorgang .untertitel{color:var(--muted);font-family:"IBM Plex Serif",serif;font-size:13px}
+.vorgang .wege{display:flex;flex-wrap:wrap;gap:6px 14px;margin:7px 0 0}
+.vorgang .wege a{font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--s1);
+  text-decoration:none;border-bottom:1px solid rgba(57,135,229,.35)}
+.vorgang .wege a:hover{border-bottom-color:var(--s1)}
+a.station{text-decoration:none;color:inherit}
+a.station:hover .dat{color:var(--s1);text-decoration:underline}
+a.station:hover .grem{border-color:var(--s1)}
+.titellink{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--s1)}
+.titellink:hover{color:var(--s1)}
+.titellink:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
+.fundort{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--rule);padding:1px 6px;
+}
+.vorgang.istEinordnung{border-left:3px solid var(--flag);padding-left:18px;background:var(--flag-bg)}
+.vorgang .einleitung{margin:8px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:74ch}
+.gekuerzt{
+  display:-webkit-box;-webkit-box-orient:vertical;
+  -webkit-line-clamp:var(--zeilen,4);line-clamp:var(--zeilen,4);overflow:hidden;
+}
+.gekuerzt.offen{-webkit-line-clamp:unset;line-clamp:unset;display:block}
+button.mehr{
+  display:block;margin:6px 0 0;padding:3px 9px;
+  background:transparent;color:var(--s1);border:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;
+  text-transform:uppercase;cursor:pointer;
+}
+button.mehr:hover{border-color:var(--s1)}
+button.mehr:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.achse button.mehr{flex:0 0 auto;margin-left:12px}
+.betrag{
+  padding:1px 7px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  /* Ein Betrag ist eine Angabe, keine Warnung. */
+  font-variant-numeric:tabular-nums;color:var(--ink-2);border:1px solid var(--rule);
+  background:var(--surface-2);white-space:nowrap;
+}
+.betrag.klein{font-size:10px;padding:0 5px}
+.filter select{
+  background:var(--surface);color:var(--ink);border:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;padding:3px 6px;margin-left:6px;
+}
+mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
+
+/* Suchfeld und Filter auf schmalen Bildschirmen: alles untereinander, damit
+   nichts aus dem Bild laeuft und die Ziele gross genug zum Antippen sind. */
+@media (max-width:620px){
+  .suchfeld input{flex:1 1 100%;font-size:16px;padding:13px 15px}
+  .filter{flex-direction:column;gap:10px;align-items:flex-start}
+  .filter label{min-height:32px}
+  .filter select{margin-left:8px;padding:5px 8px;font-size:13px}
+  .vorgang .kopf{gap:6px 10px}
+  button.mehr{padding:7px 12px}
+}
+.leer{padding:40px 0;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:14px}
+.ohnejs{
+  margin:28px 0;padding:20px 22px;background:var(--flag-bg);
+  border-left:3px solid var(--flag);
+}
+.ohnejs p{margin:0}
+"""
+
+
 def bauen(vorgaenge: list[dict], stichtag: str) -> str:
-    stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
-    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
-        encoding="utf-8").replace("{PFAD}", "./")
     # "</script>" im Titel wuerde das Element vorzeitig beenden und die ganze
     # Seite lahmlegen. Die Titel stammen aus fremdem HTML — also absichern.
     index = (json.dumps(vorgaenge, ensure_ascii=False, separators=(",", ":"))
@@ -389,173 +532,16 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
     mit_beschluss = sum(1 for v in sachvorgaenge if any(s["e"] for s in v["s"]))
     mehrstufig = sum(1 for v in sachvorgaenge if len(v["s"]) > 1)
 
-    return f"""<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vorgänge durchsuchen</title>
-<style>{schriften}</style>
-<style>{stil}</style>
-<style>
-.suchfeld{{
-  display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 0;
-}}
-.suchfeld input{{
-  flex:1 1 320px;background:var(--surface);color:var(--ink);
-  border:1px solid var(--rule);border-left:3px solid var(--s1);
-  padding:15px 18px;font-family:"IBM Plex Serif",Georgia,serif;font-size:18px;
-}}
-.suchfeld input:focus{{outline:2px solid var(--s1);outline-offset:2px}}
-.suchfeld input::placeholder{{color:var(--muted)}}
-.filter{{
-  display:flex;gap:8px 18px;flex-wrap:wrap;margin:14px 0 0;
-  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2);
-}}
-.filter label{{cursor:pointer;display:flex;align-items:center;gap:7px}}
-.trefferzahl{{
-  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--muted);margin:22px 0 0;
-}}
-/* Das Stylesheet der Ausgaben legt fuer <article> ein zweispaltiges Raster mit
-   Randspalte fest. Fuer Suchtreffer gilt das nicht — sonst wird der Titel in
-   186 Pixel gequetscht und daneben bleibt die halbe Zeile leer. */
-article.vorgang{{
-  display:block;padding:20px 0;gap:0;
-  border-bottom:1px solid var(--rule);
-}}
-.vorgang .kopf{{
-  display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;
-}}
-.vorgang h3{{
-  font-family:Archivo,sans-serif;font-weight:600;font-size:17.5px;line-height:1.35;
-  margin:0 0 4px;color:var(--ink);
-}}
-.vorgang .nr{{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
-  color:var(--muted);
-}}
-.achse{{
-  display:flex;flex-wrap:wrap;gap:0;margin:12px 0 0;
-}}
-.achse .unterlagen{{
-  flex:1 1 100%;display:flex;flex-wrap:wrap;gap:6px 10px;margin:4px 0 8px;
-}}
-.achse .unterlagen a{{
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
-  color:var(--s1);text-decoration:none;border:1px solid var(--rule);padding:3px 8px;
-}}
-.achse .unterlagen a::before{{content:"↗ ";opacity:.6}}
-.achse .unterlagen a:hover{{border-color:var(--s1)}}
-.achse .unterlagen a:focus-visible{{outline:2px solid var(--s1);outline-offset:2px}}
-.achse .wortlaut{{
-  flex:1 1 100%;margin:2px 0 12px;padding-left:12px;
-  border-left:2px solid var(--rule);max-width:74ch;
-  font-family:"IBM Plex Serif",Georgia,serif;font-size:14.5px;line-height:1.55;
-  color:var(--ink-2);
-}}
-.station{{
-  display:flex;align-items:baseline;gap:9px;
-  padding:6px 14px 6px 0;position:relative;
-}}
-.station:not(:last-child)::after{{
-  content:"→";color:var(--muted);opacity:.5;padding-left:14px;
-}}
-.station .dat{{
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);
-  font-variant-numeric:tabular-nums;white-space:nowrap;
-}}
-.station .grem{{
-  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;
-  color:var(--muted);border:1px solid var(--rule);padding:1px 5px;
-}}
-.station .erg{{
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.04em;
-  color:var(--s1);white-space:nowrap;
-}}
-.station .erg.split{{color:var(--s1)}}
-.station .svnr{{
-  font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--muted);
-  opacity:.75;white-space:nowrap;
-}}
-.vorgang .untertitel{{color:var(--muted);font-family:"IBM Plex Serif",serif;font-size:13px}}
-.vorgang .wege{{display:flex;flex-wrap:wrap;gap:6px 14px;margin:7px 0 0}}
-.vorgang .wege a{{font-family:"IBM Plex Mono",monospace;font-size:11px;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--s1);
-  text-decoration:none;border-bottom:1px solid rgba(57,135,229,.35)}}
-.vorgang .wege a:hover{{border-bottom-color:var(--s1)}}
-a.station{{text-decoration:none;color:inherit}}
-a.station:hover .dat{{color:var(--s1);text-decoration:underline}}
-a.station:hover .grem{{border-color:var(--s1)}}
-.titellink{{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--s1)}}
-.titellink:hover{{color:var(--s1)}}
-.titellink:focus-visible{{outline:2px solid var(--s1);outline-offset:3px}}
-.fundort{{
-  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--muted);
-  border:1px solid var(--rule);padding:1px 6px;
-}}
-.vorgang.istEinordnung{{border-left:3px solid var(--flag);padding-left:18px;background:var(--flag-bg)}}
-.vorgang .einleitung{{margin:8px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:74ch}}
-.gekuerzt{{
-  display:-webkit-box;-webkit-box-orient:vertical;
-  -webkit-line-clamp:var(--zeilen,4);line-clamp:var(--zeilen,4);overflow:hidden;
-}}
-.gekuerzt.offen{{-webkit-line-clamp:unset;line-clamp:unset;display:block}}
-button.mehr{{
-  display:block;margin:6px 0 0;padding:3px 9px;
-  background:transparent;color:var(--s1);border:1px solid var(--rule);
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;
-  text-transform:uppercase;cursor:pointer;
-}}
-button.mehr:hover{{border-color:var(--s1)}}
-button.mehr:focus-visible{{outline:2px solid var(--s1);outline-offset:2px}}
-.achse button.mehr{{flex:0 0 auto;margin-left:12px}}
-.betrag{{
-  padding:1px 7px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
-  font-variant-numeric:tabular-nums;color:var(--s2);border:1px solid var(--s2);
-  background:color-mix(in srgb, var(--s2) 8%, transparent);white-space:nowrap;
-}}
-.betrag.klein{{font-size:10px;padding:0 5px}}
-.filter select{{
-  background:var(--surface);color:var(--ink);border:1px solid var(--rule);
-  font-family:"IBM Plex Mono",monospace;font-size:12px;padding:3px 6px;margin-left:6px;
-}}
-mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
-
-/* Suchfeld und Filter auf schmalen Bildschirmen: alles untereinander, damit
-   nichts aus dem Bild laeuft und die Ziele gross genug zum Antippen sind. */
-@media (max-width:620px){{
-  .suchfeld input{{flex:1 1 100%;font-size:16px;padding:13px 15px}}
-  .filter{{flex-direction:column;gap:10px;align-items:flex-start}}
-  .filter label{{min-height:32px}}
-  .filter select{{margin-left:8px;padding:5px 8px;font-size:13px}}
-  .vorgang .kopf{{gap:6px 10px}}
-  button.mehr{{padding:7px 12px}}
-}}
-.leer{{padding:40px 0;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:14px}}
-.ohnejs{{
-  margin:28px 0;padding:20px 22px;background:var(--flag-bg);
-  border-left:3px solid var(--flag);
-}}
-.ohnejs p{{margin:0}}
-</style>
-</head>
-<body class="lesen">
-
-<div class="brandbar"><div class="wrap">
-  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <nav aria-label="Bereiche">
-    {navigation("./", "suche")}
-  </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
-</div></div>
-
+    return f"""{kopf("Vorgänge durchsuchen · Ratsakten Bad Waldsee", hier="suche",
+                     beschreibung="Alle erfassten Vorgänge der Stadt Bad Waldsee mit "
+                                  "ihrem Weg durch die Gremien — durchsuchbar nach "
+                                  "Stichwort und Vorlagennummer.",
+                     eigen=EIGEN)}
 <div class="wrap">
-<header class="masthead">
+<header>
   <p class="eyebrow">Vorgänge &middot; durchsuchbar</p>
   <h1>Vorg&auml;nge</h1>
-  <p class="claim">Jeder Vorgang mit seinem Weg durch die Gremien — von der ersten
+  <p class="lede">Jeder Vorgang mit seinem Weg durch die Gremien — von der ersten
   Beratung bis zum Beschluss. Mitdurchsucht werden die redaktionellen
   Einordnungen, die mehrere Vorg&auml;nge &uuml;ber die Zeit verbinden.</p>
   <div class="issueline">
@@ -563,14 +549,15 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
     <span><b>mit Beschluss</b> {mit_beschluss}</span>
     <span><b>mehrstufig</b> {mehrstufig}</span>
     <span><b>Einordnungen</b> {einordnungen}</span>
-    <span><b>Stand</b> {stichtag[8:10]}.{stichtag[5:7]}.{stichtag[:4]}</span>
+    <span><b>Stand</b> {kurz(stichtag)}</span>
   </div>
+</header>
 
-  <div class="suchfeld">
+<div class="suchfeld">
     <input type="search" id="q" placeholder="Suchen — etwa Kindergarten, Windenergie, Steinstra&szlig;e, SV-104/2026"
            autocomplete="off" aria-label="Vorg&auml;nge durchsuchen">
   </div>
-  <div class="filter">
+<div class="filter">
     <label><input type="checkbox" id="f-beschluss"> nur mit Beschluss</label>
     <label><input type="checkbox" id="f-strittig"> nur nicht einstimmig</label>
     <label><input type="checkbox" id="f-mehr"> nur mehrstufige Vorg&auml;nge</label>
@@ -585,15 +572,14 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
     </label>
   </div>
 
-  <noscript>
+<noscript>
     <div class="ohnejs">
       <p><b>Die Suche braucht JavaScript.</b> Ohne JavaScript lassen sich dieselben
       Daten als Tabelle auswerten: <a class="doc" href="https://github.com/dominikamann/ratsakten-bad-waldsee/blob/main/data/csv/tagesordnungspunkte.csv">tagesordnungspunkte.csv</a>
       und <a class="doc" href="https://github.com/dominikamann/ratsakten-bad-waldsee/blob/main/data/csv/beschluesse.csv">beschluesse.csv</a> —
       beide lassen sich in Excel oder LibreOffice &ouml;ffnen und filtern.</p>
     </div>
-  </noscript>
-</header>
+</noscript>
 
 <p class="trefferzahl" id="zahl"></p>
 <div id="treffer"></div>
@@ -652,10 +638,7 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 </section>
 </div>
 
-<footer><div class="wrap">
-  <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Stand {stichtag}</p>
-</div></footer>
+{fuss(meta=f"Stand {kurz(stichtag)}", ende=False)}
 
 <script id="daten" type="application/json">{index}</script>
 <script>

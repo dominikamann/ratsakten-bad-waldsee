@@ -22,7 +22,7 @@ import html
 import json
 from pathlib import Path
 
-from seite import navigation
+from seite import fuss, kopf, kurz
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"
@@ -79,10 +79,6 @@ def neueste_ausgabe(register: dict) -> tuple[str, int, int, dict] | None:
 def bauen() -> str:
     kennzahlen = json.loads((DATEN / "kennzahlen.json").read_text(encoding="utf-8"))
     register = json.loads((DATEN / "ausgaben.json").read_text(encoding="utf-8"))
-    stil = (WURZEL / "scripts" / "startseite.css").read_text(encoding="utf-8")
-    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
-        encoding="utf-8").replace("{PFAD}", "./")
-
     a = kennzahlen["abstimmungen"]
     kacheln = [
         (kennzahlen["sitzungen"], "Sitzungen"),
@@ -153,9 +149,9 @@ def bauen() -> str:
         n_bef = befundseite.read_text(encoding="utf-8").count('<article class="befundblock">')
         karten.append((50, f"""    <a class="karte" href="./befunde.html">
       <p class="art">Erkenntnisse &middot; gesammelt</p>
-      <h3>Was aufgefallen ist — und was eingehalten wird</h3>
+      <h3>Was aufgefallen ist</h3>
       <p>{n_bef} Eintr&auml;ge an einem Ort statt verstreut &uuml;ber Report und Wochenausgaben:
-      eingehaltene Pflichten und abgeschlossene Verfahren ebenso wie die Stellen,
+      eingehaltene Fristen und abgeschlossene Verfahren ebenso wie die Stellen,
       an denen die Aktenlage Fragen offenl&auml;sst.</p>
       <p class="meta">Regelbasiert gez&auml;hlt und maschinell gedeutet, jeweils gekennzeichnet</p>
     </a>"""))
@@ -198,25 +194,10 @@ def bauen() -> str:
     heute = dt.date.today()
     stichtag = kennzahlen.get("stichtag", heute.isoformat())
 
-    return f"""<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ratsakten Bad Waldsee</title>
-<style>{schriften}</style>
-<style>{stil}</style>
-</head>
-<body>
-
-<div class="brandbar"><div class="wrap">
-  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <nav aria-label="Bereiche">
-    {navigation("./", "start")}
-  </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
-</div></div>
-
+    return f"""{kopf("Ratsakten Bad Waldsee", hier="start",
+                     beschreibung="Maschinelle Auswertung der öffentlich zugänglichen "
+                                  "Sitzungsunterlagen der Stadt Bad Waldsee.",
+                     stile=("startseite.css", "termine.css"))}
 <div class="wrap">
 
 <header>
@@ -286,14 +267,7 @@ def bauen() -> str:
 </section>
 
 </div>
-
-<footer><div class="wrap">
-  <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Datenstand {e(stichtag)}
-  &middot; Seite erzeugt am {heute.strftime('%d.%m.%Y')}</p>
-</div></footer>
-</body>
-</html>
+{fuss(meta=f"Datenstand {kurz(stichtag)} &middot; Seite erzeugt am {kurz(heute)}")}
 """
 
 

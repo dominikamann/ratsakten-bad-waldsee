@@ -25,7 +25,7 @@ import re
 import sys
 from pathlib import Path
 
-from seite import navigation
+from seite import fuss, kopf
 
 from lxml import html as H
 
@@ -238,11 +238,40 @@ def eingehalten() -> list[tuple[str, str, str]]:
 
     return eintraege
 
-def bauen() -> str:
-    stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
-    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
-        encoding="utf-8").replace("{PFAD}", "./")
+EIGEN = """
+.befundblock{
+  display:block;padding:26px 0 22px;border-bottom:1px solid var(--rule);gap:0;
+}
+.befundblock h3{
+  font-family:var(--sans);font-weight:600;font-size:20px;line-height:1.3;
+  margin:0 0 12px;color:var(--ink);letter-spacing:-.01em;
+}
+.befundblock p{max-width:72ch}
+.befundblock .quelle{
+  margin:14px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.05em;color:var(--muted);
+}
+.befundblock .evidence{
+  margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+  letter-spacing:.02em;max-width:74ch;
+}
+.gruppe{padding:44px 0 0}
+.gruppe > h2{
+  font-family:var(--sans);font-weight:700;font-size:26px;
+  letter-spacing:-.02em;margin:0 0 6px;
+}
+.gruppe > .einleitung{color:var(--ink-2);max-width:70ch;margin:0 0 4px}
+@media (max-width:620px){
+  .gruppe{padding-top:32px}
+  .gruppe > h2{font-size:22px}
+  .befundblock h3{font-size:18px}
+  .befundblock{padding:20px 0 18px}
+}
+"""
 
+
+def bauen() -> str:
     report = juengster_report()
     if not report:
         sys.exit("Kein Report in docs/report/ — bitte zuerst Schritt 04 ausführen.")
@@ -252,74 +281,31 @@ def bauen() -> str:
     rname = f"Ratsanalyse, Stand {report.stem[8:10]}.{report.stem[5:7]}.{report.stem[:4]}"
 
     gut = eingehalten()
-    teile = [f"""<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Befunde</title>
-<style>{schriften}</style>
-<style>{stil}</style>
-<style>
-.befundblock{{
-  display:block;padding:26px 0 22px;border-bottom:1px solid var(--rule);gap:0;
-}}
-.befundblock h3{{
-  font-family:Archivo,sans-serif;font-weight:600;font-size:20px;line-height:1.3;
-  margin:0 0 12px;color:var(--ink);letter-spacing:-.01em;
-}}
-.befundblock p{{max-width:72ch}}
-.befundblock .quelle{{
-  margin:14px 0 0;font-family:"IBM Plex Mono",monospace;font-size:11px;
-  letter-spacing:.05em;color:var(--muted);
-}}
-.befundblock .evidence{{
-  margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);
-  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);
-  letter-spacing:.02em;max-width:74ch;
-}}
-.gruppe{{padding:44px 0 0}}
-.gruppe > h2{{
-  font-family:Archivo,sans-serif;font-weight:700;font-size:26px;
-  letter-spacing:-.02em;margin:0 0 6px;
-}}
-.gruppe > .einleitung{{color:var(--ink-2);max-width:70ch;margin:0 0 4px}}
-@media (max-width:620px){{
-  .gruppe{{padding-top:32px}}
-  .gruppe > h2{{font-size:22px}}
-  .befundblock h3{{font-size:18px}}
-  .befundblock{{padding:20px 0 18px}}
-}}
-</style>
-</head>
-<body class="lesen">
-
-<div class="brandbar"><div class="wrap">
-  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <nav aria-label="Bereiche">
-    {navigation("./", "befunde")}
-  </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
-</div></div>
-
-<div class="wrap">
-<header class="masthead">
-  <p class="eyebrow">Erkenntnisse &middot; gesammelt</p>
-  <h1>Befunde</h1>
-  <p class="claim">Was die Auswertung zutage gefördert hat — Eingehaltenes wie
-  Kritisches, an einem Ort statt verstreut über Report und Wochenausgaben.</p>
+    teile = [kopf("Erkenntnisse · Ratsakten Bad Waldsee", hier="befunde",
+                  beschreibung="Was die Auswertung der Bad Waldseer Sitzungsunterlagen "
+                               "ergeben hat — Eingehaltenes wie Kritisches.",
+                  eigen=EIGEN),
+             f"""<div class="wrap">
+<header>
+  <p class="eyebrow">Was die Auswertung ergeben hat</p>
+  <h1>Erkenntnisse</h1>
+  <p class="lede">Alles, was beim Durchsehen der Unterlagen aufgefallen ist — an
+  einem Ort statt verstreut über Report und Wochenausgaben. Sortiert nicht nach
+  gut und schlecht, sondern danach, woher die Erkenntnis stammt.</p>
   <div class="issueline">
-    <span><b>eingehalten</b> {len(gut)}</span>
+    <span><b>regelbasiert</b> {len(gut)}</span>
     <span><b>Beobachtungen</b> {len(beobachtungen)}</span>
-    <span><b>Befunde</b> {len(befunde)}</span>
+    <span><b>Gesamtauswertung</b> {len(befunde)}</span>
     <span><b>Einordnungen</b> {len(einordnungen)}</span>
     <span><b>Herkunft</b> gezählt und gedeutet</span>
   </div>
+</header>
 
-  <div class="kasten">
-    <p class="lab">Was auf dieser Seite steht</p>
-    <p>Zweierlei, deutlich unterschieden. Die Rubrik <b>„Was eingehalten wird“</b>
-    ist <b>regelbasiert gezählt</b> und enthält keine Deutung. Alles Übrige sind
+<div class="kasten">
+  <p class="lab">Was auf dieser Seite steht</p>
+    <p>Zweierlei, deutlich unterschieden. Der Abschnitt <b>„Eingehaltene Fristen und
+    abgeschlossene Verfahren“</b> ist <b>regelbasiert gezählt</b> und enthält keine
+    Deutung. Alles Übrige sind
     <b>KI-Deutungen</b>: Auswahl, Verknüpfung und Gewichtung von Fakten, maschinell
     erzeugt und <b>nicht redaktionell geprüft</b>. Die zugrunde liegenden Zahlen
     stammen in beiden Fällen aus den Beschlussprotokollen und sind dort nachprüfbar
@@ -329,20 +315,20 @@ def bauen() -> str:
   </div>
 
   <nav class="sprung" aria-label="Abschnitte dieser Seite">
-    <a href="#eingehalten">Was eingehalten wird <b>{len(gut)}</b></a>
+    <a href="#eingehalten">Eingehaltenes <b>{len(gut)}</b></a>
     <a href="#beobachtungen">Beobachtungen <b>{len(beobachtungen)}</b></a>
-    <a href="#befunde">Befunde <b>{len(befunde)}</b></a>
-    <a href="#einordnungen">Einordnungen <b>{len(einordnungen)}</b></a>
-  </nav>
-</header>"""]
+    <a href="#befunde">Gesamtauswertung <b>{len(befunde)}</b></a>
+    <a href="#einordnungen">Wochenausgaben <b>{len(einordnungen)}</b></a>
+  </nav>"""]
 
     if gut:
         teile.append("""
 <section class="gruppe" id="eingehalten">
-  <h2>Was eingehalten wird</h2>
-  <p class="einleitung">Was die Auswertung an eingehaltenen Pflichten und
-  abgeschlossenen Verfahren gefunden hat — ausgezählt nach denselben festen Regeln
-  wie alles Weitere auf dieser Seite.</p>""")
+  <h2>Eingehaltene Fristen und abgeschlossene Verfahren</h2>
+  <p class="einleitung">Was sich beim Auszählen als eingehalten oder erledigt
+  erwiesen hat — nach denselben festen Regeln ermittelt wie alles Weitere auf
+  dieser Seite. Keine Note, keine Prüfung: dasselbe Verfahren, anderes
+  Ergebnis.</p>""")
         for titel, text, beleg in gut:
             teile.append(f"""  <article class="befundblock">
     <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
@@ -364,7 +350,7 @@ def bauen() -> str:
 
     teile.append("""
 <section class="gruppe" id="befunde">
-  <h2>Befunde aus der Gesamtauswertung</h2>
+  <h2>Aus der Gesamtauswertung</h2>
   <p class="einleitung">Was beim Auszählen aller Sitzungen sichtbar wurde und in
   einer einzelnen Woche nicht zu erkennen ist. Dies sind die ausführlichen
   Fassungen; zwei davon — zu den Ortschaftsräten und zu den Jahresabschlüssen —
@@ -376,7 +362,7 @@ def bauen() -> str:
 
     teile.append("""
 <section class="gruppe" id="einordnungen">
-  <h2>Einordnungen aus den Wochenausgaben</h2>
+  <h2>Aus den Wochenausgaben</h2>
   <p class="einleitung">Was in der jeweiligen Woche bemerkenswert war — oft erst
   im Vergleich mit früheren Sitzungen erkennbar.</p>""")
     for ein in einordnungen:
@@ -402,13 +388,8 @@ def bauen() -> str:
   <span class="mono">data/einordnungen.json</span>.</p>
 </section>
 </div>
-
-<footer><div class="wrap">
-  <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; sämtlich KI-Deutung</p>
-</div></footer>
-</body>
-</html>""")
+""")
+    teile.append(fuss(meta="Deutung, soweit nicht anders vermerkt"))
     return "\n".join(teile)
 
 

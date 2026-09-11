@@ -76,13 +76,28 @@ function rendern(quelle, ziel, beschreibung) {
       // Die Navigationsleiste stammt aus scripts/navigation.json — derselben
       // Quelle, aus der die Bauskripte sie erzeugen. Sonst muesste man beim
       // Hinzufuegen einer Seite daran denken, den Report von Hand nachzuziehen.
-      const leiste = d.querySelector('nav[aria-label="Bereiche"]');
-      if (leiste) {
-        const hoch = path.dirname(ziel).endsWith("report") ? "../" : "";
-        leiste.innerHTML = "\n    " + NAVIGATION.map((e) => {
-          const hier = e.name === "report" ? ' aria-current="page"' : "";
-          return `<a href="${hoch}${e.ziel}"${hier}>${e.text}</a>`;
-        }).join('\n    <span aria-hidden="true">/</span>\n    ') + "\n  ";
+      const hoch = path.dirname(ziel).endsWith("report") ? "../" : "";
+      const verweise = (markieren) => "\n    " + NAVIGATION.map((e) => {
+        const hier = markieren && e.name === "report" ? ' aria-current="page"' : "";
+        return `<a href="${hoch}${e.ziel}"${hier}>${e.text}</a>`;
+      }).join('\n    <span aria-hidden="true">/</span>\n    ') + "\n  ";
+      // Oben in der Markenleiste, unten im Fuss — wie auf allen uebrigen Seiten.
+      d.querySelectorAll('nav[aria-label="Bereiche"]').forEach((n, i) => {
+        n.innerHTML = verweise(i === 0);
+      });
+
+      // Schriften und Grundstil kommen aus denselben Dateien wie bei allen
+      // uebrigen Seiten. Stuenden sie noch einmal in src/report.html, liefe der
+      // Report frueher oder spaeter optisch auseinander — genau das war der
+      // Fall: andere Ueberschriftenschrift, andere Groessen, andere Farben.
+      const basis = d.getElementById("basis");
+      if (basis) {
+        basis.textContent =
+          fs.readFileSync(path.join(__dirname, "schriften.css"), "utf8")
+            .split("{PFAD}").join(hoch) + "\n" +
+          fs.readFileSync(path.join(__dirname, "basis.css"), "utf8");
+      } else {
+        throw new Error("In " + quelle + " fehlt <style id=\"basis\">.");
       }
 
       d.documentElement.setAttribute("lang", "de");

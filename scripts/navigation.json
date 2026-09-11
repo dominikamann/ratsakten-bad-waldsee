@@ -3,7 +3,7 @@
   {"ziel": "termine.html#heute",  "text": "Termine",             "name": "termine"},
   {"ziel": "themen/index.html",   "text": "Themen",              "name": "themen"},
   {"ziel": "suche.html",          "text": "Suche",               "name": "suche"},
-  {"ziel": "befunde.html",        "text": "Befunde",             "name": "befunde"},
+  {"ziel": "befunde.html",        "text": "Erkenntnisse",        "name": "befunde"},
   {"ziel": "ausgaben/index.html", "text": "Archiv",              "name": "archiv"},
   {"ziel": "gremien.html",        "text": "Wer entscheidet was", "name": "gremien"}
 ]

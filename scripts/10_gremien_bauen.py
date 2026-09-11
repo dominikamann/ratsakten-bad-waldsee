@@ -17,45 +17,18 @@ import datetime as dt
 import json
 from pathlib import Path
 
-from seite import navigation
+from seite import fuss, kopf, kurz
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"
 DOCS = WURZEL / "docs"
 
 
-def e(s: str) -> str:
-    return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
-
-
-def kopf(titel: str) -> str:
-    stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
-    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
-        encoding="utf-8").replace("{PFAD}", "")
-    return f"""<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(titel)}</title>
-<style>{schriften}</style>
-<style>{stil}</style>
-<style>
-/* Nur auf dieser Seite gebraucht: Vorspann und Fundstellenzeile. */
-.quelle{{font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.5;
+EIGEN = """
+/* Nur auf dieser Seite gebraucht: die Fundstellenzeile unter einem Abschnitt. */
+.quelle{font-family:var(--mono);font-size:12px;line-height:1.5;
   color:var(--muted);border-top:1px solid var(--rule);padding-top:8px;
-  margin:14px 0 30px;max-width:62ch}}
-</style>
-</head>
-<body class="lesen">
-
-<div class="brandbar"><div class="wrap">
-  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <nav aria-label="Bereiche">
-    {navigation("./", "gremien")}
-  </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
-</div></div>
+  margin:14px 0 30px;max-width:62ch}
 """
 
 
@@ -92,7 +65,11 @@ def main() -> None:
     ortsch = sitzungen("Ortschaftsrat")
     zeitraum = kennzahlen.get("stichtag", dt.date.today().isoformat())
 
-    t = [kopf("Wer entscheidet was"), '<div class="wrap">']
+    t = [kopf("Wer entscheidet was · Ratsakten Bad Waldsee", hier="gremien",
+              beschreibung="Gemeinderat, Ausschüsse, Ortschaftsräte, Verwaltung, "
+                           "Landratsamt — wer in Bad Waldsee wofür zuständig ist.",
+              eigen=EIGEN),
+         '<div class="wrap">']
 
     t.append(f"""
 <header>
@@ -102,14 +79,13 @@ def main() -> None:
   und manches entscheidet die Stadt gar nicht. Diese Seite ordnet ein, wer in Bad
   Waldsee wofür zuständig ist. Sie ist die Lesehilfe für alles Übrige auf dieser
   Website.</p>
+  <div class="issueline">
+    <span><b>Gremien</b> {len(gremien)}</span>
+    <span><b>Sitzungen</b> {sum(v["sitzungen"] for v in gremien.values())}</span>
+    <span><b>Stand</b> {kurz(zeitraum)}</span>
+    <span><b>Herkunft</b> Beleg &middot; Hauptsatzung, Gemeindeordnung, Baugesetzbuch</span>
+  </div>
 </header>
-
-<div class="issueline">
-  <span><b>Gremien</b> {len(gremien)}</span>
-  <span><b>Sitzungen</b> {sum(v["sitzungen"] for v in gremien.values())}</span>
-  <span><b>Stand</b> {zeitraum}</span>
-  <span><b>Herkunft</b> Beleg &middot; Hauptsatzung, Gemeindeordnung, Baugesetzbuch</span>
-</div>
 
 <h2 class="headline">Der Gemeinderat</h2>
 <p>Der Gemeinderat ist nach der Hauptsatzung „die Vertretung der Bürger und das
@@ -220,21 +196,12 @@ und entschieden wurde, kann die Einsicht bei der Stadt verlangen.</p>
   <p>Sie enthält keine Auswertung und keine Deutung, sondern gibt geltendes Recht
   und die Hauptsatzung der Stadt wieder. Maßgeblich ist immer der Originaltext;
   die Hauptsatzung liegt im Ratsinformationssystem der Stadt aus. Stand der
-  Auswertungszahlen: {zeitraum}.</p>
+  Auswertungszahlen: {kurz(zeitraum)}.</p>
 </div>
 """)
 
     t.append("</div>")
-    t.append("""
-<footer class="kolophon"><div class="wrap">
-  <p>Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a>
-  &middot; Alle Angaben und Insights ohne Gew&auml;hr</p>
-  <p><a href="./index.html">Startseite</a> &middot;
-     <a href="./ausgaben/index.html">Archiv</a> &middot;
-     <a href="./befunde.html">Befunde</a></p>
-</div></footer>
-</body>
-</html>""")
+    t.append(fuss(meta=f"Stand {kurz(zeitraum)}"))
 
     ziel = DOCS / "gremien.html"
     ziel.write_text("\n".join(t), encoding="utf-8")

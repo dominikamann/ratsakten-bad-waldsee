@@ -48,7 +48,7 @@ uv run --quiet --with requests python scripts/02_protokolle_laden.py
 log "3/11  Kennzahlen berechnen"
 uv run --quiet --with pypdf python scripts/03_auswerten.py | head -3
 
-log "4/11  Ausgaben erzeugen"
+log "4/11  Ausgaben erzeugen (alle Jahrgänge)"
 uv run --quiet --with pypdf python scripts/05_ausgaben_bauen.py | tail -2
 
 log "5/11  Tabellen und Suche erzeugen"

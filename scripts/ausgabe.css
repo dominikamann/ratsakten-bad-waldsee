@@ -1,95 +1,8 @@
+/* Die zweispaltigen Seiten: Wochenausgaben, Befunde, Themen, Suche, Termine.
 
-/* Bewusst einfarbig dunkel — keine Themenumschaltung. */
-:root{
-  color-scheme:dark;
-  --plane:#0B0D0F;
-  --surface:#111316;
-  --surface-2:#171A1E;
-  --ink:#EDF1F5;
-  --ink-2:#B4BDC7;
-  --muted:#7F8A96;
-  --rule:#272C32;
-  --s1:#3987e5;
-  --s2:#d95926;
-  --flag:#E08163;
-  --flag-bg:rgba(224,129,99,.10);
-  --bar-bg:#15181C;
-  --bar-ink:#D6DEE7;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
-}
-
-*{box-sizing:border-box}
-body{
-  margin:0;background:var(--plane);color:var(--ink);
-  font-family:"IBM Plex Serif",Georgia,serif;
-  font-size:17.5px;line-height:1.66;-webkit-font-smoothing:antialiased;
-}
-/* Zwei Breiten, nach Anlage der Seite — nicht nach Zufall:
-   1020px fuer die zweispaltigen Seiten (Randspalte plus Textkoerper), also die
-   Wochenausgaben und den Report; 880px fuer die einspaltigen Lese- und
-   Nachschlageseiten. Die Lesbarkeit haengt ohnehin nicht an der
-   Containerbreite, sondern an der Zeilenlaenge — dafuer steht auf den
-   Absaetzen max-width:62ch. */
-.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
-body.lesen .wrap{max-width:880px}
-.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
-.num{font-variant-numeric:tabular-nums}
-
-/* ---------- Marke ---------- */
-.brandbar{
-  background:var(--bar-bg);color:var(--bar-ink);border-bottom:1px solid var(--rule);
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;
-  letter-spacing:.08em;text-transform:uppercase;
-}
-.brandbar .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;padding:10px 24px}
-.brandbar a{color:var(--s1);text-decoration:none}
-.brandbar a:hover{text-decoration:underline}
-.brandbar b{font-weight:600;letter-spacing:.1em}
-
-/* ---------- Navigation in der Markenleiste ---------- */
-.brandbar .wrap{align-items:center}
-.brandbar nav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
-.brandbar nav a{color:var(--bar-ink);text-decoration:none;opacity:.85}
-.brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
-.brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
-.brandbar nav span[aria-hidden]{opacity:.35}
-@media (max-width:620px){
-  .brandbar .disclaimer{display:none}
-}
-
-
-/* ---------- Titelkopf ---------- */
-/* Jeder Seitenkopf haelt denselben Abstand zur Menueleiste — vorher hatten
-   ihn nur die Ausgaben, die uebrigen Seiten klebten an der Leiste. */
-header{padding:52px 0 0}
-.masthead{padding:52px 0 0}
-/* Gemeinsame Ueberschriftengroesse. Der Zeitungskopf der Ausgaben darf etwas
-   groesser sein als eine Nachschlageseite, aber nicht ein Fuenftel der Seite
-   fuellen — bei clamp(42px,9vw,84px) tat er das. */
-h1{
-  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:700;
-  font-size:clamp(30px,4vw,40px);line-height:1.1;letter-spacing:-.02em;margin:0 0 8px;
-}
-/* Der Seitenkopf ist auf allen Seiten derselbe: Kategorie, Titel, Vorspann.
-   Diese drei Regeln sind die einzige Quelle dafuer — sie standen vorher
-   dreimal mit verschiedenen Groessen und Farben im Projekt. Die Wochenausgaben
-   unterscheiden sich allein durch ihre Ausgabenzeile, nicht durch die Typografie. */
-.eyebrow{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--s2);margin:0 0 10px;
-}
-.lede,.masthead .claim{
-  margin:14px 0 0;font-size:18px;line-height:1.55;color:var(--ink-2);max-width:62ch;
-}
-.masthead h1{font-weight:800}
-
-.issueline{
-  display:flex;flex-wrap:wrap;gap:8px 24px;margin:26px 0 0;padding:13px 0;
-  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;
-  letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
-}
-.issueline b{color:var(--ink);font-weight:600}
+   Voraussetzung ist basis.css — dort stehen Farben, Grundschrift,
+   Markenleiste, Seitenkopf und Fuß. Hier steht nur, was diese Seiten von der
+   Startseite unterscheidet. */
 
 /* ---------- Inhalt ---------- */
 .toc{
@@ -97,7 +10,7 @@ h1{
   border:1px solid var(--rule);box-shadow:var(--shadow);
 }
 .toc h2{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:500;
 }
 .toc ol{margin:0;padding:0;list-style:none;counter-reset:toc}
@@ -107,7 +20,7 @@ h1{
 }
 .toc li::before{
   counter-increment:toc;content:counter(toc,decimal-leading-zero);
-  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);padding-top:4px;
+  font-family:var(--mono);font-size:11px;color:var(--muted);padding-top:4px;
 }
 .toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
 .toc a:hover{border-bottom-color:var(--s1);color:var(--s1)}
@@ -118,24 +31,26 @@ article{
   padding:48px 0;border-bottom:1px solid var(--rule);
 }
 .rail{
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.55;
+  font-family:var(--mono);font-size:11.5px;line-height:1.55;
   color:var(--muted);display:flex;flex-direction:column;gap:15px;
 }
 .rail .field{display:flex;flex-direction:column;gap:2px}
 .rail .lab{font-size:10px;letter-spacing:.13em;text-transform:uppercase;opacity:.8}
 .rail .val{color:var(--ink-2);font-weight:500}
 .body-col{min-width:0}
+/* Die Rubrik benennt, worum es im Artikel geht — sie bewertet ihn nicht.
+   Deshalb dieselbe ruhige Farbe wie die Kategoriezeile im Seitenkopf. */
 .rubrik{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--s2);margin:0 0 12px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-2);margin:0 0 12px;
 }
 h2.headline{
-  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:700;
+  font-family:var(--sans);font-weight:700;
   font-size:clamp(26px,3.5vw,36px);line-height:1.1;letter-spacing:-.02em;
   margin:0 0 16px;text-wrap:balance;
 }
 h3{
-  font-family:Archivo,sans-serif;font-weight:600;font-size:18px;
+  font-family:var(--sans);font-weight:600;font-size:18px;
   margin:30px 0 9px;letter-spacing:-.005em;
 }
 p{margin:0 0 15px;max-width:66ch}
@@ -153,11 +68,11 @@ ul.beschluesse li:last-child{border-bottom:none}
 ul.beschluesse .sache{font-size:16px;line-height:1.45}
 ul.beschluesse .sache b{font-weight:600}
 ul.beschluesse .sv{
-  display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  display:block;font-family:var(--mono);font-size:10.5px;
   color:var(--muted);letter-spacing:.04em;margin-top:3px;
 }
 ul.beschluesse .erg{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
+  font-family:var(--mono);font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
 /* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
@@ -169,7 +84,7 @@ ul.beschluesse .erg.split{color:var(--s1)}
   border-left:3px solid var(--s1);box-shadow:var(--shadow);
 }
 .kasten .lab{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
 .kasten p{margin:0;max-width:62ch}
@@ -177,17 +92,17 @@ ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Tabelle ---------- */
 .tablewrap{overflow-x:auto;margin:22px 0;border:1px solid var(--rule);background:var(--surface)}
-table{border-collapse:collapse;width:100%;min-width:540px;font-size:14.5px;font-family:"IBM Plex Serif",serif}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:14.5px;font-family:var(--serif)}
 caption{
   caption-side:top;text-align:left;padding:12px 15px;background:var(--surface-2);
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);
 }
 th,td{padding:9px 15px;text-align:right;border-bottom:1px solid var(--rule)}
 th:first-child,td:first-child{text-align:left}
-thead th{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;color:var(--muted)}
+thead th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--muted)}
 tbody th{font-weight:400;color:var(--ink-2)}
-tbody td{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:13.5px}
+tbody td{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13.5px}
 tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
 
 /* ---------- Zahl der Woche ---------- */
@@ -197,12 +112,12 @@ tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
   border:1px solid var(--rule);box-shadow:var(--shadow);
 }
 .zahl .v{
-  font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(48px,9vw,78px);
+  font-family:var(--sans);font-weight:800;font-size:clamp(48px,9vw,78px);
   line-height:.9;letter-spacing:-.035em;color:var(--s2);font-variant-numeric:tabular-nums;
 }
 .zahl p{margin:0;font-size:16px;color:var(--ink-2)}
 .zahl .lab{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted);margin:0 0 7px;
 }
 
@@ -215,13 +130,13 @@ ol.agenda li{
 ol.agenda li:last-child{border-bottom:none}
 ol.agenda li::before{
   counter-increment:a;content:counter(a);
-  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);
+  font-family:var(--mono);font-size:11.5px;color:var(--muted);
 }
 ol.agenda .art{
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--muted);white-space:nowrap;
 }
-ol.agenda .art.beschluss{color:var(--flag)}
+ol.agenda .art.beschluss{color:var(--s1)}
 
 /* ---------- Kolophon / Fuß ---------- */
 .kolophon{padding:46px 0 40px}
@@ -229,13 +144,6 @@ ol.agenda .art.beschluss{color:var(--flag)}
 .kolophon p,.kolophon li{font-size:15px;color:var(--ink-2)}
 .kolophon ul{padding-left:20px;margin:0 0 16px}
 .kolophon li{margin-bottom:7px;max-width:66ch}
-footer{background:var(--bar-bg);border-top:1px solid var(--rule);padding:32px 0}
-footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:baseline}
-footer p{margin:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.05em;color:var(--muted);max-width:none}
-footer .brand{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bar-ink);font-weight:600}
-footer a{color:var(--s1);text-decoration:none}
-footer a:hover{text-decoration:underline}
-
 @media (max-width:720px){
   body{font-size:16.5px}
   article{grid-template-columns:1fr;gap:20px;padding:38px 0}
@@ -253,32 +161,22 @@ ul.beschluesse.kompakt li{
   border-bottom:1px solid color-mix(in srgb,var(--rule) 60%,transparent);
 }
 ul.beschluesse.kompakt .sache{
-  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.5;color:var(--ink-2);
+  font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ink-2);
 }
-
-/* ---------- Herkunft einer Aussage ---------- */
-.herkunft{
-  display:inline-block;margin:0 0 12px;padding:3px 9px;
-  font-family:"IBM Plex Mono",monospace;font-size:10px;
-  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
-}
-.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
-.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
-.herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
 
 /* ---------- Im Beschlusstext genannter Betrag ---------- */
 ul.beschluesse .betrag{
   margin-left:12px;padding:1px 7px;
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  font-family:var(--mono);font-size:10.5px;
   font-variant-numeric:tabular-nums;letter-spacing:.03em;
-  color:var(--s2);border:1px solid var(--s2);
-  background:color-mix(in srgb, var(--s2) 8%, transparent);
+  /* Ein Betrag ist eine Angabe, keine Warnung. */
+  color:var(--ink-2);border:1px solid var(--rule);background:var(--surface-2);
 }
 
 /* ---------- Beschlossener Wortlaut ---------- */
 ul.beschluesse .wortlaut{
   display:block;margin-top:7px;max-width:72ch;
-  font-family:"IBM Plex Serif",Georgia,serif;font-size:14.5px;line-height:1.55;
+  font-family:var(--serif);font-size:14.5px;line-height:1.55;
   color:var(--ink-2);
   padding-left:12px;border-left:2px solid var(--rule);
 }
@@ -288,7 +186,7 @@ ul.beschluesse .unterlagen{
   display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:9px;
 }
 ul.beschluesse .unterlagen a{
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.03em;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;
   color:var(--s1);text-decoration:none;
   border:1px solid var(--rule);padding:3px 8px;
 }
@@ -325,24 +223,24 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 /* ---------- Fundstelle unter einer Begriffserklaerung ---------- */
 .kasten .fundstelle{
-  margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  margin-top:10px;font-family:var(--mono);font-size:11px;
   line-height:1.5;color:var(--muted);
 }
 
 /* ---------- Begriffsliste einer Ausgabe ---------- */
 details.begriffe{margin:18px 0 4px;border-top:1px solid var(--rule)}
 details.begriffe > summary{
-  cursor:pointer;padding:10px 0;font-family:"IBM Plex Mono",monospace;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s2);
+  cursor:pointer;padding:10px 0;font-family:var(--mono);
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s1);
 }
 details.begriffe .begriff{padding:10px 0 14px;border-top:1px solid var(--rule)}
 details.begriffe .wort{
-  margin:0 0 5px;font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
-  font-weight:700;font-size:15px;color:var(--fg);
+  margin:0 0 5px;font-family:var(--sans);
+  font-weight:700;font-size:15px;color:var(--ink);
 }
 details.begriffe .begriff p{margin:0;max-width:62ch;font-size:14.5px;line-height:1.6}
 details.begriffe .fundstelle{
-  margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  margin-top:7px;font-family:var(--mono);font-size:11px;
   line-height:1.5;color:var(--muted);
 }
 
@@ -351,16 +249,16 @@ nav.sprung{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
 nav.sprung a{
   display:inline-flex;align-items:baseline;gap:7px;padding:7px 12px;
   border:1px solid var(--rule);background:var(--surface);text-decoration:none;
-  color:var(--fg);font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  color:var(--ink);font-family:var(--mono);font-size:11.5px;
   letter-spacing:.08em;text-transform:uppercase;
 }
 nav.sprung a:hover{border-color:var(--s1);color:var(--s1)}
-nav.sprung a b{font-size:13px;color:var(--s2)}
+nav.sprung a b{font-size:13px;color:var(--ink)}
 section.gruppe{scroll-margin-top:14px}
 
 /* Gremienangabe unter der Kennzahlenzeile einer Themenseite — zu lang fuer
    die Zeile selbst, gehoert aber in denselben Block. */
 .gremienzeile{
-  margin:8px 0 0;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  margin:8px 0 0;font-family:var(--mono);font-size:11px;
   line-height:1.5;color:var(--muted);max-width:70ch;
 }

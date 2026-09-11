@@ -56,8 +56,9 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 ➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 89 Ausgaben der Jahrgänge 2024 bis 2026
 ➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
 ➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf
+➡️ **[Termine](./docs/termine.html#heute)** — alle Sitzungen, vergangene wie angekündigte
 ➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 506 Vorgänge mit ihrem Weg durch die Gremien
-➡️ **[Befunde](./docs/befunde.html)** — alle 25 Erkenntnisse an einem Ort, kritische wie unkritische
+➡️ **[Erkenntnisse](./docs/befunde.html)** — alle 25 Erkenntnisse an einem Ort, eingehaltene wie kritische
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
 Abhängigkeiten und **funktionieren ohne JavaScript** — auch in der iOS-Dateivorschau,
@@ -93,7 +94,9 @@ nirgends anmelden — Link anklicken genügt:
 * **[Archiv aller Ausgaben](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/ausgaben/index.html)**
 * **[Wer entscheidet was](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/gremien.html)**
 * **[Themen](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/themen/index.html)**
+* **[Termine](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/termine.html)**
 * **[Vorgänge durchsuchen](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/suche.html)**
+* **[Erkenntnisse](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/befunde.html)**
 
 Von der Startseite aus funktioniert alles Weitere ganz normal durch Anklicken.
 
@@ -181,7 +184,7 @@ Einzelpunkten geht das nicht hervor. Solche Treffer sind als **KI-Deutung**
 gekennzeichnet. Der Suchindex steht in der Seite selbst — sie funktioniert also auch
 lokal geöffnet und ruft nichts nach.
 
-## Befunde
+## Erkenntnisse
 
 Die Zahlen sind auszählbar. Was darüber hinausgeht — dass eine Enthaltung
 ausgerechnet bei dem Verfahren fiel, gegen das eine Fachbehörde Bedenken hatte,
@@ -189,10 +192,12 @@ oder dass dreimal in Folge dasselbe abgelehnt wurde — entsteht erst durch
 Vergleich über die Zeit.
 
 Solche Aussagen lagen verstreut in einzelnen Wochenausgaben und Kapiteln. Die
-Seite [Befunde](./docs/befunde.html) sammelt sie: acht Beobachtungen,
-vier Befunde aus der Gesamtauswertung und acht Einordnungen aus den
-Wochenausgaben. Sämtlich als **KI-Deutung** gekennzeichnet, jeweils mit Weg zur
-Quelle.
+Seite [Erkenntnisse](./docs/befunde.html) sammelt sie — sortiert nicht nach gut
+und schlecht, sondern danach, woher die Erkenntnis stammt: fünf regelbasiert
+ausgezählte Einträge zu eingehaltenen Fristen und abgeschlossenen Verfahren,
+acht Beobachtungen, vier Erkenntnisse aus der Gesamtauswertung und acht
+Einordnungen aus den Wochenausgaben. Der erste Abschnitt ist **regelbasiert**,
+alles Weitere **KI-Deutung** — jeder Eintrag mit Weg zur Quelle.
 
 ## Selbst nachrechnen
 
@@ -241,8 +246,9 @@ Jede Aussage ist einer von drei Arten zugeordnet:
 | **Regelbasiert** | maschinell gezählt, ohne Bewertung | durch erneutes Ausführen reproduzierbar |
 | **KI-Deutung** | maschinell erzeugte Einordnung — Auswahl, Verknüpfung, Gewichtung | **nicht redaktionell geprüft** |
 
-Die Kapitel 01 bis 04 des Reports und die Rubrik „Auffälligkeiten“ der Ausgaben
-sind regelbasiert. Die Befunde, die 50 Fundstücke, die acht
+Die Kapitel 01 bis 04 des Reports, die Rubrik „Auffälligkeiten“ der Ausgaben und
+der Abschnitt „Eingehaltene Fristen und abgeschlossene Verfahren“ sind
+regelbasiert. Die Erkenntnisse aus der Gesamtauswertung, die 50 Fundstücke, die acht
 Beobachtungen und die wöchentlichen Einordnungen sind **KI-Deutungen**: Ihre
 Zahlen sind belegt, die daraus gezogene Schlussfolgerung ist es nicht.
 
@@ -262,7 +268,10 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 ├── docs/                 GitHub Pages zeigt diesen Ordner
 │   ├── index.html        Startseite: Report, neueste Ausgabe, Archiv
 │   ├── suche.html        durchsuchbare Vorgänge mit Zeitachse
-│   ├── befunde.html      alle Befunde und Einordnungen gesammelt
+│   ├── termine.html      Sitzungskalender, vergangen und angekündigt
+│   ├── gremien.html      wer in der Stadt wofür zuständig ist
+│   ├── befunde.html      alle Erkenntnisse und Einordnungen gesammelt
+│   ├── themen/           je ein Vorhaben mit allen Stationen
 │   ├── report/           die datierten Gesamtreports
 │   └── ausgaben/
 │       ├── index.html    Archiv über alle Jahrgänge
@@ -270,8 +279,10 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── 2025/         35 Ausgaben
 │       └── 2026/         21 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
-├── scripts/    die Verarbeitungskette, Schritt 01 bis 09
+├── scripts/    die Verarbeitungskette, Schritt 01 bis 12
 │   ├── wochenlauf.sh   ein Befehl für den ganzen Wochenlauf
+│   ├── seite.py        Seitenrahmen und Navigation — für alle Seiten dieselben
+│   ├── basis.css       Farben, Schrift, Seitenkopf und Fuß — für alle Seiten dieselben
 │   ├── pruefen.py      Kontrolle vor der Veröffentlichung
 │   └── launchd/        Vorlage für den automatischen Montagslauf
 └── data/       Kennzahlen, Ausgabenregister und die 74 Beschlussprotokolle
@@ -289,7 +300,10 @@ npm install jsdom && node scripts/04_vorrendern.js
 ```
 
 Schritt 5 erzeugt eine Ausgabe je Kalenderwoche mit Sitzung, dazu stets eine für
-die laufende Woche. Redaktionelle Einordnungen — das, was eine Maschine nicht
+die laufende Woche. Gebaut werden **alle Jahrgänge**, nicht nur der laufende —
+sonst bleiben ältere Ausgaben stillschweigend auf dem Stand stehen, den die
+Skripte bei ihrem letzten Lauf hatten. Mit `--jahr 2025` lässt sich ein einzelner
+Jahrgang bauen. Redaktionelle Einordnungen — das, was eine Maschine nicht
 erfinden kann — stehen optional in `data/einordnungen.json` und werden nach
 Schlüssel `JJJJ-kwNN` eingefügt.
 
@@ -352,7 +366,7 @@ Diese Prüfung hat beim ersten Einsatz neun fehlende Abstimmungen aufgedeckt.
   dazwischenliegen.
 * Schritt 6 zieht Kennzahlen und den Link auf die neueste Ausgabe nach.
 * Schritt 4 wird nur gebraucht, wenn der Report neu gebaut werden soll.
-* Schritt 9 sammelt die Befunde; Schritt 7 schreibt die Tabellen unter `data/csv/` neu und rechnet zum Schluss
+* Schritt 9 sammelt die Erkenntnisse; Schritt 7 schreibt die Tabellen unter `data/csv/` neu und rechnet zum Schluss
   gegen `data/kennzahlen.json` gegen. Weichen die Zahlen ab, stimmt etwas nicht.
 
 Die Abfragen sind bewusst mit Pausen versehen, um die Server der Stadt nicht zu

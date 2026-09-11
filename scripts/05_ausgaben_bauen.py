@@ -31,7 +31,7 @@ import re
 from pathlib import Path
 
 from begriffe import begriffe_finden
-from seite import navigation
+from seite import fuss, kopf
 from textwerk import pdf_text as roh_text, trennung_reparieren, wortschatz_laden
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
@@ -495,42 +495,6 @@ def e(t: str) -> str:
     return html.escape(t, quote=False)
 
 
-def kopf(titel: str, hoch: str = "", hier: str = "", lesen: bool = False) -> str:
-    """Seitenkopf. `hoch` ist der relative Weg zum docs-Verzeichnis, `hier`
-    markiert die aktuelle Seite in der Navigation."""
-    stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
-    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
-        encoding="utf-8").replace("{PFAD}", hoch)
-
-    return f"""<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(titel)}</title>
-<style>{schriften}</style>
-<style>{stil}</style>
-</head>
-<body{" class=\"lesen\"" if lesen else ""}>
-<div class="brandbar"><div class="wrap">
-  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <nav aria-label="Bereiche">
-    {navigation(hoch, hier)}
-  </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
-</div></div>
-"""
-
-
-def fuss(zusatz: str = "") -> str:
-    return f"""
-<footer><div class="wrap">
-  <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr{zusatz}</p>
-</div></footer>
-</body>
-</html>
-"""
 
 
 DISCLAIMER = """
@@ -558,12 +522,16 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     n_besch = len(w["beschluesse"])
     mit_prot = sum(1 for s in w["sitzungen"] if s["protokoll"])
 
-    t = [kopf(f"Aktenlage KW {kw}/{jahr}", hoch="../../"), '<div class="wrap">']
+    t = [kopf(f"Aktenlage KW {kw}/{jahr} · Ratsakten Bad Waldsee", hoch="../../",
+          beschreibung=f"Was der Gemeinderat und seine Ausschüsse in der "
+                       f"Kalenderwoche {kw}/{jahr} entschieden haben.",
+          koerper=""),
+     '<div class="wrap">']
     t.append(f"""
-<header class="masthead">
+<header>
   <p class="eyebrow">Aktenlage &middot; Wochenausgabe</p>
   <h1>Waldseer Aktenlage</h1>
-  <p class="claim">Was der Gemeinderat und seine Ausschüsse entschieden haben —
+  <p class="lede">Was der Gemeinderat und seine Ausschüsse entschieden haben —
   gelesen aus den Originalunterlagen.</p>
   <div class="issueline">
     <span><b>Ausgabe</b> KW {kw} / {jahr}</span>
@@ -854,8 +822,9 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   <p class="note"><a class="doc" href="../index.html">Alle Ausgaben im Archiv</a></p>
 </section>
 </div>""")
-    t.append(fuss(f" &middot; Ausgabe KW {kw}/{jahr} &middot; erzeugt am "
-                  f"{dt.date.today().strftime('%d.%m.%Y')}"))
+    t.append(fuss(hoch="../../",
+                  meta=f"Ausgabe KW {kw}/{jahr} &middot; erzeugt am "
+                       f"{dt.date.today().strftime('%d.%m.%Y')}"))
     return "\n".join(t)
 
 
@@ -866,12 +835,16 @@ def archiv_bauen(register: dict) -> str:
     ges_b = sum(a["beschluesse"] for j in jahre for a in register[j].values())
     ges_s = sum(a["sitzungen"] for j in jahre for a in register[j].values())
 
-    t = [kopf("Aktenlage — Archiv", hoch="../", hier="archiv", lesen=True), '<div class="wrap">']
+    t = [kopf("Archiv · Ratsakten Bad Waldsee", hoch="../", hier="archiv",
+          beschreibung="Alle bisher erschienenen Wochenausgaben der "
+                       "Waldseer Aktenlage."),
+     '<div class="wrap">']
     t.append(f"""
-<header class="masthead">
-  <p class="eyebrow">Aktenlage &middot; Archiv</p>
-  <h1>Aktenlage &middot; Archiv</h1>
-  <p class="claim">Alle bisher erschienenen Ausgaben der Waldseer Aktenlage.</p>
+<header>
+  <p class="eyebrow">Aktenlage &middot; alle Jahrgänge</p>
+  <h1>Archiv</h1>
+  <p class="lede">Alle bisher erschienenen Ausgaben der Waldseer Aktenlage —
+  eine für jede Kalenderwoche, in der getagt wurde.</p>
   <div class="issueline">
     <span><b>Jahrgänge</b> {', '.join(jahre)}</span>
     <span><b>Ausgaben</b> {ges_a}</span>
@@ -916,7 +889,7 @@ def archiv_bauen(register: dict) -> str:
   <p class="note"><a class="doc" href="../index.html">Zur Startseite</a></p>
 </section>
 </div>""")
-    t.append(fuss(" &middot; Archiv"))
+    t.append(fuss(hoch="../"))
     return "\n".join(t)
 
 
@@ -927,43 +900,63 @@ def register_lesen() -> dict:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--jahr", type=int, default=dt.date.today().year)
+    # Ohne --jahr werden alle Jahrgaenge neu gebaut. Frueher war das laufende
+    # Jahr die Voreinstellung; dabei blieben 2024 und 2025 auf dem Stand
+    # zurueck, den die Skripte zum Zeitpunkt ihres letzten Laufs hatten. Das
+    # faellt nicht auf — die Seiten sind da, sie sind nur alt. Genau so standen
+    # 51 Ausgaben monatelang mit einem Hinweis auf eine Farbe im Netz, die es
+    # nicht mehr gab, und 27 mit einem abgeschnittenen Gremiumsnamen.
+    p.add_argument("--jahr", type=int, default=None,
+                   help="nur diesen Jahrgang bauen (Vorgabe: alle)")
     p.add_argument("--bis", default=dt.date.today().isoformat(),
                    help="Redaktionsschluss; spätere Sitzungen bleiben unberücksichtigt")
     args = p.parse_args()
 
-    ordner = AUSGABEN / str(args.jahr)
-    ordner.mkdir(parents=True, exist_ok=True)
     einordnungen = einordnungen_laden()
-
     register = register_lesen()
-    register.setdefault(str(args.jahr), {})
-    wochen = wochen_sammeln(args.jahr, args.bis, register[str(args.jahr)])
 
-    for kw, w in wochen.items():
-        schluessel = f"{args.jahr}-kw{kw:02d}"
-        text = ausgabe_bauen(args.jahr, kw, w, einordnungen.get(schluessel))
-        (ordner / f"kw{kw:02d}.html").write_text(text, encoding="utf-8")
-        register[str(args.jahr)][f"{kw:02d}"] = {
-            "zeitraum": f"{w['von'].strftime('%d.%m.')}–{w['bis'].strftime('%d.%m.%Y')}",
-            "von_iso": w["von"].isoformat(),
-            "bis_iso": w["bis"].isoformat(),
-            "sitzungen": len(w["sitzungen"]),
-            "beschluesse": len(w["beschluesse"]),
-            "ohne_protokoll": len(w["blind"]),
-            "gremien": sorted({s["kuerzel"] for s in w["sitzungen"]}),
-            "einordnung": schluessel in einordnungen,
-            # Die Abschluss-Regeln dieser Woche mitschreiben. Schritt 09 sammelt
-            # sie fuer die Rubrik „Was eingehalten wird" — so zeigt die
-            # Befundeseite genau das, was auch in den Ausgaben steht, statt eine
-            # zweite Zaehlung mit eigenem Ergebnis aufzumachen.
-            "abschluesse": {h["art"]: h["posten"]
-                            for h in auffaelligkeiten(w)
-                            if h.get("ton") == "neutral"},
-        }
-        marke = " ←" if schluessel in einordnungen else ""
-        print(f"  KW {kw:2d}  {len(w['sitzungen'])} Sitzung(en), "
-              f"{len(w['beschluesse'])} Beschlüsse, {len(w['blind'])} ohne Protokoll{marke}")
+    # Welche Jahrgaenge? Entweder der genannte oder alle, die es gibt — das
+    # laufende Jahr immer, damit eine neue Woche auch ohne Registereintrag
+    # entsteht.
+    jahre = ([args.jahr] if args.jahr
+             else sorted({int(j) for j in register} | {dt.date.today().year}))
+
+    neueste_kw = neuestes_jahr = None
+    for jahr in jahre:
+        ordner = AUSGABEN / str(jahr)
+        ordner.mkdir(parents=True, exist_ok=True)
+        register.setdefault(str(jahr), {})
+        wochen = wochen_sammeln(jahr, args.bis, register[str(jahr)])
+
+        for kw, w in wochen.items():
+            schluessel = f"{jahr}-kw{kw:02d}"
+            text = ausgabe_bauen(jahr, kw, w, einordnungen.get(schluessel))
+            (ordner / f"kw{kw:02d}.html").write_text(text, encoding="utf-8")
+            register[str(jahr)][f"{kw:02d}"] = {
+                "zeitraum": f"{w['von'].strftime('%d.%m.')}–{w['bis'].strftime('%d.%m.%Y')}",
+                "von_iso": w["von"].isoformat(),
+                "bis_iso": w["bis"].isoformat(),
+                "sitzungen": len(w["sitzungen"]),
+                "beschluesse": len(w["beschluesse"]),
+                "ohne_protokoll": len(w["blind"]),
+                "gremien": sorted({s["kuerzel"] for s in w["sitzungen"]}),
+                "einordnung": schluessel in einordnungen,
+                # Die Abschluss-Regeln dieser Woche mitschreiben. Schritt 09
+                # sammelt sie fuer den Abschnitt „Eingehaltene Fristen und
+                # abgeschlossene Verfahren" — so zeigt die Erkenntnisseite genau
+                # das, was auch in den Ausgaben steht, statt eine zweite
+                # Zaehlung mit eigenem Ergebnis aufzumachen.
+                "abschluesse": {h["art"]: h["posten"]
+                                for h in auffaelligkeiten(w)
+                                if h.get("ton") == "neutral"},
+            }
+            marke = " ←" if schluessel in einordnungen else ""
+            print(f"  KW {kw:2d}/{jahr}  {len(w['sitzungen'])} Sitzung(en), "
+                  f"{len(w['beschluesse'])} Beschlüsse, {len(w['blind'])} ohne Protokoll{marke}")
+
+        if wochen:
+            neueste_kw, neuestes_jahr = max(wochen), jahr
+        print(f"  {len(wochen)} Ausgaben in docs/ausgaben/{jahr}/")
 
     # Sortiert schreiben, damit die Datei nicht davon abhängt, in welcher
     # Reihenfolge die Jahrgänge erzeugt wurden — sonst entstehen bei jedem Lauf
@@ -973,10 +966,9 @@ def main() -> None:
         encoding="utf-8")
     (AUSGABEN / "index.html").write_text(archiv_bauen(register), encoding="utf-8")
 
-    neueste = max(wochen)
-    print(f"\n{len(wochen)} Ausgaben in docs/ausgaben/{args.jahr}/, "
-          f"Archiv über {len(register)} Jahrgang/Jahrgänge aktualisiert.")
-    print(f"Neueste Ausgabe: KW {neueste}/{args.jahr}")
+    print(f"\nArchiv über {len(register)} Jahrgang/Jahrgänge aktualisiert.")
+    if neueste_kw:
+        print(f"Neueste Ausgabe: KW {neueste_kw}/{neuestes_jahr}")
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ import datetime as dt
 import json
 from pathlib import Path
 
-from seite import navigation
+from seite import fuss, kopf
 from vorhaben import MINDEST_STATIONEN, zusammenfuehren
 
 WURZEL = Path(__file__).resolve().parent.parent
@@ -42,73 +42,44 @@ def datum_lang(iso: str) -> str:
     return f"{d.day}. {monate[d.month - 1]} {d.year}"
 
 
-def kopf(titel: str, hoch: str, hier: str = "") -> str:
-    stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
-    schriften = (WURZEL / "scripts" / "schriften.css").read_text(
-        encoding="utf-8").replace("{PFAD}", hoch)
-
-    return f"""<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(titel)}</title>
-<style>{schriften}</style>
-<style>{stil}</style>
-<style>
-/* Nur die Themenseiten brauchen diese Stile. */
-.quelle{{margin:8px 0 0;font-family:"IBM Plex Mono",monospace;font-size:11px;
-  letter-spacing:.06em;text-transform:uppercase}}
-ol.chronik{{list-style:none;margin:26px 0 0;padding:0;counter-reset:station}}
-ol.chronik > li{{
+EIGEN = """
+/* Nur die Themenseiten brauchen diese Stile: die Chronik eines Vorhabens und
+   die Kartenliste aller Vorhaben. */
+.quelle{margin:8px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase}
+ol.chronik{list-style:none;margin:26px 0 0;padding:0;counter-reset:station}
+ol.chronik > li{
   position:relative;margin:0;padding:18px 0 22px 22px;border-top:1px solid var(--rule);
-}}
-ol.chronik > li::before{{
+}
+ol.chronik > li::before{
   counter-increment:station;content:counter(station);position:absolute;left:0;top:20px;
-  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--s2);
-}}
-ol.chronik .wann{{
-  margin:0 0 6px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+}
+ol.chronik .wann{
+  margin:0 0 6px;font-family:var(--mono);font-size:11px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
-}}
-ol.chronik .sache{{margin:0 0 8px;font-weight:600;font-size:16px;max-width:62ch}}
-ol.chronik .wortlaut{{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height:1.6;color:var(--muted)}}
-.karten{{display:grid;gap:10px;margin:24px 0}}
-a.karte{{
+}
+ol.chronik .sache{margin:0 0 8px;font-weight:600;font-size:16px;max-width:62ch}
+ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height:1.6;color:var(--muted)}
+/* Der amtliche Titel eines Vorhabens ist oft ein ganzer Absatz. Als Vorspann
+   gelesen erschlug er die Seite; hier steht er als Angabe, wo er hingehoert. */
+.amtstitel{
+  margin:8px 0 0;font-family:var(--mono);font-size:11px;line-height:1.6;
+  color:var(--muted);max-width:78ch;
+}
+.amtstitel b{color:var(--ink-2);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.karten{display:grid;gap:10px;margin:24px 0}
+a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
   text-decoration:none;color:inherit;
-}}
-a.karte:hover{{border-color:var(--s1)}}
-a.karte .wort{{display:block;font-weight:600;font-size:16px;margin-bottom:4px}}
-a.karte .meta{{
-  display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;
+}
+a.karte:hover{border-color:var(--s1)}
+a.karte .wort{display:block;font-weight:600;font-size:16px;margin-bottom:4px}
+a.karte .meta{
+  display:block;font-family:var(--mono);font-size:11px;
   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
-}}
-</style>
-</head>
-<body class="lesen">
-
-<div class="brandbar"><div class="wrap">
-  <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
-  <nav aria-label="Bereiche">
-    {navigation(hoch, hier)}
-  </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
-</div></div>
+}
 """
-
-
-def fuss(hoch: str) -> str:
-    return f"""
-<footer class="kolophon"><div class="wrap">
-  <p>Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a>
-  &middot; Alle Angaben und Insights ohne Gew&auml;hr</p>
-  <p><a href="{hoch}index.html">Startseite</a> &middot;
-     <a href="{hoch}themen/index.html">Themen</a> &middot;
-     <a href="{hoch}ausgaben/index.html">Archiv</a></p>
-</div></footer>
-</body>
-</html>"""
 
 
 def station_html(st: dict) -> str:
@@ -141,36 +112,46 @@ def seite_bauen(vg: dict) -> str:
     von, bis = stationen[0]["d"], stationen[-1]["d"]
     gremien = sorted({s["gl"] for s in stationen})
     nummern = [n for n in vg["v"].split(" · ") if n]
+    # Der amtliche Titel ist oft ein ganzer Absatz und taugt nicht als Vorspann.
+    # Er gehoert trotzdem auf die Seite — wer im Ratsinformationssystem sucht,
+    # findet den Vorgang nur unter diesem Wortlaut.
+    lang_titel = (vg.get("u") or "").strip()
+    amtstitel = (f'<p class="amtstitel"><b>Amtlicher Titel</b> {e(lang_titel)}</p>'
+                 if lang_titel and lang_titel != vg["t"] else "")
 
-    t = [kopf(f"{vg['t']} — Chronik", hoch="../", hier="themen"),
+    t = [kopf(f"{vg['t']} · Chronik eines Vorhabens", hoch="../", hier="themen",
+              beschreibung=f"Alle Stationen des Vorhabens „{vg['t']}\u201c in den "
+                           f"Gremien der Stadt Bad Waldsee.",
+              eigen=EIGEN),
          '<div class="wrap">']
     t.append(f"""
 <header>
   <p class="eyebrow">Vorhaben</p>
   <h1>{e(vg['t'])}</h1>
-  {f'<p class="lede">{e(vg["u"])}</p>' if vg.get("u") else ""}
+  <p class="lede">Der Weg dieses Vorhabens durch die Gremien — in der Reihenfolge,
+  in der es behandelt wurde, mit dem beschlossenen Wortlaut und dem
+  Abstimmungsergebnis jeder Station.</p>
+  <div class="issueline">
+    <span><b>Stationen</b> {len(stationen)}</span>
+    <span><b>Zeitraum</b> {datum_lang(von)} bis {datum_lang(bis)}</span>
+    <span><b>Vorlagen</b> {len(nummern)}</span>
+    <span><b>Herkunft</b> regelbasiert gezählt</span>
+  </div>
 </header>
 
-<div class="issueline">
-  <span><b>Stationen</b> {len(stationen)}</span>
-  <span><b>Zeitraum</b> {datum_lang(von)} bis {datum_lang(bis)}</span>
-  <span><b>Vorlagen</b> {len(nummern)}</span>
-  <span><b>Herkunft</b> regelbasiert gezählt</span>
-</div>
 <p class="gremienzeile">{e(', '.join(gremien))}</p>
+{amtstitel}
 
-<p>Diese Seite fasst zusammen, was zu diesem Vorhaben in den öffentlichen
-Unterlagen steht — in der Reihenfolge, in der es behandelt wurde. Der Wortlaut
-stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse aus der Zeile
-„Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind nicht
-enthalten.</p>
+<p>Der Wortlaut stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse
+aus der Zeile „Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind
+nicht enthalten.</p>
 
 <ol class="chronik">
 {chr(10).join(station_html(s) for s in stationen)}
 </ol>
 """)
     t.append("</div>")
-    t.append(fuss("../"))
+    t.append(fuss(hoch="../"))
     return "\n".join(t)
 
 
@@ -183,7 +164,11 @@ def index_bauen(auswahl: list[dict]) -> str:
       <span class="meta">{len(stationen)} Stationen &middot;
         {datum_lang(stationen[0]['d'])} bis {datum_lang(stationen[-1]['d'])}</span>
     </a>""")
-    t = [kopf("Themen", hoch="../", hier="themen"), '<div class="wrap">']
+    t = [kopf("Themen · Ratsakten Bad Waldsee", hoch="../", hier="themen",
+              beschreibung="Vorhaben der Stadt Bad Waldsee über Jahre hinweg — "
+                           "jedes mit allen Stationen in den Gremien.",
+              eigen=EIGEN),
+         '<div class="wrap">']
     t.append(f"""
 <header>
   <p class="eyebrow">Vorhaben im Zeitverlauf</p>
@@ -191,6 +176,11 @@ def index_bauen(auswahl: list[dict]) -> str:
   <p class="lede">Ein Bauleitplan, ein Gerätehaus, ein Solarpark — solche Vorhaben
   ziehen sich über Jahre und durch mehrere Gremien. Die Wochenausgaben zeigen
   jeweils nur einen Ausschnitt davon. Hier steht der ganze Verlauf.</p>
+  <div class="issueline">
+    <span><b>Vorhaben</b> {len(auswahl)}</span>
+    <span><b>Stationen</b> {sum(len(v["s"]) for v in auswahl)}</span>
+    <span><b>Herkunft</b> regelbasiert gezählt</span>
+  </div>
 </header>
 
 <p>Aufgenommen ist jedes Vorhaben, das im ausgewerteten Zeitraum
@@ -199,18 +189,12 @@ mindestens {MINDEST_STATIONEN} Mal auf einer Tagesordnung stand. Zugeordnet wird
 einen Vorgang anders benennt, kann eine Station fehlen. Einzelne Beschlüsse
 finden Sie über die <a href="../suche.html">Suche</a>.</p>
 
-<div class="issueline">
-  <span><b>Vorhaben</b> {len(auswahl)}</span>
-  <span><b>Stationen</b> {sum(len(v["s"]) for v in auswahl)}</span>
-  <span><b>Herkunft</b> regelbasiert gezählt</span>
-</div>
-
 <div class="karten">
 {chr(10).join(zeilen)}
 </div>
 """)
     t.append("</div>")
-    t.append(fuss("../"))
+    t.append(fuss(hoch="../"))
     return "\n".join(t)
 
 
