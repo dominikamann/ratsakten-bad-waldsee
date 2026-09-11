@@ -340,7 +340,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
     # dass dreimal in Folge das Einvernehmen versagt wurde.
     einordnungen = einordnungen_laden()
     ende_je_ausgabe = {}
-    for von, bis, pfad in zeitraeume:
+    for _von, bis, pfad in zeitraeume:
         teile = pfad.rstrip(".html").split("/")
         ende_je_ausgabe[f"{teile[-2]}-kw{int(teile[-1][2:]):02d}"] = bis
     for schluessel, ein in sorted(einordnungen.items(), reverse=True):

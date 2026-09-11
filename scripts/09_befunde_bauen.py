@@ -211,12 +211,13 @@ def eingehalten() -> list[tuple[str, str, str]]:
         jahre = [m.group(1) for p in posten
                  if (m := re.search(r"Jahresabschluss (\d{4})", p))]
         abstaende = [int(m.group(1)) for p in posten
-                     if (m := re.search(r"\((\d+) Jahre", p))]
+                     if (m := re.search(r"\((\d+) Monate", p))]
         trend = ""
         if len(abstaende) >= 2 and abstaende[-1] < abstaende[0]:
-            trend = (f" Der Abstand verkürzt sich dabei: vom Haushaltsjahr "
-                     f"{jahre[0]} lagen {abstaende[0]} Jahre bis zur Feststellung, "
-                     f"vom Haushaltsjahr {jahre[-1]} noch {abstaende[-1]}.")
+            trend = (f" Der Verzug verkürzt sich dabei: Das Haushaltsjahr "
+                     f"{jahre[0]} wurde {abstaende[0]} Monate nach Ablauf der "
+                     f"gesetzlichen Frist festgestellt, das Haushaltsjahr "
+                     f"{jahre[-1]} nach {abstaende[-1]} Monaten.")
         eintraege.append((
             "Zurückliegende Haushaltsjahre werden nachgeholt",
             "Diese Beschlüsse betreffen Jahre, die länger zurückliegen. Sie "

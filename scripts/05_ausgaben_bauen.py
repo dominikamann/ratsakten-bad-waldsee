@@ -317,19 +317,33 @@ def auffaelligkeiten(w: dict) -> list[dict]:
             "posten": [f"{b['vorlage']} — {b['titel']}" for b in abgeschlossen],
         })
 
+    # Gemessen wird der Verzug nach Ablauf der Zwoelfmonatsfrist des § 95b GemO —
+    # dieselbe Bezugsgroesse wie im Report, sonst nennen zwei Seiten fuer
+    # denselben Sachverhalt verschiedene Zahlen. Die Differenz der Kalenderjahre
+    # taugt nicht: Sie machte aus 4,2 Jahren "5 Jahre", also eine
+    # Ueberzeichnung zu Lasten der Stadt.
     aufgearbeitet = []
     for b in w["beschluesse"]:
         m = RUECKSTAND.search(b["titel"] or "")
-        if m and b["datum"].year - int(m.group(1)) >= 2:
-            aufgearbeitet.append((b, int(m.group(1)), b["datum"].year - int(m.group(1))))
+        if not m:
+            continue
+        jahr = int(m.group(1))
+        # Tagegenau und durch die mittlere Monatslaenge geteilt — dieselbe
+        # Rechenweise wie im Report. In Kalendermonaten gezaehlt kaeme man je
+        # nach Beschlusstag auf einen Monat mehr, und zwei Seiten nennten fuer
+        # denselben Abschluss verschiedene Zahlen.
+        verzug = round((b["datum"] - dt.date(jahr + 1, 12, 31)).days / 30.44)
+        if verzug >= 12:
+            aufgearbeitet.append((b, jahr, verzug))
     if aufgearbeitet:
         treffer.append({
             "art": "Rückstand aufgearbeitet",
             "ton": "neutral",
             "text": "Diese Beschlüsse betreffen zurückliegende Haushaltsjahre. Sie zeigen, "
                     "dass ein Rückstand abgearbeitet wird — und zugleich, wie groß er war.",
-            "posten": [f"{b['vorlage']} — {b['titel']} ({abstand} Jahre nach dem Haushaltsjahr {jahr})"
-                       for b, jahr, abstand in aufgearbeitet],
+            "posten": [f"{b['vorlage']} — {b['titel']} ({verzug} Monate nach Ablauf "
+                       f"der Zwölfmonatsfrist des § 95b GemO)"
+                       for b, jahr, verzug in aufgearbeitet],
         })
 
     if w["beschluesse"] and not strittig:
