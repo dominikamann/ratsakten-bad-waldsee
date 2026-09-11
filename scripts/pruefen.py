@@ -199,6 +199,69 @@ def pruefe_readme() -> None:
             fehler.append(
                 f"README nennt {m.group(1)} {was}, tatsaechlich sind es {soll}.")
 
+
+def pruefe_fundstuecke() -> None:
+    """Jedes Fundstueck gegen die Tagesordnungen halten.
+
+    Die 50 Fundstuecke des Reports nennen Datum, Gremium und Vorlagennummer.
+    Stimmt eine dieser Angaben nicht, fuehrt sie den Leser ins Leere — und
+    faellt sonst niemandem auf, weil der Text fuer sich schluessig bleibt.
+
+    Braucht data/topmap.json; ohne die Crawl-Daten wird uebersprungen.
+    """
+    karte = DATEN / "topmap.json"
+    quelle = WURZEL / "src" / "report.html"
+    if not (karte.exists() and quelle.exists()):
+        return
+    src = quelle.read_text(encoding="utf-8")
+    i = src.find("var F=[")
+    if i < 0:
+        return
+    eintraege = re.findall(
+        r'\["((?:[^"\\]|\\.)*)","((?:[^"\\]|\\.)*)","(?:[^"\\]|\\.)*"\]',
+        src[i:src.find("\n];", i)])
+
+    gremien_am: dict[str, set[str]] = {}
+    vorlagen_am: dict[str, set[str]] = {}
+    for p in json.loads(karte.read_text(encoding="utf-8")):
+        tag = ".".join(reversed(p["datum"].split("-")))
+        gremien_am.setdefault(tag, set()).add(p["gremium"])
+        if p.get("vorlage"):
+            vorlagen_am.setdefault(tag, set()).add(p["vorlage"])
+
+    kurz = {"GR": "Gemeinderat", "VA": "Verwaltungsausschuss",
+            "AUT": "Ausschuss für Umwelt", "GA": "Gemeinsamer Ausschuss",
+            "OR": "Ortschaftsrat", "KB": "Kulturbeirat"}
+    ohne_vorlage = 0
+    for titel, meta in eintraege:
+        teile = [t.strip() for t in meta.split("·")]
+        tag = teile[0]
+        kuerzel = teile[1] if len(teile) > 1 else ""
+        vorlage = next((t for t in teile if t.startswith("SV-")), None)
+        if tag not in gremien_am:
+            fehler.append(f"Fundstueck „{titel[:40]}“: kein Tagesordnungspunkt am {tag}")
+            continue
+        name = kurz.get(kuerzel)
+        if name and not any(g.startswith(name) for g in gremien_am[tag]):
+            fehler.append(f"Fundstueck „{titel[:40]}“: am {tag} tagte kein {kuerzel}")
+        if vorlage:
+            if vorlage not in vorlagen_am.get(tag, set()):
+                fehler.append(
+                    f"Fundstueck „{titel[:40]}“: {vorlage} steht am {tag} nicht "
+                    f"auf der Tagesordnung")
+        else:
+            ohne_vorlage += 1
+
+    m = re.search(r"(Fünf|Sechs|Sieben|Vier|Acht) der 50 Punkte haben systemseitig "
+                  r"keine Vorlagennummer", src)
+    if m:
+        zahlwort = {"Vier": 4, "Fünf": 5, "Sechs": 6, "Sieben": 7, "Acht": 8}[m.group(1)]
+        if zahlwort != ohne_vorlage:
+            fehler.append(
+                f"Der Report nennt {m.group(1).lower()} Fundstuecke ohne "
+                f"Vorlagennummer, tatsaechlich sind es {ohne_vorlage}.")
+    notiz.append(f"{len(eintraege)} Fundstücke gegengeprüft")
+
 def pruefe_wortwahl() -> None:
     """Keine Aussage über den Bestand von Unterlagen, die nicht geprüft wurde."""
     treffer = []
@@ -259,7 +322,8 @@ def main() -> None:
 
     for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
-                     pruefe_readme, pruefe_wortwahl, pruefe_reportalter):
+                     pruefe_readme, pruefe_fundstuecke, pruefe_wortwahl,
+                     pruefe_reportalter):
         pruefung()
 
     seiten = len(list(DOCS.rglob("*.html")))
