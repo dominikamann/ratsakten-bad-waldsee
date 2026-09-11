@@ -393,6 +393,11 @@ EIGEN = """
   font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2);
 }
 .filter label{cursor:pointer;display:flex;align-items:center;gap:7px}
+.einordnungshinweis{color:var(--muted);text-transform:none;letter-spacing:0;
+  font-family:var(--serif);font-size:13.5px}
+.einordnungshinweis a{color:var(--s1);text-decoration:none;
+  border-bottom:1px solid rgba(57,135,229,.4)}
+.einordnungshinweis a:hover{border-bottom-color:var(--s1)}
 .trefferzahl{
   font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;
   text-transform:uppercase;color:var(--muted);margin:22px 0 0;
@@ -662,6 +667,7 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
   var daten = JSON.parse(document.getElementById("daten").textContent);
   var feld  = document.getElementById("q");
   var liste = document.getElementById("treffer");
+  var anzahlEinordnungen = daten.filter(function(v){{ return v.art === "einordnung"; }}).length;
   var zahl  = document.getElementById("zahl");
   var fB = document.getElementById("f-beschluss");
   var fS = document.getElementById("f-strittig");
@@ -802,6 +808,21 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
                 + (treffer.length - imKopf) + " nur im Text";
       }}
       zahl.textContent = text;
+      // Ohne Suchbegriff stehen die Einordnungen nicht in der Liste — sie sind
+      // stets das Neueste und stuenden sonst als Erstes da, obwohl acht von
+      // 514 Eintraegen Deutungen sind. Verschwiegen werden sollen sie deshalb
+      // nicht: Hier steht, dass es sie gibt und wo sie vollstaendig stehen.
+      if(nurVorgaenge && anzahlEinordnungen){{
+        var h = document.createElement("span");
+        h.className = "einordnungshinweis";
+        h.appendChild(document.createTextNode(
+          " · " + anzahlEinordnungen + " redaktionelle Einordnungen erscheinen, sobald Sie suchen — gesammelt unter "));
+        var a = document.createElement("a");
+        a.href = "./befunde.html";
+        a.textContent = "Erkenntnisse";
+        h.appendChild(a);
+        zahl.appendChild(h);
+      }}
     }}
 
     liste.textContent = "";
