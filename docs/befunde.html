@@ -483,6 +483,18 @@ details.begriffe .fundstelle{
   margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
   line-height:1.5;color:var(--muted);
 }
+
+/* ---------- Sprungleiste der Befundeseite ---------- */
+nav.sprung{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
+nav.sprung a{
+  display:inline-flex;align-items:baseline;gap:7px;padding:7px 12px;
+  border:1px solid var(--rule);background:var(--surface);text-decoration:none;
+  color:var(--fg);font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+nav.sprung a:hover{border-color:var(--s1);color:var(--s1)}
+nav.sprung a b{font-size:13px;color:var(--s2)}
+section.gruppe{scroll-margin-top:14px}
 </style>
 <style>
 .befundblock{
@@ -563,9 +575,16 @@ details.begriffe .fundstelle{
     <p>Diese Seite erzeugt nichts Neues. Jeder Eintrag verweist auf die Stelle, an
     der er im Zusammenhang steht.</p>
   </div>
+
+  <nav class="sprung" aria-label="Abschnitte dieser Seite">
+    <a href="#eingehalten">Was eingehalten wird <b>5</b></a>
+    <a href="#beobachtungen">Kritische Beobachtungen <b>10</b></a>
+    <a href="#befunde">Befunde <b>4</b></a>
+    <a href="#einordnungen">Einordnungen <b>8</b></a>
+  </nav>
 </header>
 
-<section class="gruppe">
+<section class="gruppe" id="eingehalten">
   <h2>Was eingehalten wird</h2>
   <p class="einleitung">Was die Auswertung an eingehaltenen Pflichten und
   abgeschlossenen Verfahren gefunden hat — ausgezählt nach denselben festen Regeln
@@ -604,7 +623,7 @@ details.begriffe .fundstelle{
   </article>
 </section>
 
-<section class="gruppe">
+<section class="gruppe" id="beobachtungen">
   <h2>Kritische Beobachtungen</h2>
   <p class="einleitung">Stellen, an denen die Aktenlage Fragen offenlässt oder ein
   Verfahren formal korrekt, in seiner Wirkung aber fragwürdig ist. Keine Vorwürfe —
@@ -692,10 +711,12 @@ details.begriffe .fundstelle{
   </article>
 </section>
 
-<section class="gruppe">
+<section class="gruppe" id="befunde">
   <h2>Befunde aus der Gesamtauswertung</h2>
   <p class="einleitung">Was beim Auszählen aller Sitzungen sichtbar wurde und in
-  einer einzelnen Woche nicht zu erkennen ist.</p>
+  einer einzelnen Woche nicht zu erkennen ist. Dies sind die ausführlichen
+  Fassungen; zwei davon — zu den Ortschaftsräten und zu den Jahresabschlüssen —
+  kommen weiter oben als kürzere Beobachtung noch einmal vor.</p>
   <article class="befundblock">
     <p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>
     <h3>Befund 1 — für die Ortschaftsräte sind keine Unterlagen online abrufbar</h3>
@@ -728,7 +749,7 @@ details.begriffe .fundstelle{
   </article>
 </section>
 
-<section class="gruppe">
+<section class="gruppe" id="einordnungen">
   <h2>Einordnungen aus den Wochenausgaben</h2>
   <p class="einleitung">Was in der jeweiligen Woche bemerkenswert war — oft erst
   im Vergleich mit früheren Sitzungen erkennbar.</p>

@@ -323,3 +323,15 @@ details.begriffe .fundstelle{
   margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
   line-height:1.5;color:var(--muted);
 }
+
+/* ---------- Sprungleiste der Befundeseite ---------- */
+nav.sprung{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
+nav.sprung a{
+  display:inline-flex;align-items:baseline;gap:7px;padding:7px 12px;
+  border:1px solid var(--rule);background:var(--surface);text-decoration:none;
+  color:var(--fg);font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+nav.sprung a:hover{border-color:var(--s1);color:var(--s1)}
+nav.sprung a b{font-size:13px;color:var(--s2)}
+section.gruppe{scroll-margin-top:14px}

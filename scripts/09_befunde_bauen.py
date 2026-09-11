@@ -329,11 +329,18 @@ def bauen() -> str:
     <p>Diese Seite erzeugt nichts Neues. Jeder Eintrag verweist auf die Stelle, an
     der er im Zusammenhang steht.</p>
   </div>
+
+  <nav class="sprung" aria-label="Abschnitte dieser Seite">
+    <a href="#eingehalten">Was eingehalten wird <b>{len(gut)}</b></a>
+    <a href="#beobachtungen">Kritische Beobachtungen <b>{len(beobachtungen)}</b></a>
+    <a href="#befunde">Befunde <b>{len(befunde)}</b></a>
+    <a href="#einordnungen">Einordnungen <b>{len(einordnungen)}</b></a>
+  </nav>
 </header>"""]
 
     if gut:
         teile.append("""
-<section class="gruppe">
+<section class="gruppe" id="eingehalten">
   <h2>Was eingehalten wird</h2>
   <p class="einleitung">Was die Auswertung an eingehaltenen Pflichten und
   abgeschlossenen Verfahren gefunden hat — ausgezählt nach denselben festen Regeln
@@ -350,7 +357,7 @@ def bauen() -> str:
         teile.append("</section>")
 
     teile.append("""
-<section class="gruppe">
+<section class="gruppe" id="beobachtungen">
   <h2>Kritische Beobachtungen</h2>
   <p class="einleitung">Stellen, an denen die Aktenlage Fragen offenlässt oder ein
   Verfahren formal korrekt, in seiner Wirkung aber fragwürdig ist. Keine Vorwürfe —
@@ -360,17 +367,19 @@ def bauen() -> str:
     teile.append("</section>")
 
     teile.append("""
-<section class="gruppe">
+<section class="gruppe" id="befunde">
   <h2>Befunde aus der Gesamtauswertung</h2>
   <p class="einleitung">Was beim Auszählen aller Sitzungen sichtbar wurde und in
-  einer einzelnen Woche nicht zu erkennen ist.</p>""")
+  einer einzelnen Woche nicht zu erkennen ist. Dies sind die ausführlichen
+  Fassungen; zwei davon — zu den Ortschaftsräten und zu den Jahresabschlüssen —
+  kommen weiter oben als kürzere Beobachtung noch einmal vor.</p>""")
     for b in befunde:
         quelle = f"{rname} · {b['kapitel']}" if b["kapitel"] else rname
         teile.append(block(b["titel"], b["absaetze"], quelle, rpfad))
     teile.append("</section>")
 
     teile.append("""
-<section class="gruppe">
+<section class="gruppe" id="einordnungen">
   <h2>Einordnungen aus den Wochenausgaben</h2>
   <p class="einleitung">Was in der jeweiligen Woche bemerkenswert war — oft erst
   im Vergleich mit früheren Sitzungen erkennbar.</p>""")
