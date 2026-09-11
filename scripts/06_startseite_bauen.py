@@ -203,6 +203,7 @@ def bauen() -> str:
   </div>
 </section>
 
+{zeitleiste(register, stichtag)}
 <section>
   <h2>Worum es geht</h2>
   <p>Lokaljournalismus ist vielerorts zur&uuml;ckgegangen, w&auml;hrend kommunale Unterlagen
@@ -259,6 +260,68 @@ def bauen() -> str:
 </body>
 </html>
 """
+
+
+def zeitleiste(register: dict, stichtag: str) -> str:
+    """Eine Zelle je Kalenderwoche, verlinkt in die Ausgabe dieser Woche.
+
+    Die Aufgabe ist zweierlei: zeigen, wann wie dicht getagt wurde, und einen
+    Sprung in die jeweilige Wochenausgabe anbieten. Deshalb ein Kalenderraster
+    und keine Kurve — es geht um Dichte und Sprungziele, nicht um einen Verlauf.
+
+    Die Faerbung ist sequenziell: ein Farbton, vier Stufen, hell bedeutet viel.
+    Alle vier Stufen halten mindestens 3:1 Kontrast zum Seitengrund, damit auch
+    eine einzelne Sitzung noch als anklickbare Flaeche erkennbar ist.
+    """
+    heute = dt.date.fromisoformat(stichtag)
+    letzte_kw = heute.isocalendar()[1]
+    zeilen = []
+    for jahr in sorted(register, reverse=True):
+        wochen = register[jahr]
+        zellen = []
+        for kw in range(1, 54):
+            if jahr == str(heute.year) and kw > letzte_kw:
+                continue                       # kuenftige Wochen gibt es nicht
+            try:
+                dt.date.fromisocalendar(int(jahr), kw, 1)
+            except ValueError:
+                continue                       # KW 53 hat nicht jedes Jahr
+            schluessel = f"{kw:02d}"
+            a = wochen.get(schluessel)
+            if not a:
+                zellen.append(
+                    f'<span class="w leer" title="KW {kw}/{jahr} &middot; keine Sitzung"></span>')
+                continue
+            n = a["sitzungen"]
+            stufe = 1 if n <= 1 else 2 if n == 2 else 3 if n == 3 else 4
+            wort = "Sitzung" if n == 1 else "Sitzungen"
+            titel = (f'KW {kw}/{jahr} &middot; {a["zeitraum"]} &middot; {n} {wort}, '
+                     f'{a["beschluesse"]} Beschl&uuml;sse')
+            zellen.append(
+                f'<a class="w s{stufe}" href="./ausgaben/{jahr}/kw{schluessel}.html" '
+                f'title="{titel}"><span class="sr">KW {kw}/{jahr}, {n} {wort}</span></a>')
+        zeilen.append(
+            '      <div class="jahrzeile">\n'
+            f'        <span class="jahr">{jahr}</span>\n'
+            f'        <div class="wochen">{"".join(zellen)}</div>\n'
+            '      </div>')
+
+    inhalt = "\n".join(zeilen)
+    return (
+        '\n<section>\n'
+        '  <h2>Zeitleiste</h2>\n'
+        '  <p class="hinweis">Jede Zelle ist eine Kalenderwoche; je heller, desto mehr\n'
+        '  Sitzungen fanden in ihr statt. Ein Klick f&uuml;hrt in die Ausgabe dieser Woche.\n'
+        '  Wochen ohne Sitzung bleiben leer.</p>\n'
+        '  <div class="zeitleiste">\n'
+        f'{inhalt}\n'
+        '  </div>\n'
+        '  <p class="skala"><span>weniger</span>'
+        '<span class="w s1"></span><span class="w s2"></span>'
+        '<span class="w s3"></span><span class="w s4"></span>'
+        '<span>mehr</span><span class="trenn">&middot;</span>'
+        '<a href="./ausgaben/index.html">alle Ausgaben als Liste</a></p>\n'
+        '</section>\n')
 
 
 def main() -> None:
