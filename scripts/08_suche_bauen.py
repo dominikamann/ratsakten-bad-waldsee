@@ -487,15 +487,22 @@ a.station:hover .grem{border-color:var(--s1)}
   -webkit-line-clamp:var(--zeilen,4);line-clamp:var(--zeilen,4);overflow:hidden;
 }
 .gekuerzt.offen{-webkit-line-clamp:unset;line-clamp:unset;display:block}
+/* Dasselbe Aufklapp-Element wie bei den Tagesordnungen auf der Startseite und
+   im Kalender: Winkel, Wort, sonst nichts. Als umrandeter Kasten wurde der
+   Knopf in der Zeitachse — einem Flex-Container — auf die volle Zeilenhoehe
+   gedehnt und stand als leeres Rechteck neben dem Text. */
 button.mehr{
-  display:block;margin:6px 0 0;padding:3px 9px;
-  background:transparent;color:var(--s1);border:1px solid var(--rule);
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;
-  text-transform:uppercase;cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;align-self:flex-start;
+  margin:6px 0 0;padding:0;background:none;border:0;
+  color:var(--s1);font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
 }
-button.mehr:hover{border-color:var(--s1)}
-button.mehr:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
-.achse button.mehr{flex:0 0 auto;margin-left:12px}
+button.mehr::before{content:"\25B8";font-size:12px;line-height:1}
+button.mehr[aria-expanded="true"]::before{content:"\25BE"}
+button.mehr:hover{text-decoration:underline}
+button.mehr:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
+/* In der Zeitachse eine eigene Zeile unter dem Wortlaut, nicht daneben. */
+.achse button.mehr{flex:0 0 100%;margin-left:0}
 .betrag{
   padding:1px 7px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
   /* Ein Betrag ist eine Angabe, keine Warnung. */
@@ -677,10 +684,10 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
     var knopf = document.createElement("button");
     knopf.type = "button";
     knopf.className = "mehr";
-    knopf.textContent = "vollständig anzeigen";
+    knopf.textContent = "Vollständig anzeigen";
     knopf.addEventListener("click", function(){{
       var offen = element.classList.toggle("offen");
-      knopf.textContent = offen ? "weniger anzeigen" : "vollständig anzeigen";
+      knopf.textContent = offen ? "Weniger anzeigen" : "Vollständig anzeigen";
       knopf.setAttribute("aria-expanded", offen ? "true" : "false");
     }});
     knopf.setAttribute("aria-expanded", "false");
@@ -692,7 +699,7 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
       if(!beschnitten){{ knopf.remove(); element.classList.remove("gekuerzt"); return; }}
       if(treffer && treffer.offsetTop > element.clientHeight - 8){{
         element.classList.add("offen");
-        knopf.textContent = "weniger anzeigen";
+        knopf.textContent = "Weniger anzeigen";
         knopf.setAttribute("aria-expanded", "true");
       }}
     }});
