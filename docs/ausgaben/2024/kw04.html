@@ -460,6 +460,29 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   .brandbar .wrap{padding-left:16px;padding-right:16px}
   .kasten,.befund{padding-left:14px;padding-right:14px}
 }
+
+/* ---------- Fundstelle unter einer Begriffserklaerung ---------- */
+.kasten .fundstelle{
+  margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
+
+/* ---------- Begriffsliste einer Ausgabe ---------- */
+details.begriffe{margin:18px 0 4px;border-top:1px solid var(--rule)}
+details.begriffe > summary{
+  cursor:pointer;padding:10px 0;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s2);
+}
+details.begriffe .begriff{padding:10px 0 14px;border-top:1px solid var(--rule)}
+details.begriffe .wort{
+  margin:0 0 5px;font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-weight:700;font-size:15px;color:var(--fg);
+}
+details.begriffe .begriff p{margin:0;max-width:62ch;font-size:14.5px;line-height:1.6}
+details.begriffe .fundstelle{
+  margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
 </style>
 </head>
 <body>
@@ -467,6 +490,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
     <a href="../../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../gremien.html">Wer entscheidet was</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../themen/index.html">Themen</a>
     <span aria-hidden="true">/</span>
     <a href="../../suche.html">Suche</a>
     <span aria-hidden="true">/</span>
@@ -493,7 +520,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <article id="auffaelligkeiten">
   <div class="rail">
-    <div class="field"><span class="lab">Hinweise</span><span class="val">2</span></div>
+    <div class="field"><span class="lab">Hinweise</span><span class="val">3</span></div>
     <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
@@ -503,6 +530,9 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
+    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
+    abgeschlossen oder aufgearbeitet wurde.</p>
     <div class="kasten warn">
       <p class="lab">Größere Beträge</p>
       <p>In diesen Beschlusstexten steht ein Betrag ab 250.000 €. Haushalts- und Wirtschaftspläne enthalten naturgemäß große Summen.</p>
@@ -517,6 +547,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-252/2023 — zuvor am 22.01.2024</span></li>
       </ul>
+    </div>
+    <div class="kasten">
+      <p class="lab">Durchweg einstimmig</p>
+      <p>Alle 4 Beschlüsse dieser Woche fielen einstimmig. Das kann breiten Konsens abbilden; Beschlussprotokolle halten keine Aussprache fest, aus ihnen allein ist das nicht zu unterscheiden.</p>
     </div>
   </div>
 </article>
@@ -563,7 +597,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <h2 class="headline">Was hinter verschlossenen Türen entschieden wurde</h2>
     <p>Zu Beginn der Sitzung gibt das Gremium bekannt, was es zuvor nichtöffentlich
     beschlossen hat. Im Protokoll steht dazu wörtlich:</p>
-    <div class="kasten"><p class="lab">Wortlaut des Protokolls</p><p>Die Vorsitzende gibt bekannt, dass in der Gemeinderatssitzung am 11.12.2023 folgende nichtöf- fentliche Beschlüsse gefasst wurden: 1) Die Besetzung der ausgeschriebenen Fachbereichsleiterstelle Personal, Organisation, IT er- folgte durch Wahl im Gemeinderat. Herr Christopher Dürste wurde gewählt und beginnt am 01.02.2024 seine Arbeit bei der Stadt. 2) Die Anpassung des bisherigen Konzessionsvertrags Strom mit der Netze BW vom 10.07.2007 (MKV 1.0) in der Fassung vom 25.07.2013 (MKV 2.0) entsprechend dem Musterkonzessionsver- trag (MKV 3.0) wurde einstimmig zugestimmt. 2 Haushaltsplan und Haushaltssatzung 2024 – Große Kreisstadt Bad Waldsee SV-252/2023 Beschlussvorschlag an den Gemeinderat: De</p></div>
+    <div class="kasten"><p class="lab">Wortlaut des Protokolls</p><p>Die Vorsitzende gibt bekannt, dass in der Gemeinderatssitzung am 11.12.2023 folgende nichtöffentliche Beschlüsse gefasst wurden: 1) Die Besetzung der ausgeschriebenen Fachbereichsleiterstelle Personal, Organisation, IT erfolgte durch Wahl im Gemeinderat. Herr Christopher Dürste wurde gewählt und beginnt am 01.02.2024 seine Arbeit bei der Stadt. 2) Die Anpassung des bisherigen Konzessionsvertrags Strom mit der Netze BW vom 10.07.2007 (MKV 1.0) in der Fassung vom 25.07.2013 (MKV 2.0) entsprechend dem Musterkonzessionsvertrag (MKV 3.0) wurde einstimmig zugestimmt. 2 Haushaltsplan und Haushaltssatzung 2024 – Große Kreisstadt Bad Waldsee SV-252/2023 Beschlussvorschlag an den Gemeinderat: Der Haus</p></div>
     <p class="note">Bekanntgaben nennen das Ergebnis, nicht die Begründung, die Kosten oder
     die Alternativen. Wie viel insgesamt nichtöffentlich entschieden wird, ist aus den
     Unterlagen nicht ermittelbar.</p>
@@ -593,6 +627,14 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <section class="kolophon">
   <p class="rubrik">Zur Ausgabe</p>
+  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+  <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
+  nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
+  ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
+  Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
+  Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
@@ -601,9 +643,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
   Ja : Nein : Enthaltungen.</p>
   <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Auf feste
-  Direktlinks wird verzichtet, weil die Dokument-URLs sitzungsgebundene Token enthalten
-  und nicht dauerhaft gültig bleiben.</p>
+  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
+  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
+  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
+  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
   <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
@@ -631,7 +674,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <footer><div class="wrap">
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 4/2024 &middot; erzeugt am 10.09.2026</p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 4/2024 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 </body>
 </html>

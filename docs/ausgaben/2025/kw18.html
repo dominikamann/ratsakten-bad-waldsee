@@ -460,6 +460,29 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   .brandbar .wrap{padding-left:16px;padding-right:16px}
   .kasten,.befund{padding-left:14px;padding-right:14px}
 }
+
+/* ---------- Fundstelle unter einer Begriffserklaerung ---------- */
+.kasten .fundstelle{
+  margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
+
+/* ---------- Begriffsliste einer Ausgabe ---------- */
+details.begriffe{margin:18px 0 4px;border-top:1px solid var(--rule)}
+details.begriffe > summary{
+  cursor:pointer;padding:10px 0;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s2);
+}
+details.begriffe .begriff{padding:10px 0 14px;border-top:1px solid var(--rule)}
+details.begriffe .wort{
+  margin:0 0 5px;font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-weight:700;font-size:15px;color:var(--fg);
+}
+details.begriffe .begriff p{margin:0;max-width:62ch;font-size:14.5px;line-height:1.6}
+details.begriffe .fundstelle{
+  margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
 </style>
 </head>
 <body>
@@ -467,6 +490,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
     <a href="../../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../gremien.html">Wer entscheidet was</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../themen/index.html">Themen</a>
     <span aria-hidden="true">/</span>
     <a href="../../suche.html">Suche</a>
     <span aria-hidden="true">/</span>
@@ -493,7 +520,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <article id="auffaelligkeiten">
   <div class="rail">
-    <div class="field"><span class="lab">Hinweise</span><span class="val">2</span></div>
+    <div class="field"><span class="lab">Hinweise</span><span class="val">4</span></div>
     <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
@@ -503,6 +530,9 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
+    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
+    abgeschlossen oder aufgearbeitet wurde.</p>
     <div class="kasten warn">
       <p class="lab">Größere Beträge</p>
       <p>In diesen Beschlusstexten steht ein Betrag ab 250.000 €. Haushalts- und Wirtschaftspläne enthalten naturgemäß große Summen.</p>
@@ -518,6 +548,45 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
         <li><span class="sache">SV-95/2024 — zuvor am 16.09.2024, 23.09.2024</span></li>
       </ul>
     </div>
+    <div class="kasten">
+      <p class="lab">Verfahren abgeschlossen</p>
+      <p>Ein Planverfahren endet damit, dass das Ergebnis als Satzung beschlossen wird. Das Verfahren ist dann abgeschlossen — über die Qualität des Ergebnisses sagt das nichts, wohl aber, dass es nicht liegen geblieben ist.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-95/2024 — 3. Änderung des vorhabenbezogenen Bebauungsplans "Großflächiger Einzelhandel an der Steinenberger Straße 1" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Abwägung und Satzungsbeschluss</span></li>
+      </ul>
+    </div>
+    <div class="kasten">
+      <p class="lab">Durchweg einstimmig</p>
+      <p>Alle 7 Beschlüsse dieser Woche fielen einstimmig. Das kann breiten Konsens abbilden; Beschlussprotokolle halten keine Aussprache fest, aus ihnen allein ist das nicht zu unterscheiden.</p>
+    </div>
+  </div>
+</article>
+
+<article id="begriffe">
+  <div class="rail">
+    <div class="field"><span class="lab">Begriffe</span><span class="val">2</span></div>
+    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Begriffe</p>
+    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
+    <h2 class="headline">Was die Amtssprache meint</h2>
+    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
+    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
+    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
+    <details class="begriffe" open>
+      <summary>2 Begriffe in dieser Ausgabe</summary>
+      <div class="begriff">
+        <p class="wort">Abwägung</p>
+        <p>Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.</p>
+        <p class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Satzungsbeschluss</p>
+        <p>Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.</p>
+        <p class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</p>
+      </div>
+    </details>
   </div>
 </article>
 
@@ -556,6 +625,14 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <section class="kolophon">
   <p class="rubrik">Zur Ausgabe</p>
+  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+  <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
+  nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
+  ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
+  Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
+  Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
@@ -564,9 +641,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
   Ja : Nein : Enthaltungen.</p>
   <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Auf feste
-  Direktlinks wird verzichtet, weil die Dokument-URLs sitzungsgebundene Token enthalten
-  und nicht dauerhaft gültig bleiben.</p>
+  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
+  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
+  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
+  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
   <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
@@ -594,7 +672,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <footer><div class="wrap">
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 18/2025 &middot; erzeugt am 10.09.2026</p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 18/2025 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 </body>
 </html>

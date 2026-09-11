@@ -460,6 +460,29 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   .brandbar .wrap{padding-left:16px;padding-right:16px}
   .kasten,.befund{padding-left:14px;padding-right:14px}
 }
+
+/* ---------- Fundstelle unter einer Begriffserklaerung ---------- */
+.kasten .fundstelle{
+  margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
+
+/* ---------- Begriffsliste einer Ausgabe ---------- */
+details.begriffe{margin:18px 0 4px;border-top:1px solid var(--rule)}
+details.begriffe > summary{
+  cursor:pointer;padding:10px 0;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s2);
+}
+details.begriffe .begriff{padding:10px 0 14px;border-top:1px solid var(--rule)}
+details.begriffe .wort{
+  margin:0 0 5px;font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-weight:700;font-size:15px;color:var(--fg);
+}
+details.begriffe .begriff p{margin:0;max-width:62ch;font-size:14.5px;line-height:1.6}
+details.begriffe .fundstelle{
+  margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
 </style>
 </head>
 <body>
@@ -467,6 +490,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
     <a href="../../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../gremien.html">Wer entscheidet was</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../themen/index.html">Themen</a>
     <span aria-hidden="true">/</span>
     <a href="../../suche.html">Suche</a>
     <span aria-hidden="true">/</span>
@@ -493,7 +520,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <article id="auffaelligkeiten">
   <div class="rail">
-    <div class="field"><span class="lab">Hinweise</span><span class="val">4</span></div>
+    <div class="field"><span class="lab">Hinweise</span><span class="val">3</span></div>
     <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
@@ -503,6 +530,9 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
+    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
+    abgeschlossen oder aufgearbeitet wurde.</p>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 9 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
@@ -526,13 +556,49 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
         <li><span class="sache">SV-58/2025 — zuvor am 07.07.2025</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
-      <p class="lab">Ohne Protokoll</p>
-      <p>1 öffentliche Sitzung im Berichtszeitraum, zu denen kein Protokoll veröffentlicht wurde.</p>
-      <ul class="beschluesse kompakt">
-        <li><span class="sache">Ortschaftsrat Reute-Gaisbeuren am 22.07.2025</span></li>
-      </ul>
-    </div>
+  </div>
+</article>
+
+<article id="begriffe">
+  <div class="rail">
+    <div class="field"><span class="lab">Begriffe</span><span class="val">5</span></div>
+    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Begriffe</p>
+    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
+    <h2 class="headline">Was die Amtssprache meint</h2>
+    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
+    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
+    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
+    <details class="begriffe" open>
+      <summary>5 Begriffe in dieser Ausgabe</summary>
+      <div class="begriff">
+        <p class="wort">Gemeinsamer Ausschuss</p>
+        <p>Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.</p>
+        <p class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Flächennutzungsplan</p>
+        <p>Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht erst über den Bebauungsplan.</p>
+        <p class="fundstelle">§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Abwägung</p>
+        <p>Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.</p>
+        <p class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Ortschaftsrat</p>
+        <p>Jede der vier Ortschaften hat einen eigenen Rat. Er berät die örtliche Verwaltung und ist zu wichtigen Angelegenheiten seiner Ortschaft zu hören. Darüber hinaus sind ihm bestimmte Entscheidungen übertragen, etwa die Bewirtschaftung von Haushaltsmitteln über 3.000 € bis 26.000 € im Einzelfall.</p>
+        <p class="fundstelle">§ 16 Hauptsatzung der Stadt Bad Waldsee</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Ohne Beschlussfassung</p>
+        <p>Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht abgestimmt. Das Protokoll führt ihn dann als „Ohne Beschlussfassung“ oder als Kenntnisnahme. Über den Inhalt sagt das nichts — wohl aber, dass das Gremium darüber nicht entschieden hat.</p>
+        <p class="fundstelle">Schreibweise der Beschlussprotokolle des Ratsinformationssystems</p>
+      </div>
+    </details>
   </div>
 </article>
 
@@ -552,7 +618,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
       <li><span class="sache">Annahme und Vermittlung von Spenden und Sponsoring aus dem 1. Halbjahr 2025<span class="sv">SV-112/2025</span><span class="wortlaut">Der Annahme der im 1. Halbjahr 2025 eingegangenen Spenden und Zuwendungen (im Anhang) wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRB1Yw6G8JDEG--I2nuNM6I3yDKmaZKxM2leF89nlaOC/Sitzungsvorlage_SV-112-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-112/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Mietspiegel Bad Waldsee 2025 - Anerkennung als qualifizierter Mietspiegel<span class="sv">SV-91/2025</span><span class="wortlaut">Der vom EMA-Institut für empirische Marktanalysen, der Marktentwicklung angepasste, qualifizierte Mietspiegel Bad Waldsee 2025 wird gem. § 558 d BGB anerkannt. Er hat eine Gültigkeit ab dem 01.08.2025.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZ3dWOAy0HMhKvEh0EzcxxFjZXsyy38xEDq7ML1uvLmt/Sitzungsvorlage_SV-91-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-91/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZc0Y9G9BIVN53L09usMdUG6I_HNOTav-aUHe8VygAga-/Mietspiegel_2025.pdf" target="_blank" rel="noopener noreferrer">Mietspiegel 2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Änderung der Satzung zur Offenhaltung der Einzelhandelsgeschäfte in Bad Waldsee am Sonntag der "Zukunftstage Bad Waldsee"<span class="sv">SV-103/2025</span><span class="wortlaut">Der Satzungsänderung zur Offenhaltung der Einzelhandelsgeschäfte in Bad Waldsee am Sonntag der „Zukunftstage Bad Waldsee“ wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZREUD1bqzQA7g7BmqS7Pc8CQQ7YFvw2dgDBd5n3atrv2/Sitzungsvorlage_SV-103-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-103/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZfSeDnualAM86hG2TfOigChClE4FnO_LW0D86_la1xsX/Satzung_Offenhalten_der_Einzelhandelsgeschaefte__Gesundheitstag.pdf" target="_blank" rel="noopener noreferrer">Satzung_Offenhalten_der_Einzelhandelsgeschäfte__Gesundheitstag</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Jubiläumsjahr 2026<span class="sv">SV-132/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">300.000 €</span></span><span class="wortlaut">1. Den vorgestellten Aktivitäten zum Jubiläumsjahr 2026 wird zugestimmt. Über wesentliche Änderungen ist der Gemeinderat zu informieren. 2. Für die städtischen Veranstaltungen zum Jubiläumsjahr, für die begleitenden Dienstleistungen sowie das Marketing werden aus dem städtischen Haushalt insgesamt 300.000 Euro zzgl. Per - sonal- und Bauhofkosten bereitgestellt. Die Deckung eventuell höherer Kosten bzw. die anteilige Refinanzierung der Ausgaben erfolgt durch Sponsoring, Spenden oder die Erhebung von Ein - trittsgeldern.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTdbX6qVOVW93KU12NSBysijBk1wV2a0RAnSBMVqYi7J/Sitzungsvorlage_SV-132-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-132/2025</a></span></span><span class="erg split">23 : 3 : 0</span></li>
+      <li><span class="sache">Jubiläumsjahr 2026<span class="sv">SV-132/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">300.000 €</span></span><span class="wortlaut">1. Den vorgestellten Aktivitäten zum Jubiläumsjahr 2026 wird zugestimmt. Über wesentliche Änderungen ist der Gemeinderat zu informieren. 2. Für die städtischen Veranstaltungen zum Jubiläumsjahr, für die begleitenden Dienstleistungen sowie das Marketing werden aus dem städtischen Haushalt insgesamt 300.000 Euro zzgl. Personal- und Bauhofkosten bereitgestellt. Die Deckung eventuell höherer Kosten bzw. die anteilige Refinanzierung der Ausgaben erfolgt durch Sponsoring, Spenden oder die Erhebung von Eintrittsgeldern.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTdbX6qVOVW93KU12NSBysijBk1wV2a0RAnSBMVqYi7J/Sitzungsvorlage_SV-132-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-132/2025</a></span></span><span class="erg split">23 : 3 : 0</span></li>
       <li><span class="sache">Digitalisierung von Reisemobilstellplätzen bei der Waldsee-Therme<span class="sv">SV-131/2025</span><span class="wortlaut">1. Der Anschaffung eines digitalen Reservierungssystems für den Reisemobilstellplatz der Stadt Bad Waldsee bei der Waldsee-Therme wird zugestimmt. 2. Die Kosten für die Anschaffung werden genehmigt. 3. Die Verwaltung wird mit der Umsetzung beauftragt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZartGa4MatujrOeG2-5jXQG_bpv9gIM7eGXLwE3Ev1IX/Sitzungsvorlage_SV-131-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-131/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Neubau Erweiterung Gymnasium Bad Waldsee- aktueller Stand Planung und Baustelle<span class="sv">SV-117/2025</span><span class="wortlaut">Der Gemeinderat nimmt den Bericht über den aktuellen Stand zur Planung und Baudurchführung des Projekts Neubau Erweiterung Gymnasium, Döchtbühlweg 2 zur Kenntnis.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcUifLozzJ2RA6fLnpKGQ0i0foa91uXnbjYgdZKJfNjb/Sitzungsvorlage_SV-117-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-117/2025</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
@@ -613,6 +679,14 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <section class="kolophon">
   <p class="rubrik">Zur Ausgabe</p>
+  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+  <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
+  nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
+  ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
+  Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
+  Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
@@ -621,9 +695,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
   Ja : Nein : Enthaltungen.</p>
   <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Auf feste
-  Direktlinks wird verzichtet, weil die Dokument-URLs sitzungsgebundene Token enthalten
-  und nicht dauerhaft gültig bleiben.</p>
+  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
+  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
+  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
+  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
   <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
@@ -651,7 +726,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <footer><div class="wrap">
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 30/2025 &middot; erzeugt am 10.09.2026</p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 30/2025 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 </body>
 </html>

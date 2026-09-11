@@ -460,6 +460,29 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   .brandbar .wrap{padding-left:16px;padding-right:16px}
   .kasten,.befund{padding-left:14px;padding-right:14px}
 }
+
+/* ---------- Fundstelle unter einer Begriffserklaerung ---------- */
+.kasten .fundstelle{
+  margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
+
+/* ---------- Begriffsliste einer Ausgabe ---------- */
+details.begriffe{margin:18px 0 4px;border-top:1px solid var(--rule)}
+details.begriffe > summary{
+  cursor:pointer;padding:10px 0;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s2);
+}
+details.begriffe .begriff{padding:10px 0 14px;border-top:1px solid var(--rule)}
+details.begriffe .wort{
+  margin:0 0 5px;font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-weight:700;font-size:15px;color:var(--fg);
+}
+details.begriffe .begriff p{margin:0;max-width:62ch;font-size:14.5px;line-height:1.6}
+details.begriffe .fundstelle{
+  margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
 </style>
 </head>
 <body>
@@ -467,6 +490,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
     <a href="../../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../gremien.html">Wer entscheidet was</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../themen/index.html">Themen</a>
     <span aria-hidden="true">/</span>
     <a href="../../suche.html">Suche</a>
     <span aria-hidden="true">/</span>
@@ -509,7 +536,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <article id="auffaelligkeiten">
   <div class="rail">
-    <div class="field"><span class="lab">Hinweise</span><span class="val">5</span></div>
+    <div class="field"><span class="lab">Hinweise</span><span class="val">6</span></div>
     <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
@@ -519,6 +546,9 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
+    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
+    abgeschlossen oder aufgearbeitet wurde.</p>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>
       <p>2 von 11 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
@@ -553,13 +583,78 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
         <li><span class="sache">SV-17/2026 — zuvor am 23.03.2026, 13.04.2026</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
-      <p class="lab">Ohne Protokoll</p>
-      <p>1 öffentliche Sitzung im Berichtszeitraum, zu denen kein Protokoll veröffentlicht wurde.</p>
+    <div class="kasten">
+      <p class="lab">Verfahren abgeschlossen</p>
+      <p>Ein Planverfahren endet damit, dass das Ergebnis als Satzung beschlossen wird. Das Verfahren ist dann abgeschlossen — über die Qualität des Ergebnisses sagt das nichts, wohl aber, dass es nicht liegen geblieben ist.</p>
       <ul class="beschluesse kompakt">
-        <li><span class="sache">Ortschaftsrat Haisterkirch am 15.04.2026</span></li>
+        <li><span class="sache">SV-165/2025 — 2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss</span></li>
       </ul>
     </div>
+    <div class="kasten">
+      <p class="lab">Rückstand aufgearbeitet</p>
+      <p>Diese Beschlüsse betreffen zurückliegende Haushaltsjahre. Sie zeigen, dass ein Rückstand abgearbeitet wird — und zugleich, wie groß er war.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-71/2026 — Jahresabschluss 2023 der Stadt Bad Waldsee (3 Jahre nach dem Haushaltsjahr 2023)</span></li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<article id="begriffe">
+  <div class="rail">
+    <div class="field"><span class="lab">Begriffe</span><span class="val">8</span></div>
+    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Begriffe</p>
+    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
+    <h2 class="headline">Was die Amtssprache meint</h2>
+    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
+    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
+    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
+    <details class="begriffe" open>
+      <summary>8 Begriffe in dieser Ausgabe</summary>
+      <div class="begriff">
+        <p class="wort">Gemeindliches Einvernehmen</p>
+        <p>Über die Zulässigkeit eines Bauvorhabens entscheidet nicht die Stadt, sondern die Baugenehmigungsbehörde — „im Einvernehmen mit der Gemeinde“. Die Stadt wird also beteiligt und erteilt oder versagt ihr Einvernehmen. Versagt sie es, ist das Vorhaben damit nicht zwingend erledigt: Ein <b>rechtswidrig</b> versagtes Einvernehmen kann die nach Landesrecht zuständige Behörde ersetzen.</p>
+        <p class="fundstelle">§ 36 Abs. 1 Satz 1 und Abs. 2 Satz 3 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Gemeinsamer Ausschuss</p>
+        <p>Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.</p>
+        <p class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Flächennutzungsplan</p>
+        <p>Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht erst über den Bebauungsplan.</p>
+        <p class="fundstelle">§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Abwägung</p>
+        <p>Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.</p>
+        <p class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Satzungsbeschluss</p>
+        <p>Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.</p>
+        <p class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Ortschaftsrat</p>
+        <p>Jede der vier Ortschaften hat einen eigenen Rat. Er berät die örtliche Verwaltung und ist zu wichtigen Angelegenheiten seiner Ortschaft zu hören. Darüber hinaus sind ihm bestimmte Entscheidungen übertragen, etwa die Bewirtschaftung von Haushaltsmitteln über 3.000 € bis 26.000 € im Einzelfall.</p>
+        <p class="fundstelle">§ 16 Hauptsatzung der Stadt Bad Waldsee</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Ohne Beschlussfassung</p>
+        <p>Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht abgestimmt. Das Protokoll führt ihn dann als „Ohne Beschlussfassung“ oder als Kenntnisnahme. Über den Inhalt sagt das nichts — wohl aber, dass das Gremium darüber nicht entschieden hat.</p>
+        <p class="fundstelle">Schreibweise der Beschlussprotokolle des Ratsinformationssystems</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Über- und außerplanmäßige Ausgaben</p>
+        <p>Ausgaben, die im beschlossenen Haushaltsplan nicht oder nicht in dieser Höhe vorgesehen waren. Sie sind zulässig, brauchen aber eine eigene Zustimmung. Sie kann vorab als einzelner Tagesordnungspunkt erfolgen oder nachträglich gesammelt im Jahresabschluss.</p>
+        <p class="fundstelle">Beschlussprotokolle; § 16 Abs. 4.2 Hauptsatzung für die Ortschaftsräte</p>
+      </div>
+    </details>
   </div>
 </article>
 
@@ -574,14 +669,14 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <h2 class="headline">9 Beschlüsse am 13. April 2026</h2>
     <ul class="beschluesse">
       <li><span class="sache">Wahl des 2. Stellvertreters des Ortsvorstehers im Ortschaftsrat Reute-Gaisbeuren<span class="sv">SV-66/2026</span><span class="wortlaut">Der Gemeinderat wählt auf Vorschlag des Ortschaftsrats Reute-Gaisbeuren Herrn Hubert Gärtner für die verbleibenden vier Jahre der Amtsperiode 2024–2029 zum 2. stellvertretenden Ortsvorsteher.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZd7WpE22lin7oWWd1_VRIwW_ZfJoI8S3DXpicbYulRGM/Sitzungsvorlage_SV-66-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-66/2026</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZe9ODfps7cuXM2Ofh1_lNqCarmDo3kav-Ygl7zHpUI5Q/Schreiben_Ortsvorsteher_Achim_Strobel.pdf" target="_blank" rel="noopener noreferrer">Schreiben Ortsvorsteher Achim Strobel</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Zustimmung zur Wahl des Abteilungskommandanten und seines Stellvertreters der Freiwilligen Feuerwehr, Einsatzabteilung Michelwinnaden<span class="sv">SV-61/2026</span><span class="wortlaut">Der Gemeinderat stimmt der Wahl von Herr Martin Langosch zum Abteilungskommandanten und Herrn Manuel Lemmle zum stellvertretenden Abteilungskommandanten der Einsatzabteilung Mi - chelwinnaden zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSgwKkkaesq99XkhVIg3Qg7QWPe5VlVKMt0EPGatX8Ta/Sitzungsvorlage_SV-61-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-61/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Zustimmung zur Wahl des Abteilungskommandanten und seines Stellvertreters der Freiwilligen Feuerwehr, Einsatzabteilung Michelwinnaden<span class="sv">SV-61/2026</span><span class="wortlaut">Der Gemeinderat stimmt der Wahl von Herr Martin Langosch zum Abteilungskommandanten und Herrn Manuel Lemmle zum stellvertretenden Abteilungskommandanten der Einsatzabteilung Michelwinnaden zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSgwKkkaesq99XkhVIg3Qg7QWPe5VlVKMt0EPGatX8Ta/Sitzungsvorlage_SV-61-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-61/2026</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Vorstellung Zukunftskommune Oberschwaben und Klimaschutzmaßnahmen<span class="sv">SV-269/2025</span><span class="wortlaut">1. Der Sachstandsbericht zur Zukunftskommune Oberschwaben wird zur Kenntnis genommen 2. Dem Vorschlag zur Erstellung eines Klimawandelanpassungskonzeptes wird zugestimmt 3. Die Verwaltung wird mit der Erstellung des Klimawandelanpassungskonzeptes beauftragt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRSFkCmRLnBJaSY1vtEGSRq1FllOPOqDyubGsFo6azb8/Sitzungsvorlage_SV-269-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-269/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Jahresabschluss 2023 der Stadt Bad Waldsee<span class="sv">SV-71/2026</span><span class="wortlaut">1. Dem Rechenschaftsbericht, dem Anhang und den Anlagen wird zugestimmt. 2. Der Leistung von über- und außerplanmäßigen Auszahlungen und Aufwendungen im Haushaltsjahr 2023 wird zugestimmt. 3. Aufgrund von § 95b der Gemeindeordnung für Baden-Württemberg wird der Jahresabschluss 2023 der Stadt Bad Waldsee wie folgt festgestellt: 1 Ergebnisrechnung In Euro 1.1 Ordentliche Erträge 65.972.973,92 1.2 Ordentliche Aufwendungen 59.993.794,56 1.3 Ordentliches Ergebnis 5.979.179,36 1.4 Außerordentliche Erträge 43.622,54 1.5 Außerordentliche Aufwendungen 23.261,13 1.6 Sonderergebnis 20.361,41 1.7 Gesamtergebnis 5.999.540,77 2 Finanzrechnung 2.1 Einzahlungen aus laufender Verwaltungstätigkeit 64.643.904,61 2.2 Auszahlungen aus laufender Verwaltungstätigkeit 49.997.609,47 2.3 Zahlungsmittelüberschuss/-bedarf der Ergebnisrechnung 14.646.295,14 2.4 Einzahlungen aus Investitionstätigkeit 16.998.686,83 2.5 Auszahlungen aus Investitionstätigkeit 21.397.396,58 2.6 Finanzierungsmittelüberschuss/-bedarf aus Investitionstätigkeit -4.398.709,75 2.7 Finanzierungsmittelüberschuss/-bedarf 10.247.585,39 2.9 Auszahlungen aus Finanzierungstätigkeit 200.000,00 2.10 Finanzierungsmittelüberschuss/-bedarf aus Finanzierungstätigkeit -200.000,00 2.11 Änderung des Finanzierungsmittelbestands zum Ende des Haushaltsjahres 10.047.585,39 2.12 Zahlungsmittelüberschuss/-bedarf aus haushaltsunwirksamen Einzahlungen und A …</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRvcFDBmDDsjn9BofM5dBFK0do0ViB92g38QSHazBhlv/Sitzungsvorlage_SV-71-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-71/2026</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRI5Nwhht5c9_ONMt_RHxSpG1iSjbHWssr17SiwURz9d/Jahresabschluss_2023.pdf" target="_blank" rel="noopener noreferrer">Jahresabschluss 2023</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplans "Lohbühl I - Erweiterung", Gemarkung Bergatreute – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-17/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 15.04.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute für die Wohnbaufläche im Bereich Lohbühl I – Erweiterung, Gemarkung Bergatreute wird in der übersandten Planfassung vom 15.04.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt im gemeinsamen Ausschuss der 21. Ände - rung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdcIioq06MTBmw4M17KnZPpEI2-dril7RthaVy2q1N38/Sitzungsvorlage_SV-17-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-17/2026</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-16/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 09.01.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden wird in der Planfassung vom 09.01.2026 im Entwurf festge - stellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 22. Ände - rung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdFFi-BodShHIXlQXiOv79atYMuM8ugWHzVvz7EBI1dS/Sitzungsvorlage_SV-16-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-16/2026</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss<span class="sv">SV-165/2025</span><span class="wortlaut">1. Der Bebauungsplan „2. Änderung Sport- und Gesundheitspark Hopfenweiler“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee werden in der Fassung vom 13.02.2026 gemäß den Planunterlagen sowie dem Satzungsentwurf auf den Seiten 18 und 19 als Satzung beschlossen. 2. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 13.02.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, die 2. Änderung des Bebauungsplanes „Sport- und Gesund - heitspark Hopfenweiler“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee öffentlich bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZfJX2mCq5En7VcRwGF_Awod3yg5FPK_B2zWgvP6ycp65/Sitzungsvorlage_SV-165-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-165/2025 (aktualisiert: 17.03.2026)</a></span></span><span class="erg split">24 : 0 : 2</span></li>
-      <li><span class="sache">Neubau Feuerwehrgebäude Michelwinnaden - Durchführungsbeschluss<span class="sv">SV-60/2026<span class="betrag" title="größter im Beschlusstext genannter Betrag">1.620.000 €</span></span><span class="wortlaut">1. Der vorgestellten Planung Neubau Feuerwehrgebäude in Michelwinnaden wird zugestimmt. 2. Dem Durchführungsbeschluss zum Feuerwehrgebäude in Michelwinnaden mit einem Kostenvolumen in Höhe von ca. 1,62 Mio. € wird zugestimmt. Der Fachbereich Bauen &amp; Stadtentwicklung wird beauftragt Kosteneinsparungen und mit der Freiwilligen Feuerwehr Michelwinnaden weitere Eigenleistungen zu prüfen. 3. Das Architekturbüro mlw, Ravensburg wird mit der LPH 04 dem Erstellen der Baugenehmigungsplanung, Architektenleistungen nach der Leistungsphase 04 der Honorarordnung für Architekten und Ingenieure (HOAI) beauftragt. 4. Die Verwaltung wird mit der Vergabe beauftragt, das Grundstück für die Baumaßnahmen vorzubereiten. 5. Das Planungsbüro tga-planwerk, Altshausen für die Heizung-, Lüftung- und Sanitärplanung (HLS) wird mit der weiteren Planung nach den Leistungsphasen 05 - 09 der Honorarordnung für Architekten und Ingenieure (HOAI) beauftragt. 6. Das Planungsbüro e-planwerk, Altshausen für die Elektroplanung (ELT) wird mit der weiteren Planung nach den Leistungsphasen 05 - 09 der Honorarordnung für Architekten und Ingenieure (HOAI) beauftragt. 7. Das Büro für Tragwerksplanung Kuttruff Ingenieure GmbH &amp; Co.KG aus Ravensburg wird mit der weiteren Tragwerksplanung nach den Leistungsphasen 05 - 09 der Honorarordnung für Ar - chitekten und Ingenieure (HOAI) beauftragt. 8. …</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZR2Q9cBt4Gzt-Aw44-xirooxVYjEOOgOoOM2yvBo3F4k/Sitzungsvorlage_SV-60-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-60/2026</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Gemeindliches Einvernehmen zu Windenergieanlagen bei Osterhofen<span class="sv">SV-67/2026</span><span class="wortlaut">Das gemeindliche Einvernehmen zur Errichtung von 5 Windkraftanlagen bei Osterhofen wird ver - sagt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZeglrzJuacdMgzA35e_I84Q6KDJe7sgybpv0zq8zfDgE/Sitzungsvorlage_SV-67-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-67/2026</a></span></span><span class="erg split">19 : 5 : 1</span></li>
+      <li><span class="sache">21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplans "Lohbühl I - Erweiterung", Gemarkung Bergatreute – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-17/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 15.04.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute für die Wohnbaufläche im Bereich Lohbühl I – Erweiterung, Gemarkung Bergatreute wird in der übersandten Planfassung vom 15.04.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt im gemeinsamen Ausschuss der 21. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdcIioq06MTBmw4M17KnZPpEI2-dril7RthaVy2q1N38/Sitzungsvorlage_SV-17-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-17/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-16/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 09.01.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden wird in der Planfassung vom 09.01.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 22. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdFFi-BodShHIXlQXiOv79atYMuM8ugWHzVvz7EBI1dS/Sitzungsvorlage_SV-16-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-16/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss<span class="sv">SV-165/2025</span><span class="wortlaut">1. Der Bebauungsplan „2. Änderung Sport- und Gesundheitspark Hopfenweiler“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee werden in der Fassung vom 13.02.2026 gemäß den Planunterlagen sowie dem Satzungsentwurf auf den Seiten 18 und 19 als Satzung beschlossen. 2. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 13.02.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, die 2. Änderung des Bebauungsplanes „Sport- und Gesundheitspark Hopfenweiler“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee öffentlich bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZfJX2mCq5En7VcRwGF_Awod3yg5FPK_B2zWgvP6ycp65/Sitzungsvorlage_SV-165-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-165/2025 (aktualisiert: 17.03.2026)</a></span></span><span class="erg split">24 : 0 : 2</span></li>
+      <li><span class="sache">Neubau Feuerwehrgebäude Michelwinnaden - Durchführungsbeschluss<span class="sv">SV-60/2026<span class="betrag" title="größter im Beschlusstext genannter Betrag">1.620.000 €</span></span><span class="wortlaut">1. Der vorgestellten Planung Neubau Feuerwehrgebäude in Michelwinnaden wird zugestimmt. 2. Dem Durchführungsbeschluss zum Feuerwehrgebäude in Michelwinnaden mit einem Kostenvolumen in Höhe von ca. 1,62 Mio. € wird zugestimmt. Der Fachbereich Bauen &amp; Stadtentwicklung wird beauftragt Kosteneinsparungen und mit der Freiwilligen Feuerwehr Michelwinnaden weitere Eigenleistungen zu prüfen. 3. Das Architekturbüro mlw, Ravensburg wird mit der LPH 04 dem Erstellen der Baugenehmigungs- planung, Architektenleistungen nach der Leistungsphase 04 der Honorarordnung für Architekten und Ingenieure (HOAI) beauftragt. 4. Die Verwaltung wird mit der Vergabe beauftragt, das Grundstück für die Baumaßnahmen vorzubereiten. 5. Das Planungsbüro tga-planwerk, Altshausen für die Heizung-, Lüftung- und Sanitärplanung (HLS) wird mit der weiteren Planung nach den Leistungsphasen 05 - 09 der Honorarordnung für Architekten und Ingenieure (HOAI) beauftragt. 6. Das Planungsbüro e-planwerk, Altshausen für die Elektroplanung (ELT) wird mit der weiteren Planung nach den Leistungsphasen 05 - 09 der Honorarordnung für Architekten und Ingenieure (HOAI) beauftragt. 7. Das Büro für Tragwerksplanung Kuttruff Ingenieure GmbH &amp; Co.KG aus Ravensburg wird mit der weiteren Tragwerksplanung nach den Leistungsphasen 05 - 09 der Honorarordnung für Architekten und Ingenieure (HOAI) beauftragt. 8. …</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZR2Q9cBt4Gzt-Aw44-xirooxVYjEOOgOoOM2yvBo3F4k/Sitzungsvorlage_SV-60-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-60/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Gemeindliches Einvernehmen zu Windenergieanlagen bei Osterhofen<span class="sv">SV-67/2026</span><span class="wortlaut">Das gemeindliche Einvernehmen zur Errichtung von 5 Windkraftanlagen bei Osterhofen wird versagt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZeglrzJuacdMgzA35e_I84Q6KDJe7sgybpv0zq8zfDgE/Sitzungsvorlage_SV-67-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-67/2026</a></span></span><span class="erg split">19 : 5 : 1</span></li>
     </ul>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>
@@ -651,6 +746,14 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <section class="kolophon">
   <p class="rubrik">Zur Ausgabe</p>
+  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+  <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
+  nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
+  ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
+  Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
+  Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
@@ -659,9 +762,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
   Ja : Nein : Enthaltungen.</p>
   <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Auf feste
-  Direktlinks wird verzichtet, weil die Dokument-URLs sitzungsgebundene Token enthalten
-  und nicht dauerhaft gültig bleiben.</p>
+  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
+  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
+  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
+  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
   <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
@@ -689,7 +793,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <footer><div class="wrap">
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 16/2026 &middot; erzeugt am 10.09.2026</p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 16/2026 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 </body>
 </html>

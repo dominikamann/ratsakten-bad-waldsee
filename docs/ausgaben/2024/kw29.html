@@ -460,6 +460,29 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   .brandbar .wrap{padding-left:16px;padding-right:16px}
   .kasten,.befund{padding-left:14px;padding-right:14px}
 }
+
+/* ---------- Fundstelle unter einer Begriffserklaerung ---------- */
+.kasten .fundstelle{
+  margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
+
+/* ---------- Begriffsliste einer Ausgabe ---------- */
+details.begriffe{margin:18px 0 4px;border-top:1px solid var(--rule)}
+details.begriffe > summary{
+  cursor:pointer;padding:10px 0;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s2);
+}
+details.begriffe .begriff{padding:10px 0 14px;border-top:1px solid var(--rule)}
+details.begriffe .wort{
+  margin:0 0 5px;font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-weight:700;font-size:15px;color:var(--fg);
+}
+details.begriffe .begriff p{margin:0;max-width:62ch;font-size:14.5px;line-height:1.6}
+details.begriffe .fundstelle{
+  margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
 </style>
 </head>
 <body>
@@ -467,6 +490,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
     <a href="../../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../gremien.html">Wer entscheidet was</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../themen/index.html">Themen</a>
     <span aria-hidden="true">/</span>
     <a href="../../suche.html">Suche</a>
     <span aria-hidden="true">/</span>
@@ -503,16 +530,41 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
-    <div class="kasten warn">
-      <p class="lab">Ohne Protokoll</p>
-      <p>4 öffentliche Sitzungen im Berichtszeitraum, zu denen kein Protokoll veröffentlicht wurde.</p>
-      <ul class="beschluesse kompakt">
-        <li><span class="sache">Ortschaftsrat Reute-Gaisbeuren am 16.07.2024</span></li>
-        <li><span class="sache">Ortschaftsrat Haisterkirch am 16.07.2024</span></li>
-        <li><span class="sache">Ortschaftsrat Michelwinnaden am 18.07.2024</span></li>
-        <li><span class="sache">Ortschaftsrat Mittelurbach am 18.07.2024</span></li>
-      </ul>
+    <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
+    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
+    abgeschlossen oder aufgearbeitet wurde.</p>
+    <div class="kasten">
+      <p class="lab">Durchweg einstimmig</p>
+      <p>Alle 9 Beschlüsse dieser Woche fielen einstimmig. Das kann breiten Konsens abbilden; Beschlussprotokolle halten keine Aussprache fest, aus ihnen allein ist das nicht zu unterscheiden.</p>
     </div>
+  </div>
+</article>
+
+<article id="begriffe">
+  <div class="rail">
+    <div class="field"><span class="lab">Begriffe</span><span class="val">2</span></div>
+    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Begriffe</p>
+    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
+    <h2 class="headline">Was die Amtssprache meint</h2>
+    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
+    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
+    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
+    <details class="begriffe" open>
+      <summary>2 Begriffe in dieser Ausgabe</summary>
+      <div class="begriff">
+        <p class="wort">Gemeinsamer Ausschuss</p>
+        <p>Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.</p>
+        <p class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Ortschaftsrat</p>
+        <p>Jede der vier Ortschaften hat einen eigenen Rat. Er berät die örtliche Verwaltung und ist zu wichtigen Angelegenheiten seiner Ortschaft zu hören. Darüber hinaus sind ihm bestimmte Entscheidungen übertragen, etwa die Bewirtschaftung von Haushaltsmitteln über 3.000 € bis 26.000 € im Einzelfall.</p>
+        <p class="fundstelle">§ 16 Hauptsatzung der Stadt Bad Waldsee</p>
+      </div>
+    </details>
   </div>
 </article>
 
@@ -527,7 +579,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <h2 class="headline">9 Beschlüsse am 15. Juli 2024</h2>
     <ul class="beschluesse">
       <li><span class="sache">Verpflichtung der Mitglieder des Gemeinderates und Bestätigung der Sitzordnung<span class="sv">SV-45/2024</span><span class="wortlaut">Der Gemeinderat beschließt die vorgeschlagene Sitzordnung für den Gemeinderat und die Ausschüsse.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSf3GsXjOKMxyueXiq-aPEXOivs-vUU08ht479v836mx/Sitzungsvorlage_SV-45-2024_1._Ergaenzung_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-45/2024 1. Ergänzung 1. Nachtrag</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZf4587K6o1-YIXFsOqrq6o0DYO1EACUz-Nxgeheogduf/TOP_1_-_Bestaetigung_der_Sitzordnung.pdf" target="_blank" rel="noopener noreferrer">TOP 1 - Bestätigung der Sitzordnung</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Ehrenamtliche Stellvertreter des Oberbürgermeisters<span class="sv">SV-46/2024</span><span class="wortlaut">1. Der Gemeinderat beschließt die Anzahl der ehrenamtlichen Stellvertreter des Oberbürgermeis - ters auf 3 Stellvertreter festzulegen. 2. Der Gemeinderat wählt in der Sitzung die ehrenamtlichen Stellvertreter des Oberbürgermeisters gemäß den Vorschlägen der Fraktionen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZYmZlyuxWyiAERLm7ikw9fPYI_dc3qW0rAzKvXasqhq/Sitzungsvorlage_SV-46-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-46/2024</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Ehrenamtliche Stellvertreter des Oberbürgermeisters<span class="sv">SV-46/2024</span><span class="wortlaut">1. Der Gemeinderat beschließt die Anzahl der ehrenamtlichen Stellvertreter des Oberbürgermeisters auf 3 Stellvertreter festzulegen. 2. Der Gemeinderat wählt in der Sitzung die ehrenamtlichen Stellvertreter des Oberbürgermeisters gemäß den Vorschlägen der Fraktionen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZYmZlyuxWyiAERLm7ikw9fPYI_dc3qW0rAzKvXasqhq/Sitzungsvorlage_SV-46-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-46/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Ehrenamtliche Stellvertreter des Oberbürgermeisters<span class="sv">SV-46/2024</span><span class="wortlaut">Sonja Wild wird zur 1. ehrenamtlichen Stellvertreterin des Oberbürgermeisters gewählt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZYmZlyuxWyiAERLm7ikw9fPYI_dc3qW0rAzKvXasqhq/Sitzungsvorlage_SV-46-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-46/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Besetzen der beschließenden Ausschüsse 1. Verwaltungsausschuss 2. Ausschuss für Umwelt, Technik und Nachhaltigkeit 3. Betriebsausschuss Städt. Rehakliniken<span class="sv">SV-48/2024</span><span class="wortlaut">Der Gemeinderat stimmt der vorgeschlagenen Ausschussbesetzung zu (siehe Anlage zur Sitzungsvorlage). 1. Verwaltungsausschuss 2. Ausschuss für Umwelt, Technik und Nachhaltigkeit 3. Betriebsausschuss Städt. Rehakliniken</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZ8YlOCp14GPURwHo6o8raznj7f7JY8DgXO5l0Afjpcg/Sitzungsvorlage_SV-48-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-48/2024</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcCtekMhc3w6VHm1XXWDyCwKIR3dVgMOezAkdlx_Kp_I/TOP_3_-_Besetzen_beschliessender_Ausschuesse.pdf" target="_blank" rel="noopener noreferrer">TOP 3 - Besetzen beschließender Ausschüsse</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Bestellen von Mitglieder für 1. Arbeitskreis Kinder, Jugend und Bildung 2. Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute 3. B 30 Ausschuss 4. Kulturbeirat<span class="sv">SV-49/2024</span><span class="wortlaut">Der Gemeinderat stimmt den vorgeschlagenen Besetzungen folgender Arbeitskreise und Ausschüsse durch einstimmigen Beschluss zu: 1. Arbeitskreis Kinder, Jugend und Bildung 2. Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute 3. B 30 Ausschuss 4. Kulturbeirat</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUubRlK0neJQgUjQe4nz8NgyFNlMkAS7hG3MBD55f8SF/Sitzungsvorlage_SV-49-2024_1._Ergaenzung_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-49/2024 1. Ergänzung 1. Nachtrag</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcXUBR5GAZ8Oq3C-jDejJGlvDo9M8m6HDgVV8aFBol5w/TOP_4_-_Berufen_von_Mitgliedern_-_Vertreter_in_Ausschuessen_-_Arbeitskreisen.pdf" target="_blank" rel="noopener noreferrer">TOP 4 - Berufen von Mitgliedern - Vertreter in Ausschüssen + Arbeitskreisen</a></span></span><span class="erg">Einstimmig</span></li>
@@ -585,6 +637,14 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <section class="kolophon">
   <p class="rubrik">Zur Ausgabe</p>
+  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+  <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
+  nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
+  ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
+  Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
+  Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
@@ -593,9 +653,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
   Ja : Nein : Enthaltungen.</p>
   <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Auf feste
-  Direktlinks wird verzichtet, weil die Dokument-URLs sitzungsgebundene Token enthalten
-  und nicht dauerhaft gültig bleiben.</p>
+  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
+  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
+  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
+  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
   <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
@@ -623,7 +684,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <footer><div class="wrap">
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 29/2024 &middot; erzeugt am 10.09.2026</p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 29/2024 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 </body>
 </html>

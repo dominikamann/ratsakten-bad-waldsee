@@ -460,6 +460,29 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   .brandbar .wrap{padding-left:16px;padding-right:16px}
   .kasten,.befund{padding-left:14px;padding-right:14px}
 }
+
+/* ---------- Fundstelle unter einer Begriffserklaerung ---------- */
+.kasten .fundstelle{
+  margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
+
+/* ---------- Begriffsliste einer Ausgabe ---------- */
+details.begriffe{margin:18px 0 4px;border-top:1px solid var(--rule)}
+details.begriffe > summary{
+  cursor:pointer;padding:10px 0;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s2);
+}
+details.begriffe .begriff{padding:10px 0 14px;border-top:1px solid var(--rule)}
+details.begriffe .wort{
+  margin:0 0 5px;font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-weight:700;font-size:15px;color:var(--fg);
+}
+details.begriffe .begriff p{margin:0;max-width:62ch;font-size:14.5px;line-height:1.6}
+details.begriffe .fundstelle{
+  margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
 </style>
 </head>
 <body>
@@ -467,6 +490,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
     <a href="../../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../gremien.html">Wer entscheidet was</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../themen/index.html">Themen</a>
     <span aria-hidden="true">/</span>
     <a href="../../suche.html">Suche</a>
     <span aria-hidden="true">/</span>
@@ -493,7 +520,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <article id="auffaelligkeiten">
   <div class="rail">
-    <div class="field"><span class="lab">Hinweise</span><span class="val">3</span></div>
+    <div class="field"><span class="lab">Hinweise</span><span class="val">4</span></div>
     <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
@@ -503,6 +530,9 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
+    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
+    abgeschlossen oder aufgearbeitet wurde.</p>
     <div class="kasten warn">
       <p class="lab">Größere Beträge</p>
       <p>In diesen Beschlusstexten steht ein Betrag ab 250.000 €. Haushalts- und Wirtschaftspläne enthalten naturgemäß große Summen.</p>
@@ -519,13 +549,50 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
         <li><span class="sache">SV-198/2024 — zuvor am 25.11.2024</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
-      <p class="lab">Ohne Protokoll</p>
-      <p>1 öffentliche Sitzung im Berichtszeitraum, zu denen kein Protokoll veröffentlicht wurde.</p>
+    <div class="kasten">
+      <p class="lab">Verfahren abgeschlossen</p>
+      <p>Ein Planverfahren endet damit, dass das Ergebnis als Satzung beschlossen wird. Das Verfahren ist dann abgeschlossen — über die Qualität des Ergebnisses sagt das nichts, wohl aber, dass es nicht liegen geblieben ist.</p>
       <ul class="beschluesse kompakt">
-        <li><span class="sache">Ortschaftsrat Mittelurbach am 04.12.2024</span></li>
+        <li><span class="sache">SV-149/2024 — Bebauungsplan Teilbereich A "Drei-Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Satzungsbeschluss</span></li>
       </ul>
     </div>
+    <div class="kasten">
+      <p class="lab">Durchweg einstimmig</p>
+      <p>Alle 6 Beschlüsse dieser Woche fielen einstimmig. Das kann breiten Konsens abbilden; Beschlussprotokolle halten keine Aussprache fest, aus ihnen allein ist das nicht zu unterscheiden.</p>
+    </div>
+  </div>
+</article>
+
+<article id="begriffe">
+  <div class="rail">
+    <div class="field"><span class="lab">Begriffe</span><span class="val">3</span></div>
+    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Begriffe</p>
+    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
+    <h2 class="headline">Was die Amtssprache meint</h2>
+    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
+    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
+    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
+    <details class="begriffe" open>
+      <summary>3 Begriffe in dieser Ausgabe</summary>
+      <div class="begriff">
+        <p class="wort">Abwägung</p>
+        <p>Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.</p>
+        <p class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Satzungsbeschluss</p>
+        <p>Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.</p>
+        <p class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Ortschaftsrat</p>
+        <p>Jede der vier Ortschaften hat einen eigenen Rat. Er berät die örtliche Verwaltung und ist zu wichtigen Angelegenheiten seiner Ortschaft zu hören. Darüber hinaus sind ihm bestimmte Entscheidungen übertragen, etwa die Bewirtschaftung von Haushaltsmitteln über 3.000 € bis 26.000 € im Einzelfall.</p>
+        <p class="fundstelle">§ 16 Hauptsatzung der Stadt Bad Waldsee</p>
+      </div>
+    </details>
   </div>
 </article>
 
@@ -539,11 +606,11 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <p class="rubrik">Beschlossen · GR</p>
     <h2 class="headline">6 Beschlüsse am 2. Dezember 2024</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Bebauungsplan Teilbereich A "Drei-Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Satzungsbeschluss<span class="sv">SV-149/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 04.11.2024 enthaltenen Beschlussvorschlägen abgewogen. 2. Der Bebauungsplan für den Teilbereich A „Drei Eichen VI“ und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren, werden gemäß den übersandten Sitzungsunter - lagen in der Fassung vom 04.11.2024 und dem Satzungsentwurf auf den Seiten 47 und 48 als Satzung beschlossen. 3. Die Verwaltung wird beauftragt, den Bebauungsplan für den Teilbereich A „Drei Eichen VI“ und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren, öffentlich bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbgpNujQzUMy5RNEzlamqjFjoSgsf1m_KmHAj09-O1So/Sitzungsvorlage_SV-149-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-149/2024</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Bebauungsplan Teilbereich A "Drei-Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Satzungsbeschluss<span class="sv">SV-149/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 04.11.2024 enthaltenen Beschlussvorschlägen abgewogen. 2. Der Bebauungsplan für den Teilbereich A „Drei Eichen VI“ und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren, werden gemäß den übersandten Sitzungsunterlagen in der Fassung vom 04.11.2024 und dem Satzungsentwurf auf den Seiten 47 und 48 als Satzung beschlossen. 3. Die Verwaltung wird beauftragt, den Bebauungsplan für den Teilbereich A „Drei Eichen VI“ und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren, öffentlich bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbgpNujQzUMy5RNEzlamqjFjoSgsf1m_KmHAj09-O1So/Sitzungsvorlage_SV-149-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-149/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Verkaufsoffener Sonntag im Frühling: Ferien- und feiertagsbedingte Erweiterung des Zeitraums der Durchführung des verkaufsoffenen Sonntags um den Monat Mai<span class="sv">SV-180/2024</span><span class="wortlaut">Der Änderung der Satzung zum Offenhalten von Einzelhandelsgeschäften an einem Sonntag im März, April oder Mai wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZddiqK1lYcQOb1StekAjxvvI51drVd0v3wWFq-8xtOxC/Sitzungsvorlage_SV-180-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-180/2024</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYTkQ1sKWVgFS7reByLdjTmbqPjIOzm4vwV80ZhziObH/Kultursonntag_Satzung_2024.pdf" target="_blank" rel="noopener noreferrer">Kultursonntag Satzung 2024</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Straßenbauarbeiten an der L 285 zwischen Gaisbeuren und Reute - flankierende städtische Maßnahmen - Durchführungsbeschluss<span class="sv">SV-176/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">850.000 €</span></span><span class="wortlaut">1. Der Durchführung von flankierenden städtischen Maßnahmen im Zusammenhang mit den Straßenbaumaßnahmen des Regierungspräsidiums im Zuge der L 285 zwischen Gaisbeuren bis zur Brücke über den Durlesbach in Reute wird zugestimmt. 2. Die Verwaltung wird ermächtigt, die notwendige Vereinbarung über die Umsetzungsmodalitäten und die Kostenverteilung mit den beteiligten Akteuren (u.a. Land) abzuschließen. In dieser Vereinbarung werden auch die Kosten für die Bauleitung des Projektes durch das Regierungspräsidium geregelt. 3. Der Vergabe der notwendigen ergänzenden Ingenieurleistungen für flankierende städtische Maßnahmen für die Leistungsphasen 5-7 (HOAI) sowie weiterer Beratungsleistungen (z.B. Vermessung und geotechnische Untersuchungen) wird zugestimmt. 4. Die Gesamtkosten der Großen Kreisstadt Bad Waldsee belaufen sich voraussichtlich auf 850.000 €. Im Falle einer Zuschussfähigkeit mehrerer Projektbestandteile dürfte ein Zuschuss in Größenordnung von ca. 120.000 € zu erwarten sein. Die Finanzierung erfolgt über den Haus - haltsplan 2025 ff.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQ1qWVsY06-QOPNJId_KymeNTIqyXyvmWzaUllZud3ZU/Sitzungsvorlage_SV-176-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-176/2024</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUFp8leye2s-zARt7nZHNRYQM6MFeC3owTbiAaZ3bwAm/L_285_FDE_Ziff_3_GR_DB_SV_Anlage_1_UeLP_Baubereich_Bu_2024-11-22.pdf" target="_blank" rel="noopener noreferrer">L 285 FDE Ziff_3 GR DB SV Anlage 1 ÜLP Baubereich Bu 2024-11-22</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Straßenbauarbeiten an der L 285 zwischen Gaisbeuren und Reute - flankierende städtische Maßnahmen - Durchführungsbeschluss<span class="sv">SV-176/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">850.000 €</span></span><span class="wortlaut">1. Der Durchführung von flankierenden städtischen Maßnahmen im Zusammenhang mit den Straßenbaumaßnahmen des Regierungspräsidiums im Zuge der L 285 zwischen Gaisbeuren bis zur Brücke über den Durlesbach in Reute wird zugestimmt. 2. Die Verwaltung wird ermächtigt, die notwendige Vereinbarung über die Umsetzungsmodalitäten und die Kostenverteilung mit den beteiligten Akteuren (u.a. Land) abzuschließen. In dieser Vereinbarung werden auch die Kosten für die Bauleitung des Projektes durch das Regierungspräsidium geregelt. 3. Der Vergabe der notwendigen ergänzenden Ingenieurleistungen für flankierende städtische Maßnahmen für die Leistungsphasen 5-7 (HOAI) sowie weiterer Beratungsleistungen (z.B. Vermessung und geotechnische Untersuchungen) wird zugestimmt. 4. Die Gesamtkosten der Großen Kreisstadt Bad Waldsee belaufen sich voraussichtlich auf 850.000 €. Im Falle einer Zuschussfähigkeit mehrerer Projektbestandteile dürfte ein Zuschuss in Größenordnung von ca. 120.000 € zu erwarten sein. Die Finanzierung erfolgt über den Haushaltsplan 2025 ff.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQ1qWVsY06-QOPNJId_KymeNTIqyXyvmWzaUllZud3ZU/Sitzungsvorlage_SV-176-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-176/2024</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUFp8leye2s-zARt7nZHNRYQM6MFeC3owTbiAaZ3bwAm/L_285_FDE_Ziff_3_GR_DB_SV_Anlage_1_UeLP_Baubereich_Bu_2024-11-22.pdf" target="_blank" rel="noopener noreferrer">L 285 FDE Ziff_3 GR DB SV Anlage 1 ÜLP Baubereich Bu 2024-11-22</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Beitrag zur Jugendsportförderung für die Nutzung der Eugen-Bolz-Halle<span class="sv">SV-216/2024</span><span class="wortlaut">1. Der Zuschuss an die Sportgemeinschaft zur Unterstützung des Jugendsports für die Anmietung der Hallenkapazität wird ab dem Jahr 2025 erhöht. Die Stadt Bad Waldsee trägt den Kostenanteil für die Nutzung der EBS-Halle für die Jahre 2025 bis 2027, der den Betrag von 12.000 Euro übersteigt. 2. Die Stadt wird ermächtigt, den Zuschuss anzupassen, wenn das Hallennutzungsentgelt erhöht wird. 3. Ab dem Jahr 2028 trägt die Stadt Bad Waldsee 50 % des Entgelts für die Nutzung der EBS- Halle.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcwd9EM2ocg-Jyr_YaM9fee4xqC95IoKeipeAqFTB3TM/Sitzungsvorlage_SV-216-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-216/2024</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Eigenbetrieb Städtische Abwasserbeseitigung - Feststellung der Gebührennachkalkulation, Festlegung des neuen Gebührensatzes sowie Änderung der Abwassersatzung<span class="sv">SV-198/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">984.354 €</span></span><span class="wortlaut">1. Die Gebührenüberdeckung des Kalkulationszeitraumes 2021 - 2022 in Höhe von insgesamt 984.354,11 € wird festgestellt und in die Gebührenkalkulation 2025 bis 2026 eingestellt. 2. Die vorliegende Gebührenkalkulation für die Jahre 2025-2026 wird mit dem Beschlussvorschlag in der Anlage 2 und den ermittelten Gebührensätzen in Höhe von 2,63 € / m³ Schmutzwasser und 0,71 € / m² versiegelter Fläche für das Niederschlagswasser beschlossen. Die Gebühren - überdeckungen aus den Vorjahren werden beim jeweiligen Gebührensatz berücksichtigt. 3. Die Satzung zur Änderung der Abwassersatzung zum 01.01.2025 wird beschlossen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYoVsHApuze51YTmOYVru3N49uU4j7Elq41I0BaGZDR6/Sitzungsvorlage_SV-198-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-198/2024</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Eigenbetrieb Städtische Abwasserbeseitigung - Feststellung der Gebührennachkalkulation, Festlegung des neuen Gebührensatzes sowie Änderung der Abwassersatzung<span class="sv">SV-198/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">984.354 €</span></span><span class="wortlaut">1. Die Gebührenüberdeckung des Kalkulationszeitraumes 2021 - 2022 in Höhe von insgesamt 984.354,11 € wird festgestellt und in die Gebührenkalkulation 2025 bis 2026 eingestellt. 2. Die vorliegende Gebührenkalkulation für die Jahre 2025-2026 wird mit dem Beschlussvorschlag in der Anlage 2 und den ermittelten Gebührensätzen in Höhe von 2,63 € / m³ Schmutzwasser und 0,71 € / m² versiegelter Fläche für das Niederschlagswasser beschlossen. Die Gebührenüberdeckungen aus den Vorjahren werden beim jeweiligen Gebührensatz berücksichtigt. 3. Die Satzung zur Änderung der Abwassersatzung zum 01.01.2025 wird beschlossen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYoVsHApuze51YTmOYVru3N49uU4j7Elq41I0BaGZDR6/Sitzungsvorlage_SV-198-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-198/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Landesgartenschau in Bad Waldsee - Bewerbung<span class="sv">SV-231/2024</span><span class="wortlaut">1. Der Bewerbung für eine Landesgartenschau in Bad Waldsee wird zugestimmt. 2. Die Fa. Senner wird mit der Erarbeitung des Konzepts beauftragt. 3. Die Kosten von voraussichtlich 103.000 Euro werden im Haushaltsplan 2025 bereitgestellt.</span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
@@ -601,6 +668,14 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <section class="kolophon">
   <p class="rubrik">Zur Ausgabe</p>
+  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+  <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
+  nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
+  ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
+  Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
+  Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
@@ -609,9 +684,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
   Ja : Nein : Enthaltungen.</p>
   <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Auf feste
-  Direktlinks wird verzichtet, weil die Dokument-URLs sitzungsgebundene Token enthalten
-  und nicht dauerhaft gültig bleiben.</p>
+  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
+  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
+  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
+  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
   <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
@@ -639,7 +715,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <footer><div class="wrap">
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 49/2024 &middot; erzeugt am 10.09.2026</p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 49/2024 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 </body>
 </html>

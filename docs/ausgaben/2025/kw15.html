@@ -460,6 +460,29 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   .brandbar .wrap{padding-left:16px;padding-right:16px}
   .kasten,.befund{padding-left:14px;padding-right:14px}
 }
+
+/* ---------- Fundstelle unter einer Begriffserklaerung ---------- */
+.kasten .fundstelle{
+  margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
+
+/* ---------- Begriffsliste einer Ausgabe ---------- */
+details.begriffe{margin:18px 0 4px;border-top:1px solid var(--rule)}
+details.begriffe > summary{
+  cursor:pointer;padding:10px 0;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--s2);
+}
+details.begriffe .begriff{padding:10px 0 14px;border-top:1px solid var(--rule)}
+details.begriffe .wort{
+  margin:0 0 5px;font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-weight:700;font-size:15px;color:var(--fg);
+}
+details.begriffe .begriff p{margin:0;max-width:62ch;font-size:14.5px;line-height:1.6}
+details.begriffe .fundstelle{
+  margin-top:7px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  line-height:1.5;color:var(--muted);
+}
 </style>
 </head>
 <body>
@@ -467,6 +490,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
     <a href="../../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../gremien.html">Wer entscheidet was</a>
+    <span aria-hidden="true">/</span>
+    <a href="../../themen/index.html">Themen</a>
     <span aria-hidden="true">/</span>
     <a href="../../suche.html">Suche</a>
     <span aria-hidden="true">/</span>
@@ -493,7 +520,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <article id="auffaelligkeiten">
   <div class="rail">
-    <div class="field"><span class="lab">Hinweise</span><span class="val">2</span></div>
+    <div class="field"><span class="lab">Hinweise</span><span class="val">3</span></div>
     <div class="field"><span class="lab">Erzeugt</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
@@ -503,6 +530,9 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
+    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
+    abgeschlossen oder aufgearbeitet wurde.</p>
     <div class="kasten warn">
       <p class="lab">Nicht einstimmig</p>
       <p>2 von 6 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
@@ -518,12 +548,57 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
         <li><span class="sache">335.000 € — SV-31/2025 Kläranlage Bad Waldsee: Erneuerung der Klärschlammpresse</span></li>
       </ul>
     </div>
+    <div class="kasten">
+      <p class="lab">Verfahren abgeschlossen</p>
+      <p>Ein Planverfahren endet damit, dass das Ergebnis als Satzung beschlossen wird. Das Verfahren ist dann abgeschlossen — über die Qualität des Ergebnisses sagt das nichts, wohl aber, dass es nicht liegen geblieben ist.</p>
+      <ul class="beschluesse kompakt">
+        <li><span class="sache">SV-5/2025 — Bebauungsplan "Drei-Eichen VI" (Teilbereich B) und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren - Abwägung und Satzungsbeschluss</span></li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<article id="begriffe">
+  <div class="rail">
+    <div class="field"><span class="lab">Begriffe</span><span class="val">4</span></div>
+    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Begriffe</p>
+    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
+    <h2 class="headline">Was die Amtssprache meint</h2>
+    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
+    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
+    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
+    <details class="begriffe" open>
+      <summary>4 Begriffe in dieser Ausgabe</summary>
+      <div class="begriff">
+        <p class="wort">Gemeinsamer Ausschuss</p>
+        <p>Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.</p>
+        <p class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Flächennutzungsplan</p>
+        <p>Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht erst über den Bebauungsplan.</p>
+        <p class="fundstelle">§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Abwägung</p>
+        <p>Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.</p>
+        <p class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</p>
+      </div>
+      <div class="begriff">
+        <p class="wort">Satzungsbeschluss</p>
+        <p>Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.</p>
+        <p class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</p>
+      </div>
+    </details>
   </div>
 </article>
 
 <article>
   <div class="rail">
-    <div class="field"><span class="lab">Sitzung</span><span class="val">Ausschuss für Umwelt</span></div>
+    <div class="field"><span class="lab">Sitzung</span><span class="val">Ausschuss für Umwelt, Technik und Nachhaltigkeit</span></div>
     <div class="field"><span class="lab">Datum</span><span class="val">07.04.2025</span></div>
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">5</span></div>
   </div>
@@ -533,7 +608,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
     <ul class="beschluesse">
       <li><span class="sache">Kläranlage Bad Waldsee: Durchführungsbeschluss für den Bau eines Nachklärbeckens<span class="sv">SV-29/2025</span><span class="wortlaut">1. Dem Durchführungsbeschluss zum Neubau eines Nachklärbeckens auf der Kläranlage Bad Waldsee mit Kosten von ca. 3,5 Millionen € wird zugestimmt. 2. Die Verwaltung wird beauftragt, die Arbeiten auszuschreiben und zu vergeben. 3. Die Finanzierung erfolgt über den Vermögensplan des Wirtschaftsplans 2025 des Eigenbetriebs Städt. Abwasserbeseitigung, Konto 0886.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSpOlgKfnopo9Z6BcGgFh1bcPT5Imi1dxlZpdlG7zDdk/Sitzungsvorlage_SV-29-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-29/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Kläranlage Bad Waldsee: Erneuerung der Klärschlammpresse<span class="sv">SV-31/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">335.000 €</span></span><span class="wortlaut">1. Der Erneuerung der Klärschlammpresse auf der Kläranlage Bad Waldsee mit Kosten von ca. 335.000 € wird zugestimmt. 2. Die Verwaltung wird beauftragt, die Arbeiten auszuschreiben und zu vergeben. 3. Die Finanzierung erfolgt über den Vermögensplan des Wirtschaftsplans 2025 des Eigenbetriebs Städt. Abwasserbeseitigung Konto 310 und über Einsparungen beim Konto 0430.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZf-jgmPpEKS9GeRakwiOCJGwGRO7fbQyb4TqpYehRXmj/Sitzungsvorlage_SV-31-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-31/2025</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Vorhabenbezogener Bebauungsplan "Frauenbergstraße-Friedhofstraße" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Entwurfsbeschluss<span class="sv">SV-4/2025</span><span class="wortlaut">1. Der vorhabenbezogene Bebauungsplan „Frauenbergstraße-Friedhofstraße“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee, werden gemäß den übersandten Sitzungsunterlagen in der Fassung vom 17.02.2025 als Entwürfe festgestellt. 2. Die Verwaltung wird zum Abschluss des Durchführungsvertrages mit dem Vorhabenträger er - mächtigt. 3. Die Verwaltung wird beauftragt, den Bebauungsplanentwurf für einen Monat öffentlich auszule - gen und die Stellungnahmen der Behörden und sonstigen Träger öffentlicher Belange einzuho - len.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSuldlPol3cRw_Dv3qp7z7gzS6vn0ML3DFqxeHxv-ImM/Sitzungsvorlage_SV-4-2025_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-4/2025 1. Nachtrag</a></span></span><span class="erg split">7 : 0 : 5</span></li>
+      <li><span class="sache">Vorhabenbezogener Bebauungsplan "Frauenbergstraße-Friedhofstraße" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Entwurfsbeschluss<span class="sv">SV-4/2025</span><span class="wortlaut">1. Der vorhabenbezogene Bebauungsplan „Frauenbergstraße-Friedhofstraße“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee, werden gemäß den übersandten Sitzungsunterlagen in der Fassung vom 17.02.2025 als Entwürfe festgestellt. 2. Die Verwaltung wird zum Abschluss des Durchführungsvertrages mit dem Vorhabenträger ermächtigt. 3. Die Verwaltung wird beauftragt, den Bebauungsplanentwurf für einen Monat öffentlich auszulegen und die Stellungnahmen der Behörden und sonstigen Träger öffentlicher Belange einzuholen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSuldlPol3cRw_Dv3qp7z7gzS6vn0ML3DFqxeHxv-ImM/Sitzungsvorlage_SV-4-2025_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-4/2025 1. Nachtrag</a></span></span><span class="erg split">7 : 0 : 5</span></li>
       <li><span class="sache">Bebauungsplan "Drei-Eichen VI" (Teilbereich B) und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren - Abwägung und Satzungsbeschluss<span class="sv">SV-5/2025</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 07.01.2025 enthaltenen Beschlussvorschlägen abgewogen. 2. Der Bebauungsplan für den Teilbereich B „Drei Eichen VI“ und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren, werden gemäß den übersandten Sitzungsunterlagen in der Fassung vom 04.11.2024 und dem Satzungsentwurf auf den Seiten 47 und 48 als Satzung beschlossen. 3. Die Verwaltung wird beauftragt, den Bebauungsplan für den Teilbereich B „Drei Eichen VI“ und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren öffentlich bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYhL8rce2qHnXP3LloubESZUJbA2xWn8g4z9ab-g6Ijy/Sitzungsvorlage_SV-5-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-5/2025</a></span></span><span class="erg split">10 : 0 : 2</span></li>
       <li><span class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung und Feststellungsbeschluss<span class="sv">SV-13/2025</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 14.03.2025 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 20. Änderung des Flächennutzungsplans für die Wohnbaufläche „Drei Eichen VI“ Teilbereich B sowie für die Fläche für Landwirtschaft südlich des Durlesbachs, Gemarkungen Reute und Gaisbeuren, wird in der übersandten Planfassung vom 16.12.2024 festgestellt. 3. Die Verwaltung wird beauftragt, beim Regierungspräsidium Tübingen die Genehmigung zu be - antragen und die Bekanntmachung zu veranlassen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQjFfN6l8yLE3Jy20ZsV8YWPV3gYxZ4zqh5Xgo9ybR8N/Sitzungsvorlage_SV-13-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-13/2025</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
@@ -584,6 +659,14 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <section class="kolophon">
   <p class="rubrik">Zur Ausgabe</p>
+  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+  <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
+  nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
+  ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
+  Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
+  Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
@@ -592,9 +675,10 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
   Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
   Ja : Nein : Enthaltungen.</p>
   <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Auf feste
-  Direktlinks wird verzichtet, weil die Dokument-URLs sitzungsgebundene Token enthalten
-  und nicht dauerhaft gültig bleiben.</p>
+  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
+  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
+  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
+  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
   <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
@@ -622,7 +706,7 @@ ul.beschluesse .unterlagen a:focus-visible{outline:2px solid var(--s1);outline-o
 
 <footer><div class="wrap">
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 15/2025 &middot; erzeugt am 10.09.2026</p>
+  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 15/2025 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 </body>
 </html>
