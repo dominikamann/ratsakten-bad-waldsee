@@ -42,9 +42,6 @@ def kopf(titel: str) -> str:
 <style>{stil}</style>
 <style>
 /* Nur auf dieser Seite gebraucht: Vorspann und Fundstellenzeile. */
-.eyebrow{{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--s2);margin:0 0 10px}}
-.lede{{font-size:clamp(17px,2vw,19px);line-height:1.55;color:var(--fg);max-width:62ch}}
 .quelle{{font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.5;
   color:var(--muted);border-top:1px solid var(--rule);padding-top:8px;
   margin:14px 0 30px;max-width:62ch}}
@@ -105,8 +102,14 @@ def main() -> None:
   und manches entscheidet die Stadt gar nicht. Diese Seite ordnet ein, wer in Bad
   Waldsee wofür zuständig ist. Sie ist die Lesehilfe für alles Übrige auf dieser
   Website.</p>
-  <p class="herkunft geprueft">Beleg &middot; Hauptsatzung, Gemeindeordnung, Baugesetzbuch</p>
 </header>
+
+<div class="issueline">
+  <span><b>Gremien</b> {len(gremien)}</span>
+  <span><b>Sitzungen</b> {sum(v["sitzungen"] for v in gremien.values())}</span>
+  <span><b>Stand</b> {zeitraum}</span>
+  <span><b>Herkunft</b> Beleg &middot; Hauptsatzung, Gemeindeordnung, Baugesetzbuch</span>
+</div>
 
 <h2 class="headline">Der Gemeinderat</h2>
 <p>Der Gemeinderat ist nach der Hauptsatzung „die Vertretung der Bürger und das

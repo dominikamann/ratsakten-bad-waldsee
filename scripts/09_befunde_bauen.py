@@ -304,6 +304,7 @@ def bauen() -> str:
 
 <div class="wrap">
 <header class="masthead">
+  <p class="eyebrow">Erkenntnisse &middot; gesammelt</p>
   <h1>Befunde</h1>
   <p class="claim">Was die Auswertung zutage gefördert hat — Eingehaltenes wie
   Kritisches, an einem Ort statt verstreut über Report und Wochenausgaben.</p>

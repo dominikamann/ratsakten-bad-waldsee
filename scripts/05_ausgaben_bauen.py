@@ -561,6 +561,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     t = [kopf(f"Aktenlage KW {kw}/{jahr}", hoch="../../"), '<div class="wrap">']
     t.append(f"""
 <header class="masthead">
+  <p class="eyebrow">Aktenlage &middot; Wochenausgabe</p>
   <h1>Waldseer Aktenlage</h1>
   <p class="claim">Was der Gemeinderat und seine Ausschüsse entschieden haben —
   gelesen aus den Originalunterlagen.</p>
@@ -868,6 +869,7 @@ def archiv_bauen(register: dict) -> str:
     t = [kopf("Aktenlage — Archiv", hoch="../", hier="archiv", lesen=True), '<div class="wrap">']
     t.append(f"""
 <header class="masthead">
+  <p class="eyebrow">Aktenlage &middot; Archiv</p>
   <h1>Aktenlage &middot; Archiv</h1>
   <p class="claim">Alle bisher erschienenen Ausgaben der Waldseer Aktenlage.</p>
   <div class="issueline">

@@ -52,9 +52,6 @@ def kopf(titel: str) -> str:
 <style>{stil}</style>
 <style>
 /* Nur diese Seite braucht die Kalenderliste. */
-.eyebrow{{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--s2);margin:0 0 10px}}
-.lede{{font-size:clamp(16px,2vw,18px);line-height:1.55;color:var(--muted);max-width:62ch}}
 ol.kalender{{list-style:none;margin:18px 0 0;padding:0}}
 ol.kalender > li{{padding:13px 0 15px;border-top:1px solid var(--rule)}}
 ol.kalender > li:last-child{{border-bottom:1px solid var(--rule)}}
@@ -89,6 +86,28 @@ ol.tops .doc{{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--s
   text-transform:uppercase;color:var(--s1);scroll-margin-top:16px;
 }}
 .heute::before,.heute::after{{content:"";flex:1;height:1px;background:var(--s1);opacity:.4}}
+li.marke,li.jahrmarke{{
+  border-top:none;padding:22px 0 8px;display:flex;align-items:center;gap:14px;
+  font-family:"IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
+}}
+li.marke::before,li.marke::after,li.jahrmarke::after{{
+  content:"";flex:1;height:1px;background:currentColor;opacity:.3;
+}}
+li.marke{{color:var(--s1);font-size:11.5px;scroll-margin-top:14px}}
+li.jahrmarke{{color:var(--s2);font-size:12px;scroll-margin-top:14px}}
+li.jahrmarke span{{order:-1}}
+.sprungmarken{{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:22px 0 0;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;
+}}
+.sprungmarken .jetzt{{
+  padding:7px 14px;border:1px solid var(--s1);color:var(--s1);text-decoration:none;
+}}
+.sprungmarken .jetzt:hover{{background:rgba(57,135,229,.10)}}
+.sprungmarken .jahre{{display:flex;gap:12px;color:var(--muted)}}
+.sprungmarken .jahre a{{color:var(--muted);text-decoration:none}}
+.sprungmarken .jahre a:hover{{color:var(--s1)}}
 h2.abschnitt{{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--s2);margin:34px 0 0;font-weight:400;
@@ -160,41 +179,58 @@ def main() -> None:
     kennzahlen = json.loads((DATEN / "kennzahlen.json").read_text(encoding="utf-8"))
     heute = dt.date.fromisoformat(kennzahlen["stichtag"])
 
+    # Eine durchgehende Chronik, aelteste Sitzung zuerst. Zwei gegenlaeufige
+    # Listen — Kuenftiges vorwaerts, Vergangenes rueckwaerts — lasen sich beim
+    # Scrollen wie ein Bruch. Der heutige Tag steht an seiner Stelle in der
+    # Reihe; dorthin fuehrt eine Sprungmarke.
+    termine.sort(key=lambda t: (t["datum"], t["zeit"]))
     kuenftig = [t for t in termine if dt.date.fromisoformat(t["datum"]) > heute]
-    vergangen = [t for t in termine if dt.date.fromisoformat(t["datum"]) <= heute]
-    kuenftig.sort(key=lambda t: t["datum"])
-    vergangen.sort(key=lambda t: t["datum"], reverse=True)
-
     mit_agenda = sum(1 for t in kuenftig if t.get("punkte"))
+
+    zeilen: list[str] = []
+    jahr_gesetzt: set[int] = set()
+    heute_gesetzt = False
+    for x in termine:
+        d = dt.date.fromisoformat(x["datum"])
+        if not heute_gesetzt and d > heute:
+            zeilen.append(f'  <li class="marke" id="heute"><span>Heute &middot; '
+                          f'{lang(heute)}</span></li>')
+            heute_gesetzt = True
+        if d.year not in jahr_gesetzt:
+            jahr_gesetzt.add(d.year)
+            zeilen.append(f'  <li class="jahrmarke" id="jahr{d.year}"><span>{d.year}</span></li>')
+        zeilen.append(eintrag(x, register, d <= heute))
+    if not heute_gesetzt:                     # alle Termine liegen zurueck
+        zeilen.append(f'  <li class="marke" id="heute"><span>Heute &middot; '
+                      f'{lang(heute)}</span></li>')
+
+    jahre = sorted(jahr_gesetzt)
+    sprung = " &middot; ".join(f'<a href="#jahr{j}">{j}</a>' for j in jahre)
 
     t = [kopf("Termine"), '<div class="wrap">']
     t.append(f"""
 <header>
   <p class="eyebrow">Sitzungskalender</p>
   <h1>Termine</h1>
-  <p class="lede">Alle öffentlichen Sitzungen der Stadt — was ansteht und was war.
-  Die Sitzungen sind öffentlich, soweit nicht ausdrücklich nichtöffentlich beraten
-  wird; wer hingehen möchte, kann das ohne Anmeldung.</p>
-  <p class="herkunft regel">Regelbasiert zusammengestellt · keine Deutung</p>
+  <p class="lede">Alle öffentlichen Sitzungen der Stadt in einer durchgehenden Reihe —
+  von der ersten erfassten Sitzung bis zum letzten angekündigten Termin. Die Sitzungen
+  sind öffentlich, soweit nicht ausdrücklich nichtöffentlich beraten wird; wer hingehen
+  möchte, kann das ohne Anmeldung.</p>
 </header>
 
-<div class="rail">
-  <div class="field"><span class="lab">Termine</span><span class="val">{len(termine)}</span></div>
-  <div class="field"><span class="lab">Angekündigt</span><span class="val">{len(kuenftig)}</span></div>
-  <div class="field"><span class="lab">Mit Tagesordnung</span><span class="val">{mit_agenda}</span></div>
-  <div class="field"><span class="lab">Stand</span><span class="val">{lang(heute)}</span></div>
+<div class="issueline">
+  <span><b>Termine</b> {len(termine)}</span>
+  <span><b>angekündigt</b> {len(kuenftig)}</span>
+  <span><b>mit Tagesordnung</b> {mit_agenda}</span>
+  <span><b>Stand</b> {lang(heute)}</span>
+  <span><b>Herkunft</b> regelbasiert gezählt</span>
 </div>
 
-<h2 class="abschnitt">Was ansteht</h2>
-<ol class="kalender">
-{chr(10).join(eintrag(x, register, False) for x in kuenftig)}
-</ol>
+<p class="sprungmarken"><a class="jetzt" href="#heute">Zum heutigen Tag</a>
+<span class="jahre">{sprung}</span></p>
 
-<p class="heute" id="heute">Heute &middot; {lang(heute)}</p>
-
-<h2 class="abschnitt">Was war</h2>
 <ol class="kalender">
-{chr(10).join(eintrag(x, register, True) for x in vergangen)}
+{chr(10).join(zeilen)}
 </ol>
 """)
     t.append("</div>")
@@ -211,9 +247,8 @@ def main() -> None:
 
     ziel = DOCS / "termine.html"
     ziel.write_text("\n".join(t), encoding="utf-8")
-    print(f"  {ziel.relative_to(WURZEL)}  —  {len(kuenftig)} angekündigt, "
-          f"{len(vergangen)} vergangen, {ziel.stat().st_size // 1024} KB")
-
+    print(f"  {ziel.relative_to(WURZEL)}  —  {len(termine)} Termine, "
+          f"{len(kuenftig)} angekündigt, {ziel.stat().st_size // 1024} KB")
 
 if __name__ == "__main__":
     main()

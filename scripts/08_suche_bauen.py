@@ -553,6 +553,7 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 
 <div class="wrap">
 <header class="masthead">
+  <p class="eyebrow">Vorgänge &middot; durchsuchbar</p>
   <h1>Vorg&auml;nge</h1>
   <p class="claim">Jeder Vorgang mit seinem Weg durch die Gremien — von der ersten
   Beratung bis zum Beschluss. Mitdurchsucht werden die redaktionellen

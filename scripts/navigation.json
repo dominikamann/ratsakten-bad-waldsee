@@ -1,6 +1,6 @@
 [
   {"ziel": "index.html",          "text": "Startseite",          "name": "start"},
-  {"ziel": "termine.html",        "text": "Termine",             "name": "termine"},
+  {"ziel": "termine.html#heute",  "text": "Termine",             "name": "termine"},
   {"ziel": "themen/index.html",   "text": "Themen",              "name": "themen"},
   {"ziel": "suche.html",          "text": "Suche",               "name": "suche"},
   {"ziel": "befunde.html",        "text": "Befunde",             "name": "befunde"},

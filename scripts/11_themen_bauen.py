@@ -57,9 +57,6 @@ def kopf(titel: str, hoch: str, hier: str = "") -> str:
 <style>{stil}</style>
 <style>
 /* Nur die Themenseiten brauchen diese Stile. */
-.eyebrow{{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--s2);margin:0 0 10px}}
-.lede{{font-size:clamp(16px,2vw,18px);line-height:1.55;color:var(--muted);max-width:62ch}}
 .quelle{{margin:8px 0 0;font-family:"IBM Plex Mono",monospace;font-size:11px;
   letter-spacing:.06em;text-transform:uppercase}}
 ol.chronik{{list-style:none;margin:26px 0 0;padding:0;counter-reset:station}}
@@ -152,15 +149,15 @@ def seite_bauen(vg: dict) -> str:
   <p class="eyebrow">Vorhaben</p>
   <h1>{e(vg['t'])}</h1>
   {f'<p class="lede">{e(vg["u"])}</p>' if vg.get("u") else ""}
-  <p class="herkunft regel">Regelbasiert zusammengestellt · keine Deutung</p>
 </header>
 
-<div class="rail">
-  <div class="field"><span class="lab">Stationen</span><span class="val">{len(stationen)}</span></div>
-  <div class="field"><span class="lab">Zeitraum</span><span class="val">{datum_lang(von)} bis {datum_lang(bis)}</span></div>
-  <div class="field"><span class="lab">Gremien</span><span class="val">{e(', '.join(gremien))}</span></div>
-  <div class="field"><span class="lab">Vorlagen</span><span class="val">{len(nummern)}</span></div>
+<div class="issueline">
+  <span><b>Stationen</b> {len(stationen)}</span>
+  <span><b>Zeitraum</b> {datum_lang(von)} bis {datum_lang(bis)}</span>
+  <span><b>Vorlagen</b> {len(nummern)}</span>
+  <span><b>Herkunft</b> regelbasiert gezählt</span>
 </div>
+<p class="gremienzeile">{e(', '.join(gremien))}</p>
 
 <p>Diese Seite fasst zusammen, was zu diesem Vorhaben in den öffentlichen
 Unterlagen steht — in der Reihenfolge, in der es behandelt wurde. Der Wortlaut
@@ -194,7 +191,6 @@ def index_bauen(auswahl: list[dict]) -> str:
   <p class="lede">Ein Bauleitplan, ein Gerätehaus, ein Solarpark — solche Vorhaben
   ziehen sich über Jahre und durch mehrere Gremien. Die Wochenausgaben zeigen
   jeweils nur einen Ausschnitt davon. Hier steht der ganze Verlauf.</p>
-  <p class="herkunft regel">Regelbasiert zusammengestellt · keine Deutung</p>
 </header>
 
 <p>Aufgenommen ist jedes Vorhaben, das im ausgewerteten Zeitraum
@@ -202,6 +198,12 @@ mindestens {MINDEST_STATIONEN} Mal auf einer Tagesordnung stand. Zugeordnet wird
 über den in Anführungszeichen genannten Namen des Vorhabens; wo die Verwaltung
 einen Vorgang anders benennt, kann eine Station fehlen. Einzelne Beschlüsse
 finden Sie über die <a href="../suche.html">Suche</a>.</p>
+
+<div class="issueline">
+  <span><b>Vorhaben</b> {len(auswahl)}</span>
+  <span><b>Stationen</b> {sum(len(v["s"]) for v in auswahl)}</span>
+  <span><b>Herkunft</b> regelbasiert gezählt</span>
+</div>
 
 <div class="karten">
 {chr(10).join(zeilen)}
