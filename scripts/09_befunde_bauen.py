@@ -251,6 +251,7 @@ def bauen() -> str:
     rpfad = f"./report/{report.name}"
     rname = f"Ratsanalyse, Stand {report.stem[8:10]}.{report.stem[5:7]}.{report.stem[:4]}"
 
+    gut = eingehalten()
     teile = [f"""<!doctype html>
 <html lang="de">
 <head>
@@ -304,13 +305,14 @@ def bauen() -> str:
 <div class="wrap">
 <header class="masthead">
   <h1>Befunde</h1>
-  <p class="claim">Alles, was über das Auszählen hinausgeht — an einem Ort statt
-  verstreut über Report und Wochenausgaben.</p>
+  <p class="claim">Was die Auswertung zutage gefördert hat — Eingehaltenes wie
+  Kritisches, an einem Ort statt verstreut über Report und Wochenausgaben.</p>
   <div class="issueline">
-    <span><b>Befunde</b> {len(befunde)}</span>
+    <span><b>eingehalten</b> {len(gut)}</span>
     <span><b>kritische Beobachtungen</b> {len(beobachtungen)}</span>
+    <span><b>Befunde</b> {len(befunde)}</span>
     <span><b>Einordnungen</b> {len(einordnungen)}</span>
-    <span><b>Herkunft</b> KI-Deutung</span>
+    <span><b>Herkunft</b> gezählt und gedeutet</span>
   </div>
 
   <div class="kasten warn">
@@ -329,6 +331,24 @@ def bauen() -> str:
   </div>
 </header>"""]
 
+    if gut:
+        teile.append("""
+<section class="gruppe">
+  <h2>Was eingehalten wird</h2>
+  <p class="einleitung">Was die Auswertung an eingehaltenen Pflichten und
+  abgeschlossenen Verfahren gefunden hat — ausgezählt nach denselben festen Regeln
+  wie alles Weitere auf dieser Seite. Kein Lob, sondern dieselbe Rechnung in die
+  andere Richtung. Denn eine Auswertung, die nur auf Abweichungen anspringt, ist im
+  Ergebnis eine Wertung, auch wenn jeder einzelne Satz neutral bleibt.</p>""")
+        for titel, text, beleg in gut:
+            teile.append(f"""  <article class="befundblock">
+    <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
+    <h3>{e(titel)}</h3>
+    <p>{e(text)}</p>
+    <p class="evidence">{e(beleg)}</p>
+  </article>""")
+        teile.append("</section>")
+
     teile.append("""
 <section class="gruppe">
   <h2>Kritische Beobachtungen</h2>
@@ -338,24 +358,6 @@ def bauen() -> str:
     for b in beobachtungen:
         teile.append(block(b["titel"], b["absaetze"], rname, rpfad, beleg=b["beleg"]))
     teile.append("</section>")
-
-    gut = eingehalten()
-    if gut:
-        teile.append("""
-<section class="gruppe">
-  <h2>Was eingehalten wird</h2>
-  <p class="einleitung">Dieselben Regeln, andere Richtung. Eine Auswertung, die nur
-  auf Abweichungen anspringt, ist im Ergebnis eine Wertung — auch wenn jeder
-  einzelne Satz neutral bleibt. Hier steht, was die Regeln an Abschlüssen und
-  eingehaltenen Pflichten gefunden haben. Kein Lob, sondern dieselbe Auszählung.</p>""")
-        for titel, text, beleg in gut:
-            teile.append(f"""  <article class="befundblock">
-    <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
-    <h3>{e(titel)}</h3>
-    <p>{e(text)}</p>
-    <p class="evidence">{e(beleg)}</p>
-  </article>""")
-        teile.append("</section>")
 
     teile.append("""
 <section class="gruppe">

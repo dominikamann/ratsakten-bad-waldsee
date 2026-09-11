@@ -181,9 +181,12 @@ def pruefe_readme() -> None:
     text = readme.read_text(encoding="utf-8")
     kennzahlen = json.loads((WURZEL / "data" / "kennzahlen.json").read_text(encoding="utf-8"))
 
+    # Gezaehlt werden die Eintraege selbst, nicht die Ueberschriften: Unter den
+    # <h3> steckt auch die des Kolophons („Warum diese Seite existiert"). Diese
+    # Pruefung hat deshalb einmal eine richtige Zahl in eine falsche geaendert.
     befunde = DOCS / "befunde.html"
-    erkenntnisse = (len(re.findall(r"<h3", befunde.read_text(encoding="utf-8")))
-                    if befunde.exists() else None)
+    erkenntnisse = (befunde.read_text(encoding="utf-8").count(
+        '<article class="befundblock">') if befunde.exists() else None)
 
     pruefungen = [
         (r"(\d+) Dokumente sind so erreichbar", kennzahlen.get("dokumente"), "Dokumente"),
