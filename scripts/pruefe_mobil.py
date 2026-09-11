@@ -39,8 +39,14 @@ def main():
                 for width in (320, 390, 620, 621, 1024):
                     page.set_viewport_size({"width": width, "height": 844})
                     for path in SEITEN:
+                        # Ein zweiter Versuch, falls die Seite gerade neu
+                        # geschrieben wird — das passiert, wenn direkt nach
+                        # einem Bauflauf geprueft wird.
                         response = page.goto(f"{origin}/{path}")
-                        assert response.status == 200, path
+                        if response.status != 200:
+                            page.wait_for_timeout(300)
+                            response = page.goto(f"{origin}/{path}")
+                        assert response.status == 200, (path, response.status)
                         page.evaluate("document.fonts.ready")
                         result = page.evaluate("""() => {
                           const nav = document.querySelector('.brandbar nav');
