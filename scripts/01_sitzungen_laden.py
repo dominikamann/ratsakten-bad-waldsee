@@ -20,6 +20,12 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
+
+# Sitzungstitel lauten immer „<Gremium>, N. Sitzung". Frueher wurde alles ab
+# dem ersten Komma entfernt — das verstuemmelte den „Ausschuss fuer Umwelt,
+# Technik und Nachhaltigkeit" zu „Ausschuss fuer Umwelt", also zu einem
+# Gremium, das es nicht gibt. Entfernt wird deshalb nur die Zaehlung.
+GREMIUM_AUS_TITEL = re.compile(r",\s*\d+\.\s*Sitzung\s*$")
 BASIS = "https://ris.bad-waldsee.de"
 VON, BIS = "2024-01-01", "2026-12-31"
 PAUSE = 0.25  # Sekunden zwischen Abrufen — die Server der Stadt sollen nicht leiden
@@ -133,7 +139,7 @@ def sitzung_auslesen(s: requests.Session, termin: dict) -> tuple[dict, list[dict
         vorlage = re.search(r"SV-\d+/\d{4}", zeile.get_text(" ", strip=True))
         punkte.append({
             "datum": termin["start"][:10],
-            "gremium": re.sub(r",.*", "", termin["title"]),
+            "gremium": GREMIUM_AUS_TITEL.sub("", termin["title"]),
             "top": nummer,
             "titel": titel,
             "vorlage": vorlage.group(0) if vorlage else None,

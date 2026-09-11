@@ -18,7 +18,7 @@ import logging
 import re
 from pathlib import Path
 
-from pypdf import PdfReader
+from textwerk import pdf_text as roh_text, wortschatz_aus, wortschatz_speichern
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -70,18 +70,20 @@ AUSZAEHLUNG = re.compile(
     r"\s*Enthaltung(?:en)?(?:\(en\))?\s*:?\s*(\d+)")
 
 
+# Sitzungstitel lauten „<Gremium>, N. Sitzung". Entfernt wird nur die
+# Zaehlung — ein Schnitt am ersten Komma machte aus dem „Ausschuss fuer
+# Umwelt, Technik und Nachhaltigkeit" ein Gremium, das es nicht gibt.
+NUR_ZAEHLUNG = re.compile(r",\s*\d+\.\s*Sitzung\s*$")
+
+
 def gremium(titel: str) -> str:
-    name = re.sub(r",.*", "", titel)
+    name = NUR_ZAEHLUNG.sub("", titel)
     return "Ausschuss Umwelt/Technik" if name.startswith("Ausschuss für Umwelt") else name
 
 
 def pdf_text(pfad: Path) -> str:
-    """Text eines PDFs, Trennstriche und Umbrüche geglättet."""
-    try:
-        roh = "\n".join(seite.extract_text() or "" for seite in PdfReader(pfad).pages)
-    except Exception:  # noqa: BLE001 — beschädigte PDFs überspringen
-        return ""
-    return re.sub(r"[­\s]+", " ", roh)
+    """Text eines PDFs aus dem gemeinsamen Zwischenspeicher."""
+    return roh_text(pfad)
 
 
 def main() -> None:
@@ -122,9 +124,14 @@ def main() -> None:
     je_jahr: dict[str, list[int]] = collections.defaultdict(lambda: [0, 0])
     gesamt = strittig = mit_nein = mit_enthaltung = 0
     modifiziert: list[str] = []
+    # Der Wortschatz entsteht hier, weil dieser Lauf ohnehin jedes Protokoll
+    # liest. Die spaeteren Schritte laden ihn, um Silbentrennungen von
+    # Gedankenstrichen unterscheiden zu koennen.
+    wortschatz: collections.Counter[str] = collections.Counter()
     for pdf in sorted((DATEN / "protokolle").glob("*.pdf")):
         jahr = pdf.name[:4]
         text = pdf_text(pdf)
+        wortschatz_aus(text, wortschatz)
         modifiziert += [pdf.name[:10]] * len(re.findall(r"Modifizierter Beschluss", text))
         for treffer in ERGEBNIS.finditer(text):
             wert = treffer.group(1)
@@ -165,6 +172,7 @@ def main() -> None:
     }
     (DATEN / "kennzahlen.json").write_text(
         json.dumps(kennzahlen, ensure_ascii=False, indent=2), encoding="utf-8")
+    wortschatz_speichern(wortschatz, DATEN / "wortschatz.json")
 
     # --- Zusammenfassung ---------------------------------------------------
     k = kennzahlen

@@ -29,6 +29,10 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
 
 def kurzname(titel: str) -> str:
     """Gremiumsname auf etwas kürzen, das als Dateiname taugt."""
+    # Achtung: Hier wird bewusst am ersten Komma geschnitten, obwohl das
+    # den Gremiumsnamen verkuerzt. Die bereits geladenen Protokolle auf
+    # der Platte tragen genau diese Namen; eine Aenderung wuerde sie
+    # unauffindbar machen. Fuer die Anzeige gibt es gremium().
     name = re.sub(r",.*", "", titel)
     name = re.sub(r"[^A-Za-zÄÖÜäöüß0-9]+", "-", name).strip("-")
     return name[:48]

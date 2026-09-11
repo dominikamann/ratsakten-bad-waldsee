@@ -6,9 +6,11 @@ anfangen. Diese Tabellen lassen sich in Excel, LibreOffice oder Numbers öffnen,
 sortieren und filtern — und damit lässt sich jede Zahl des Reports nachprüfen,
 ohne ein einziges Skript auszuführen.
 
-Bewusst ohne Dokument-Links: Die URLs des Ratsinformationssystems enthalten
-sitzungsgebundene Token und sind nicht dauerhaft gültig. Stabile Kennung ist die
-Vorlagennummer — damit findet man jeden Vorgang im System unter „Vorlagen“.
+Bewusst ohne Dokument-Links: Stabile Kennung ist die Vorlagennummer — damit
+findet man jeden Vorgang im System unter „Vorlagen“. Die Dokumentadressen des
+Ratsinformationssystems waren im Test zwar ueber Tage abrufbar, zugesichert ist
+ihre Haltbarkeit aber nicht; in einer CSV-Tabelle waere ein toter Link
+schlechter als keiner.
 
 Ergebnis: data/csv/sitzungen.csv
           data/csv/tagesordnungspunkte.csv
@@ -26,7 +28,7 @@ import logging
 import re
 from pathlib import Path
 
-from pypdf import PdfReader
+from textwerk import pdf_text as roh_text
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -73,23 +75,30 @@ TRENNER = ";"
 KODIERUNG = "utf-8-sig"
 
 
+# Sitzungstitel lauten „<Gremium>, N. Sitzung". Entfernt wird nur die
+# Zaehlung — ein Schnitt am ersten Komma machte aus dem „Ausschuss fuer
+# Umwelt, Technik und Nachhaltigkeit" ein Gremium, das es nicht gibt.
+NUR_ZAEHLUNG = re.compile(r",\s*\d+\.\s*Sitzung\s*$")
+
+
 def gremium(titel: str) -> str:
-    return re.sub(r",.*", "", titel)
+    return NUR_ZAEHLUNG.sub("", titel)
 
 
 def dateiname(titel: str) -> str:
     """Muss der Benennung aus 02_protokolle_laden.py entsprechen."""
+    # Achtung: Hier wird bewusst am ersten Komma geschnitten, obwohl das
+    # den Gremiumsnamen verkuerzt. Die bereits geladenen Protokolle auf
+    # der Platte tragen genau diese Namen; eine Aenderung wuerde sie
+    # unauffindbar machen. Fuer die Anzeige gibt es gremium().
     name = re.sub(r",.*", "", titel)
     name = re.sub(r"[^A-Za-zÄÖÜäöüß0-9]+", "-", name).strip("-")
     return name[:48]
 
 
 def pdf_text(pfad: Path) -> str:
-    try:
-        roh = "\n".join(s.extract_text() or "" for s in PdfReader(pfad).pages)
-    except Exception:  # noqa: BLE001
-        return ""
-    return re.sub(r"[­\s]+", " ", roh)
+    """Text eines PDFs aus dem gemeinsamen Zwischenspeicher."""
+    return roh_text(pfad)
 
 
 def schreiben(pfad: Path, spalten: list[str], zeilen: list[dict]) -> None:

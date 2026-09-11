@@ -12,8 +12,15 @@ __pycache__/
 .DS_Store
 .DS_Store
 
-# Zwischenergebnis des Crawls. Enthaelt sitzungsgebundene Dokument-Token des
-# Ratsinformationssystems - keine Zugangsdaten, aber unnoetig zu veroeffentlichen
-# und ohnehin nicht dauerhaft gueltig. Schritt 01 erzeugt beide Dateien neu.
+# Zwischenergebnis des Crawls. Schritt 01 erzeugt beide Dateien neu.
 data/sitzungen.json
 data/topmap.json
+
+# Zwischenspeicher der ausgelesenen PDF-Texte — jederzeit neu erzeugbar
+data/cache/
+
+# Bauzwischenstaende. Beide leiten sich aus den oben ignorierten Crawl-Daten
+# ab; ohne diese nuetzen sie niemandem, und der Lauf erzeugt sie ohnehin neu.
+# wortschatz.json entsteht in Schritt 03, vorgaenge.json in Schritt 08.
+data/wortschatz.json
+data/vorgaenge.json
