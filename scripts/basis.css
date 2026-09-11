@@ -69,7 +69,19 @@ body.lesen .wrap{max-width:880px}
 
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .num{font-variant-numeric:tabular-nums}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* Nur fuer Vorleseprogramme sichtbar.
+
+   `position:absolute` ohne positionierten Vorfahren bezieht sich auf das
+   Dokument: Der Text sitzt dann an seiner statischen Stelle und entkommt jedem
+   Rollbereich darum herum. In der Zeitleiste der Startseite lag diese Stelle
+   bei 785 Pixeln — und obwohl der Text nur einen Pixel breit ist, zog er die
+   ganze Seite auf diese Breite. Gemessen: Dokumentbreite 771 statt 492.
+   Deshalb `margin:-1px` und ein positionierter Vorfahr ueberall dort, wo `.sr`
+   benutzt wird. */
+.sr{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
 
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   outline:2px solid var(--s1);outline-offset:2px;

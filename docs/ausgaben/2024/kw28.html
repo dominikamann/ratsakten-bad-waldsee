@@ -190,7 +190,19 @@ body.lesen .wrap{max-width:880px}
 
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .num{font-variant-numeric:tabular-nums}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* Nur fuer Vorleseprogramme sichtbar.
+
+   `position:absolute` ohne positionierten Vorfahren bezieht sich auf das
+   Dokument: Der Text sitzt dann an seiner statischen Stelle und entkommt jedem
+   Rollbereich darum herum. In der Zeitleiste der Startseite lag diese Stelle
+   bei 785 Pixeln — und obwohl der Text nur einen Pixel breit ist, zog er die
+   ganze Seite auf diese Breite. Gemessen: Dokumentbreite 771 statt 492.
+   Deshalb `margin:-1px` und ein positionierter Vorfahr ueberall dort, wo `.sr`
+   benutzt wird. */
+.sr{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
 
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   outline:2px solid var(--s1);outline-offset:2px;
@@ -221,7 +233,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   .brandbar nav{
     flex-basis:100%;flex-wrap:wrap;min-width:0;
   }
-   .brandbar nav a,.brandbar nav span[aria-hidden]{
+  .brandbar nav a,.brandbar nav span[aria-hidden]{
     flex:0 1 auto;white-space:normal;overflow-wrap:anywhere;
   }
 }
@@ -493,6 +505,7 @@ ol.agenda .art.beschluss{color:var(--s1)}
 
 /* ---------- Kolophon / Fuß ---------- */
 .kolophon{padding:46px 0 40px}
+.kolophon + .kolophon{padding-top:18px}
 .kolophon h3{margin-top:0}
 .kolophon p,.kolophon li{font-size:15px;color:var(--ink-2)}
 .kolophon ul{padding-left:20px;margin:0 0 16px}
@@ -835,7 +848,7 @@ section.gruppe{scroll-margin-top:14px}
     <a href="../../gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 28/2024 &middot; erzeugt am 11.09.2026</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 28/2024 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>

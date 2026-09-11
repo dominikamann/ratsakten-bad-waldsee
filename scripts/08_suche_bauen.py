@@ -761,7 +761,14 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
   function zeichne(){{
     var roh = feld.value.trim();
     var woerter = normal(roh).split(/\\s+/).filter(Boolean);
+    // Ohne Suchbegriff zeigt die Liste, was die Seite ist: Vorgaenge. Die
+    // Einordnungen tragen als Datum das Ende ihres Berichtszeitraums und sind
+    // damit immer das Neueste — ungefiltert standen deshalb zwei KI-Deutungen
+    // ganz oben und die 506 Vorgaenge darunter. Sobald gesucht wird, sind sie
+    // wieder dabei; gesammelt stehen sie auf der Erkenntnisseite.
+    var nurVorgaenge = !roh;
     var treffer = daten.filter(function(v){{
+      if(nurVorgaenge && v.art === "einordnung") return false;
       if(fB.checked && !v.s.some(function(s){{ return s.e; }})) return false;
       if(fS.checked && !v.strittig) return false;
       if(fM.checked && v.s.length < 2) return false;

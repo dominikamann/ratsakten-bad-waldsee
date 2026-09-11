@@ -51,7 +51,9 @@ ul.plain li{margin-bottom:8px;max-width:66ch}
    Sequenzielle Faerbung, ein Farbton, vier Stufen. Die Stufen sind gegen den
    Seitengrund geprueft: alle halten mindestens 3:1 Kontrast, damit auch eine
    einzelne Sitzung als anklickbare Flaeche erkennbar bleibt.                */
-.zeitleiste{overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
+/* `position:relative` haelt die Vorlesetexte der Wochenzellen im Rollbereich;
+   ohne das beziehen sie sich auf das Dokument und weiten die ganze Seite. */
+.zeitleiste{position:relative;overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
 .jahrzeile{display:flex;align-items:center;gap:12px;margin-bottom:5px}
 .jahrzeile .jahr{
   flex:0 0 auto;width:34px;font-family:var(--mono);
@@ -59,8 +61,8 @@ ul.plain li{margin-bottom:8px;max-width:66ch}
 }
 .wochen{display:flex;gap:3px}
 .w{
-  display:block;width:11px;height:11px;border-radius:2px;flex:0 0 auto;
-  background:transparent;text-decoration:none;
+  display:block;position:relative;width:11px;height:11px;border-radius:2px;
+  flex:0 0 auto;background:transparent;text-decoration:none;
 }
 .w.leer{box-shadow:inset 0 0 0 1px var(--rule)}
 .w.s1{background:#31649f}

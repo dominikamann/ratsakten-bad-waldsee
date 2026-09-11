@@ -190,7 +190,19 @@ body.lesen .wrap{max-width:880px}
 
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .num{font-variant-numeric:tabular-nums}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* Nur fuer Vorleseprogramme sichtbar.
+
+   `position:absolute` ohne positionierten Vorfahren bezieht sich auf das
+   Dokument: Der Text sitzt dann an seiner statischen Stelle und entkommt jedem
+   Rollbereich darum herum. In der Zeitleiste der Startseite lag diese Stelle
+   bei 785 Pixeln — und obwohl der Text nur einen Pixel breit ist, zog er die
+   ganze Seite auf diese Breite. Gemessen: Dokumentbreite 771 statt 492.
+   Deshalb `margin:-1px` und ein positionierter Vorfahr ueberall dort, wo `.sr`
+   benutzt wird. */
+.sr{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;border:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
 
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   outline:2px solid var(--s1);outline-offset:2px;
@@ -221,7 +233,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
   .brandbar nav{
     flex-basis:100%;flex-wrap:wrap;min-width:0;
   }
-   .brandbar nav a,.brandbar nav span[aria-hidden]{
+  .brandbar nav a,.brandbar nav span[aria-hidden]{
     flex:0 1 auto;white-space:normal;overflow-wrap:anywhere;
   }
 }
@@ -404,7 +416,9 @@ ul.plain li{margin-bottom:8px;max-width:66ch}
    Sequenzielle Faerbung, ein Farbton, vier Stufen. Die Stufen sind gegen den
    Seitengrund geprueft: alle halten mindestens 3:1 Kontrast, damit auch eine
    einzelne Sitzung als anklickbare Flaeche erkennbar bleibt.                */
-.zeitleiste{overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
+/* `position:relative` haelt die Vorlesetexte der Wochenzellen im Rollbereich;
+   ohne das beziehen sie sich auf das Dokument und weiten die ganze Seite. */
+.zeitleiste{position:relative;overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
 .jahrzeile{display:flex;align-items:center;gap:12px;margin-bottom:5px}
 .jahrzeile .jahr{
   flex:0 0 auto;width:34px;font-family:var(--mono);
@@ -412,8 +426,8 @@ ul.plain li{margin-bottom:8px;max-width:66ch}
 }
 .wochen{display:flex;gap:3px}
 .w{
-  display:block;width:11px;height:11px;border-radius:2px;flex:0 0 auto;
-  background:transparent;text-decoration:none;
+  display:block;position:relative;width:11px;height:11px;border-radius:2px;
+  flex:0 0 auto;background:transparent;text-decoration:none;
 }
 .w.leer{box-shadow:inset 0 0 0 1px var(--rule)}
 .w.s1{background:#31649f}
@@ -770,7 +784,7 @@ ol.tops .doc:hover{border-bottom-color:var(--s1)}
     <a href="gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; Datenstand 11.09.2026 &middot; Seite erzeugt am 11.09.2026</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; Datenstand 11.09.2026 &middot; Seite erzeugt am 11.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>
