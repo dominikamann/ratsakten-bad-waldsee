@@ -295,7 +295,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │   ├── basis.css       Farben, Schrift, Seitenkopf und Fuß — für alle Seiten dieselben
 │   ├── pruefen.py      Kontrolle vor der Veröffentlichung
 │   └── launchd/        Vorlage für den automatischen Montagslauf
-└── data/       Kennzahlen, Ausgabenregister und die 74 Beschlussprotokolle
+└── data/       Kennzahlen, Ausgabenregister und 74 Protokolldateien zu 72 Sitzungen
 ```
 
 ## Auswertung selbst nachvollziehen

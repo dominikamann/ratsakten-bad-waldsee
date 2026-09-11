@@ -99,7 +99,7 @@ def pruefe_zeitraeume() -> None:
                  for _, a in sorted(ausgaben.items(), key=lambda kv: int(kv[0]))
                  if a.get("von_iso")]
         geprueft += len(paare)
-        for (_, ende), (start, _) in zip(paare, paare[1:]):
+        for (_, ende), (start, _) in zip(paare, paare[1:], strict=False):
             if ende >= start:
                 fehler.append(f"{jahr}: Berichtszeiträume überschneiden sich bei "
                               f"{ende} / {start}")
@@ -242,6 +242,29 @@ def pruefe_stil() -> None:
         fehler.append(f"… und {len(kaputt) - 5} weitere Seiten")
     if not kaputt:
         notiz.append("Stilvorlagen vollständig")
+
+
+def pruefe_schwaerzung() -> None:
+    """Nachsehen, ob eine geschwaerzte Stelle wieder in den Seiten steht.
+
+    Die Schwaerzung greift beim Erzeugen (`textwerk.schwaerzen`). Wird ein
+    Textweg umgebaut, der daran vorbeifuehrt, faellt das sonst niemandem auf —
+    der Name stuende einfach wieder da. Geprueft wird deshalb das Ergebnis,
+    nicht der Weg dorthin.
+    """
+    quelle = DATEN / "schwaerzung.json"
+    if not quelle.exists():
+        return
+    paare = json.loads(quelle.read_text(encoding="utf-8")).get("ersetzungen", [])
+    if not paare:
+        return
+    for f in sorted(DOCS.rglob("*.html")):
+        text = f.read_text(encoding="utf-8")
+        for alt, _ in paare:
+            if alt in text:
+                fehler.append(f"{f.relative_to(WURZEL)}: geschwärzte Stelle wieder "
+                              f"im Dokument — „{alt[:50]}…“")
+    notiz.append(f"{len(paare)} Schwärzung(en) gegengeprüft")
 
 
 def pruefe_fundstuecke() -> None:
@@ -401,7 +424,8 @@ def main() -> None:
 
     for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
-                     pruefe_stil, pruefe_readme, pruefe_fundstuecke,
+                     pruefe_stil, pruefe_schwaerzung, pruefe_readme,
+                     pruefe_fundstuecke,
                      pruefe_themenverweise,
                      pruefe_wortwahl,
                      pruefe_reportalter):

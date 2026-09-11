@@ -107,3 +107,37 @@ def pdf_text(pfad: Path) -> str:
     CACHE.mkdir(parents=True, exist_ok=True)
     ziel.write_text(text, encoding="utf-8")
     return text
+
+# ---------- Schwaerzung ----------
+
+SCHWAERZUNG = Path(__file__).resolve().parent.parent / "data" / "schwaerzung.json"
+
+
+def _ersetzungen() -> list[tuple[str, str]]:
+    if not SCHWAERZUNG.exists():
+        return []
+    daten = json.loads(SCHWAERZUNG.read_text(encoding="utf-8"))
+    return [(a, b) for a, b in daten.get("ersetzungen", [])]
+
+
+def schwaerzen(text: str) -> str:
+    """Namen von Privatpersonen aus einem Beschlusswortlaut entfernen.
+
+    Beschluesse sind oeffentlich, und die Stadt nennt darin gelegentlich
+    Privatpersonen — etwa die Spenderin einer Geldspende, deren Annahme der
+    Gemeinderat beschliessen muss. Dass eine Angabe oeffentlich ist, heisst
+    nicht, dass dieses Projekt sie zusaetzlich verbreiten muss: Hier entstuende
+    aus einer Zeile im Protokoll ein durchsuchbarer Eintrag mit Namen und
+    Wohnort.
+
+    Amtstraeger sind ausdruecklich nicht gemeint. Abteilungskommandanten der
+    Feuerwehr, Ortsvorsteher und Fachbereichsleitungen werden in oeffentlicher
+    Sitzung gewaehlt; ihre Namen gehoeren zum Vorgang.
+
+    Die Liste steht in `data/schwaerzung.json` und ist bewusst woertlich statt
+    mustergestuetzt — eine Namenserkennung, die raet, wuerde entweder Aemter
+    mitschwaerzen oder Privatpersonen uebersehen.
+    """
+    for alt, neu in _ersetzungen():
+        text = text.replace(alt, neu)
+    return text

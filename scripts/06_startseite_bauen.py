@@ -179,7 +179,6 @@ def bauen() -> str:
     if register:
         ges_a = sum(len(v) for v in register.values())
         ges_b = sum(x["beschluesse"] for v in register.values() for x in v.values())
-        ges_o = sum(x["ohne_protokoll"] for v in register.values() for x in v.values())
         jahre = sorted(register, reverse=True)
         spanne = (f"Jahrg&auml;nge {jahre[-1]}–{jahre[0]}" if len(jahre) > 1
                   else f"Jahrgang {jahre[0]}")

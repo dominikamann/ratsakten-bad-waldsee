@@ -1,0 +1,6 @@
+{
+  "_hinweis": "Namen von Privatpersonen, die in oeffentlichen Beschlusstexten vorkommen, ohne dass die genannte Person ein Amt oder eine Funktion ausuebt. Traeger oeffentlicher und ehrenamtlicher Aemter werden nicht geschwaerzt — ihre Wahl findet in oeffentlicher Sitzung statt. Jeder Eintrag ersetzt eine woertliche Zeichenfolge im Beschlusswortlaut; der Beschluss bleibt im Ratsinformationssystem unveraendert nachlesbar.",
+  "ersetzungen": [
+    ["Geldspende von Frau Gerda Hymer aus Bad Waldsee", "Geldspende einer Privatperson"]
+  ]
+}

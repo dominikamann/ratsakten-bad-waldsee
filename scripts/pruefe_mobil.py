@@ -77,13 +77,48 @@ def main():
                 page.goto(origin + "/index.html")
                 page.locator('.brandbar nav a').last.click()
                 assert page.url == origin + "/gremien.html", engine.name
+
+                # Mit JavaScript und als Telefon. Die Suche baut ihre
+                # Trefferliste erst im Browser auf — ohne JavaScript ist die
+                # Seite leer, und genau dort lag ein Ueberlauf: Ein Dateiname
+                # ohne Trennstelle war breiter als das Fenster und liess sich
+                # seitlich wegschieben. Eine Pruefung, die den Inhalt nie
+                # rendert, sieht so etwas nicht.
+                for geraet in ("iPhone 13", "iPhone 14 Pro Max"):
+                    handy = browser.new_context(**p.devices[geraet])
+                    h = handy.new_page()
+                    for pfad in SEITEN:
+                        h.goto(f"{origin}/{pfad}")
+                        h.wait_for_timeout(400)
+                        mass = h.evaluate("""() => ({
+                          breite: document.documentElement.clientWidth,
+                          rollbreite: document.documentElement.scrollWidth
+                        })""")
+                        assert mass["rollbreite"] <= mass["breite"] + 1, \
+                            (engine.name, geraet, pfad, mass)
+                        checks += 1
+                    # Ein Suchbegriff bringt Treffer und Einordnungen ins Bild.
+                    h.goto(f"{origin}/suche.html")
+                    h.fill("#q", "Satzung")
+                    h.wait_for_timeout(400)
+                    mass = h.evaluate("""() => ({
+                      breite: document.documentElement.clientWidth,
+                      rollbreite: document.documentElement.scrollWidth,
+                      treffer: document.querySelectorAll("article.vorgang").length
+                    })""")
+                    assert mass["treffer"] > 0, (engine.name, geraet, "keine Treffer")
+                    assert mass["rollbreite"] <= mass["breite"] + 1, \
+                        (engine.name, geraet, "suche mit Suchbegriff", mass)
+                    checks += 1
+                    handy.close()
                 browser.close()
     finally:
         server.shutdown()
         server.server_close()
-    print(f"{checks} Ansichten in Chromium/WebKit ohne JavaScript geprueft: "
-          "alle Links sichtbar, mobile Tippziele >=44px, kein Seitenueberlauf; "
-          "Tastatur und Navigation erfolgreich.")
+    print(f"{checks} Ansichten in Chromium/WebKit geprueft: alle Links sichtbar, "
+          "mobile Tippziele >=44px, kein Seitenueberlauf, Tastatur und Navigation "
+          "erfolgreich — ohne JavaScript bei fuenf Breiten und zusaetzlich als "
+          "iPhone mit JavaScript, samt aufgebauter Trefferliste.")
 
 
 if __name__ == "__main__":

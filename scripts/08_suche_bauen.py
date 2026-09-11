@@ -30,7 +30,7 @@ from pathlib import Path
 from seite import fuss, kopf, kurz
 
 from vorhaben import seiten_je_vorgang, vergleichsname
-from textwerk import pdf_text as roh_text, trennung_reparieren, wortschatz_laden
+from textwerk import schwaerzen, pdf_text as roh_text, trennung_reparieren, wortschatz_laden
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -150,7 +150,8 @@ def beschlusstext(abschnitt: str, grenze: int = 900) -> str:
     if not treffer:
         return ""
     roh = SEITENFUSS.sub(" ", abschnitt[treffer[-1].end():])
-    roh = re.sub(r"\s+", " ", roh).strip()
+    # Einmal an der Quelle schwaerzen, damit keine der Rueckgaben daran vorbeigeht.
+    roh = schwaerzen(re.sub(r"\s+", " ", roh).strip())
     if len(roh) <= grenze:
         return roh
     schnitt = roh.rfind(". ", 0, grenze)

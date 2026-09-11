@@ -32,7 +32,7 @@ from pathlib import Path
 
 from begriffe import begriffe_finden
 from seite import fuss, kopf
-from textwerk import pdf_text as roh_text, trennung_reparieren, wortschatz_laden
+from textwerk import schwaerzen, pdf_text as roh_text, trennung_reparieren, wortschatz_laden
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -181,7 +181,8 @@ def beschlusstext(abschnitt: str, grenze: int = 1400) -> str:
     if not treffer:
         return ""
     roh = SEITENFUSS.sub(" ", abschnitt[treffer[-1].end():])
-    roh = re.sub(r"\s+", " ", roh).strip()
+    # Einmal an der Quelle schwaerzen, damit keine der Rueckgaben daran vorbeigeht.
+    roh = schwaerzen(re.sub(r"\s+", " ", roh).strip())
     if len(roh) <= grenze:
         return roh
     schnitt = roh.rfind(". ", 0, grenze)
@@ -433,7 +434,7 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
                 continue
             text = pdf_text(pfad)
             for b in beschluesse_lesen(text):
-                b["titel"] = titel_je_vorlage.get(b["vorlage"], None)
+                b["titel"] = titel_je_vorlage.get(b["vorlage"])
                 b["frueher"] = [d for d in termine_je_vorlage.get(b["vorlage"], [])
                                 if d < s["start"][:10]]
                 b["dokumente"] = dokumente_je_punkt.get(

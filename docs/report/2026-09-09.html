@@ -144,11 +144,11 @@
   --rule:#272C32;
   --grid:#22262B;
   --s1:#3987e5;              /* Hinweis, Verweis, Zahl */
-  --s2:#d95926;              /* Ein einziger Akzent: die Zahl der Woche.
-                                Sonst nirgends — als Signalfarbe an Rubriken und
-                                Erkenntnissen gelesen wirken Auffaelligkeiten wie
-                                Warnungen, und genau das sollen sie nicht. */
-  --absent:#3C444D;
+  /* Der zweite Akzent ist derzeit unbenutzt. Er stand frueher an Rubriken und
+     Erkenntnissen; dort gelesen wirkten Auffaelligkeiten wie Warnungen, und
+     genau das sollen sie nicht. Er bleibt im Farbsatz, weil er zur Marke
+     gehoert — wer ihn wieder einsetzt, soll es bewusst tun. */
+  --s2:#d95926;
   --flag:#E08163;            /* KI-Deutung — auffällig, aber kein Alarm */
   --flag-bg:rgba(224,129,99,.10);
   --bar-bg:#15181C;
@@ -174,6 +174,13 @@ body{
 body{overflow-wrap:break-word}
 img,svg,video,iframe{max-width:100%;height:auto}
 pre,code{max-width:100%;overflow-x:auto}
+/* Verweise auf Unterlagen tragen den Dateinamen aus dem Ratsinformationssystem,
+   und der kennt keine Trennstellen: „Satzung_Offenhalten_der_Einzelhandels-
+   geschaefte_..." ist 428 Pixel breit und sprengte auf dem Telefon die Seite.
+   `break-word` reicht dafuer nicht — es aendert die Mindestbreite eines
+   Flex-Elements nicht, und genau die bestimmt hier die Breite. `anywhere`
+   tut es. */
+a.doc,.unterlagen a,.unterlagen{min-width:0;overflow-wrap:anywhere}
 
 /* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
    der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
@@ -188,7 +195,6 @@ pre,code{max-width:100%;overflow-x:auto}
 body.lesen .wrap{max-width:880px}
 
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
-.num{font-variant-numeric:tabular-nums}
 /* Nur fuer Vorleseprogramme sichtbar.
 
    `position:absolute` ohne positionierten Vorfahren bezieht sich auf das

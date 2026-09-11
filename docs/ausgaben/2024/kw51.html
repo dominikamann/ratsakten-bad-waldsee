@@ -145,11 +145,11 @@
   --rule:#272C32;
   --grid:#22262B;
   --s1:#3987e5;              /* Hinweis, Verweis, Zahl */
-  --s2:#d95926;              /* Ein einziger Akzent: die Zahl der Woche.
-                                Sonst nirgends — als Signalfarbe an Rubriken und
-                                Erkenntnissen gelesen wirken Auffaelligkeiten wie
-                                Warnungen, und genau das sollen sie nicht. */
-  --absent:#3C444D;
+  /* Der zweite Akzent ist derzeit unbenutzt. Er stand frueher an Rubriken und
+     Erkenntnissen; dort gelesen wirkten Auffaelligkeiten wie Warnungen, und
+     genau das sollen sie nicht. Er bleibt im Farbsatz, weil er zur Marke
+     gehoert — wer ihn wieder einsetzt, soll es bewusst tun. */
+  --s2:#d95926;
   --flag:#E08163;            /* KI-Deutung — auffällig, aber kein Alarm */
   --flag-bg:rgba(224,129,99,.10);
   --bar-bg:#15181C;
@@ -175,6 +175,13 @@ body{
 body{overflow-wrap:break-word}
 img,svg,video,iframe{max-width:100%;height:auto}
 pre,code{max-width:100%;overflow-x:auto}
+/* Verweise auf Unterlagen tragen den Dateinamen aus dem Ratsinformationssystem,
+   und der kennt keine Trennstellen: „Satzung_Offenhalten_der_Einzelhandels-
+   geschaefte_..." ist 428 Pixel breit und sprengte auf dem Telefon die Seite.
+   `break-word` reicht dafuer nicht — es aendert die Mindestbreite eines
+   Flex-Elements nicht, und genau die bestimmt hier die Breite. `anywhere`
+   tut es. */
+a.doc,.unterlagen a,.unterlagen{min-width:0;overflow-wrap:anywhere}
 
 /* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
    der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
@@ -189,7 +196,6 @@ pre,code{max-width:100%;overflow-x:auto}
 body.lesen .wrap{max-width:880px}
 
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
-.num{font-variant-numeric:tabular-nums}
 /* Nur fuer Vorleseprogramme sichtbar.
 
    `position:absolute` ohne positionierten Vorfahren bezieht sich auf das
@@ -372,27 +378,6 @@ footer nav span[aria-hidden]{opacity:.35}
    Markenleiste, Seitenkopf und Fuß. Hier steht nur, was diese Seiten von der
    Startseite unterscheidet. */
 
-/* ---------- Inhalt ---------- */
-.toc{
-  margin:30px 0 0;padding:20px 22px;background:var(--surface);
-  border:1px solid var(--rule);box-shadow:var(--shadow);
-}
-.toc h2{
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:500;
-}
-.toc ol{margin:0;padding:0;list-style:none;counter-reset:toc}
-.toc li{
-  display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;
-  padding:6px 0;font-size:16px;
-}
-.toc li::before{
-  counter-increment:toc;content:counter(toc,decimal-leading-zero);
-  font-family:var(--mono);font-size:11px;color:var(--muted);padding-top:4px;
-}
-.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
-.toc a:hover{border-bottom-color:var(--s1);color:var(--s1)}
-
 /* ---------- Artikel ---------- */
 article{
   display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;
@@ -473,22 +458,6 @@ tbody th{font-weight:400;color:var(--ink-2)}
 tbody td{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13.5px}
 tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
 
-/* ---------- Zahl der Woche ---------- */
-.zahl{
-  display:grid;grid-template-columns:auto minmax(0,1fr);gap:26px;align-items:center;
-  margin:24px 0;padding:24px 26px;background:var(--surface);
-  border:1px solid var(--rule);box-shadow:var(--shadow);
-}
-.zahl .v{
-  font-family:var(--sans);font-weight:800;font-size:clamp(48px,9vw,78px);
-  line-height:.9;letter-spacing:-.035em;color:var(--s2);font-variant-numeric:tabular-nums;
-}
-.zahl p{margin:0;font-size:16px;color:var(--ink-2)}
-.zahl .lab{
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted);margin:0 0 7px;
-}
-
 /* ---------- Vorschau ---------- */
 ol.agenda{margin:18px 0;padding:0;list-style:none;counter-reset:a}
 ol.agenda li{
@@ -504,7 +473,6 @@ ol.agenda .art{
   font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--muted);white-space:nowrap;
 }
-ol.agenda .art.beschluss{color:var(--s1)}
 
 /* ---------- Kolophon / Fuß ---------- */
 .kolophon{padding:46px 0 40px}
@@ -517,7 +485,6 @@ ol.agenda .art.beschluss{color:var(--s1)}
   body{font-size:16.5px}
   article{grid-template-columns:1fr;gap:20px;padding:38px 0}
   .rail{flex-direction:row;flex-wrap:wrap;gap:8px 22px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
-  .zahl{grid-template-columns:1fr;gap:12px}
   ul.beschluesse li{grid-template-columns:1fr}
   ol.agenda li{grid-template-columns:24px minmax(0,1fr)}
   ol.agenda .art{grid-column:2}
