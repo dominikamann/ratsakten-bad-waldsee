@@ -223,7 +223,7 @@ def eingehalten() -> list[tuple[str, str, str]]:
             "Diese Beschlüsse betreffen Jahre, die länger zurückliegen. Sie "
             "zeigen, dass ein Rückstand abgearbeitet wird — und zugleich, wie "
             "groß er war. Die Fristüberschreitung selbst steht als eigener "
-            "Befund auf dieser Seite." + trend,
+            "Eintrag auf dieser Seite." + trend,
             "; ".join(posten),
         ))
 

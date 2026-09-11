@@ -178,7 +178,7 @@ wird bis zum 30.04.2028 festgelegt."* Angezeigt werden rund 340 Zeichen,
 durchsucht wird der vollständige Beschluss.
 
 Mitdurchsucht werden auch die redaktionellen **Einordnungen**. Sie verbinden
-mehrere Vorgänge über die Zeit — etwa den Befund, dass Bad Waldsee binnen elf
+mehrere Vorgänge über die Zeit — etwa die Erkenntnis, dass Bad Waldsee binnen elf
 Monaten dreimal in Folge das Einvernehmen für Windkraft versagt hat. Aus den
 Einzelpunkten geht das nicht hervor. Solche Treffer sind als **KI-Deutung**
 gekennzeichnet. Der Suchindex steht in der Seite selbst — sie funktioniert also auch

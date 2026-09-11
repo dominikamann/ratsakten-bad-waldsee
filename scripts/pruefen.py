@@ -200,7 +200,7 @@ def pruefe_readme() -> None:
 
     pruefungen = [
         (r"(\d+) Dokumente sind so erreichbar", kennzahlen.get("dokumente"), "Dokumente"),
-        (r"alle (\d+) Erkenntnisse", erkenntnisse, "Erkenntnisse auf der Befundeseite"),
+        (r"alle (\d+) Erkenntnisse", erkenntnisse, "Erkenntnisse auf der Erkenntnisseite"),
     ]
     for muster, soll, was in pruefungen:
         if soll is None:

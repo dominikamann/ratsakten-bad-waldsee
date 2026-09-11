@@ -1,8 +1,8 @@
 """Schritt 10 — die Seite „Wer entscheidet was" erzeugen.
 
-Das Projekt zeigt Zahlen und Befunde, setzt aber bisher voraus, dass man
+Das Projekt zeigt Zahlen und Erkenntnisse, setzt aber bisher voraus, dass man
 weiss, wer in einer Stadt worueber entscheidet. Ohne diesen Rahmen bleibt
-jede Zahl nur eine Zahl — und der Befund zu den Ortschaftsraeten ist
+jede Zahl nur eine Zahl — und die Erkenntnis zu den Ortschaftsraeten ist
 ueberhaupt nur zu verstehen, wenn man weiss, dass ihnen Entscheidungen
 uebertragen sind.
 
@@ -140,7 +140,7 @@ hat ein Vorschlagsrecht.</p>
 <p>Die vier Ortschaftsräte tagten im ausgewerteten Zeitraum zusammen {ortsch} Mal
 öffentlich — etwa die Hälfte aller öffentlichen Sitzungen der Stadt. Zu keiner
 dieser Sitzungen ist im Ratsinformationssystem eine Niederschrift abrufbar; das
-ist der <a href="./befunde.html">erste Befund</a> dieses Projekts.</p>
+ist die <a href="./befunde.html">erste Erkenntnis</a> dieses Projekts.</p>
 {beleg("§ 13, § 14 und § 16 Hauptsatzung")}
 
 <h2 class="headline">Die Ortsvorsteher</h2>

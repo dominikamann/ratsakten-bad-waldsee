@@ -346,7 +346,7 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
 
     # Die redaktionellen Einordnungen mit aufnehmen. Sie verbinden mehrere
     # Vorgaenge ueber die Zeit — genau das, was aus den Einzelpunkten nicht
-    # hervorgeht. Wer nach „Windkraft" sucht, soll auch den Befund finden,
+    # hervorgeht. Wer nach „Windkraft" sucht, soll auch die Erkenntnis finden,
     # dass dreimal in Folge das Einvernehmen versagt wurde.
     einordnungen = einordnungen_laden()
     ende_je_ausgabe = {}
@@ -600,12 +600,12 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
   <h3>Einordnungen</h3>
   <p>Neben den Vorg&auml;ngen sind die <b>redaktionellen Einordnungen</b> der
   Wochenausgaben durchsuchbar. Sie verbinden mehrere Vorg&auml;nge &uuml;ber die Zeit —
-  etwa den Befund, dass Bad Waldsee binnen elf Monaten dreimal in Folge das
+  etwa die Erkenntnis, dass Bad Waldsee binnen elf Monaten dreimal in Folge das
   Einvernehmen f&uuml;r Windkraft versagt hat. Aus den Einzelpunkten geht das nicht
   hervor.</p>
   <p>Solche Treffer sind mit <span class="herkunft ki">KI-Deutung</span> gekennzeichnet:
   maschinell erzeugt, auf belegten Zahlen beruhend, <b>nicht redaktionell gepr&uuml;ft</b>.
-  Gesammelt stehen sie auf der Seite <a class="doc" href="./befunde.html">Befunde</a>.</p>
+  Gesammelt stehen sie auf der Seite <a class="doc" href="./befunde.html">Erkenntnisse</a>.</p>
 
   <h3>Reihenfolge der Treffer</h3>
   <p>Zuerst kommt, was den Suchbegriff in der &Uuml;berschrift oder der Vorlagennummer

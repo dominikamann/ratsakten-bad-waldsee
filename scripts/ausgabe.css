@@ -1,4 +1,4 @@
-/* Die zweispaltigen Seiten: Wochenausgaben, Befunde, Themen, Suche, Termine.
+/* Die zweispaltigen Seiten: Wochenausgaben, Erkenntnisse, Themen, Suche, Termine.
 
    Voraussetzung ist basis.css — dort stehen Farben, Grundschrift,
    Markenleiste, Seitenkopf und Fuß. Hier steht nur, was diese Seiten von der
@@ -244,7 +244,7 @@ details.begriffe .fundstelle{
   line-height:1.5;color:var(--muted);
 }
 
-/* ---------- Sprungleiste der Befundeseite ---------- */
+/* ---------- Sprungleiste der Erkenntnisseite ---------- */
 nav.sprung{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
 nav.sprung a{
   display:inline-flex;align-items:baseline;gap:7px;padding:7px 12px;

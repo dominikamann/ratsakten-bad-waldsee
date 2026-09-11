@@ -8,7 +8,7 @@ zusammengefuehrt werden.
 Die Schwierigkeit ist, dass derselbe Bindestrich auch als Gedankenstrich
 vorkommt. „Schuetzenstrasse 27 - ausserplanmaessige Ausgaben" ist ein
 Tagesordnungstitel und darf nicht zu „27ausserplanmaessige" werden; dieser
-Titel steht woertlich in einem der Befunde.
+Titel steht woertlich in einer der Erkenntnisse.
 
 Unterschieden wird deshalb am Wortschatz des Bestands: Eine echte Trennung
 ergibt zusammengefuegt ein Wort, das anderswo in den Protokollen vorkommt.
