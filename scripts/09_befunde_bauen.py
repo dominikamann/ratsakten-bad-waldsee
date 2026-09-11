@@ -290,8 +290,7 @@ def bauen() -> str:
   <p class="eyebrow">Was die Auswertung ergeben hat</p>
   <h1>Erkenntnisse</h1>
   <p class="lede">Alles, was beim Durchsehen der Unterlagen aufgefallen ist — an
-  einem Ort statt verstreut über Report und Wochenausgaben. Sortiert nicht nach
-  gut und schlecht, sondern danach, woher die Erkenntnis stammt.</p>
+  einem Ort statt verstreut über Report und Wochenausgaben.</p>
   <div class="issueline">
     <span><b>regelbasiert</b> {len(gut)}</span>
     <span><b>Beobachtungen</b> {len(beobachtungen)}</span>
@@ -325,10 +324,9 @@ def bauen() -> str:
         teile.append("""
 <section class="gruppe" id="eingehalten">
   <h2>Der Regelfall</h2>
-  <p class="einleitung">Wovon sich alles Weitere auf dieser Seite abhebt: was das
-  Auszählen als den gewöhnlichen Verlauf ausweist — eingehaltene Fristen,
-  abgeschlossene Verfahren, Sitzungen mit Protokoll. Keine Note und keine
-  Prüfung, sondern dieselbe Zählung wie sonst, nur mit anderem Ergebnis.</p>""")
+  <p class="einleitung">Der gewöhnliche Verlauf, wie ihn das Auszählen ausweist:
+  eingehaltene Fristen, abgeschlossene Verfahren, Sitzungen mit Protokoll.
+  Ermittelt nach denselben Regeln wie die übrigen Abschnitte.</p>""")
         for titel, text, beleg in gut:
             teile.append(f"""  <article class="befundblock">
     <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>

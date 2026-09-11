@@ -204,11 +204,9 @@ oder dass dreimal in Folge dasselbe abgelehnt wurde — entsteht erst durch
 Vergleich über die Zeit.
 
 Solche Aussagen lagen verstreut in einzelnen Wochenausgaben und Kapiteln. Die
-Seite [Erkenntnisse](./docs/befunde.html) sammelt sie — sortiert nicht nach gut
-und schlecht, sondern danach, woher die Erkenntnis stammt: fünf regelbasiert
-ausgezählte Einträge zum Regelfall, von dem sich alles Weitere abhebt,
-acht Beobachtungen, vier Erkenntnisse aus der Gesamtauswertung und acht
-Einordnungen aus den Wochenausgaben. Der erste Abschnitt ist **regelbasiert**,
+Seite [Erkenntnisse](./docs/befunde.html) sammelt sie: fünf regelbasiert
+ausgezählte Einträge zum Regelfall, acht Beobachtungen, vier Erkenntnisse aus
+der Gesamtauswertung und acht Einordnungen aus den Wochenausgaben. Der erste Abschnitt ist **regelbasiert**,
 alles Weitere **KI-Deutung** — jeder Eintrag mit Weg zur Quelle.
 
 ## Selbst nachrechnen
