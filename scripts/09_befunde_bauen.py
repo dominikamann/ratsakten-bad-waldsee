@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Schritt 9 — alle Befunde an einem Ort sammeln.
 
-Die interessanten Erkenntnisse lagen verstreut: vier Befunde und zehn kritische
+Die interessanten Erkenntnisse lagen verstreut: vier Befunde und acht kritische
 Beobachtungen im Report, acht Einordnungen in einzelnen Wochenausgaben. Über die
 Suche waren sie erreichbar — aber nur, wenn man das richtige Stichwort erriet.
 
@@ -34,7 +34,7 @@ DATEN = WURZEL / "data"
 DOCS = WURZEL / "docs"
 
 ERWARTET_BEFUNDE = 4
-ERWARTET_BEOBACHTUNGEN = 10
+ERWARTET_BEOBACHTUNGEN = 8
 
 MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
           "August", "September", "Oktober", "November", "Dezember"]

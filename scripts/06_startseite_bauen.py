@@ -106,7 +106,7 @@ def bauen() -> str:
       <h3>Ratsanalyse Bad Waldsee</h3>
       <p>Auswertung der gesamten dokumentierten Gremienarbeit: Transparenz, Themen,
       Abstimmungsverhalten, Finanzen — dazu die 50 auff&auml;lligsten Tagesordnungspunkte
-      und zehn kritische Beobachtungen.</p>
+      und acht kritische Beobachtungen.</p>
       <p class="meta">Stand {datum_lang(stand)} &middot; 8 Kapitel &middot; 5 Diagramme</p>
     </a>""")
 

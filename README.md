@@ -57,7 +57,7 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 ➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
 ➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf
 ➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 506 Vorgänge mit ihrem Weg durch die Gremien
-➡️ **[Befunde](./docs/befunde.html)** — alle 27 Erkenntnisse an einem Ort, kritische wie unkritische
+➡️ **[Befunde](./docs/befunde.html)** — alle 25 Erkenntnisse an einem Ort, kritische wie unkritische
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
 Abhängigkeiten und **funktionieren ohne JavaScript** — auch in der iOS-Dateivorschau,
@@ -189,7 +189,7 @@ oder dass dreimal in Folge dasselbe abgelehnt wurde — entsteht erst durch
 Vergleich über die Zeit.
 
 Solche Aussagen lagen verstreut in einzelnen Wochenausgaben und Kapiteln. Die
-Seite [Befunde](./docs/befunde.html) sammelt sie: zehn kritische Beobachtungen,
+Seite [Befunde](./docs/befunde.html) sammelt sie: acht kritische Beobachtungen,
 vier Befunde aus der Gesamtauswertung und acht Einordnungen aus den
 Wochenausgaben. Sämtlich als **KI-Deutung** gekennzeichnet, jeweils mit Weg zur
 Quelle.
@@ -242,7 +242,7 @@ Jede Aussage ist einer von drei Arten zugeordnet:
 | **KI-Deutung** | maschinell erzeugte Einordnung — Auswahl, Verknüpfung, Gewichtung | **nicht redaktionell geprüft** |
 
 Die Kapitel 01 bis 04 des Reports und die Rubrik „Auffälligkeiten“ der Ausgaben
-sind regelbasiert. Die Befunde, die 50 Fundstücke, die zehn kritischen
+sind regelbasiert. Die Befunde, die 50 Fundstücke, die acht kritischen
 Beobachtungen und die wöchentlichen Einordnungen sind **KI-Deutungen**: Ihre
 Zahlen sind belegt, die daraus gezogene Schlussfolgerung ist es nicht.
 
