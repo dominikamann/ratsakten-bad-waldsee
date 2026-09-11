@@ -194,7 +194,7 @@ Vergleich über die Zeit.
 Solche Aussagen lagen verstreut in einzelnen Wochenausgaben und Kapiteln. Die
 Seite [Erkenntnisse](./docs/befunde.html) sammelt sie — sortiert nicht nach gut
 und schlecht, sondern danach, woher die Erkenntnis stammt: fünf regelbasiert
-ausgezählte Einträge zu eingehaltenen Fristen und abgeschlossenen Verfahren,
+ausgezählte Einträge zum Regelfall, von dem sich alles Weitere abhebt,
 acht Beobachtungen, vier Erkenntnisse aus der Gesamtauswertung und acht
 Einordnungen aus den Wochenausgaben. Der erste Abschnitt ist **regelbasiert**,
 alles Weitere **KI-Deutung** — jeder Eintrag mit Weg zur Quelle.
@@ -247,7 +247,7 @@ Jede Aussage ist einer von drei Arten zugeordnet:
 | **KI-Deutung** | maschinell erzeugte Einordnung — Auswahl, Verknüpfung, Gewichtung | **nicht redaktionell geprüft** |
 
 Die Kapitel 01 bis 04 des Reports, die Rubrik „Auffälligkeiten“ der Ausgaben und
-der Abschnitt „Eingehaltene Fristen und abgeschlossene Verfahren“ sind
+der Abschnitt „Der Regelfall“ sind
 regelbasiert. Die Erkenntnisse aus der Gesamtauswertung, die 50 Fundstücke, die acht
 Beobachtungen und die wöchentlichen Einordnungen sind **KI-Deutungen**: Ihre
 Zahlen sind belegt, die daraus gezogene Schlussfolgerung ist es nicht.
@@ -291,13 +291,30 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 ## Auswertung selbst nachvollziehen
 
 ```bash
+# Daten holen und auswerten
 uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 uv run --with requests                       python scripts/02_protokolle_laden.py
 uv run --with pypdf                          python scripts/03_auswerten.py
+
+# Seiten bauen
 uv run --with pypdf                          python scripts/05_ausgaben_bauen.py
+uv run --with pypdf                          python scripts/07_tabellen_bauen.py
+uv run --with pypdf                          python scripts/08_suche_bauen.py
+uv run                                       python scripts/11_themen_bauen.py
+uv run                                       python scripts/12_termine_bauen.py
+uv run --with lxml                           python scripts/09_befunde_bauen.py
+uv run                                       python scripts/10_gremien_bauen.py
 uv run                                       python scripts/06_startseite_bauen.py
 npm install jsdom && node scripts/04_vorrendern.js
+
+# kontrollieren
+uv run --with lxml                           python scripts/pruefen.py
 ```
+
+Die Reihenfolge ist nicht beliebig: Schritt 6 (Startseite) liest Kennzahlen aus
+dem, was die vorigen Schritte geschrieben haben, und Schritt 9 liest den
+vorgerenderten Report — deshalb steht Schritt 4 am Ende und wird beim nächsten
+Lauf gelesen. `scripts/wochenlauf.sh` führt genau diese Kette aus.
 
 Schritt 5 erzeugt eine Ausgabe je Kalenderwoche mit Sitzung, dazu stets eine für
 die laufende Woche. Gebaut werden **alle Jahrgänge**, nicht nur der laufende —
@@ -381,6 +398,10 @@ belasten.
 - [x] Herkunft jeder Aussage gekennzeichnet (Beleg · Regelbasiert · KI-Deutung)
 - [x] Archiv der bisherigen Ausgaben
 - [x] Rohdaten zum Nachrechnen (`data/csv/`, siehe unten)
+- [x] Seite „Wer entscheidet was" mit Fundstellen aus Gemeindeordnung und Hauptsatzung
+- [x] Themenseiten: 26 Vorhaben mit allen Stationen (`docs/themen/`)
+- [x] Sitzungskalender, vergangen und angekündigt (`docs/termine.html`)
+- [x] Ein gemeinsames Fundament für alle Seiten (`scripts/basis.css`, `scripts/seite.py`)
 
 ## Haftungsausschluss
 

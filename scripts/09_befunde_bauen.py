@@ -303,8 +303,8 @@ def bauen() -> str:
 
 <div class="kasten">
   <p class="lab">Was auf dieser Seite steht</p>
-    <p>Zweierlei, deutlich unterschieden. Der Abschnitt <b>„Eingehaltene Fristen und
-    abgeschlossene Verfahren“</b> ist <b>regelbasiert gezählt</b> und enthält keine
+    <p>Zweierlei, deutlich unterschieden. Der Abschnitt <b>„Der Regelfall“</b> ist
+    <b>regelbasiert gezählt</b> und enthält keine
     Deutung. Alles Übrige sind
     <b>KI-Deutungen</b>: Auswahl, Verknüpfung und Gewichtung von Fakten, maschinell
     erzeugt und <b>nicht redaktionell geprüft</b>. Die zugrunde liegenden Zahlen
@@ -315,7 +315,7 @@ def bauen() -> str:
   </div>
 
   <nav class="sprung" aria-label="Abschnitte dieser Seite">
-    <a href="#eingehalten">Eingehaltenes <b>{len(gut)}</b></a>
+    <a href="#eingehalten">Regelfall <b>{len(gut)}</b></a>
     <a href="#beobachtungen">Beobachtungen <b>{len(beobachtungen)}</b></a>
     <a href="#befunde">Gesamtauswertung <b>{len(befunde)}</b></a>
     <a href="#einordnungen">Wochenausgaben <b>{len(einordnungen)}</b></a>
@@ -324,11 +324,11 @@ def bauen() -> str:
     if gut:
         teile.append("""
 <section class="gruppe" id="eingehalten">
-  <h2>Eingehaltene Fristen und abgeschlossene Verfahren</h2>
-  <p class="einleitung">Was sich beim Auszählen als eingehalten oder erledigt
-  erwiesen hat — nach denselben festen Regeln ermittelt wie alles Weitere auf
-  dieser Seite. Keine Note, keine Prüfung: dasselbe Verfahren, anderes
-  Ergebnis.</p>""")
+  <h2>Der Regelfall</h2>
+  <p class="einleitung">Wovon sich alles Weitere auf dieser Seite abhebt: was das
+  Auszählen als den gewöhnlichen Verlauf ausweist — eingehaltene Fristen,
+  abgeschlossene Verfahren, Sitzungen mit Protokoll. Keine Note und keine
+  Prüfung, sondern dieselbe Zählung wie sonst, nur mit anderem Ergebnis.</p>""")
         for titel, text, beleg in gut:
             teile.append(f"""  <article class="befundblock">
     <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>

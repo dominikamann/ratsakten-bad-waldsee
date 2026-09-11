@@ -942,10 +942,9 @@ def main() -> None:
                 "gremien": sorted({s["kuerzel"] for s in w["sitzungen"]}),
                 "einordnung": schluessel in einordnungen,
                 # Die Abschluss-Regeln dieser Woche mitschreiben. Schritt 09
-                # sammelt sie fuer den Abschnitt „Eingehaltene Fristen und
-                # abgeschlossene Verfahren" — so zeigt die Erkenntnisseite genau
-                # das, was auch in den Ausgaben steht, statt eine zweite
-                # Zaehlung mit eigenem Ergebnis aufzumachen.
+                # sammelt sie fuer den Abschnitt „Der Regelfall" — so zeigt die
+                # Erkenntnisseite genau das, was auch in den Ausgaben steht,
+                # statt eine zweite Zaehlung mit eigenem Ergebnis aufzumachen.
                 "abschluesse": {h["art"]: h["posten"]
                                 for h in auffaelligkeiten(w)
                                 if h.get("ton") == "neutral"},

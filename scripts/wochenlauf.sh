@@ -61,7 +61,7 @@ uv run --quiet python scripts/11_themen_bauen.py
 log "7/11  Terminseite erzeugen"
 uv run --quiet python scripts/12_termine_bauen.py
 
-log "8/11  Befunde sammeln"
+log "8/11  Erkenntnisse sammeln"
 uv run --quiet --with lxml python scripts/09_befunde_bauen.py
 
 log "9/11  Seite „Wer entscheidet was“ erzeugen"
