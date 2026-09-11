@@ -292,7 +292,7 @@ def bauen() -> str:
 }}
 </style>
 </head>
-<body>
+<body class="lesen">
 
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>

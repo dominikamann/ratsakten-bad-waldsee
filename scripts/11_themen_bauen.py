@@ -18,46 +18,21 @@ from __future__ import annotations
 
 import datetime as dt
 import json
-import re
-import unicodedata
 from pathlib import Path
 
 from seite import navigation
+from vorhaben import MINDEST_STATIONEN, zusammenfuehren
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"
 ZIEL = WURZEL / "docs" / "themen"
 
-# Ab wie vielen Stationen lohnt eine eigene Seite. Bei einer einzigen Station
-# stuende dort nichts, was nicht schon in der Wochenausgabe steht.
-MINDEST_STATIONEN = 2
 
 
 def e(s: str) -> str:
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
 
-def slug(name: str) -> str:
-    roh = unicodedata.normalize("NFKD", name)
-    roh = (roh.replace("ä", "ae").replace("ö", "oe").replace("ü", "ue")
-              .replace("Ä", "ae").replace("Ö", "oe").replace("Ü", "ue")
-              .replace("ß", "ss"))
-    roh = "".join(c for c in roh if not unicodedata.combining(c))
-    roh = re.sub(r"[^A-Za-z0-9]+", "-", roh).strip("-").lower()
-    return roh[:60] or "vorhaben"
-
-
-def vergleichsname(name: str) -> str:
-    """Schluessel, unter dem zwei Schreibweisen dasselbe Vorhaben meinen.
-
-    Die Verwaltung schreibt denselben Vorgang nicht immer gleich: „der
-    Vereinbarten Verwaltungsgemeinschaft" und „der vereinbarten
-    Verwaltungsgemeinschaft", „Sport- und Gesundheitspark" und „Sport- und
-    Gesundheitsparks". Ohne diesen Abgleich entstuenden zwei Seiten fuer ein
-    Vorhaben.
-    """
-    worte = re.findall(r"[A-Za-zÄÖÜäöüß0-9]+", name.lower())
-    return " ".join(w[:-1] if len(w) > 4 and w.endswith("s") else w for w in worte)
 
 
 def datum_lang(iso: str) -> str:
@@ -114,7 +89,7 @@ a.karte .meta{{
 }}
 </style>
 </head>
-<body>
+<body class="lesen">
 
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -244,43 +219,14 @@ def main() -> None:
             "data/vorgaenge.json fehlt — bitte zuerst Schritt 08 ausführen.")
     vorgaenge = json.loads(quelle.read_text(encoding="utf-8"))
 
-    # Nur mehrstufige Vorgaenge sind Vorhaben im hier gemeinten Sinn. Einzelne
-    # Tagesordnungspunkte tragen oft denselben Routinetitel („Verschiedenes",
-    # „Bekanntgaben"); wuerde man auch sie zusammenfassen, entstuenden
-    # Sammelseiten, die kein Vorhaben beschreiben.
-    kandidaten = [v for v in vorgaenge if len(v.get("s", [])) >= MINDEST_STATIONEN]
-
-    # Gleiche Vorhaben unter abweichender Schreibweise zusammenfuehren.
-    zusammen: dict[str, dict] = {}
-    for v in kandidaten:
-        k = vergleichsname(v["t"])
-        if k in zusammen:
-            ziel = zusammen[k]
-            bekannt = {(st["d"], st.get("v"), st["t"]) for st in ziel["s"]}
-            ziel["s"] += [st for st in v["s"]
-                          if (st["d"], st.get("v"), st["t"]) not in bekannt]
-            if len(v["t"]) > len(ziel["t"]):
-                ziel["t"] = v["t"]
-            ziel["v"] = " · ".join(sorted(
-                {n for n in (ziel["v"] + " · " + v["v"]).split(" · ") if n}))
-        else:
-            zusammen[k] = dict(v, s=list(v["s"]))
-
-    auswahl = [v for v in zusammen.values() if len(v["s"]) >= MINDEST_STATIONEN]
-    auswahl.sort(key=lambda v: (-len(v["s"]), v["t"]))
+    auswahl = zusammenfuehren(vorgaenge)
 
     ZIEL.mkdir(parents=True, exist_ok=True)
     for alt in ZIEL.glob("*.html"):
         alt.unlink()
 
-    vergeben: set[str] = set()
     for vg in auswahl:
-        name = slug(vg["t"])
-        if name in vergeben:          # zwei Vorhaben mit gleichem Namen
-            name = f"{name}-{len(vergeben)}"
-        vergeben.add(name)
-        vg["_slug"] = name
-        (ZIEL / f"{name}.html").write_text(seite_bauen(vg), encoding="utf-8")
+        (ZIEL / f"{vg['_slug']}.html").write_text(seite_bauen(vg), encoding="utf-8")
 
     (ZIEL / "index.html").write_text(index_bauen(auswahl), encoding="utf-8")
     print(f"  docs/themen/  —  {len(auswahl)} Vorhaben, "

@@ -29,6 +29,7 @@ from pathlib import Path
 
 from seite import navigation
 
+from vorhaben import seiten_je_vorgang, vergleichsname
 from textwerk import pdf_text as roh_text, trennung_reparieren, wortschatz_laden
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
@@ -334,6 +335,15 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
             "b": max((st["b"] for st in stationen), default=0),
         })
 
+    # Zu jedem Vorgang die Themenseite vermerken, sofern es eine gibt. Die
+    # Zuordnung stammt aus demselben Modul, aus dem Schritt 11 die Seiten baut —
+    # sonst verwiese die Suche auf Seiten, die es nicht gibt.
+    seiten = seiten_je_vorgang(vorgaenge)
+    for v in vorgaenge:
+        ziel = seiten.get(vergleichsname(v["t"]))
+        if ziel:
+            v["th"] = ziel
+
     # Die redaktionellen Einordnungen mit aufnehmen. Sie verbinden mehrere
     # Vorgaenge ueber die Zeit — genau das, was aus den Einzelpunkten nicht
     # hervorgeht. Wer nach „Windkraft" sucht, soll auch den Befund finden,
@@ -469,6 +479,11 @@ article.vorgang{{
   opacity:.75;white-space:nowrap;
 }}
 .vorgang .untertitel{{color:var(--muted);font-family:"IBM Plex Serif",serif;font-size:13px}}
+.vorgang .wege{{display:flex;flex-wrap:wrap;gap:6px 14px;margin:7px 0 0}}
+.vorgang .wege a{{font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--s1);
+  text-decoration:none;border-bottom:1px solid rgba(57,135,229,.35)}}
+.vorgang .wege a:hover{{border-bottom-color:var(--s1)}}
 a.station{{text-decoration:none;color:inherit}}
 a.station:hover .dat{{color:var(--s1);text-decoration:underline}}
 a.station:hover .grem{{border-color:var(--s1)}}
@@ -526,7 +541,7 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 .ohnejs p{{margin:0}}
 </style>
 </head>
-<body>
+<body class="lesen">
 
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
@@ -806,7 +821,12 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
         marke.textContent = v.geprueft ? "Einordnung" : "KI-Deutung";
         d.appendChild(marke);
       }}
-      var ziel = v.a || (v.s.length ? v.s[v.s.length-1].a : "");
+      // Wo es eine Chronik des Vorhabens gibt, fuehrt der Titel dorthin: Sie
+      // zeigt den ganzen Verlauf, die Wochenausgabe nur einen Ausschnitt. Der
+      // Weg in die Ausgabe bleibt daneben erhalten, benannt statt versteckt.
+      var ausgabe = v.a || (v.s.length ? v.s[v.s.length-1].a : "");
+      var chronik = v.th ? ("./themen/" + v.th + ".html") : "";
+      var ziel = chronik || ausgabe;
       if(ziel){{
         var link = document.createElement("a");
         link.href = ziel; link.className = "titellink";
@@ -817,6 +837,23 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
       }}
       kopf.appendChild(h);
       d.appendChild(kopf);
+      if(chronik || ausgabe){{
+        var wege = document.createElement("p");
+        wege.className = "wege";
+        if(chronik){{
+          var a1 = document.createElement("a");
+          a1.href = chronik;
+          a1.textContent = "Chronik des Vorhabens · " + v.s.length + " Stationen";
+          wege.appendChild(a1);
+        }}
+        if(ausgabe){{
+          var a2 = document.createElement("a");
+          a2.href = ausgabe;
+          a2.textContent = chronik ? "Wochenausgabe" : "In der Wochenausgabe";
+          wege.appendChild(a2);
+        }}
+        d.appendChild(wege);
+      }}
       var teile = v.v ? v.v.split(" · ") : [];
       var nr = document.createElement("p");
       nr.className = "nr";

@@ -50,7 +50,7 @@ def kopf(titel: str) -> str:
   margin:14px 0 30px;max-width:62ch}}
 </style>
 </head>
-<body>
+<body class="lesen">
 
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>

@@ -495,7 +495,7 @@ def e(t: str) -> str:
     return html.escape(t, quote=False)
 
 
-def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
+def kopf(titel: str, hoch: str = "", hier: str = "", lesen: bool = False) -> str:
     """Seitenkopf. `hoch` ist der relative Weg zum docs-Verzeichnis, `hier`
     markiert die aktuelle Seite in der Navigation."""
     stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
@@ -511,7 +511,7 @@ def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
 <style>{schriften}</style>
 <style>{stil}</style>
 </head>
-<body>
+<body{" class=\"lesen\"" if lesen else ""}>
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
@@ -865,7 +865,7 @@ def archiv_bauen(register: dict) -> str:
     ges_b = sum(a["beschluesse"] for j in jahre for a in register[j].values())
     ges_s = sum(a["sitzungen"] for j in jahre for a in register[j].values())
 
-    t = [kopf("Aktenlage — Archiv", hoch="../", hier="archiv"), '<div class="wrap">']
+    t = [kopf("Aktenlage — Archiv", hoch="../", hier="archiv", lesen=True), '<div class="wrap">']
     t.append(f"""
 <header class="masthead">
   <h1>Aktenlage &middot; Archiv</h1>

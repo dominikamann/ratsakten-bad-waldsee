@@ -289,6 +289,27 @@ def pruefe_fundstuecke() -> None:
 
     notiz.append(f"{len(eintraege)} Fundstücke gegengeprüft")
 
+
+def pruefe_themenverweise() -> None:
+    """Die Suche verlinkt Themenseiten — gibt es die auch?
+
+    Die Verweise entstehen erst im Browser, der Verweis-Waechter sieht sie im
+    erzeugten HTML deshalb nicht. Geprueft wird stattdessen die Datenseite:
+    Jeder in data/vorgaenge.json vermerkte Kuerzel muss eine Datei haben.
+    """
+    quelle = DATEN / "vorgaenge.json"
+    ordner = DOCS / "themen"
+    if not (quelle.exists() and ordner.exists()):
+        return
+    vorhanden = {p.stem for p in ordner.glob("*.html")}
+    verwiesen = {v["th"] for v in json.loads(quelle.read_text(encoding="utf-8"))
+                 if v.get("th")}
+    fehlend = sorted(verwiesen - vorhanden)
+    for x in fehlend:
+        fehler.append(f"Suche verweist auf docs/themen/{x}.html — die Seite fehlt")
+    if verwiesen:
+        notiz.append(f"{len(verwiesen)} Themenverweise geprüft")
+
 def pruefe_wortwahl() -> None:
     """Keine Aussage über den Bestand von Unterlagen, die nicht geprüft wurde."""
     treffer = []
@@ -349,7 +370,8 @@ def main() -> None:
 
     for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
-                     pruefe_readme, pruefe_fundstuecke, pruefe_wortwahl,
+                     pruefe_readme, pruefe_fundstuecke, pruefe_themenverweise,
+                     pruefe_wortwahl,
                      pruefe_reportalter):
         pruefung()
 
