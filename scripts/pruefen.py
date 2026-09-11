@@ -213,6 +213,37 @@ def pruefe_readme() -> None:
                 f"README nennt {m.group(1)} {was}, tatsaechlich sind es {soll}.")
 
 
+def pruefe_stil() -> None:
+    """Klammern der eingebetteten Stilvorlagen zaehlen.
+
+    Eine einzige ueberzaehlige schliessende Klammer beendet die Stilvorlage —
+    alles danach wird verworfen. Die Seite steht dann in Serifenschrift auf
+    weissem Grund da und sieht aus, als fehle das Stylesheet ganz.
+
+    Genau das ist passiert, als acht ungenutzte Schriftschnitte entfernt wurden:
+    Ein Muster, das einen Schriftblock bis zur ersten schliessenden Klammer
+    fasste, verschluckte sich an der geschweiften Klammer im Platzhalter
+    `{PFAD}` und liess acht Bruchstuecke stehen. Der Browser meldet so
+    etwas nicht — er verwirft stillschweigend den Rest.
+    """
+    kaputt = []
+    for f in sorted(DOCS.rglob("*.html")):
+        for block in re.findall(r"<style[^>]*>(.*?)</style>",
+                                f.read_text(encoding="utf-8"), re.S):
+            ohne = re.sub(r"/\*.*?\*/", "", block, flags=re.S)
+            auf, zu = ohne.count("{"), ohne.count("}")
+            if auf != zu:
+                kaputt.append(f"{f.relative_to(WURZEL)}: "
+                              f"{auf} öffnende, {zu} schließende Klammern")
+                break
+    for k in kaputt[:5]:
+        fehler.append(f"unausgeglichene Stilvorlage — {k}")
+    if len(kaputt) > 5:
+        fehler.append(f"… und {len(kaputt) - 5} weitere Seiten")
+    if not kaputt:
+        notiz.append("Stilvorlagen vollständig")
+
+
 def pruefe_fundstuecke() -> None:
     """Jedes Fundstueck gegen die Tagesordnungen halten.
 
@@ -370,7 +401,8 @@ def main() -> None:
 
     for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
-                     pruefe_readme, pruefe_fundstuecke, pruefe_themenverweise,
+                     pruefe_stil, pruefe_readme, pruefe_fundstuecke,
+                     pruefe_themenverweise,
                      pruefe_wortwahl,
                      pruefe_reportalter):
         pruefung()

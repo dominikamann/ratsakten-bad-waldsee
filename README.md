@@ -452,9 +452,11 @@ wünscht, kann das ebenfalls über ein Issue oder per E-Mail tun.
 - **Code:** MIT
 - **Report, Texte und Tabellen:** CC BY 4.0 — Weitergabe und Bearbeitung erlaubt,
   **Namensnennung erforderlich**
-- **Schriften** (`docs/fonts/`): SIL Open Font License 1.1 — Archivo und IBM Plex,
-  unverändert weitergegeben. Lizenztext und Copyright-Vermerke in
-  [`docs/fonts/OFL.txt`](./docs/fonts/OFL.txt)
+- **Schriften** (`docs/fonts/`): SIL Open Font License 1.1 — Archivo, IBM Plex
+  Serif und IBM Plex Mono, unverändert weitergegeben und selbst ausgeliefert.
+  Lizenztext und Copyright-Vermerke in
+  [`docs/fonts/OFL.txt`](./docs/fonts/OFL.txt). Kein Abruf bei Google Fonts oder
+  einem anderen fremden Server — das prüft `scripts/pruefen.py` bei jedem Push.
 
 ### So ist zu zitieren
 
