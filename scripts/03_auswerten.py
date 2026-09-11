@@ -153,12 +153,38 @@ def main() -> None:
     # Kuenftige Sitzungen. Das Ratsinformationssystem fuehrt Termine, die noch
     # bevorstehen; sie gehoeren in keine Auswertung, beantworten aber die Frage,
     # die ein Buerger als erstes stellt: Was kommt als Naechstes?
-    kommend = [
-        {"datum": s["start"][:10], "zeit": s["start"][11:16],
-         "gremium": gremium(s["titel"]), "tops": s["n_tops"]}
-        for s in sorted(alle, key=lambda x: x["start"])
-        if s["start"][:10] > args.stichtag
-    ][:10]
+    # Zu den Terminen gehoert, was dort verhandelt wird. Die Tagesordnung liegt
+    # in topmap.json, sobald die Stadt sie veroeffentlicht hat — meist wenige
+    # Tage vorher. Mitgegeben werden Titel, Vorlagennummer und die verlinkten
+    # Unterlagen, damit die Startseite sie ausklappbar zeigen kann.
+    karte = DATEN / "topmap.json"
+    punkte_je_tag: dict[str, list[dict]] = {}
+    if karte.exists():
+        for p in json.loads(karte.read_text(encoding="utf-8")):
+            if p["datum"] > args.stichtag:
+                punkte_je_tag.setdefault(p["datum"], []).append(p)
+
+    kommend = []
+    for s in sorted(alle, key=lambda x: x["start"]):
+        tag = s["start"][:10]
+        if tag <= args.stichtag:
+            continue
+        name = gremium(s["titel"])
+        punkte = [p for p in punkte_je_tag.get(tag, []) if p["gremium"].startswith(name[:18])]
+        punkte.sort(key=lambda p: int(p["top"]) if p["top"].isdigit() else 99)
+        kommend.append({
+            "datum": tag,
+            "zeit": s["start"][11:16],
+            "gremium": name,
+            "tops": s["n_tops"],
+            "url": s.get("url", ""),
+            "punkte": [{"top": p["top"], "titel": p["titel"],
+                        "vorlage": p.get("vorlage") or "",
+                        "dokumente": p.get("dokumente") or []}
+                       for p in punkte],
+        })
+        if len(kommend) == 10:
+            break
 
     kennzahlen = {
         "stichtag": args.stichtag,

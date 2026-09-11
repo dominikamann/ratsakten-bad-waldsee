@@ -5,61 +5,117 @@
       "datum": "2026-09-15",
       "zeit": "18:00",
       "gremium": "Verwaltungsausschuss",
-      "tops": 5
+      "tops": 5,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZRKoRnhnLLCFV_DehXmy-js",
+      "punkte": [
+        {
+          "top": "1",
+          "titel": "Bekanntgabe der in nichtöffentlicher Sitzung getroffenen Entscheidung/en",
+          "vorlage": "",
+          "dokumente": []
+        },
+        {
+          "top": "2",
+          "titel": "Integrationsbericht",
+          "vorlage": "SV-118/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-118/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZeJXS3Qaoe0etmy6qc8o5ptpsUI03eRHT53pXg4z98M4/Sitzungsvorlage_SV-118-2026.pdf"
+            }
+          ]
+        },
+        {
+          "top": "3",
+          "titel": "Dorfmitte Osterhofen – Sanierung des Gebäudes auf Flst. 1623 sowie Gestaltung und Überlassung der Außenanlagen",
+          "vorlage": "SV-152/2026",
+          "dokumente": []
+        },
+        {
+          "top": "4",
+          "titel": "Verschiedenes",
+          "vorlage": "",
+          "dokumente": []
+        },
+        {
+          "top": "5",
+          "titel": "Bekanntgaben",
+          "vorlage": "",
+          "dokumente": []
+        }
+      ]
     },
     {
       "datum": "2026-09-22",
       "zeit": "19:30",
       "gremium": "Ortschaftsrat Reute-Gaisbeuren",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZYI3GRSmaJeR1pUdvTfqBR0",
+      "punkte": []
     },
     {
       "datum": "2026-09-28",
       "zeit": "18:00",
       "gremium": "Gemeinderat",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZdP0ydn8uQto-aOMDpyyPGU",
+      "punkte": []
     },
     {
       "datum": "2026-09-30",
       "zeit": "19:00",
       "gremium": "Ortschaftsrat Haisterkirch",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZetlJRm9FZRQylvzFdSgRGw",
+      "punkte": []
     },
     {
       "datum": "2026-10-06",
       "zeit": "18:00",
       "gremium": "Ortschaftsrat Michelwinnaden",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZa4pYNWfPm2Em2N8ck18h0Q",
+      "punkte": []
     },
     {
       "datum": "2026-10-08",
       "zeit": "19:00",
       "gremium": "Ortschaftsrat Mittelurbach",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZXrojZNmvBN5GYNNrrV5Nk0",
+      "punkte": []
     },
     {
       "datum": "2026-10-12",
       "zeit": "18:00",
       "gremium": "Ausschuss Umwelt/Technik",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZXSUiNOA_2UirDaHN9pT3PA",
+      "punkte": []
     },
     {
       "datum": "2026-10-13",
       "zeit": "18:00",
       "gremium": "Verwaltungsausschuss",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZVXsCT4asupbS0_ozapxGgA",
+      "punkte": []
     },
     {
       "datum": "2026-10-20",
       "zeit": "19:30",
       "gremium": "Ortschaftsrat Reute-Gaisbeuren",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZavqx9_gURc5nSQ2Ov3R7tE",
+      "punkte": []
     },
     {
       "datum": "2026-11-02",
       "zeit": "18:00",
       "gremium": "Gemeinderat",
-      "tops": 0
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZaF1uk3NCXRrkNMW_k7x0IU",
+      "punkte": []
     }
   ],
   "sitzungen": 166,

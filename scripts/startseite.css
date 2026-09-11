@@ -70,10 +70,12 @@ a{color:var(--s1)}
 ul.plain{padding-left:20px;font-size:16px;color:var(--ink-2)}
 ul.plain li{margin-bottom:8px;max-width:66ch}
 
-.hinweis{margin:24px 0 0;padding:20px 22px;background:rgba(224,129,99,.10);
-  border-left:3px solid #E08163}
+/* Ein Hinweis ist eine Auskunft, keine Warnung — deshalb die ruhige Flaeche
+   der Seite und die Infofarbe, kein Signalton. */
+.hinweis{margin:24px 0 0;padding:20px 22px;background:var(--surface);
+  border-left:3px solid var(--s1)}
 .hinweis .lab{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:#E08163;margin:0 0 8px}
+  text-transform:uppercase;color:var(--s1);margin:0 0 8px}
 .hinweis p{margin:0;font-size:15.5px;color:var(--ink-2)}
 .hinweis p + p{margin-top:9px}
 
@@ -141,23 +143,50 @@ a.w:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
 
 /* ---------- Was als Naechstes ansteht ---------- */
 ol.termine{list-style:none;margin:20px 0 12px;padding:0}
-ol.termine li{
-  display:grid;grid-template-columns:1fr auto;gap:2px 16px;
-  padding:11px 0;border-top:1px solid var(--rule);
-}
-ol.termine li:last-child{border-bottom:1px solid var(--rule)}
+ol.termine > li{padding:14px 0 16px;border-top:1px solid var(--rule)}
+ol.termine > li:last-child{border-bottom:1px solid var(--rule)}
 ol.termine .wann{
-  grid-column:1;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  margin:0 0 3px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
   letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
 }
 ol.termine .uhr{margin-left:10px}
 ol.termine .bald{margin-left:10px;color:var(--s1)}
-ol.termine .gremium{grid-column:1;font-size:16.5px;color:var(--ink)}
-ol.termine .agenda{
-  grid-column:2;grid-row:2;align-self:end;font-family:"IBM Plex Mono",monospace;
-  font-size:11.5px;color:var(--muted);text-align:right;
+ol.termine .gremium{margin:0 0 8px;font-size:17px;color:var(--ink)}
+
+details.agenda > summary{
+  cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:7px;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--s1);
 }
-@media (max-width:560px){
-  ol.termine li{grid-template-columns:1fr}
-  ol.termine .agenda{grid-column:1;grid-row:auto;text-align:left}
+details.agenda > summary::-webkit-details-marker{display:none}
+details.agenda > summary::before{content:"▸";font-size:13px}
+details.agenda[open] > summary::before{content:"▾"}
+details.agenda > summary:hover{text-decoration:underline}
+ol.tops{margin:10px 0 0;padding:0 0 0 20px;color:var(--ink-2)}
+ol.tops li{margin:0 0 7px;font-size:15px;line-height:1.5}
+ol.tops .sv{
+  margin-left:9px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  color:var(--muted);white-space:nowrap;
 }
+ol.tops .unterlagen{display:block;margin-top:3px}
+ol.tops .doc{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--s1);
+  text-decoration:none;border-bottom:1px solid rgba(57,135,229,.35);
+}
+ol.tops .doc:hover{border-bottom-color:var(--s1)}
+details.agenda .quelle{
+  margin:10px 0 0;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+details.agenda .quelle a{color:var(--s1);text-decoration:none}
+details.agenda .quelle a:hover{text-decoration:underline}
+p.agenda.offen{
+  margin:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+}
+p.agenda.offen a{color:var(--s1);text-decoration:none}
+p.agenda.offen a:hover{text-decoration:underline}
+.fussnote{
+  margin:14px 0 0;font-size:14px;line-height:1.6;color:var(--muted);max-width:62ch;
+}
+

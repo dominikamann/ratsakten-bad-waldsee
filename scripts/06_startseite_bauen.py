@@ -96,19 +96,20 @@ def bauen() -> str:
         f'    <div class="tile"><span class="v">{v}</span><span class="k">{t}</span></div>'
         for v, t in kacheln)
 
-    karten = []
+    # (Rang, HTML) — die Reihenfolge folgt dem Leserinteresse, nicht dem Code.
+    karten: list[tuple[int, str]] = []
 
     report = juengster_report()
     if report:
         pfad, stand = report
-        karten.append(f"""    <a class="karte" href="{pfad}">
+        karten.append((60, f"""    <a class="karte" href="{pfad}">
       <p class="art">Report &middot; Vollauswertung</p>
       <h3>Ratsanalyse Bad Waldsee</h3>
       <p>Auswertung der gesamten dokumentierten Gremienarbeit: Transparenz, Themen,
       Abstimmungsverhalten, Finanzen — dazu die 50 auff&auml;lligsten Tagesordnungspunkte
       und acht Beobachtungen.</p>
       <p class="meta">Stand {datum_lang(stand)} &middot; 8 Kapitel &middot; 5 Diagramme</p>
-    </a>""")
+    </a>"""))
 
     # Kennzahlen kommen aus data/suche.json, das Schritt 08 schreibt. Sie aus dem
     # erzeugten HTML zu lesen waere zerbrechlich: Aendert sich dort die Auszeichnung,
@@ -116,14 +117,48 @@ def bauen() -> str:
     kennwerte = DATEN / "suche.json"
     if (DOCS / "suche.html").exists() and kennwerte.exists():
         sk = json.loads(kennwerte.read_text(encoding="utf-8"))
-        karten.append(f"""    <a class="karte" href="./suche.html">
+        karten.append((40, f"""    <a class="karte" href="./suche.html">
       <p class="art">Vorg&auml;nge &middot; durchsuchbar</p>
       <h3>Was wurde zu einem Thema entschieden?</h3>
       <p>{sk.get('sachvorgaenge', sk['vorgaenge'])} Vorg&auml;nge mit ihrem Weg durch die Gremien — von der ersten
       Beratung bis zum Beschluss, mit Datum, Gremium und Stimmenverh&auml;ltnis.
       {sk['mehrstufig']} davon durchliefen mehrere Stationen.</p>
       <p class="meta">Suche nach Stichwort oder Vorlagennummer</p>
-    </a>""")
+    </a>"""))
+
+
+    if (DOCS / "gremien.html").exists():
+        karten.append((20, """    <a class="karte" href="./gremien.html">
+      <p class="art">Grundlagen</p>
+      <h3>Wer entscheidet was</h3>
+      <p>Gemeinderat, beschlie&szlig;ende Aussch&uuml;sse, Ortschaftsr&auml;te, Gemeinsamer Ausschuss —
+      und was die Stadt gar nicht entscheidet. Die Lesehilfe f&uuml;r alles &Uuml;brige.</p>
+      <p class="meta">Mit Fundstellen aus Hauptsatzung, Gemeindeordnung und Baugesetzbuch</p>
+    </a>"""))
+
+    themenseiten = sorted((DOCS / "themen").glob("*.html")) if (DOCS / "themen").exists() else []
+    vorhaben = [p for p in themenseiten if p.name != "index.html"]
+    if vorhaben:
+        karten.append((30, f"""    <a class="karte" href="./themen/index.html">
+      <p class="art">Vorhaben &middot; im Zeitverlauf</p>
+      <h3>Was wurde aus …?</h3>
+      <p>{len(vorhaben)} Vorhaben mit ihrem vollst&auml;ndigen Verlauf — ein Bauleitplan oder ein
+      Ger&auml;tehaus zieht sich &uuml;ber Jahre und durch mehrere Gremien. Die Wochenausgaben
+      zeigen davon immer nur einen Ausschnitt.</p>
+      <p class="meta">L&auml;ngster Vorgang: 19 Stationen &uuml;ber zwei Jahre</p>
+    </a>"""))
+
+    befundseite = DOCS / "befunde.html"
+    if befundseite.exists():
+        n_bef = befundseite.read_text(encoding="utf-8").count('<article class="befundblock">')
+        karten.append((50, f"""    <a class="karte" href="./befunde.html">
+      <p class="art">Erkenntnisse &middot; gesammelt</p>
+      <h3>Was aufgefallen ist — und was eingehalten wird</h3>
+      <p>{n_bef} Eintr&auml;ge an einem Ort statt verstreut &uuml;ber Report und Wochenausgaben:
+      eingehaltene Pflichten und abgeschlossene Verfahren ebenso wie die Stellen,
+      an denen die Aktenlage Fragen offenl&auml;sst.</p>
+      <p class="meta">Regelbasiert gez&auml;hlt und maschinell gedeutet, jeweils gekennzeichnet</p>
+    </a>"""))
 
     aktuell = neueste_ausgabe(register)
     if aktuell:
@@ -137,13 +172,13 @@ def bauen() -> str:
             beschreibung += (f", dazu {meta['ohne_protokoll']} &ouml;ffentliche "
                              f"{'Sitzung' if meta['ohne_protokoll'] == 1 else 'Sitzungen'} "
                              f"ohne Protokoll")
-        karten.append(f"""    <a class="karte" href="{pfad}">
+        karten.append((10, f"""    <a class="karte" href="{pfad}">
       <p class="art">Aktenlage &middot; aktuelle Ausgabe</p>
       <h3>Waldseer Aktenlage, KW {kw}/{jahr}</h3>
       <p>Was der Gemeinderat und seine Aussch&uuml;sse zuletzt entschieden haben.
       {beschreibung}.</p>
       <p class="meta">Berichtszeitraum {e(meta['zeitraum'])}</p>
-    </a>""")
+    </a>"""))
 
     if register:
         ges_a = sum(len(v) for v in register.values())
@@ -152,13 +187,13 @@ def bauen() -> str:
         jahre = sorted(register, reverse=True)
         spanne = (f"Jahrg&auml;nge {jahre[-1]}–{jahre[0]}" if len(jahre) > 1
                   else f"Jahrgang {jahre[0]}")
-        karten.append(f"""    <a class="karte" href="./ausgaben/index.html">
+        karten.append((70, f"""    <a class="karte" href="./ausgaben/index.html">
       <p class="art">Aktenlage &middot; Archiv</p>
       <h3>Alle bisherigen Ausgaben</h3>
       <p>{zahlwort(ges_a)} Ausgaben mit zusammen {ges_b} Beschl&uuml;ssen — dazu {ges_o}
       &ouml;ffentliche Sitzungen, zu denen online kein Protokoll abrufbar ist.</p>
       <p class="meta">{spanne} &middot; maschinell erzeugt</p>
-    </a>""")
+    </a>"""))
 
     heute = dt.date.today()
     stichtag = kennzahlen.get("stichtag", heute.isoformat())
@@ -197,9 +232,9 @@ def bauen() -> str:
 </header>
 
 <section>
-  <h2>Ver&ouml;ffentlichungen</h2>
+  <h2>Einstiege</h2>
   <div class="karten">
-{chr(10).join(karten)}
+{chr(10).join(h for _, h in sorted(karten, key=lambda x: x[0]))}
   </div>
 </section>
 
@@ -336,63 +371,87 @@ def zeitleiste(register: dict, stichtag: str) -> str:
         '  <div class="zeitleiste">\n'
         f'{inhalt}\n'
         '  </div>\n'
-        '  <p class="hinweis">Jede Zelle ist eine Kalenderwoche; je heller, desto mehr\n'
-        '  Sitzungen fanden in ihr statt. Ein Klick f&uuml;hrt in die Ausgabe dieser Woche.\n'
-        '  Wochen ohne Sitzung bleiben leer.</p>\n'
         '  <p class="skala"><span>weniger</span>'
         '<span class="w s1"></span><span class="w s2"></span>'
         '<span class="w s3"></span><span class="w s4"></span>'
-        '<span>mehr</span><span class="trenn">&middot;</span>'
+        '<span>mehr Sitzungen</span><span class="trenn">&middot;</span>'
         '<a href="./ausgaben/index.html">alle Ausgaben als Liste</a></p>\n'
         '</section>\n')
 
 
 def naechste_termine(kennzahlen: dict) -> str:
-    """Die naechsten angekuendigten Sitzungen.
+    """Die naechsten angekuendigten Sitzungen, mit Tagesordnung wo vorhanden.
 
     Das Ratsinformationssystem fuehrt Termine, die noch bevorstehen. Sie
-    beantworten die Frage, die vor jeder Auswertung kommt: Was steht an? Ob zu
-    einem Termin schon eine Tagesordnung vorliegt, steht ausdruecklich dabei —
-    meistens liegt sie erst kurz vorher vor, und das ist eine Auskunft wert.
+    beantworten die Frage, die vor jeder Auswertung kommt: Was steht an? Liegt
+    die Tagesordnung schon vor, laesst sie sich aufklappen — samt
+    Vorlagennummern und den dort verlinkten Unterlagen. Meist erscheint sie
+    erst wenige Tage vorher, und auch das ist eine Auskunft.
     """
     kommend = kennzahlen.get("kommende_sitzungen") or []
     if not kommend:
         return ""
     tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag",
             "Freitag", "Samstag", "Sonntag"]
-    monate = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
+    monate = ["Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni", "Juli",
               "August", "September", "Oktober", "November", "Dezember"]
     heute = dt.date.fromisoformat(kennzahlen["stichtag"])
     zeilen = []
     for t in kommend:
         d = dt.date.fromisoformat(t["datum"])
-        tage_hin = (d - heute).days
-        wann = ("morgen" if tage_hin == 1 else
-                f"in {tage_hin} Tagen" if tage_hin <= 14 else "")
-        n = t.get("tops") or 0
-        agenda = (f'{n} Tagesordnungspunkt{"" if n == 1 else "e"}' if n
-                  else "Tagesordnung noch nicht ver&ouml;ffentlicht")
+        hin = (d - heute).days
+        bald = ("morgen" if hin == 1 else f"in {hin} Tagen" if hin <= 14 else "")
+        punkte = t.get("punkte") or []
+        sitzung = t.get("url") or ""
+
+        if punkte:
+            eintraege = []
+            for p in punkte:
+                dok = "".join(
+                    '<a class="doc" href="%s" target="_blank" rel="noopener noreferrer">%s</a>'
+                    % (e(x["url"]), e(x["titel"])) for x in p["dokumente"])
+                nummer = ('<span class="sv">%s</span>' % e(p["vorlage"])) if p["vorlage"] else ""
+                eintraege.append(
+                    '        <li><span class="sache">%s%s</span>%s</li>'
+                    % (e(p["titel"]), nummer,
+                       ('<span class="unterlagen">%s</span>' % dok) if dok else ""))
+            wort = "Tagesordnungspunkt" if len(punkte) == 1 else "Tagesordnungspunkte"
+            agenda = (
+                '      <details class="agenda">\n'
+                '        <summary>%d %s</summary>\n'
+                '        <ol class="tops">\n%s\n        </ol>\n'
+                '%s'
+                '      </details>'
+                % (len(punkte), wort, "\n".join(eintraege),
+                   ('        <p class="quelle"><a href="%s" target="_blank" '
+                    'rel="noopener noreferrer">Sitzung im Ratsinformationssystem</a></p>\n'
+                    % e(sitzung)) if sitzung else ""))
+        else:
+            agenda = ('      <p class="agenda offen">Tagesordnung noch nicht ver&ouml;ffentlicht'
+                      + (' &middot; <a href="%s" target="_blank" rel="noopener noreferrer">'
+                         'Termin im Ratsinformationssystem</a>' % e(sitzung) if sitzung else "")
+                      + "</p>")
+
         zeilen.append(
             '    <li>\n'
-            f'      <span class="wann">{tage[d.weekday()]}, {d.day}. {monate[d.month - 1]}'
-            f'{"" if d.year == heute.year else " " + str(d.year)}'
-            f'<span class="uhr">{t["zeit"]} Uhr</span>'
-            f'{f"<span class=&quot;bald&quot;>{wann}</span>" if wann else ""}</span>\n'
-            f'      <span class="gremium">{t["gremium"]}</span>\n'
-            f'      <span class="agenda">{agenda}</span>\n'
-            '    </li>')
+            '      <p class="wann">%s, %d. %s%s<span class="uhr">%s Uhr</span>%s</p>\n'
+            '      <p class="gremium">%s</p>\n'
+            '%s\n'
+            '    </li>'
+            % (tage[d.weekday()], d.day, monate[d.month - 1],
+               "" if d.year == heute.year else " " + str(d.year),
+               t["zeit"],
+               ('<span class="bald">%s</span>' % bald) if bald else "",
+               e(t["gremium"]), agenda))
 
     return (
         '\n<section>\n'
         '  <h2>Was als N&auml;chstes ansteht</h2>\n'
-        f'  <ol class="termine">\n{chr(10).join(zeilen)}\n  </ol>\n'
-        '  <p class="hinweis">Angek&uuml;ndigte Sitzungen aus dem Ratsinformationssystem.\n'
-        '  Sie sind &ouml;ffentlich, soweit nicht ausdr&uuml;cklich nicht&ouml;ffentlich beraten wird —\n'
-        '  wer hingehen will, kann das ohne Anmeldung. Tagesordnungen erscheinen meist\n'
-        '  wenige Tage vorher unter\n'
-        '  <a href="https://ris.bad-waldsee.de/termine" rel="noopener">ris.bad-waldsee.de</a>.</p>\n'
-        '</section>\n')
-
+        '  <ol class="termine">\n%s\n  </ol>\n'
+        '  <p class="fussnote">Angek&uuml;ndigte Sitzungen aus dem Ratsinformationssystem. '
+        'Sie sind &ouml;ffentlich, soweit nicht ausdr&uuml;cklich nicht&ouml;ffentlich beraten wird — '
+        'wer hingehen will, kann das ohne Anmeldung.</p>\n'
+        '</section>\n' % "\n".join(zeilen))
 
 def main() -> None:
     DOCS.mkdir(exist_ok=True)
