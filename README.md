@@ -382,6 +382,21 @@ das Ergebnis: tote Verweise, fehlende Schriften, Abrufe bei fremden Servern,
 Lücken in den Berichtszeiträumen und ob die Tabellen zu den Kennzahlen passen.
 Diese Prüfung hat beim ersten Einsatz neun fehlende Abstimmungen aufgedeckt.
 
+Zusätzlich gibt es eine Browserprüfung für schmale Bildschirme, die lokal
+ausgeführt wird und nicht Teil des Workflows ist:
+
+```bash
+pip install playwright && playwright install chromium webkit
+python scripts/pruefe_mobil.py
+```
+
+Sie öffnet zehn Seiten in Chromium und WebKit — der Engine von Safari — bei
+fünf Breiten von 320 bis 1024 Pixeln, jeweils **ohne JavaScript**, und prüft:
+alle sieben Menüeinträge sichtbar, Tippziele mindestens 44 Pixel hoch, kein
+waagerechter Seitenüberlauf, Tastaturreihenfolge in Ordnung. Ein
+Seitenüberlauf fällt am Rechner nicht auf und macht eine Seite auf dem Telefon
+unbenutzbar — dafür reicht ein einziger falsch positionierter Vorlesetext.
+
 * Schritt 1 muss immer zuerst laufen: `data/sitzungen.json` und `data/topmap.json`
   sind Zwischenergebnisse und werden nicht versioniert. Sie enthalten
   sitzungsgebundene Dokument-Token des Ratsinformationssystems — keine

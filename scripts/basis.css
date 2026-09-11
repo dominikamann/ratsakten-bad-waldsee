@@ -105,16 +105,19 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
 .brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
 .brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
 .brandbar nav span[aria-hidden]{opacity:.35}
-/* Auf dem Telefon darf die Navigation in mehrere Zeilen wachsen, damit die
-   Seite ihre Breite am Viewport ausrichtet und nicht horizontal ueberlaeuft. */
+/* Alle Bereiche bleiben auch auf dem Telefon sichtbar, ohne seitliches
+   Schieben. Ganze Links umbrechen lassen; die Trennstriche entfallen, damit
+   sie nicht allein am Zeilenanfang stehen. Vierundvierzig Pixel Hoehe ist das
+   Mass, das sich mit dem Daumen zuverlaessig treffen laesst. */
 @media (max-width:620px){
-  .brandbar .wrap{padding-right:24px}
   .brandbar nav{
-    flex-basis:100%;flex-wrap:wrap;min-width:0;
+    flex-basis:100%;gap:0 8px;
   }
-  .brandbar nav a,.brandbar nav span[aria-hidden]{
-    flex:0 1 auto;white-space:normal;overflow-wrap:anywhere;
+  .brandbar nav a{
+    display:flex;align-items:center;min-height:44px;padding:8px;
+    max-width:100%;font-size:13px;
   }
+  .brandbar nav span[aria-hidden]{display:none}
 }
 
 /* ---------- Seitenkopf ----------
