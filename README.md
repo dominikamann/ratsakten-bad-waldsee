@@ -54,8 +54,10 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
 ➡️ **[Aktuelle Ausgabe, KW 37/2026](./docs/ausgaben/2026/kw37.html)** — die wöchentliche Aktenlage
 ➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 89 Ausgaben der Jahrgänge 2024 bis 2026
+➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
+➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf
 ➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 514 Vorgänge mit ihrem Weg durch die Gremien
-➡️ **[Befunde](./docs/befunde.html)** — alle 22 Erkenntnisse an einem Ort
+➡️ **[Befunde](./docs/befunde.html)** — alle 23 Erkenntnisse an einem Ort
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
 Abhängigkeiten und **funktionieren ohne JavaScript** — auch in der iOS-Dateivorschau,
@@ -89,6 +91,8 @@ nirgends anmelden — Link anklicken genügt:
 * **[Startseite](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/index.html)**
 * **[Ratsanalyse 2024–2026](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/report/2026-09-09.html)**
 * **[Archiv aller Ausgaben](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/ausgaben/index.html)**
+* **[Wer entscheidet was](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/gremien.html)**
+* **[Themen](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/themen/index.html)**
 * **[Vorgänge durchsuchen](https://raw.githack.com/dominikamann/ratsakten-bad-waldsee/main/docs/suche.html)**
 
 Von der Startseite aus funktioniert alles Weitere ganz normal durch Anklicken.
@@ -161,7 +165,7 @@ Umweltbericht —, sind sie **verlinkt und öffnen in einem neuen Tab**. Die
 Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum die
 Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
 Diese Begründung wird **nicht wiedergegeben** — wer sie lesen will, liest sie im
-Original. 436 Dokumente sind so erreichbar.
+Original. 625 Dokumente sind so erreichbar.
 
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst

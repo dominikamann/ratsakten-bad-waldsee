@@ -159,8 +159,45 @@ BEHAUPTUNGEN = [
     (r"ohne (?:jede )?(?:Überlieferung|Ueberlieferung)", "„ohne Überlieferung“ — bestandsbezogen"),
     (r"keine nachvollziehbare Spur", "„keine nachvollziehbare Spur“ — zu stark"),
     (r"kein einziges Protokoll ver(?:ö|oe)ffentlicht", "Formulierung legt ein Versäumnis nahe"),
+    # Diese Fassung stand bis 11.09.2026 in jeder Wochenausgabe und ist am
+    # Waechter vorbeigelaufen, weil er nur die Variante mit „kein einziges"
+    # kannte. Erhoben ist die Abrufbarkeit, nicht die Veroeffentlichung.
+    (r"kein(?:e)? (?:Protokoll|Niederschrift)\w* ver(?:ö|oe)ffentlicht",
+     "„kein Protokoll veröffentlicht“ — geprüft ist nur die Abrufbarkeit"),
 ]
 
+
+
+def pruefe_readme() -> None:
+    """Zahlen in der README gegen die Daten halten.
+
+    Die README wird von Hand gepflegt. Zweimal stand dort eine Zahl, die aus
+    einem frueheren Lauf stammte — „436 Dokumente", als es laengst 625 waren.
+    Solche Angaben veralten still, weil niemand sie nachrechnet.
+    """
+    readme = WURZEL / "README.md"
+    if not readme.exists():
+        return
+    text = readme.read_text(encoding="utf-8")
+    kennzahlen = json.loads((WURZEL / "data" / "kennzahlen.json").read_text(encoding="utf-8"))
+
+    befunde = DOCS / "befunde.html"
+    erkenntnisse = (len(re.findall(r"<h3", befunde.read_text(encoding="utf-8")))
+                    if befunde.exists() else None)
+
+    pruefungen = [
+        (r"(\d+) Dokumente sind so erreichbar", kennzahlen.get("dokumente"), "Dokumente"),
+        (r"alle (\d+) Erkenntnisse", erkenntnisse, "Erkenntnisse auf der Befundeseite"),
+    ]
+    for muster, soll, was in pruefungen:
+        if soll is None:
+            continue
+        m = re.search(muster, text)
+        if not m:
+            continue
+        if int(m.group(1)) != soll:
+            fehler.append(
+                f"README nennt {m.group(1)} {was}, tatsaechlich sind es {soll}.")
 
 def pruefe_wortwahl() -> None:
     """Keine Aussage über den Bestand von Unterlagen, die nicht geprüft wurde."""
@@ -199,11 +236,20 @@ def pruefe_reportalter() -> None:
         dt.date.fromisoformat(datiert)
     except ValueError:
         return
-    if stand > datiert:
+    # Entscheidend ist nicht der Stichtag, sondern ob seither eine Sitzung
+    # stattgefunden hat. Sonst mahnt die Pruefung jeden Tag, an dem nichts
+    # passiert ist — und wird bald ueberlesen.
+    sitzungen = DATEN / "sitzungen.json"
+    neuer = []
+    if sitzungen.exists():
+        neuer = [e for e in json.loads(sitzungen.read_text(encoding="utf-8"))
+                 if datiert < e["start"][:10] <= stand]
+    if neuer:
         hinweise.append(
-            f"Der Report ist vom {datiert}, die Daten reichen bis {stand}. "
-            f"Ein neuer Report gehört nach docs/report/{stand}.html — "
-            f"Stichtag in src/report.html nachziehen und Schritt 04 ausführen.")
+            f"Seit dem Report vom {datiert} haben {len(neuer)} Sitzung(en) "
+            f"stattgefunden (Daten bis {stand}). Ein neuer Report gehört nach "
+            f"docs/report/{stand}.html — Stichtag in src/report.html nachziehen "
+            f"und Schritt 04 ausführen.")
     notiz.append(f"Report vom {datiert}")
 
 
@@ -213,7 +259,7 @@ def main() -> None:
 
     for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
-                     pruefe_wortwahl, pruefe_reportalter):
+                     pruefe_readme, pruefe_wortwahl, pruefe_reportalter):
         pruefung()
 
     seiten = len(list(DOCS.rglob("*.html")))
