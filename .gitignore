@@ -24,3 +24,6 @@ data/cache/
 # wortschatz.json entsteht in Schritt 03, vorgaenge.json in Schritt 08.
 data/wortschatz.json
 data/vorgaenge.json
+
+# Vollstaendiger Sitzungskalender, aus den Crawl-Daten erzeugt (Schritt 03).
+data/termine.json

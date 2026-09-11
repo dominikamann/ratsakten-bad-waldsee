@@ -50,7 +50,12 @@ def pruefe_verweise() -> None:
             if ziel.startswith(("http", "mailto:", "#")):
                 continue
             gesamt += 1
-            if not (f.parent / urllib.parse.unquote(ziel)).resolve().exists():
+            # Sprungmarke abschneiden: „seite.html#stelle" verweist auf die
+            # Datei, nicht auf einen Pfad mit Raute im Namen.
+            pfad = urllib.parse.unquote(ziel.split("#", 1)[0])
+            if not pfad:
+                continue
+            if not (f.parent / pfad).resolve().exists():
                 meldung = f"toter Verweis: {f.relative_to(WURZEL)} → {ziel}"
                 if meldung not in fehler:
                     fehler.append(meldung)

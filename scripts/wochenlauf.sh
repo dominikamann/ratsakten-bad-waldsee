@@ -39,35 +39,38 @@ case "$CODE" in
 esac
 
 # --- Verarbeitungskette -------------------------------------------------------
-log "1/10  Sitzungen und Tagesordnungen laden"
+log "1/11  Sitzungen und Tagesordnungen laden"
 uv run --quiet --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 
-log "2/10  Neue Protokolle laden"
+log "2/11  Neue Protokolle laden"
 uv run --quiet --with requests python scripts/02_protokolle_laden.py
 
-log "3/10  Kennzahlen berechnen"
+log "3/11  Kennzahlen berechnen"
 uv run --quiet --with pypdf python scripts/03_auswerten.py | head -3
 
-log "4/10  Ausgaben erzeugen"
+log "4/11  Ausgaben erzeugen"
 uv run --quiet --with pypdf python scripts/05_ausgaben_bauen.py | tail -2
 
-log "5/10  Tabellen und Suche erzeugen"
+log "5/11  Tabellen und Suche erzeugen"
 uv run --quiet --with pypdf python scripts/07_tabellen_bauen.py | tail -4
 uv run --quiet --with pypdf python scripts/08_suche_bauen.py
 
-log "6/10  Themenseiten erzeugen"
+log "6/11  Themenseiten erzeugen"
 uv run --quiet python scripts/11_themen_bauen.py
 
-log "7/10  Befunde sammeln"
+log "7/11  Terminseite erzeugen"
+uv run --quiet python scripts/12_termine_bauen.py
+
+log "8/11  Befunde sammeln"
 uv run --quiet --with lxml python scripts/09_befunde_bauen.py
 
-log "8/10  Seite „Wer entscheidet was“ erzeugen"
+log "9/11  Seite „Wer entscheidet was“ erzeugen"
 uv run --quiet python scripts/10_gremien_bauen.py
 
-log "9/10  Startseite erzeugen"
+log "10/11  Startseite erzeugen"
 uv run --quiet python scripts/06_startseite_bauen.py
 
-log "10/10  Report vorrendern"
+log "11/11  Report vorrendern"
 node scripts/04_vorrendern.js | tail -1
 
 # --- Pruefen ------------------------------------------------------------------

@@ -450,7 +450,8 @@ def naechste_termine(kennzahlen: dict) -> str:
         '  <ol class="termine">\n%s\n  </ol>\n'
         '  <p class="fussnote">Angek&uuml;ndigte Sitzungen aus dem Ratsinformationssystem. '
         'Sie sind &ouml;ffentlich, soweit nicht ausdr&uuml;cklich nicht&ouml;ffentlich beraten wird — '
-        'wer hingehen will, kann das ohne Anmeldung.</p>\n'
+        'wer hingehen will, kann das ohne Anmeldung. '
+        '<a href="./termine.html#heute">Alle Termine, auch vergangene</a>.</p>\n'
         '</section>\n' % "\n".join(zeilen))
 
 def main() -> None:

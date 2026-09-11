@@ -158,11 +158,11 @@ def main() -> None:
     # Tage vorher. Mitgegeben werden Titel, Vorlagennummer und die verlinkten
     # Unterlagen, damit die Startseite sie ausklappbar zeigen kann.
     karte = DATEN / "topmap.json"
-    punkte_je_tag: dict[str, list[dict]] = {}
+    punkte_je_datum: dict[str, list[dict]] = {}
     if karte.exists():
         for p in json.loads(karte.read_text(encoding="utf-8")):
-            if p["datum"] > args.stichtag:
-                punkte_je_tag.setdefault(p["datum"], []).append(p)
+            punkte_je_datum.setdefault(p["datum"], []).append(p)
+    punkte_je_tag = {d: p for d, p in punkte_je_datum.items() if d > args.stichtag}
 
     kommend = []
     for s in sorted(alle, key=lambda x: x["start"]):
@@ -210,6 +210,30 @@ def main() -> None:
     (DATEN / "kennzahlen.json").write_text(
         json.dumps(kennzahlen, ensure_ascii=False, indent=2), encoding="utf-8")
     wortschatz_speichern(wortschatz, DATEN / "wortschatz.json")
+
+    # Alle Sitzungstermine, vergangene wie kuenftige, als eigene Datei. Die
+    # Terminseite braucht den vollstaendigen Kalender; sitzungen.json enthaelt
+    # ihn zwar, liegt aber nicht im Repo, weil es der Rohabzug des Crawls ist.
+    termine = []
+    for sitzung in sorted(alle, key=lambda x: x["start"]):
+        tag = sitzung["start"][:10]
+        termine.append({
+            "datum": tag,
+            "zeit": sitzung["start"][11:16],
+            "gremium": gremium(sitzung["titel"]),
+            "tops": sitzung["n_tops"],
+            "protokoll": bool(sitzung["protokolle"]),
+            "url": sitzung.get("url", ""),
+            "punkte": [{"top": p["top"], "titel": p["titel"],
+                        "vorlage": p.get("vorlage") or "",
+                        "dokumente": p.get("dokumente") or []}
+                       for p in sorted(
+                           punkte_je_datum.get(tag, []),
+                           key=lambda p: int(p["top"]) if p["top"].isdigit() else 99)
+                       if p["gremium"].startswith(gremium(sitzung["titel"])[:18])],
+        })
+    (DATEN / "termine.json").write_text(
+        json.dumps(termine, ensure_ascii=False), encoding="utf-8")
 
     # --- Zusammenfassung ---------------------------------------------------
     k = kennzahlen
