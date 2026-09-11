@@ -242,15 +242,29 @@ h1{
 .issueline b{color:var(--ink);font-weight:600}
 
 /* ---------- Herkunft einer Aussage ----------
-   Drei Stufen, auf jeder Seite dieselben: belegt, regelbasiert, gedeutet. */
+   Drei Stufen, auf jeder Seite dieselben: belegt, regelbasiert, gedeutet.
+
+   Vorher ein rechteckiger Rahmen in voller Akzentfarbe — das las sich wie ein
+   Eingabefeld oder eine Warnung, obwohl die Marke nur sagt, woher eine Aussage
+   kommt. Jetzt eine kleine Kapsel: getönte Fläche, Haarlinie statt Vollton, und
+   ein Punkt trägt die Farbe, nicht die ganze Schrift. */
 .herkunft{
-  display:inline-block;margin:0;padding:3px 9px;
-  font-family:var(--mono);font-size:10px;font-style:normal;
-  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
+  display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;
+  padding:3px 10px 3px 8px;border-radius:999px;border:1px solid transparent;
+  font-family:var(--mono);font-size:9.5px;font-style:normal;line-height:1.6;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink-2);
+  vertical-align:middle;
 }
-.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
-.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
-.herkunft.beleg,.herkunft.geprueft{color:var(--muted);border-color:var(--rule)}
+.herkunft::before{
+  content:"";flex:0 0 auto;width:5px;height:5px;border-radius:50%;
+  background:currentColor;
+}
+.herkunft.ki{background:rgba(224,129,99,.10);border-color:rgba(224,129,99,.30)}
+.herkunft.ki::before{background:var(--flag)}
+.herkunft.regel{background:rgba(57,135,229,.10);border-color:rgba(57,135,229,.30)}
+.herkunft.regel::before{background:var(--s1)}
+.herkunft.beleg,.herkunft.geprueft{background:var(--surface);border-color:var(--rule)}
+.herkunft.beleg::before,.herkunft.geprueft::before{background:var(--muted)}
 
 /* ---------- Fuß ---------- */
 footer{background:var(--bar-bg);border-top:1px solid var(--rule);padding:32px 0;margin-top:48px}
@@ -385,14 +399,6 @@ svg{display:block;max-width:100%;height:auto}
 
 /* ---------- Befund ---------- */
 .befund{margin:26px 0;padding:20px 22px;border-left:3px solid var(--flag);background:var(--flag-bg)}
-.herkunft{
-  display:inline-block;margin:0 0 14px;padding:3px 9px;
-  font-family:var(--mono);font-size:10px;
-  letter-spacing:.11em;text-transform:uppercase;border:1px solid;
-}
-.herkunft.ki{color:var(--flag);border-color:var(--flag);background:var(--flag-bg)}
-.herkunft.regel{color:var(--s1);border-color:var(--s1);background:rgba(57,135,229,.08)}
-.herkunft.beleg{color:var(--muted);border-color:var(--rule)}
 .befund .lab{
   font-family:var(--mono);font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--flag);margin:0 0 8px;font-weight:500;
