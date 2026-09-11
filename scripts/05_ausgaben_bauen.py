@@ -30,7 +30,9 @@ import logging
 import re
 from pathlib import Path
 
-from pypdf import PdfReader
+from begriffe import begriffe_finden
+from seite import navigation
+from textwerk import pdf_text as roh_text, trennung_reparieren, wortschatz_laden
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -40,6 +42,11 @@ logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"
+
+# Silbentrennungen des PDF zusammenfuehren. Welcher Bindestrich eine
+# Trennung ist und welcher ein Gedankenstrich, entscheidet der Wortschatz
+# aus 03_auswerten.py — siehe textwerk.py.
+WORTSCHATZ = wortschatz_laden(DATEN / "wortschatz.json")
 AUSGABEN = WURZEL / "docs" / "ausgaben"
 
 ERGEBNIS = re.compile(r"Ergebnis der Beschlussfassung\s*:?\s*(.{0,70})")
@@ -62,6 +69,14 @@ BETRAGSSCHWELLE = 250_000
 # Titelmuster, die auf eine nicht eingeplante Ausgabe hindeuten.
 UNGEPLANT = re.compile(r"au(?:ß|ss)erplanm(?:ä|ae)(?:ß|ss)ig|(?:ü|ue)berplanm(?:ä|ae)(?:ß|ss)ig",
                        re.I)
+
+# Ein Bebauungsplan endet mit dem Satzungsbeschluss (§ 10 Abs. 1 BauGB) —
+# das Gegenstueck zu den Abweichungsregeln: ein abgeschlossenes Verfahren.
+ABSCHLUSS = re.compile(r"Satzungsbeschluss|als Satzung beschlossen|wird als Satzung", re.I)
+
+# Jahresabschluesse und Rechenschaftsberichte nennen das Haushaltsjahr, das sie
+# betreffen. Liegt es weit zurueck, wird ein Rueckstand aufgearbeitet.
+RUECKSTAND = re.compile(r"Jahresabschluss\w*\s+(?:der\s+\w+\s+)?(\d{4})", re.I)
 
 KURZ = {
     "Gemeinderat": "GR",
@@ -89,8 +104,14 @@ MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
 
 # --------------------------------------------------------------------- Daten
 
+# Sitzungstitel lauten „<Gremium>, N. Sitzung". Entfernt wird nur die
+# Zaehlung — ein Schnitt am ersten Komma machte aus dem „Ausschuss fuer
+# Umwelt, Technik und Nachhaltigkeit" ein Gremium, das es nicht gibt.
+NUR_ZAEHLUNG = re.compile(r",\s*\d+\.\s*Sitzung\s*$")
+
+
 def gremium(titel: str) -> str:
-    return re.sub(r",.*", "", titel)
+    return NUR_ZAEHLUNG.sub("", titel)
 
 
 def kuerzel(name: str) -> str:
@@ -104,17 +125,23 @@ def kuerzel(name: str) -> str:
 
 def dateiname(titel: str) -> str:
     """Muss exakt der Benennung aus 02_protokolle_laden.py entsprechen."""
+    # Achtung: Hier wird bewusst am ersten Komma geschnitten, obwohl das
+    # den Gremiumsnamen verkuerzt. Die bereits geladenen Protokolle auf
+    # der Platte tragen genau diese Namen; eine Aenderung wuerde sie
+    # unauffindbar machen. Fuer die Anzeige gibt es gremium().
     name = re.sub(r",.*", "", titel)
     name = re.sub(r"[^A-Za-zÄÖÜäöüß0-9]+", "-", name).strip("-")
     return name[:48]
 
 
 def pdf_text(pfad: Path) -> str:
-    try:
-        roh = "\n".join(s.extract_text() or "" for s in PdfReader(pfad).pages)
-    except Exception:  # noqa: BLE001
-        return ""
-    return re.sub(r"[­\s]+", " ", roh)
+    """Rohtext aus dem Zwischenspeicher, Silbentrennung zusammengefuehrt.
+
+    Die Reparatur passiert hier und nicht im Zwischenspeicher, weil der
+    Wortschatz erst in Schritt 03 entsteht — der Speicher haelt deshalb den
+    unbehandelten Text.
+    """
+    return trennung_reparieren(roh_text(pfad), WORTSCHATZ)
 
 
 def ergebnis_lesen(roh: str) -> tuple[str | None, bool]:
@@ -146,9 +173,6 @@ EINLEITUNG = re.compile(
     r"(?:Modifizierter Beschluss|Beschlussvorschlag an den [^:]{0,40}|Beschluss)\s*:\s*")
 SEITENFUSS = re.compile(
     r"Beschlussprotokoll der öffentlichen Sitzung.{0,140}?\d+\s*von\s*\d+\s*")
-# Silbentrennung aus dem PDF zusammenfuehren — aber "Kosten- und Zeitplan" nicht
-# zu "Kostenund" verstuemmeln.
-TRENNUNG = re.compile(r"(\w)-\s+(?!(?:und|oder|bzw|sowie|als|wie)\b)([a-zäöüß])")
 
 
 def beschlusstext(abschnitt: str, grenze: int = 1400) -> str:
@@ -157,7 +181,7 @@ def beschlusstext(abschnitt: str, grenze: int = 1400) -> str:
     if not treffer:
         return ""
     roh = SEITENFUSS.sub(" ", abschnitt[treffer[-1].end():])
-    roh = TRENNUNG.sub(r"\1\2", re.sub(r"\s+", " ", roh)).strip()
+    roh = re.sub(r"\s+", " ", roh).strip()
     if len(roh) <= grenze:
         return roh
     schnitt = roh.rfind(". ", 0, grenze)
@@ -214,10 +238,16 @@ def euro(betrag: float) -> str:
 
 
 def auffaelligkeiten(w: dict) -> list[dict]:
-    """Regelbasierte Hinweise darauf, wo Hinschauen sich lohnt.
+    """Regelbasierte Hinweise auf das, was aus dem Rahmen faellt.
 
-    Bewusst nur Regeln, keine Deutung: Jeder Punkt ist am Protokoll überprüfbar.
-    Die Rubrik findet keine Zusammenhänge — sie zeigt, was auffällt.
+    Bewusst nur Regeln, keine Deutung: Jeder Punkt ist am Protokoll ueberpruefbar.
+    Die Rubrik findet keine Zusammenhaenge — sie zeigt, was auffaellt.
+
+    Die Regeln sprechen absichtlich auf beides an: auf Abweichungen (nicht
+    einstimmig, ausserplanmaessig, ohne Protokoll) und auf Abschluesse
+    (Satzungsbeschluss, aufgearbeiteter Rueckstand, durchweg einstimmig). Eine
+    Rubrik, die nur Abweichungen kennt, waere im Ergebnis eine Wertung — auch
+    wenn jeder einzelne Satz neutral bleibt.
     """
     treffer = []
 
@@ -273,15 +303,51 @@ def auffaelligkeiten(w: dict) -> list[dict]:
                        for b in wieder],
         })
 
-    if w["blind"]:
+    # --- Abschluesse und Aufarbeitung; dieselbe Regellogik, andere Richtung
+    abgeschlossen = [b for b in w["beschluesse"]
+                     if ABSCHLUSS.search((b.get("wortlaut") or "") + " " + (b["titel"] or ""))]
+    if abgeschlossen:
         treffer.append({
-            "art": "Ohne Protokoll",
-            "text": f"{len(w['blind'])} öffentliche "
-                    f"{'Sitzung' if len(w['blind']) == 1 else 'Sitzungen'} im "
-                    f"Berichtszeitraum, zu denen kein Protokoll veröffentlicht wurde.",
-            "posten": [f"{b['gremium']} am {b['datum'].strftime('%d.%m.%Y')}"
-                       for b in w["blind"]],
+            "art": "Verfahren abgeschlossen",
+            "ton": "neutral",
+            "text": "Ein Planverfahren endet damit, dass das Ergebnis als Satzung "
+                    "beschlossen wird. Das Verfahren ist dann abgeschlossen — über "
+                    "die Qualität des Ergebnisses sagt das nichts, wohl aber, dass es "
+                    "nicht liegen geblieben ist.",
+            "posten": [f"{b['vorlage']} — {b['titel']}" for b in abgeschlossen],
         })
+
+    aufgearbeitet = []
+    for b in w["beschluesse"]:
+        m = RUECKSTAND.search(b["titel"] or "")
+        if m and b["datum"].year - int(m.group(1)) >= 2:
+            aufgearbeitet.append((b, int(m.group(1)), b["datum"].year - int(m.group(1))))
+    if aufgearbeitet:
+        treffer.append({
+            "art": "Rückstand aufgearbeitet",
+            "ton": "neutral",
+            "text": "Diese Beschlüsse betreffen zurückliegende Haushaltsjahre. Sie zeigen, "
+                    "dass ein Rückstand abgearbeitet wird — und zugleich, wie groß er war.",
+            "posten": [f"{b['vorlage']} — {b['titel']} ({abstand} Jahre nach dem Haushaltsjahr {jahr})"
+                       for b, jahr, abstand in aufgearbeitet],
+        })
+
+    if w["beschluesse"] and not strittig:
+        treffer.append({
+            "art": "Durchweg einstimmig",
+            "ton": "neutral",
+            "text": f"Alle {len(w['beschluesse'])} Beschlüsse dieser Woche fielen einstimmig. "
+                    f"Das kann breiten Konsens abbilden; Beschlussprotokolle halten keine "
+                    f"Aussprache fest, aus ihnen allein ist das nicht zu unterscheiden.",
+            "posten": [],
+        })
+
+    # Sitzungen ohne abrufbare Unterlagen stehen bewusst NICHT hier, sondern in
+    # der eigenen Rubrik „Blinder Fleck". Dort ist der Sachverhalt genauer
+    # gefasst — erhoben ist die Abrufbarkeit, nicht der Bestand einer
+    # Niederschrift — und er bekommt den Zusammenhang ueber den ganzen
+    # Zeitraum. Stuende er zusaetzlich hier, waere derselbe Umstand zweimal
+    # gezaehlt und die Rubrik im Ergebnis eine Wertung.
 
     return treffer
 
@@ -422,16 +488,6 @@ def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
     schriften = (WURZEL / "scripts" / "schriften.css").read_text(
         encoding="utf-8").replace("{PFAD}", hoch)
 
-    def eintrag(ziel: str, text: str, name: str) -> str:
-        aktuell = ' aria-current="page"' if name == hier else ""
-        return f'<a href="{hoch}{ziel}"{aktuell}>{text}</a>'
-
-    navigation = ("\n    <span aria-hidden=\"true\">/</span>\n    ".join([
-        eintrag("index.html", "Startseite", "start"),
-        eintrag("suche.html", "Suche", "suche"),
-        eintrag("befunde.html", "Befunde", "befunde"),
-        eintrag("ausgaben/index.html", "Archiv", "archiv"),
-    ]))
     return f"""<!doctype html>
 <html lang="de">
 <head>
@@ -445,7 +501,7 @@ def kopf(titel: str, hoch: str = "", hier: str = "") -> str:
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
-    {navigation}
+    {navigation(hoch, hier)}
   </nav>
   <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
@@ -486,7 +542,6 @@ DISCLAIMER = """
 def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     mo, so = w["von"], w["bis"]
     n_besch = len(w["beschluesse"])
-    n_strittig = sum(1 for b in w["beschluesse"] if b["strittig"])
     mit_prot = sum(1 for s in w["sitzungen"] if s["protokoll"])
 
     t = [kopf(f"Aktenlage KW {kw}/{jahr}", hoch="../../"), '<div class="wrap">']
@@ -552,12 +607,13 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
         for h in hinweise:
             posten = "".join(
                 f'        <li><span class="sache">{e(p)}</span></li>\n' for p in h["posten"])
-            bloecke.append(f"""    <div class="kasten warn">
+            liste = (f'      <ul class="beschluesse kompakt">\n{posten}      </ul>\n'
+                     if h["posten"] else "")
+            klasse = "kasten warn" if h.get("ton", "warn") == "warn" else "kasten"
+            bloecke.append(f"""    <div class="{klasse}">
       <p class="lab">{e(h['art'])}</p>
       <p>{e(h['text'])}</p>
-      <ul class="beschluesse kompakt">
-{posten}      </ul>
-    </div>""")
+{liste}    </div>""")
         t.append(f"""
 <article id="auffaelligkeiten">
   <div class="rail">
@@ -571,7 +627,53 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     <p>Diese Rubrik entsteht aus festen Regeln, nicht aus einer Bewertung. Sie zeigt,
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
+    <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
+    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
+    abgeschlossen oder aufgearbeitet wurde.</p>
 {chr(10).join(bloecke)}
+  </div>
+</article>""")
+
+    # --- Begriffe, die in dieser Ausgabe vorkommen
+    # Steht bewusst vor den Beschlusslisten: Der Leser soll die Erklaerung
+    # haben, bevor er ueber den Begriff stolpert.
+    # Nur gegen den Text pruefen, den der Leser auch sieht. Wuerde man die
+    # ganze Wochenstruktur serialisieren, loesten Dateinamen von Anlagen und
+    # interne Felder Erklaerungen fuer Begriffe aus, die in der Ausgabe gar
+    # nicht vorkommen.
+    sichtbar = " ".join(filter(None, (
+        [b.get("titel") or "" for b in w["beschluesse"]]
+        + [b.get("wortlaut") or "" for b in w["beschluesse"]]
+        + [b.get("gremium") or "" for b in w["beschluesse"]]
+        + [s.get("gremium") or "" for s in w["sitzungen"]]
+        + [b.get("gremium") or "" for b in w["blind"]]
+        + [h["art"] + " " + h["text"] for h in hinweise]
+    )))
+    gefunden = begriffe_finden(sichtbar)
+    if gefunden:
+        eintraege = "\n".join(
+            f"""      <div class="begriff">
+        <p class="wort">{e(b['name'])}</p>
+        <p>{b['satz']}</p>
+        <p class="fundstelle">{e(b['fundstelle'])}</p>
+      </div>""" for b in gefunden)
+        t.append(f"""
+<article id="begriffe">
+  <div class="rail">
+    <div class="field"><span class="lab">Begriffe</span><span class="val">{len(gefunden)}</span></div>
+    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Begriffe</p>
+    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
+    <h2 class="headline">Was die Amtssprache meint</h2>
+    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
+    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
+    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
+    <details class="begriffe" open>
+      <summary>{len(gefunden)} Begriffe in dieser Ausgabe</summary>
+{eintraege}
+    </details>
   </div>
 </article>""")
 
@@ -708,6 +810,14 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     t.append(f"""
 <section class="kolophon">
   <p class="rubrik">Zur Ausgabe</p>
+  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+  <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
+  nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
+  ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
+  Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
+  Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
@@ -716,9 +826,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
   Ja : Nein : Enthaltungen.</p>
   <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Auf feste
-  Direktlinks wird verzichtet, weil die Dokument-URLs sitzungsgebundene Token enthalten
-  und nicht dauerhaft gültig bleiben.</p>
+  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
+  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
+  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
+  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
   <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>

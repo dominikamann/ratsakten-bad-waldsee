@@ -22,13 +22,14 @@ from __future__ import annotations
 import argparse
 import collections
 import datetime as dt
-import html
 import json
 import logging
 import re
 from pathlib import Path
 
-from pypdf import PdfReader
+from seite import navigation
+
+from textwerk import pdf_text as roh_text, trennung_reparieren, wortschatz_laden
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -38,6 +39,11 @@ logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"
+
+# Silbentrennungen des PDF zusammenfuehren. Welcher Bindestrich eine
+# Trennung ist und welcher ein Gedankenstrich, entscheidet der Wortschatz
+# aus 03_auswerten.py — siehe textwerk.py.
+WORTSCHATZ = wortschatz_laden(DATEN / "wortschatz.json")
 DOCS = WURZEL / "docs"
 
 ERGEBNIS = re.compile(r"Ergebnis der Beschlussfassung\s*:?\s*(.{0,70})")
@@ -110,17 +116,23 @@ def kuerzel(name: str) -> str:
 
 
 def dateiname(titel: str) -> str:
+    # Achtung: Hier wird bewusst am ersten Komma geschnitten, obwohl das
+    # den Gremiumsnamen verkuerzt. Die bereits geladenen Protokolle auf
+    # der Platte tragen genau diese Namen; eine Aenderung wuerde sie
+    # unauffindbar machen. Fuer die Anzeige gibt es gremium().
     name = re.sub(r",.*", "", titel)
     name = re.sub(r"[^A-Za-zÄÖÜäöüß0-9]+", "-", name).strip("-")
     return name[:48]
 
 
 def pdf_text(pfad: Path) -> str:
-    try:
-        roh = "\n".join(s.extract_text() or "" for s in PdfReader(pfad).pages)
-    except Exception:  # noqa: BLE001
-        return ""
-    return re.sub(r"[­\s]+", " ", roh)
+    """Rohtext aus dem Zwischenspeicher, Silbentrennung zusammengefuehrt.
+
+    Die Reparatur passiert hier und nicht im Zwischenspeicher, weil der
+    Wortschatz erst in Schritt 03 entsteht — der Speicher haelt deshalb den
+    unbehandelten Text.
+    """
+    return trennung_reparieren(roh_text(pfad), WORTSCHATZ)
 
 
 # Der Beschlusstext steht zwischen der Einleitung „Beschluss:" und der
@@ -130,7 +142,6 @@ EINLEITUNG = re.compile(
     r"(?:Modifizierter Beschluss|Beschlussvorschlag an den [^:]{0,40}|Beschluss)\s*:\s*")
 SEITENFUSS = re.compile(
     r"Beschlussprotokoll der öffentlichen Sitzung.{0,140}?\d+\s*von\s*\d+\s*")
-TRENNUNG = re.compile(r"(\w)-\s+(?!(?:und|oder|bzw|sowie|als|wie)\b)([a-zäöüß])")
 
 
 def beschlusstext(abschnitt: str, grenze: int = 900) -> str:
@@ -138,7 +149,7 @@ def beschlusstext(abschnitt: str, grenze: int = 900) -> str:
     if not treffer:
         return ""
     roh = SEITENFUSS.sub(" ", abschnitt[treffer[-1].end():])
-    roh = TRENNUNG.sub(r"\1\2", re.sub(r"\s+", " ", roh)).strip()
+    roh = re.sub(r"\s+", " ", roh).strip()
     if len(roh) <= grenze:
         return roh
     schnitt = roh.rfind(". ", 0, grenze)
@@ -520,13 +531,7 @@ mark{{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}}
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
-    <a href="./index.html">Startseite</a>
-    <span aria-hidden="true">/</span>
-    <a href="./suche.html" aria-current="page">Suche</a>
-    <span aria-hidden="true">/</span>
-    <a href="./befunde.html">Befunde</a>
-    <span aria-hidden="true">/</span>
-    <a href="./ausgaben/index.html">Archiv</a>
+    {navigation("./", "suche")}
   </nav>
   <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
@@ -948,6 +953,12 @@ def main() -> None:
         "mehrstufig": mehrstufig,
         "stichtag": args.stichtag,
     }, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    # Die vollstaendig gruppierten Vorgaenge einmal ablegen. Schritt 11 baut
+    # daraus die Themenseiten, ohne die Gruppierung ein zweites Mal zu
+    # implementieren — zwei Fassungen derselben Logik wuerden auseinanderlaufen.
+    (DATEN / "vorgaenge.json").write_text(
+        json.dumps(vorgaenge, ensure_ascii=False), encoding="utf-8")
 
 
 if __name__ == "__main__":
