@@ -323,9 +323,6 @@ def bauen() -> str:
     erzeugt und <b>nicht redaktionell geprüft</b>. Die zugrunde liegenden Zahlen
     stammen in beiden Fällen aus den Beschlussprotokollen und sind dort nachprüfbar
     — die daraus gezogene Schlussfolgerung ist es nicht.</p>
-    <p>Die Regeln sprechen absichtlich in beide Richtungen: auf Abweichungen und
-    auf Abschlüsse. Eine Auswertung, die nur Abweichungen kennt, wäre im Ergebnis
-    eine Wertung, auch wenn jeder einzelne Satz neutral bleibt.</p>
     <p>Diese Seite erzeugt nichts Neues. Jeder Eintrag verweist auf die Stelle, an
     der er im Zusammenhang steht.</p>
   </div>
@@ -344,9 +341,7 @@ def bauen() -> str:
   <h2>Was eingehalten wird</h2>
   <p class="einleitung">Was die Auswertung an eingehaltenen Pflichten und
   abgeschlossenen Verfahren gefunden hat — ausgezählt nach denselben festen Regeln
-  wie alles Weitere auf dieser Seite. Kein Lob, sondern dieselbe Rechnung in die
-  andere Richtung. Denn eine Auswertung, die nur auf Abweichungen anspringt, ist im
-  Ergebnis eine Wertung, auch wenn jeder einzelne Satz neutral bleibt.</p>""")
+  wie alles Weitere auf dieser Seite.</p>""")
         for titel, text, beleg in gut:
             teile.append(f"""  <article class="befundblock">
     <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
