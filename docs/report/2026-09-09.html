@@ -217,7 +217,19 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
    den letzten Eintrag abzuschneiden, weicht zuerst der Hinweistext, dann
    bekommt die Navigation eine eigene Zeile. */
 @media (max-width:1000px){.brandbar .disclaimer{display:none}}
-@media (max-width:620px){.brandbar nav{flex-basis:100%}}
+/* Auf dem Telefon brach die Leiste auf drei Zeilen um — ein graues Feld von
+   einem Viertel Bildschirmhoehe, noch bevor der erste Satz kommt. Sie bleibt
+   deshalb einzeilig und laesst sich seitlich schieben; vollstaendig steht die
+   Navigation ohnehin auch im Fuss. */
+@media (max-width:620px){
+  .brandbar .wrap{padding-right:0}
+  .brandbar nav{
+    flex-basis:100%;flex-wrap:nowrap;overflow-x:auto;padding-right:24px;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .brandbar nav::-webkit-scrollbar{display:none}
+  .brandbar nav a,.brandbar nav span[aria-hidden]{flex:0 0 auto;white-space:nowrap}
+}
 
 /* ---------- Seitenkopf ----------
    Jede Seite trägt denselben Kopf: Kategorie, Titel, Vorspann, Kennzahlenzeile.
