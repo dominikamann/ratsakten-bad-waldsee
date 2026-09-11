@@ -51,7 +51,8 @@ ul.plain li{margin-bottom:8px;max-width:66ch}
    Sequenzielle Faerbung, ein Farbton, vier Stufen. Die Stufen sind gegen den
    Seitengrund geprueft: alle halten mindestens 3:1 Kontrast, damit auch eine
    einzelne Sitzung als anklickbare Flaeche erkennbar bleibt.                */
-.zeitleiste{overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
+/* Die absolut positionierten .sr-Beschriftungen bleiben im Scrollbereich. */
+.zeitleiste{position:relative;overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
 .jahrzeile{display:flex;align-items:center;gap:12px;margin-bottom:5px}
 .jahrzeile .jahr{
   flex:0 0 auto;width:34px;font-family:var(--mono);
@@ -99,4 +100,3 @@ ol.termine > li:last-child{border-bottom:1px solid var(--rule)}
 .fussnote{
   margin:14px 0 0;font-size:14px;line-height:1.6;color:var(--muted);max-width:62ch;
 }
-

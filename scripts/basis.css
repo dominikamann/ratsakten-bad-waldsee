@@ -97,16 +97,18 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
    den letzten Eintrag abzuschneiden, weicht zuerst der Hinweistext, dann
    bekommt die Navigation eine eigene Zeile. */
 @media (max-width:1000px){.brandbar .disclaimer{display:none}}
-/* Auf dem Telefon darf die Navigation in mehrere Zeilen wachsen, damit die
-   Seite ihre Breite am Viewport ausrichtet und nicht horizontal ueberlaeuft. */
+/* Alle Bereiche bleiben auch auf dem Telefon sichtbar, ohne seitliches
+   Schieben. Ganze Links umbrechen lassen; die Trennstriche entfallen, damit
+   sie nicht allein am Zeilenanfang stehen. Die Links bieten grosse Tippziele. */
 @media (max-width:620px){
-  .brandbar .wrap{padding-right:24px}
   .brandbar nav{
-    flex-basis:100%;flex-wrap:wrap;min-width:0;
+    flex-basis:100%;gap:0 8px;
   }
-  .brandbar nav a,.brandbar nav span[aria-hidden]{
-    flex:0 1 auto;white-space:normal;overflow-wrap:anywhere;
+  .brandbar nav a{
+    display:flex;align-items:center;min-height:44px;padding:8px;
+    max-width:100%;font-size:13px;
   }
+  .brandbar nav span[aria-hidden]{display:none}
 }
 
 /* ---------- Seitenkopf ----------

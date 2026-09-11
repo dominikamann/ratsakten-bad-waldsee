@@ -218,16 +218,18 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
    den letzten Eintrag abzuschneiden, weicht zuerst der Hinweistext, dann
    bekommt die Navigation eine eigene Zeile. */
 @media (max-width:1000px){.brandbar .disclaimer{display:none}}
-/* Auf dem Telefon darf die Navigation in mehrere Zeilen wachsen, damit die
-   Seite ihre Breite am Viewport ausrichtet und nicht horizontal ueberlaeuft. */
+/* Alle Bereiche bleiben auch auf dem Telefon sichtbar, ohne seitliches
+   Schieben. Ganze Links umbrechen lassen; die Trennstriche entfallen, damit
+   sie nicht allein am Zeilenanfang stehen. Die Links bieten grosse Tippziele. */
 @media (max-width:620px){
-  .brandbar .wrap{padding-right:24px}
   .brandbar nav{
-    flex-basis:100%;flex-wrap:wrap;min-width:0;
+    flex-basis:100%;gap:0 8px;
   }
-   .brandbar nav a,.brandbar nav span[aria-hidden]{
-    flex:0 1 auto;white-space:normal;overflow-wrap:anywhere;
+  .brandbar nav a{
+    display:flex;align-items:center;min-height:44px;padding:8px;
+    max-width:100%;font-size:13px;
   }
+  .brandbar nav span[aria-hidden]{display:none}
 }
 
 /* ---------- Seitenkopf ----------
@@ -404,7 +406,8 @@ ul.plain li{margin-bottom:8px;max-width:66ch}
    Sequenzielle Faerbung, ein Farbton, vier Stufen. Die Stufen sind gegen den
    Seitengrund geprueft: alle halten mindestens 3:1 Kontrast, damit auch eine
    einzelne Sitzung als anklickbare Flaeche erkennbar bleibt.                */
-.zeitleiste{overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
+/* Die absolut positionierten .sr-Beschriftungen bleiben im Scrollbereich. */
+.zeitleiste{position:relative;overflow-x:auto;padding:4px 0 2px;margin:18px 0 10px}
 .jahrzeile{display:flex;align-items:center;gap:12px;margin-bottom:5px}
 .jahrzeile .jahr{
   flex:0 0 auto;width:34px;font-family:var(--mono);
@@ -452,7 +455,6 @@ ol.termine > li:last-child{border-bottom:1px solid var(--rule)}
 .fussnote{
   margin:14px 0 0;font-size:14px;line-height:1.6;color:var(--muted);max-width:62ch;
 }
-
 
 /* Sitzungstermine — auf der Startseite und auf der Terminseite.
 
