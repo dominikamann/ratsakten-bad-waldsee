@@ -949,7 +949,12 @@ def main() -> None:
     # Kennzahlen fuer die Startseite, damit sie nicht aus dem HTML gelesen
     # werden muessen (Befund aus dem Code-Review).
     (DATEN / "suche.json").write_text(json.dumps({
+        # Zwei Zahlen, weil die Seite selbst zwei nennt: die Sachvorgaenge und
+        # die Einordnungen, die mehrere davon verbinden. Frueher stand hier nur
+        # die Summe, und die Startseite beschriftete sie als „Vorgaenge" — was
+        # der Suche widersprach, die 506 anzeigte.
         "vorgaenge": len(vorgaenge),
+        "sachvorgaenge": sum(1 for v in vorgaenge if v.get("art") != "einordnung"),
         "mehrstufig": mehrstufig,
         "stichtag": args.stichtag,
     }, ensure_ascii=False, indent=1), encoding="utf-8")

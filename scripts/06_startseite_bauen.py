@@ -119,7 +119,7 @@ def bauen() -> str:
         karten.append(f"""    <a class="karte" href="./suche.html">
       <p class="art">Vorg&auml;nge &middot; durchsuchbar</p>
       <h3>Was wurde zu einem Thema entschieden?</h3>
-      <p>{sk['vorgaenge']} Vorg&auml;nge mit ihrem Weg durch die Gremien — von der ersten
+      <p>{sk.get('sachvorgaenge', sk['vorgaenge'])} Vorg&auml;nge mit ihrem Weg durch die Gremien — von der ersten
       Beratung bis zum Beschluss, mit Datum, Gremium und Stimmenverh&auml;ltnis.
       {sk['mehrstufig']} davon durchliefen mehrere Stationen.</p>
       <p class="meta">Suche nach Stichwort oder Vorlagennummer</p>
@@ -156,7 +156,7 @@ def bauen() -> str:
       <p class="art">Aktenlage &middot; Archiv</p>
       <h3>Alle bisherigen Ausgaben</h3>
       <p>{zahlwort(ges_a)} Ausgaben mit zusammen {ges_b} Beschl&uuml;ssen — dazu {ges_o}
-      &ouml;ffentliche Sitzungen, von denen kein Protokoll existiert.</p>
+      &ouml;ffentliche Sitzungen, zu denen online kein Protokoll abrufbar ist.</p>
       <p class="meta">{spanne} &middot; maschinell erzeugt</p>
     </a>""")
 

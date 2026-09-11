@@ -152,7 +152,12 @@ def pruefe_seitenkopf() -> None:
 # nicht, dass keine existiert. Die Unterscheidung ist der Kern der Belastbarkeit
 # dieses Projekts und darf nicht unbemerkt zurückfallen.
 BEHAUPTUNGEN = [
-    (r"existiert (?:ein|kein)\s+Protokoll", "„existiert kein Protokoll“ — geprüft ist nur die Abrufbarkeit"),
+    # Beide Wortstellungen: „existiert kein Protokoll" und „kein Protokoll
+    # existiert". Die zweite stand bis 11.09.2026 auf der Startseite und ist
+    # dem Waechter entgangen, weil er nur die erste kannte.
+    (r"existiert (?:ein|kein)\s+Protokoll|kein(?:e)? (?:Protokoll|Niederschrift)\w*\s+"
+     r"(?:existiert|besteht|vorliegt|vorhanden)",
+     "Aussage über den Bestand — geprüft ist nur die Abrufbarkeit"),
     (r"ohne jede Dokumentation", "„ohne jede Dokumentation“ — sagt etwas über den Bestand aus"),
     (r"Dokumentationsl(?:ü|ue)cke", "„Dokumentationslücke“ — wertend und bestandsbezogen"),
     (r"nicht dokumentiert", "„nicht dokumentiert“ — gemeint ist: nicht online abrufbar"),
