@@ -189,7 +189,7 @@ oder dass dreimal in Folge dasselbe abgelehnt wurde — entsteht erst durch
 Vergleich über die Zeit.
 
 Solche Aussagen lagen verstreut in einzelnen Wochenausgaben und Kapiteln. Die
-Seite [Befunde](./docs/befunde.html) sammelt sie: acht kritische Beobachtungen,
+Seite [Befunde](./docs/befunde.html) sammelt sie: acht Beobachtungen,
 vier Befunde aus der Gesamtauswertung und acht Einordnungen aus den
 Wochenausgaben. Sämtlich als **KI-Deutung** gekennzeichnet, jeweils mit Weg zur
 Quelle.
@@ -242,7 +242,7 @@ Jede Aussage ist einer von drei Arten zugeordnet:
 | **KI-Deutung** | maschinell erzeugte Einordnung — Auswahl, Verknüpfung, Gewichtung | **nicht redaktionell geprüft** |
 
 Die Kapitel 01 bis 04 des Reports und die Rubrik „Auffälligkeiten“ der Ausgaben
-sind regelbasiert. Die Befunde, die 50 Fundstücke, die acht kritischen
+sind regelbasiert. Die Befunde, die 50 Fundstücke, die acht
 Beobachtungen und die wöchentlichen Einordnungen sind **KI-Deutungen**: Ihre
 Zahlen sind belegt, die daraus gezogene Schlussfolgerung ist es nicht.
 
@@ -252,7 +252,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 
 - Die 50 Fundstücke nennen **Datum, Gremium und Vorlagennummer** (`SV-000/JJJJ`).
   Damit ist jeder Vorgang im Ratsinformationssystem unter „Vorlagen“ eindeutig auffindbar.
-- Die kritischen Beobachtungen nennen zusätzlich Seitenzahl beziehungsweise Beschlussdatum.
+- Die Beobachtungen nennen zusätzlich Seitenzahl beziehungsweise Beschlussdatum.
 - Auf feste Direktlinks zu PDFs wurde verzichtet: Die Dokument-URLs enthalten
   sitzungsgebundene Token und sind nicht dauerhaft gültig. Die Vorlagennummer bleibt stabil.
 

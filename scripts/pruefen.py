@@ -268,6 +268,20 @@ def pruefe_fundstuecke() -> None:
             fehler.append(
                 f"Der Report nennt {m.group(1).lower()} Fundstuecke ohne "
                 f"Vorlagennummer, tatsaechlich sind es {ohne_vorlage}.")
+    # Die Kapitelueberschrift nennt die Zahl der Beobachtungen als Wort. Sie
+    # stand auf "Zehn", nachdem zwei Eintraege aufgeloest worden waren — eine
+    # Ueberschrift rechnet niemand nach.
+    zahlwoerter = {"Sechs": 6, "Sieben": 7, "Acht": 8, "Neun": 9, "Zehn": 10,
+                   "Elf": 11, "Zwölf": 12}
+    k = re.search(r"<h2>(\w+) Punkte, die Fragen aufwerfen</h2>", src)
+    if k and k.group(1) in zahlwoerter:
+        i2 = src.find("var C=[")
+        anzahl = len(re.findall(r'^\["', src[i2:src.find("\n];", i2)], re.M)) if i2 > 0 else 0
+        if anzahl and zahlwoerter[k.group(1)] != anzahl:
+            fehler.append(
+                f"Kapitel 06 ist mit „{k.group(1)} Punkte“ ueberschrieben, "
+                f"tatsaechlich sind es {anzahl}.")
+
     notiz.append(f"{len(eintraege)} Fundstücke gegengeprüft")
 
 def pruefe_wortwahl() -> None:

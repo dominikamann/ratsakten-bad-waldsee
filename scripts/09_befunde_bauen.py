@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Schritt 9 — alle Befunde an einem Ort sammeln.
 
-Die interessanten Erkenntnisse lagen verstreut: vier Befunde und acht kritische
+Die interessanten Erkenntnisse lagen verstreut: vier Befunde und acht
 Beobachtungen im Report, acht Einordnungen in einzelnen Wochenausgaben. Über die
 Suche waren sie erreichbar — aber nur, wenn man das richtige Stichwort erriet.
 
@@ -50,7 +50,7 @@ def juengster_report() -> Path | None:
 
 
 def aus_report(pfad: Path) -> tuple[list[dict], list[dict]]:
-    """Befund-Kästen und kritische Beobachtungen strukturiert auslesen."""
+    """Befund-Kästen und Beobachtungen strukturiert auslesen."""
     baum = H.parse(str(pfad)).getroot()
 
     befunde = []
@@ -309,7 +309,7 @@ def bauen() -> str:
   Kritisches, an einem Ort statt verstreut über Report und Wochenausgaben.</p>
   <div class="issueline">
     <span><b>eingehalten</b> {len(gut)}</span>
-    <span><b>kritische Beobachtungen</b> {len(beobachtungen)}</span>
+    <span><b>Beobachtungen</b> {len(beobachtungen)}</span>
     <span><b>Befunde</b> {len(befunde)}</span>
     <span><b>Einordnungen</b> {len(einordnungen)}</span>
     <span><b>Herkunft</b> gezählt und gedeutet</span>
@@ -332,7 +332,7 @@ def bauen() -> str:
 
   <nav class="sprung" aria-label="Abschnitte dieser Seite">
     <a href="#eingehalten">Was eingehalten wird <b>{len(gut)}</b></a>
-    <a href="#beobachtungen">Kritische Beobachtungen <b>{len(beobachtungen)}</b></a>
+    <a href="#beobachtungen">Beobachtungen <b>{len(beobachtungen)}</b></a>
     <a href="#befunde">Befunde <b>{len(befunde)}</b></a>
     <a href="#einordnungen">Einordnungen <b>{len(einordnungen)}</b></a>
   </nav>
@@ -358,7 +358,7 @@ def bauen() -> str:
 
     teile.append("""
 <section class="gruppe" id="beobachtungen">
-  <h2>Kritische Beobachtungen</h2>
+  <h2>Beobachtungen</h2>
   <p class="einleitung">Stellen, an denen die Aktenlage Fragen offenlässt oder ein
   Verfahren formal korrekt, in seiner Wirkung aber fragwürdig ist. Keine Vorwürfe —
   jeder Punkt nennt seinen Beleg.</p>""")
