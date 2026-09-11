@@ -21,9 +21,10 @@ from __future__ import annotations
 import datetime as dt
 import html
 import json
-import re
 import sys
 from pathlib import Path
+
+from seite import navigation
 
 from lxml import html as H
 
@@ -184,13 +185,7 @@ def bauen() -> str:
 <div class="brandbar"><div class="wrap">
   <span>Created by <a href="https://amannlabs.eu" rel="noopener"><b>AmannLabs.eu</b></a></span>
   <nav aria-label="Bereiche">
-    <a href="./index.html">Startseite</a>
-    <span aria-hidden="true">/</span>
-    <a href="./suche.html">Suche</a>
-    <span aria-hidden="true">/</span>
-    <a href="./befunde.html" aria-current="page">Befunde</a>
-    <span aria-hidden="true">/</span>
-    <a href="./ausgaben/index.html">Archiv</a>
+    {navigation("./", "befunde")}
   </nav>
   <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
@@ -218,7 +213,7 @@ def bauen() -> str:
   </div>
 </header>"""]
 
-    teile.append(f"""
+    teile.append("""
 <section class="gruppe">
   <h2>Kritische Beobachtungen</h2>
   <p class="einleitung">Stellen, an denen die Aktenlage Fragen offenlässt oder ein

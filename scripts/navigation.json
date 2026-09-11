@@ -1,0 +1,8 @@
+[
+  {"ziel": "index.html",           "text": "Startseite",          "name": "start"},
+  {"ziel": "gremien.html",         "text": "Wer entscheidet was",  "name": "gremien"},
+  {"ziel": "themen/index.html",    "text": "Themen",              "name": "themen"},
+  {"ziel": "suche.html",           "text": "Suche",               "name": "suche"},
+  {"ziel": "befunde.html",         "text": "Befunde",             "name": "befunde"},
+  {"ziel": "ausgaben/index.html",  "text": "Archiv",              "name": "archiv"}
+]

@@ -45,6 +45,9 @@ const SEITEN = [
    "Datenanalyse der Gremienarbeit der Stadt Bad Waldsee, Januar 2024 bis September 2026."],
 ];
 
+const NAVIGATION = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "navigation.json"), "utf8"));
+
 function kopfEintrag(d, tag, attrs) {
   const e = d.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
@@ -68,6 +71,18 @@ function rendern(quelle, ziel, beschreibung) {
         const s = d.createElement("script");
         s.textContent = TOOLTIP_JS;
         d.body.appendChild(s);
+      }
+
+      // Die Navigationsleiste stammt aus scripts/navigation.json — derselben
+      // Quelle, aus der die Bauskripte sie erzeugen. Sonst muesste man beim
+      // Hinzufuegen einer Seite daran denken, den Report von Hand nachzuziehen.
+      const leiste = d.querySelector('nav[aria-label="Bereiche"]');
+      if (leiste) {
+        const hoch = path.dirname(ziel).endsWith("report") ? "../" : "";
+        leiste.innerHTML = "\n    " + NAVIGATION.map((e) => {
+          const hier = e.name === "report" ? ' aria-current="page"' : "";
+          return `<a href="${hoch}${e.ziel}"${hier}>${e.text}</a>`;
+        }).join('\n    <span aria-hidden="true">/</span>\n    ') + "\n  ";
       }
 
       d.documentElement.setAttribute("lang", "de");
