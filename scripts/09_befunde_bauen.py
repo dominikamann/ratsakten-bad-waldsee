@@ -21,6 +21,7 @@ from __future__ import annotations
 import datetime as dt
 import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -127,6 +128,115 @@ def block(titel: str, absaetze: list[str], quelle: str, pfad: str,
   </article>"""
 
 
+
+def eingehalten() -> list[tuple[str, str, str]]:
+    """Was die Regeln in die andere Richtung gefunden haben.
+
+    Dieselbe Mechanik wie die „Auffaelligkeiten", nur auf Abschluesse statt auf
+    Abweichungen. Die Zahlen kommen aus denselben Quellen wie die Ausgaben —
+    eine zweite, eigene Zaehlung wuerde frueher oder spaeter abweichen und die
+    Seite gegen sich selbst stellen.
+
+    Rueckgabe je Eintrag: Ueberschrift, Text, Beleg.
+    """
+    eintraege: list[tuple[str, str, str]] = []
+
+    kennzahlen = json.loads((DATEN / "kennzahlen.json").read_text(encoding="utf-8"))
+    gremien = kennzahlen.get("gremien", {})
+    voll = sorted(((n, v) for n, v in gremien.items()
+                   if v["protokolle"] and v["protokolle"] == v["sitzungen"]),
+                  key=lambda x: -x[1]["sitzungen"])
+    teil = sorted(((n, v) for n, v in gremien.items()
+                   if v["protokolle"] and v["protokolle"] != v["sitzungen"]),
+                  key=lambda x: -x[1]["sitzungen"])
+    if voll:
+        namen = ", ".join(f"{n} ({v['sitzungen']} von {v['sitzungen']})"
+                          for n, v in voll)
+        rest = ("; ".join(f"{n}: {v['protokolle']} von {v['sitzungen']}"
+                          for n, v in teil))
+        eintraege.append((
+            "Zu jeder Sitzung der Kerngremien ist ein Protokoll abrufbar",
+            f"Lückenlos sind: {namen}."
+            + (f" Bei den übrigen beschließenden Gremien fehlen einzelne — {rest}."
+               if rest else "")
+            + " Gemeint ist die Abrufbarkeit im Ratsinformationssystem.",
+            "Eigene Auszählung aller Sitzungstermine und der dort verlinkten "
+            "Beschlussprotokolle.",
+        ))
+
+    abstimmungen = kennzahlen.get("abstimmungen", {})
+    gesamt = abstimmungen.get("gesamt")
+    einstimmig = abstimmungen.get("einstimmig")
+    if gesamt and einstimmig:
+        eintraege.append((
+            f"{einstimmig} von {gesamt} Beschlüssen fielen einstimmig",
+            f"Das sind {einstimmig / gesamt * 100:.0f} Prozent. Die Angabe stammt "
+            f"wörtlich aus der Zeile „Ergebnis der Beschlussfassung“ der "
+            f"Protokolle. Was sie bedeutet, ist damit nicht gesagt: Sie kann "
+            f"breiten Konsens abbilden — oder eine Willensbildung, die vor der "
+            f"Sitzung stattfindet.",
+            "Alle ausgewerteten Abstimmungen des Zeitraums.",
+        ))
+
+    register = json.loads((DATEN / "ausgaben.json").read_text(encoding="utf-8"))
+    gesammelt: dict[str, list[str]] = {}
+    wochen: dict[str, int] = {}
+    for jahrgang in register.values():
+        for woche in jahrgang.values():
+            for art, posten in (woche.get("abschluesse") or {}).items():
+                wochen[art] = wochen.get(art, 0) + 1
+                for p in posten:
+                    gesammelt.setdefault(art, [])
+                    if p not in gesammelt[art]:
+                        gesammelt[art].append(p)
+
+    def nummern(posten: list[str]) -> str:
+        """Nur die Vorlagennummern — die vollen Titel waeren eine Textwand."""
+        gefunden = [m.group(0) for p in posten
+                    if (m := re.match(r"SV-\d+/\d{4}", p))]
+        return ", ".join(gefunden)
+
+    if "Verfahren abgeschlossen" in wochen:
+        posten = gesammelt.get("Verfahren abgeschlossen", [])
+        eintraege.append((
+            f"{len(posten)} Planverfahren wurden zu Ende gebracht",
+            "Ein Bauleitplanverfahren endet damit, dass das Ergebnis als Satzung "
+            "beschlossen wird. Über die Qualität des Ergebnisses sagt das nichts "
+            "— wohl aber, dass es nicht liegen geblieben ist.",
+            "Vorlagen: " + nummern(posten),
+        ))
+
+    if "Rückstand aufgearbeitet" in wochen:
+        posten = gesammelt.get("Rückstand aufgearbeitet", [])
+        jahre = [m.group(1) for p in posten
+                 if (m := re.search(r"Jahresabschluss (\d{4})", p))]
+        abstaende = [int(m.group(1)) for p in posten
+                     if (m := re.search(r"\((\d+) Jahre", p))]
+        trend = ""
+        if len(abstaende) >= 2 and abstaende[-1] < abstaende[0]:
+            trend = (f" Der Abstand verkürzt sich dabei: vom Haushaltsjahr "
+                     f"{jahre[0]} lagen {abstaende[0]} Jahre bis zur Feststellung, "
+                     f"vom Haushaltsjahr {jahre[-1]} noch {abstaende[-1]}.")
+        eintraege.append((
+            "Zurückliegende Haushaltsjahre werden nachgeholt",
+            "Diese Beschlüsse betreffen Jahre, die länger zurückliegen. Sie "
+            "zeigen, dass ein Rückstand abgearbeitet wird — und zugleich, wie "
+            "groß er war. Die Fristüberschreitung selbst steht als eigener "
+            "Befund auf dieser Seite." + trend,
+            "; ".join(posten),
+        ))
+
+    if "Durchweg einstimmig" in wochen:
+        eintraege.append((
+            f"In {wochen['Durchweg einstimmig']} Berichtswochen fiel kein "
+            f"Beschluss strittig aus",
+            "In diesen Wochen gab es zu keinem Tagesordnungspunkt eine "
+            "Gegenstimme und keine Enthaltung.",
+            "Auszählung der Ergebniszeilen je Berichtswoche.",
+        ))
+
+    return eintraege
+
 def bauen() -> str:
     stil = (WURZEL / "scripts" / "ausgabe.css").read_text(encoding="utf-8")
     schriften = (WURZEL / "scripts" / "schriften.css").read_text(
@@ -204,10 +314,15 @@ def bauen() -> str:
 
   <div class="kasten warn">
     <p class="lab">Was auf dieser Seite steht</p>
-    <p>Ausschließlich <b>KI-Deutungen</b>: Auswahl, Verknüpfung und Gewichtung von
-    Fakten, maschinell erzeugt und <b>nicht redaktionell geprüft</b>. Die zugrunde
-    liegenden Zahlen stammen aus den Beschlussprotokollen und sind dort nachprüfbar
+    <p>Zweierlei, deutlich unterschieden. Die Rubrik <b>„Was eingehalten wird“</b>
+    ist <b>regelbasiert gezählt</b> und enthält keine Deutung. Alles Übrige sind
+    <b>KI-Deutungen</b>: Auswahl, Verknüpfung und Gewichtung von Fakten, maschinell
+    erzeugt und <b>nicht redaktionell geprüft</b>. Die zugrunde liegenden Zahlen
+    stammen in beiden Fällen aus den Beschlussprotokollen und sind dort nachprüfbar
     — die daraus gezogene Schlussfolgerung ist es nicht.</p>
+    <p>Die Regeln sprechen absichtlich in beide Richtungen: auf Abweichungen und
+    auf Abschlüsse. Eine Auswertung, die nur Abweichungen kennt, wäre im Ergebnis
+    eine Wertung, auch wenn jeder einzelne Satz neutral bleibt.</p>
     <p>Diese Seite erzeugt nichts Neues. Jeder Eintrag verweist auf die Stelle, an
     der er im Zusammenhang steht.</p>
   </div>
@@ -222,6 +337,24 @@ def bauen() -> str:
     for b in beobachtungen:
         teile.append(block(b["titel"], b["absaetze"], rname, rpfad, beleg=b["beleg"]))
     teile.append("</section>")
+
+    gut = eingehalten()
+    if gut:
+        teile.append("""
+<section class="gruppe">
+  <h2>Was eingehalten wird</h2>
+  <p class="einleitung">Dieselben Regeln, andere Richtung. Eine Auswertung, die nur
+  auf Abweichungen anspringt, ist im Ergebnis eine Wertung — auch wenn jeder
+  einzelne Satz neutral bleibt. Hier steht, was die Regeln an Abschlüssen und
+  eingehaltenen Pflichten gefunden haben. Kein Lob, sondern dieselbe Auszählung.</p>""")
+        for titel, text, beleg in gut:
+            teile.append(f"""  <article class="befundblock">
+    <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
+    <h3>{e(titel)}</h3>
+    <p>{e(text)}</p>
+    <p class="evidence">{e(beleg)}</p>
+  </article>""")
+        teile.append("</section>")
 
     teile.append("""
 <section class="gruppe">

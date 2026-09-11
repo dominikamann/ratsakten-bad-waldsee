@@ -935,6 +935,13 @@ def main() -> None:
             "ohne_protokoll": len(w["blind"]),
             "gremien": sorted({s["kuerzel"] for s in w["sitzungen"]}),
             "einordnung": schluessel in einordnungen,
+            # Die Abschluss-Regeln dieser Woche mitschreiben. Schritt 09 sammelt
+            # sie fuer die Rubrik „Was eingehalten wird" — so zeigt die
+            # Befundeseite genau das, was auch in den Ausgaben steht, statt eine
+            # zweite Zaehlung mit eigenem Ergebnis aufzumachen.
+            "abschluesse": {h["art"]: h["posten"]
+                            for h in auffaelligkeiten(w)
+                            if h.get("ton") == "neutral"},
         }
         marke = " ←" if schluessel in einordnungen else ""
         print(f"  KW {kw:2d}  {len(w['sitzungen'])} Sitzung(en), "

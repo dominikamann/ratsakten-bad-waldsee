@@ -1,6 +1,7 @@
 {
  "2024": {
   "03": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-01-21",
    "einordnung": false,
@@ -13,6 +14,9 @@
    "zeitraum": "15.01.–21.01.2024"
   },
   "04": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 4,
    "bis_iso": "2024-01-28",
    "einordnung": false,
@@ -26,6 +30,7 @@
    "zeitraum": "22.01.–28.01.2024"
   },
   "05": {
+   "abschluesse": {},
    "beschluesse": 7,
    "bis_iso": "2024-02-04",
    "einordnung": false,
@@ -38,6 +43,7 @@
    "zeitraum": "29.01.–04.02.2024"
   },
   "08": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-02-25",
    "einordnung": false,
@@ -50,6 +56,11 @@
    "zeitraum": "05.02.–25.02.2024"
   },
   "09": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-3/2024 — Bebauungsplan \"2. Erweiterung Gewerbepark Wasserstall\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee mit 2. Änderung des Bebauungsplans \"1. Erweiterung Gewerbepark Wasserstall\" und 3. Änderung des Bebauungsplans \"Gewerbepark Wasserstall\", Gemarkung Waldsee - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 12,
    "bis_iso": "2024-03-03",
    "einordnung": false,
@@ -63,6 +74,7 @@
    "zeitraum": "26.02.–03.03.2024"
   },
   "10": {
+   "abschluesse": {},
    "beschluesse": 5,
    "bis_iso": "2024-03-10",
    "einordnung": false,
@@ -78,6 +90,7 @@
    "zeitraum": "04.03.–10.03.2024"
   },
   "11": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-03-17",
    "einordnung": false,
@@ -90,6 +103,11 @@
    "zeitraum": "11.03.–17.03.2024"
   },
   "12": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-84/2023 — Vorhabenbezogener Bebauungsplan \"Abfahrt B 30 Nord\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 2,
    "bis_iso": "2024-03-24",
    "einordnung": false,
@@ -102,6 +120,7 @@
    "zeitraum": "18.03.–24.03.2024"
   },
   "15": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-04-14",
    "einordnung": false,
@@ -114,6 +133,11 @@
    "zeitraum": "25.03.–14.04.2024"
   },
   "16": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-32/2024 — Bebauungsplan \"Holzstraße\" und die örtlichen Bauvorschriften hierzu sowie 1. Änderung des Bebauungsplanes \"Teichäcker II\", Gemarkung Waldsee - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 5,
    "bis_iso": "2024-04-21",
    "einordnung": false,
@@ -128,6 +152,12 @@
    "zeitraum": "15.04.–21.04.2024"
   },
   "17": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-32/2024 — Bebauungsplan \"Holzstraße\" und die örtlichen Bauvorschriften hierzu sowie 1. Änderung des Bebauungsplanes \"Teichäcker II\", Gemarkung Waldsee - Abwägung und Satzungsbeschluss",
+     "SV-32/2024 — Bebauungsplan \"Holzstraße\" und die örtlichen Bauvorschriften hierzu sowie 1. Änderung des Bebauungsplanes \"Teichäcker II\", Gemarkung Waldsee - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 17,
    "bis_iso": "2024-04-28",
    "einordnung": false,
@@ -142,6 +172,7 @@
    "zeitraum": "22.04.–28.04.2024"
   },
   "19": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-05-12",
    "einordnung": false,
@@ -155,6 +186,9 @@
    "zeitraum": "29.04.–12.05.2024"
   },
   "20": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 2,
    "bis_iso": "2024-05-19",
    "einordnung": false,
@@ -168,6 +202,7 @@
    "zeitraum": "13.05.–19.05.2024"
   },
   "23": {
+   "abschluesse": {},
    "beschluesse": 6,
    "bis_iso": "2024-06-09",
    "einordnung": false,
@@ -180,6 +215,7 @@
    "zeitraum": "20.05.–09.06.2024"
   },
   "24": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-06-16",
    "einordnung": false,
@@ -192,6 +228,7 @@
    "zeitraum": "10.06.–16.06.2024"
   },
   "25": {
+   "abschluesse": {},
    "beschluesse": 8,
    "bis_iso": "2024-06-23",
    "einordnung": false,
@@ -205,6 +242,7 @@
    "zeitraum": "17.06.–23.06.2024"
   },
   "27": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-07-07",
    "einordnung": false,
@@ -217,6 +255,9 @@
    "zeitraum": "24.06.–07.07.2024"
   },
   "28": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 6,
    "bis_iso": "2024-07-14",
    "einordnung": false,
@@ -230,6 +271,9 @@
    "zeitraum": "08.07.–14.07.2024"
   },
   "29": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 9,
    "bis_iso": "2024-07-21",
    "einordnung": false,
@@ -243,6 +287,7 @@
    "zeitraum": "15.07.–21.07.2024"
   },
   "31": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-08-04",
    "einordnung": false,
@@ -255,6 +300,7 @@
    "zeitraum": "22.07.–04.08.2024"
   },
   "32": {
+   "abschluesse": {},
    "beschluesse": 8,
    "bis_iso": "2024-08-11",
    "einordnung": false,
@@ -267,6 +313,7 @@
    "zeitraum": "05.08.–11.08.2024"
   },
   "37": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-09-15",
    "einordnung": false,
@@ -279,6 +326,14 @@
    "zeitraum": "12.08.–15.09.2024"
   },
   "38": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-95/2024 — 3. Änderung des vorhabenbezogenen Bebauungsplans \"Großflächiger Einzelhandel an der Steinenberger Straße 1\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Abwägung und Satzungsbeschluss",
+     "SV-98/2024 — Vorhabenbezogener Bebauungsplan \"Agri-Solarpark Sankt Josef\" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach - Abwägung und Satzungsbeschluss",
+     "SV-141/2024 — Bebauungsplan \"Rauhe Äcker\" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach - Abwägung und Satzungsbeschluss",
+     "SV-101/2024 — 1. Änderung des Bebauungsplans \"Drei-Eichen IV\" und die örtlichen Bauvorschriften hierzu, Gemarkung Reute - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 8,
    "bis_iso": "2024-09-22",
    "einordnung": false,
@@ -291,6 +346,13 @@
    "zeitraum": "16.09.–22.09.2024"
   },
   "39": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-141/2024 — Bebauungsplan \"Rauhe Äcker\" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach - Abwägung und Satzungsbeschluss",
+     "SV-101/2024 — 1. Änderung des Bebauungsplans \"Drei-Eichen IV\" und die örtlichen Bauvorschriften hierzu, Gemarkung Reute - Abwägung und Satzungsbeschluss",
+     "SV-98/2024 — Vorhabenbezogener Bebauungsplan \"Agri-Solarpark Sankt Josef\" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 5,
    "bis_iso": "2024-09-29",
    "einordnung": false,
@@ -304,6 +366,9 @@
    "zeitraum": "23.09.–29.09.2024"
   },
   "40": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 2,
    "bis_iso": "2024-10-06",
    "einordnung": false,
@@ -317,6 +382,9 @@
    "zeitraum": "30.09.–06.10.2024"
   },
   "41": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 3,
    "bis_iso": "2024-10-13",
    "einordnung": false,
@@ -329,6 +397,7 @@
    "zeitraum": "07.10.–13.10.2024"
   },
   "42": {
+   "abschluesse": {},
    "beschluesse": 3,
    "bis_iso": "2024-10-20",
    "einordnung": false,
@@ -342,6 +411,7 @@
    "zeitraum": "14.10.–20.10.2024"
   },
   "45": {
+   "abschluesse": {},
    "beschluesse": 4,
    "bis_iso": "2024-11-10",
    "einordnung": false,
@@ -354,6 +424,7 @@
    "zeitraum": "21.10.–10.11.2024"
   },
   "47": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-11-24",
    "einordnung": false,
@@ -366,6 +437,11 @@
    "zeitraum": "11.11.–24.11.2024"
   },
   "48": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-149/2024 — Bebauungsplan Teilbereich A \"Drei-Eichen VI\" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 7,
    "bis_iso": "2024-12-01",
    "einordnung": false,
@@ -379,6 +455,12 @@
    "zeitraum": "25.11.–01.12.2024"
   },
   "49": {
+   "abschluesse": {
+    "Durchweg einstimmig": [],
+    "Verfahren abgeschlossen": [
+     "SV-149/2024 — Bebauungsplan Teilbereich A \"Drei-Eichen VI\" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 6,
    "bis_iso": "2024-12-08",
    "einordnung": false,
@@ -392,6 +474,7 @@
    "zeitraum": "02.12.–08.12.2024"
   },
   "50": {
+   "abschluesse": {},
    "beschluesse": 9,
    "bis_iso": "2024-12-15",
    "einordnung": false,
@@ -404,6 +487,7 @@
    "zeitraum": "09.12.–15.12.2024"
   },
   "51": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2024-12-22",
    "einordnung": false,
@@ -418,6 +502,7 @@
  },
  "2025": {
   "03": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-01-19",
    "einordnung": false,
@@ -430,6 +515,7 @@
    "zeitraum": "13.01.–19.01.2025"
   },
   "04": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-01-26",
    "einordnung": false,
@@ -442,6 +528,7 @@
    "zeitraum": "20.01.–26.01.2025"
   },
   "05": {
+   "abschluesse": {},
    "beschluesse": 5,
    "bis_iso": "2025-02-02",
    "einordnung": false,
@@ -455,6 +542,7 @@
    "zeitraum": "27.01.–02.02.2025"
   },
   "06": {
+   "abschluesse": {},
    "beschluesse": 12,
    "bis_iso": "2025-02-09",
    "einordnung": false,
@@ -468,6 +556,7 @@
    "zeitraum": "03.02.–09.02.2025"
   },
   "08": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-02-23",
    "einordnung": false,
@@ -480,6 +569,7 @@
    "zeitraum": "10.02.–23.02.2025"
   },
   "11": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-03-16",
    "einordnung": false,
@@ -492,6 +582,7 @@
    "zeitraum": "24.02.–16.03.2025"
   },
   "12": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-03-23",
    "einordnung": false,
@@ -504,6 +595,13 @@
    "zeitraum": "17.03.–23.03.2025"
   },
   "13": {
+   "abschluesse": {
+    "Durchweg einstimmig": [],
+    "Rückstand aufgearbeitet": [
+     "SV-20/2025 — Jahresabschluss 2020 der Stadt Bad Waldsee (5 Jahre nach dem Haushaltsjahr 2020)",
+     "SV-21/2025 — Jahresabschluss 2021 der Stadt Bad Waldsee (4 Jahre nach dem Haushaltsjahr 2021)"
+    ]
+   },
    "beschluesse": 6,
    "bis_iso": "2025-03-30",
    "einordnung": false,
@@ -517,6 +615,7 @@
    "zeitraum": "24.03.–30.03.2025"
   },
   "14": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-04-06",
    "einordnung": false,
@@ -530,6 +629,11 @@
    "zeitraum": "31.03.–06.04.2025"
   },
   "15": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-5/2025 — Bebauungsplan \"Drei-Eichen VI\" (Teilbereich B) und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 6,
    "bis_iso": "2025-04-13",
    "einordnung": false,
@@ -543,6 +647,12 @@
    "zeitraum": "07.04.–13.04.2025"
   },
   "18": {
+   "abschluesse": {
+    "Durchweg einstimmig": [],
+    "Verfahren abgeschlossen": [
+     "SV-95/2024 — 3. Änderung des vorhabenbezogenen Bebauungsplans \"Großflächiger Einzelhandel an der Steinenberger Straße 1\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 7,
    "bis_iso": "2025-05-04",
    "einordnung": false,
@@ -555,6 +665,7 @@
    "zeitraum": "14.04.–04.05.2025"
   },
   "19": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-05-11",
    "einordnung": false,
@@ -567,6 +678,7 @@
    "zeitraum": "05.05.–11.05.2025"
   },
   "20": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-05-18",
    "einordnung": false,
@@ -579,6 +691,7 @@
    "zeitraum": "12.05.–18.05.2025"
   },
   "21": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-05-25",
    "einordnung": false,
@@ -591,6 +704,7 @@
    "zeitraum": "19.05.–25.05.2025"
   },
   "22": {
+   "abschluesse": {},
    "beschluesse": 5,
    "bis_iso": "2025-06-01",
    "einordnung": false,
@@ -603,6 +717,9 @@
    "zeitraum": "26.05.–01.06.2025"
   },
   "26": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 2,
    "bis_iso": "2025-06-29",
    "einordnung": false,
@@ -616,6 +733,7 @@
    "zeitraum": "02.06.–29.06.2025"
   },
   "27": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-07-06",
    "einordnung": false,
@@ -628,6 +746,7 @@
    "zeitraum": "30.06.–06.07.2025"
   },
   "28": {
+   "abschluesse": {},
    "beschluesse": 5,
    "bis_iso": "2025-07-13",
    "einordnung": false,
@@ -641,6 +760,7 @@
    "zeitraum": "07.07.–13.07.2025"
   },
   "29": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-07-20",
    "einordnung": false,
@@ -654,6 +774,7 @@
    "zeitraum": "14.07.–20.07.2025"
   },
   "30": {
+   "abschluesse": {},
    "beschluesse": 9,
    "bis_iso": "2025-07-27",
    "einordnung": false,
@@ -667,6 +788,9 @@
    "zeitraum": "21.07.–27.07.2025"
   },
   "31": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 3,
    "bis_iso": "2025-08-03",
    "einordnung": false,
@@ -680,6 +804,7 @@
    "zeitraum": "28.07.–03.08.2025"
   },
   "37": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-09-14",
    "einordnung": false,
@@ -692,6 +817,9 @@
    "zeitraum": "04.08.–14.09.2025"
   },
   "38": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 3,
    "bis_iso": "2025-09-21",
    "einordnung": false,
@@ -705,6 +833,7 @@
    "zeitraum": "15.09.–21.09.2025"
   },
   "39": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-09-28",
    "einordnung": false,
@@ -717,6 +846,7 @@
    "zeitraum": "22.09.–28.09.2025"
   },
   "40": {
+   "abschluesse": {},
    "beschluesse": 8,
    "bis_iso": "2025-10-05",
    "einordnung": false,
@@ -731,6 +861,11 @@
    "zeitraum": "29.09.–05.10.2025"
   },
   "41": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-171/2025 — Vorhabenbezogener Bebauungsplan \"Frauenbergstraße-Friedhofstraße\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 5,
    "bis_iso": "2025-10-12",
    "einordnung": false,
@@ -743,6 +878,7 @@
    "zeitraum": "06.10.–12.10.2025"
   },
   "42": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-10-19",
    "einordnung": false,
@@ -755,6 +891,11 @@
    "zeitraum": "13.10.–19.10.2025"
   },
   "43": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-171/2025 — Vorhabenbezogener Bebauungsplan \"Frauenbergstraße-Friedhofstraße\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 13,
    "bis_iso": "2025-10-26",
    "einordnung": false,
@@ -768,6 +909,7 @@
    "zeitraum": "20.10.–26.10.2025"
   },
   "45": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-11-09",
    "einordnung": false,
@@ -780,6 +922,7 @@
    "zeitraum": "27.10.–09.11.2025"
   },
   "46": {
+   "abschluesse": {},
    "beschluesse": 5,
    "bis_iso": "2025-11-16",
    "einordnung": false,
@@ -792,6 +935,7 @@
    "zeitraum": "10.11.–16.11.2025"
   },
   "47": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-11-23",
    "einordnung": false,
@@ -804,6 +948,7 @@
    "zeitraum": "17.11.–23.11.2025"
   },
   "48": {
+   "abschluesse": {},
    "beschluesse": 3,
    "bis_iso": "2025-11-30",
    "einordnung": false,
@@ -816,6 +961,11 @@
    "zeitraum": "24.11.–30.11.2025"
   },
   "49": {
+   "abschluesse": {
+    "Rückstand aufgearbeitet": [
+     "SV-239/2025 — Jahresabschluss 2022 der Stadt Bad Waldsee (3 Jahre nach dem Haushaltsjahr 2022)"
+    ]
+   },
    "beschluesse": 8,
    "bis_iso": "2025-12-07",
    "einordnung": false,
@@ -828,6 +978,9 @@
    "zeitraum": "01.12.–07.12.2025"
   },
   "50": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 1,
    "bis_iso": "2025-12-14",
    "einordnung": false,
@@ -840,6 +993,7 @@
    "zeitraum": "08.12.–14.12.2025"
   },
   "51": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2025-12-21",
    "einordnung": false,
@@ -854,6 +1008,7 @@
  },
  "2026": {
   "03": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-01-18",
    "einordnung": false,
@@ -866,6 +1021,9 @@
    "zeitraum": "12.01.–18.01.2026"
   },
   "04": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 4,
    "bis_iso": "2026-01-25",
    "einordnung": false,
@@ -879,6 +1037,11 @@
    "zeitraum": "19.01.–25.01.2026"
   },
   "06": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-5/2025 — Bebauungsplan \"Drei-Eichen VI\" (Teilbereich B) und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren - Abwägung und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 14,
    "bis_iso": "2026-02-08",
    "einordnung": false,
@@ -892,6 +1055,7 @@
    "zeitraum": "26.01.–08.02.2026"
   },
   "09": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-03-01",
    "einordnung": false,
@@ -904,6 +1068,11 @@
    "zeitraum": "09.02.–01.03.2026"
   },
   "10": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-49/2026 — Sanierungsgebiet „Altstadt III“ – 4. Änderungssatzung zur Teilaufhebung des Sanierungsgebietes"
+    ]
+   },
    "beschluesse": 5,
    "bis_iso": "2026-03-08",
    "einordnung": true,
@@ -917,6 +1086,7 @@
    "zeitraum": "02.03.–08.03.2026"
   },
   "11": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-03-15",
    "einordnung": false,
@@ -929,6 +1099,7 @@
    "zeitraum": "09.03.–15.03.2026"
   },
   "12": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-03-22",
    "einordnung": false,
@@ -941,6 +1112,11 @@
    "zeitraum": "16.03.–22.03.2026"
   },
   "13": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-165/2025 — 2. Änderung des Bebauungsplanes \"Sport- und Gesundheitspark Hopfenweiler\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 7,
    "bis_iso": "2026-03-29",
    "einordnung": true,
@@ -954,6 +1130,14 @@
    "zeitraum": "23.03.–29.03.2026"
   },
   "16": {
+   "abschluesse": {
+    "Rückstand aufgearbeitet": [
+     "SV-71/2026 — Jahresabschluss 2023 der Stadt Bad Waldsee (3 Jahre nach dem Haushaltsjahr 2023)"
+    ],
+    "Verfahren abgeschlossen": [
+     "SV-165/2025 — 2. Änderung des Bebauungsplanes \"Sport- und Gesundheitspark Hopfenweiler\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 11,
    "bis_iso": "2026-04-19",
    "einordnung": true,
@@ -968,6 +1152,7 @@
    "zeitraum": "30.03.–19.04.2026"
   },
   "17": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-04-26",
    "einordnung": false,
@@ -980,6 +1165,9 @@
    "zeitraum": "20.04.–26.04.2026"
   },
   "18": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 1,
    "bis_iso": "2026-05-03",
    "einordnung": false,
@@ -993,6 +1181,7 @@
    "zeitraum": "27.04.–03.05.2026"
   },
   "20": {
+   "abschluesse": {},
    "beschluesse": 6,
    "bis_iso": "2026-05-17",
    "einordnung": true,
@@ -1005,6 +1194,7 @@
    "zeitraum": "04.05.–17.05.2026"
   },
   "21": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-05-24",
    "einordnung": false,
@@ -1017,6 +1207,9 @@
    "zeitraum": "18.05.–24.05.2026"
   },
   "24": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
    "beschluesse": 2,
    "bis_iso": "2026-06-14",
    "einordnung": false,
@@ -1029,6 +1222,7 @@
    "zeitraum": "25.05.–14.06.2026"
   },
   "26": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-06-28",
    "einordnung": false,
@@ -1042,6 +1236,7 @@
    "zeitraum": "15.06.–28.06.2026"
   },
   "27": {
+   "abschluesse": {},
    "beschluesse": 4,
    "bis_iso": "2026-07-05",
    "einordnung": true,
@@ -1055,6 +1250,13 @@
    "zeitraum": "29.06.–05.07.2026"
   },
   "28": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-101/2026 — 1. Änderung des Bebauungsplans \"Biberacher Straße Nord\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss",
+     "SV-102/2026 — Bebauungsplan \"Feuerwehrgerätehaus Michelwinnaden\" und die örtlichen Bauvorschriften hierzu, Gemarkung Michelwinnaden – Abwägungs- und Satzungsbeschluss",
+     "SV-166/2025 — Vorhabenbezogener Bebauungsplan \"Waldseer Straße\" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach – Abwägungs- und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 7,
    "bis_iso": "2026-07-12",
    "einordnung": true,
@@ -1067,6 +1269,13 @@
    "zeitraum": "06.07.–12.07.2026"
   },
   "30": {
+   "abschluesse": {
+    "Verfahren abgeschlossen": [
+     "SV-101/2026 — 1. Änderung des Bebauungsplans \"Biberacher Straße Nord\" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss",
+     "SV-102/2026 — Bebauungsplan \"Feuerwehrgerätehaus Michelwinnaden\" und die örtlichen Bauvorschriften hierzu, Gemarkung Michelwinnaden – Abwägungs- und Satzungsbeschluss",
+     "SV-166/2025 — Vorhabenbezogener Bebauungsplan \"Waldseer Straße\" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach – Abwägungs- und Satzungsbeschluss"
+    ]
+   },
    "beschluesse": 11,
    "bis_iso": "2026-07-26",
    "einordnung": true,
@@ -1080,6 +1289,7 @@
    "zeitraum": "13.07.–26.07.2026"
   },
   "31": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-08-02",
    "einordnung": false,
@@ -1092,6 +1302,7 @@
    "zeitraum": "27.07.–02.08.2026"
   },
   "32": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-08-09",
    "einordnung": false,
@@ -1104,6 +1315,7 @@
    "zeitraum": "03.08.–09.08.2026"
   },
   "37": {
+   "abschluesse": {},
    "beschluesse": 0,
    "bis_iso": "2026-09-11",
    "einordnung": true,
