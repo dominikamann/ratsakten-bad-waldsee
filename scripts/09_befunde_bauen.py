@@ -378,9 +378,6 @@ def bauen() -> str:
   hinausgeht — dass eine Enthaltung ausgerechnet bei dem Verfahren fiel, gegen das
   eine Fachbehörde Bedenken hatte, oder dass dreimal in Folge dasselbe abgelehnt
   wurde — entsteht erst durch Vergleich über die Zeit.</p>
-  <p>Solche Aussagen lagen verstreut in einzelnen Wochenausgaben und Kapiteln. Wer
-  sie finden wollte, musste das richtige Stichwort raten. Hier stehen sie
-  zusammen — jeder Eintrag mit seiner Herkunft und mit dem Weg zur Quelle.</p>
   <p class="note">Erzeugt am {heute.strftime('%d.%m.%Y')} aus
   <span class="mono">docs/report/{report.name}</span> und
   <span class="mono">data/einordnungen.json</span>.</p>
