@@ -577,7 +577,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
         absaetze = "\n".join(f"    <p>{e(a)}</p>" for a in einordnung.get("absaetze", []))
         geprueft = einordnung.get("status") == "geprueft"
         marke = ('<p class="herkunft geprueft">Redaktionell geprüft</p>' if geprueft else
-                 '<p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>')
+                 '<p class="herkunft ki">KI-Deutung · am Beleg nachprüfbar</p>')
         fussnote = ("" if geprueft else
                     '\n    <p class="note">Dieser Abschnitt ist eine maschinell erzeugte '
                     'Einordnung. Die genannten Zahlen und Beschlüsse stammen aus den '

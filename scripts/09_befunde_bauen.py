@@ -117,7 +117,7 @@ def aus_einordnungen() -> list[dict]:
 def block(titel: str, absaetze: list[str], quelle: str, pfad: str,
           beleg: str = "", geprueft: bool = False) -> str:
     marke = ('<p class="herkunft geprueft">Redaktionell geprüft</p>' if geprueft else
-             '<p class="herkunft ki">KI-Deutung · nicht redaktionell geprüft</p>')
+             '<p class="herkunft ki">KI-Deutung · am Beleg nachprüfbar</p>')
     text = "\n".join(f"    <p>{e(a)}</p>" for a in absaetze)
     belegzeile = f'\n    <p class="evidence">{e(beleg)}</p>' if beleg else ""
     return f"""  <article class="befundblock">
