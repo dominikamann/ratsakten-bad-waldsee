@@ -114,6 +114,18 @@ Also `github.com` durch `raw.githack.com` ersetzen und das `/blob` herausnehmen.
 
 </details>
 
+**Zum Weitergeben besser mit Commit-Kennung.** Die Adressen oben zeigen auf
+`main` und damit immer auf den neuesten Stand — dafür hält `raw.githack.com`
+das Ergebnis eine Weile im Zwischenspeicher. Wer gerade etwas geändert hat,
+bekommt unter Umständen noch die alte Fassung, auch nach dem Neuladen. Fest an
+einen Stand gebunden und nie aus dem Zwischenspeicher bedient wird diese Form:
+
+```
+https://rawcdn.githack.com/dominikamann/ratsakten-bad-waldsee/<commit>/docs/index.html
+```
+
+Die Kennung des aktuellen Standes liefert `git rev-parse --short HEAD`.
+
 **Was man dazu wissen sollte:** githack ist ein fremder Dienst. Er ist seit Jahren
 verfügbar und kostenlos, aber niemand garantiert das. Für einen dauerhaften
 Auftritt wäre GitHub Pages der richtige Weg — dann hätten die Seiten eine feste
