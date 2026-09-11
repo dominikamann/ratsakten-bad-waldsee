@@ -186,8 +186,9 @@ def bauen() -> str:
         karten.append((70, f"""    <a class="karte" href="./ausgaben/index.html">
       <p class="art">Aktenlage &middot; Archiv</p>
       <h3>Alle bisherigen Ausgaben</h3>
-      <p>{zahlwort(ges_a)} Ausgaben mit zusammen {ges_b} Beschl&uuml;ssen — dazu {ges_o}
-      &ouml;ffentliche Sitzungen, zu denen online kein Protokoll abrufbar ist.</p>
+      <p>{zahlwort(ges_a)} Ausgaben mit zusammen {ges_b} Beschl&uuml;ssen, eine f&uuml;r jede
+      Kalenderwoche, in der getagt wurde. Jede Ausgabe nennt auch die Sitzungen,
+      zu denen online kein Protokoll abrufbar ist.</p>
       <p class="meta">{spanne} &middot; maschinell erzeugt</p>
     </a>"""))
 
@@ -203,8 +204,8 @@ def bauen() -> str:
 <header>
   <p class="eyebrow">Lernprojekt &middot; Kommunaldaten</p>
   <h1>Ratsakten Bad Waldsee</h1>
-  <p class="lede">Kommunalpolitik ist &ouml;ffentlich — aber nicht zug&auml;nglich. Dieses
-  Projekt wertet die frei verf&uuml;gbaren Sitzungsunterlagen der Stadt Bad Waldsee
+  <p class="lede">Die Sitzungsunterlagen der Stadt Bad Waldsee stehen vollst&auml;ndig
+  im Netz — verteilt auf Hunderte von PDF-Dateien. Dieses Projekt wertet sie
   maschinell aus und macht daraus etwas Lesbares.</p>
 
   <div class="tiles">

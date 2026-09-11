@@ -201,8 +201,7 @@ def eingehalten() -> list[tuple[str, str, str]]:
         eintraege.append((
             f"{len(posten)} Planverfahren wurden zu Ende gebracht",
             "Ein Bauleitplanverfahren endet damit, dass das Ergebnis als Satzung "
-            "beschlossen wird. Über die Qualität des Ergebnisses sagt das nichts "
-            "— wohl aber, dass es nicht liegen geblieben ist.",
+            "beschlossen wird; über die Qualität des Ergebnisses sagt das nichts.",
             "Vorlagen: " + nummern(posten),
         ))
 
@@ -220,10 +219,9 @@ def eingehalten() -> list[tuple[str, str, str]]:
                      f"{jahre[-1]} nach {abstaende[-1]} Monaten.")
         eintraege.append((
             "Zurückliegende Haushaltsjahre werden nachgeholt",
-            "Diese Beschlüsse betreffen Jahre, die länger zurückliegen. Sie "
-            "zeigen, dass ein Rückstand abgearbeitet wird — und zugleich, wie "
-            "groß er war. Die Fristüberschreitung selbst steht als eigener "
-            "Eintrag auf dieser Seite." + trend,
+            "Diese Beschlüsse betreffen Haushaltsjahre, die länger zurückliegen. "
+            "Die Frist dafür nennt § 95b GemO; der Abstand steht bei jedem "
+            "Posten." + trend,
             "; ".join(posten),
         ))
 

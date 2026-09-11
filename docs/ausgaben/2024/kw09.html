@@ -169,6 +169,13 @@ body{
 }
 ::selection{background:rgba(57,135,229,.3)}
 
+/* Nichts darf die Seite in die Breite ziehen. Lange Vorlagennummern, Adressen
+   und Dateinamen brechen um, statt ueber den Rand zu laufen — auf einem
+   Telefon entscheidet das darueber, ob die Seite lesbar ist. */
+body{overflow-wrap:break-word}
+img,svg,video,iframe{max-width:100%;height:auto}
+pre,code{max-width:100%;overflow-x:auto}
+
 /* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
    der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
 [id]{scroll-margin-top:18px}
@@ -675,7 +682,7 @@ section.gruppe{scroll-margin-top:14px}
     </div>
     <div class="kasten">
       <p class="lab">Verfahren abgeschlossen</p>
-      <p>Ein Planverfahren endet damit, dass das Ergebnis als Satzung beschlossen wird. Das Verfahren ist dann abgeschlossen — über die Qualität des Ergebnisses sagt das nichts, wohl aber, dass es nicht liegen geblieben ist.</p>
+      <p>Ein Planverfahren endet damit, dass das Ergebnis als Satzung beschlossen wird. Das Verfahren ist dann abgeschlossen; über die Qualität des Ergebnisses sagt das nichts.</p>
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-3/2024 — Bebauungsplan "2. Erweiterung Gewerbepark Wasserstall" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee mit 2. Änderung des Bebauungsplans "1. Erweiterung Gewerbepark Wasserstall" und 3. Änderung des Bebauungsplans "Gewerbepark Wasserstall", Gemarkung Waldsee - Abwägung und Satzungsbeschluss</span></li>
       </ul>

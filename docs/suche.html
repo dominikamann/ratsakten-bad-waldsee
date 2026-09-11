@@ -169,6 +169,13 @@ body{
 }
 ::selection{background:rgba(57,135,229,.3)}
 
+/* Nichts darf die Seite in die Breite ziehen. Lange Vorlagennummern, Adressen
+   und Dateinamen brechen um, statt ueber den Rand zu laufen — auf einem
+   Telefon entscheidet das darueber, ob die Seite lesbar ist. */
+body{overflow-wrap:break-word}
+img,svg,video,iframe{max-width:100%;height:auto}
+pre,code{max-width:100%;overflow-x:auto}
+
 /* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
    der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
 [id]{scroll-margin-top:18px}
@@ -697,7 +704,13 @@ a.station:hover .grem{border-color:var(--s1)}
   text-transform:uppercase;color:var(--muted);
   border:1px solid var(--rule);padding:1px 6px;
 }
-.vorgang.istEinordnung{border-left:3px solid var(--flag);padding-left:18px;background:var(--flag-bg)}
+/* Die Herkunft markiert die Marke oben im Treffer — nicht die ganze Karte.
+   Eingefaerbt und mit farbigem Balken sah jede Einordnung aus wie eine Warnung,
+   obwohl die Faerbung nur sagte, wie die Aussage entstanden ist. Bleibt eine
+   ruhige Flaeche, die den Treffer als zusammengehoerig zeigt. */
+.vorgang.istEinordnung{
+  border-left:1px solid var(--rule);padding-left:18px;background:var(--surface);
+}
 .vorgang .einleitung{margin:8px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2);max-width:74ch}
 .gekuerzt{
   display:-webkit-box;-webkit-box-orient:vertical;
@@ -737,9 +750,10 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
   button.mehr{padding:7px 12px}
 }
 .leer{padding:40px 0;color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:14px}
+/* Ein Hinweis auf eine technische Voraussetzung ist keine Warnung. */
 .ohnejs{
-  margin:28px 0;padding:20px 22px;background:var(--flag-bg);
-  border-left:3px solid var(--flag);
+  margin:28px 0;padding:20px 22px;background:var(--surface);
+  border-left:3px solid var(--s1);
 }
 .ohnejs p{margin:0}
 </style>
@@ -849,9 +863,8 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
   <p>Wo Unterlagen am Tagesordnungspunkt hängen — Sitzungsvorlage, Planteil,
   Umweltbericht —, sind sie <b>verlinkt und öffnen in einem neuen Tab</b>. Die
   Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum die
-  Verwaltung etwas vorschlägt. Das ist oft aufschlussreicher als der Beschluss
-  selbst. Wir geben diese Begründung nicht wieder — wer sie lesen will, liest sie
-  im Original.</p>
+  Verwaltung etwas vorschlägt. Wiedergegeben wird er hier nicht — wer ihn lesen
+  will, liest ihn im Original.</p>
   <p><b>Beträge sind Fundstellen, keine Kostenangaben.</b> Angezeigt wird der größte
   im Beschlusstext genannte Betrag ab 250.000 &euro;. Das kann der Preis eines
   Vorhabens sein, aber ebenso ein Haushaltsansatz oder eine Planungsgröße — bei

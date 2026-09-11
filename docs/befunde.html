@@ -169,6 +169,13 @@ body{
 }
 ::selection{background:rgba(57,135,229,.3)}
 
+/* Nichts darf die Seite in die Breite ziehen. Lange Vorlagennummern, Adressen
+   und Dateinamen brechen um, statt ueber den Rand zu laufen — auf einem
+   Telefon entscheidet das darueber, ob die Seite lesbar ist. */
+body{overflow-wrap:break-word}
+img,svg,video,iframe{max-width:100%;height:auto}
+pre,code{max-width:100%;overflow-x:auto}
+
 /* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
    der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
 [id]{scroll-margin-top:18px}
@@ -707,13 +714,13 @@ section.gruppe{scroll-margin-top:14px}
   <article class="befundblock">
     <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
     <h3>15 Planverfahren wurden zu Ende gebracht</h3>
-    <p>Ein Bauleitplanverfahren endet damit, dass das Ergebnis als Satzung beschlossen wird. Über die Qualität des Ergebnisses sagt das nichts — wohl aber, dass es nicht liegen geblieben ist.</p>
+    <p>Ein Bauleitplanverfahren endet damit, dass das Ergebnis als Satzung beschlossen wird; über die Qualität des Ergebnisses sagt das nichts.</p>
     <p class="evidence">Vorlagen: SV-3/2024, SV-84/2023, SV-32/2024, SV-95/2024, SV-98/2024, SV-141/2024, SV-101/2024, SV-149/2024, SV-5/2025, SV-171/2025, SV-49/2026, SV-165/2025, SV-101/2026, SV-102/2026, SV-166/2025</p>
   </article>
   <article class="befundblock">
     <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
     <h3>Zurückliegende Haushaltsjahre werden nachgeholt</h3>
-    <p>Diese Beschlüsse betreffen Jahre, die länger zurückliegen. Sie zeigen, dass ein Rückstand abgearbeitet wird — und zugleich, wie groß er war. Die Fristüberschreitung selbst steht als eigener Eintrag auf dieser Seite. Der Verzug verkürzt sich dabei: Das Haushaltsjahr 2020 wurde 39 Monate nach Ablauf der gesetzlichen Frist festgestellt, das Haushaltsjahr 2023 nach 15 Monaten.</p>
+    <p>Diese Beschlüsse betreffen Haushaltsjahre, die länger zurückliegen. Die Frist dafür nennt § 95b GemO; der Abstand steht bei jedem Posten. Der Verzug verkürzt sich dabei: Das Haushaltsjahr 2020 wurde 39 Monate nach Ablauf der gesetzlichen Frist festgestellt, das Haushaltsjahr 2023 nach 15 Monaten.</p>
     <p class="evidence">SV-20/2025 — Jahresabschluss 2020 der Stadt Bad Waldsee (39 Monate nach Ablauf der Zwölfmonatsfrist des § 95b GemO); SV-21/2025 — Jahresabschluss 2021 der Stadt Bad Waldsee (27 Monate nach Ablauf der Zwölfmonatsfrist des § 95b GemO); SV-239/2025 — Jahresabschluss 2022 der Stadt Bad Waldsee (23 Monate nach Ablauf der Zwölfmonatsfrist des § 95b GemO); SV-71/2026 — Jahresabschluss 2023 der Stadt Bad Waldsee (15 Monate nach Ablauf der Zwölfmonatsfrist des § 95b GemO)</p>
   </article>
   <article class="befundblock">

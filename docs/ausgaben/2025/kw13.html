@@ -169,6 +169,13 @@ body{
 }
 ::selection{background:rgba(57,135,229,.3)}
 
+/* Nichts darf die Seite in die Breite ziehen. Lange Vorlagennummern, Adressen
+   und Dateinamen brechen um, statt ueber den Rand zu laufen — auf einem
+   Telefon entscheidet das darueber, ob die Seite lesbar ist. */
+body{overflow-wrap:break-word}
+img,svg,video,iframe{max-width:100%;height:auto}
+pre,code{max-width:100%;overflow-x:auto}
+
 /* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
    der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
 [id]{scroll-margin-top:18px}
@@ -660,7 +667,7 @@ section.gruppe{scroll-margin-top:14px}
     </div>
     <div class="kasten">
       <p class="lab">Rückstand aufgearbeitet</p>
-      <p>Diese Beschlüsse betreffen zurückliegende Haushaltsjahre. Sie zeigen, dass ein Rückstand abgearbeitet wird — und zugleich, wie groß er war.</p>
+      <p>Diese Beschlüsse betreffen Haushaltsjahre, die länger zurückliegen. Die Fristen dazu nennt § 95b GemO; der Abstand steht bei jedem Posten.</p>
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-20/2025 — Jahresabschluss 2020 der Stadt Bad Waldsee (39 Monate nach Ablauf der Zwölfmonatsfrist des § 95b GemO)</span></li>
         <li><span class="sache">SV-21/2025 — Jahresabschluss 2021 der Stadt Bad Waldsee (27 Monate nach Ablauf der Zwölfmonatsfrist des § 95b GemO)</span></li>
@@ -748,7 +755,7 @@ section.gruppe{scroll-margin-top:14px}
       <p>Über den Bestand der Niederschriften sagt das nichts: § 38 Abs. 1 GemO verlangt
       sie, § 38 Abs. 2 Satz 4 GemO gibt Einwohnern ein Einsichtsrecht, eine Pflicht zur
       Veröffentlichung im Internet besteht nicht. Es geht um Zugänglichkeit.</p>
-      <p>Nach § 16 Abs. 4 der Hauptsatzung entscheiden die Ortschaftsräte allerdings auch
+      <p>Nach § 16 Abs. 4 der Hauptsatzung entscheiden die Ortschaftsräte auch
       selbst — etwa über Haushaltsmittel bis 26.000 € und Grundstücksgeschäfte bis
       52.000 € im Einzelfall.</p>
     </div>

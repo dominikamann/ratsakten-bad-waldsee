@@ -68,11 +68,19 @@ svg{display:block;max-width:100%;height:auto}
   border-radius:3px;z-index:50;white-space:nowrap;transition:opacity .1s;
 }
 
-/* ---------- Befund ---------- */
-.befund{margin:26px 0;padding:20px 22px;border-left:3px solid var(--flag);background:var(--flag-bg)}
+/* ---------- Erkenntnis ----------
+   Frueher orange hinterlegt mit orangem Balken. Die Faerbung sagte nichts ueber
+   den Inhalt, liess den Kasten aber wie eine Warnmeldung aussehen — und das
+   faerbte auf das Thema ab, das er behandelt. Jetzt dieselbe ruhige Flaeche wie
+   jeder andere Kasten; die Herkunftsmarke daneben sagt, wie die Aussage
+   entstanden ist. */
+.befund{
+  margin:26px 0;padding:20px 22px;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--rule);
+}
 .befund .lab{
   font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--flag);margin:0 0 8px;font-weight:500;
+  text-transform:uppercase;color:var(--ink-2);margin:0 0 8px;font-weight:500;
 }
 .befund p{margin:0;max-width:64ch}
 .befund p + p{margin-top:10px}
@@ -104,7 +112,7 @@ ol.findings li::before{
 ol.concerns{margin:26px 0 0;padding:0;list-style:none;counter-reset:c}
 ol.concerns li{
   padding:20px 22px;margin-bottom:14px;border:1px solid var(--rule);
-  border-left:3px solid var(--flag);background:var(--surface);box-shadow:var(--shadow);
+  border-left:3px solid var(--rule);background:var(--surface);box-shadow:var(--shadow);
 }
 ol.concerns .c-head{
   font-family:var(--sans);font-weight:600;font-size:17px;margin:0 0 8px;
@@ -112,7 +120,7 @@ ol.concerns .c-head{
 }
 ol.concerns .c-head::before{
   counter-increment:c;content:"B" counter(c,decimal-leading-zero);
-  font-family:var(--mono);font-size:11px;color:var(--flag);
+  font-family:var(--mono);font-size:11px;color:var(--muted);
   letter-spacing:.08em;display:block;margin-bottom:6px;font-weight:500;
 }
 ol.concerns p{margin:0;font-size:15.5px;line-height:1.6;color:var(--ink-2)}

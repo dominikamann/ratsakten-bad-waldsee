@@ -169,6 +169,13 @@ body{
 }
 ::selection{background:rgba(57,135,229,.3)}
 
+/* Nichts darf die Seite in die Breite ziehen. Lange Vorlagennummern, Adressen
+   und Dateinamen brechen um, statt ueber den Rand zu laufen — auf einem
+   Telefon entscheidet das darueber, ob die Seite lesbar ist. */
+body{overflow-wrap:break-word}
+img,svg,video,iframe{max-width:100%;height:auto}
+pre,code{max-width:100%;overflow-x:auto}
+
 /* Sprungziele nicht bündig an den Fensterrand setzen: Wer aus der Suche oder
    der Sprungleiste kommt, soll die Überschrift über dem Ziel noch sehen. */
 [id]{scroll-margin-top:18px}
@@ -524,8 +531,8 @@ ol.tops .doc:hover{border-bottom-color:var(--s1)}
 <header>
   <p class="eyebrow">Lernprojekt &middot; Kommunaldaten</p>
   <h1>Ratsakten Bad Waldsee</h1>
-  <p class="lede">Kommunalpolitik ist &ouml;ffentlich — aber nicht zug&auml;nglich. Dieses
-  Projekt wertet die frei verf&uuml;gbaren Sitzungsunterlagen der Stadt Bad Waldsee
+  <p class="lede">Die Sitzungsunterlagen der Stadt Bad Waldsee stehen vollst&auml;ndig
+  im Netz — verteilt auf Hunderte von PDF-Dateien. Dieses Projekt wertet sie
   maschinell aus und macht daraus etwas Lesbares.</p>
 
   <div class="tiles">
@@ -590,8 +597,9 @@ ol.tops .doc:hover{border-bottom-color:var(--s1)}
     <a class="karte" href="./ausgaben/index.html">
       <p class="art">Aktenlage &middot; Archiv</p>
       <h3>Alle bisherigen Ausgaben</h3>
-      <p>89 Ausgaben mit zusammen 316 Beschl&uuml;ssen — dazu 94
-      &ouml;ffentliche Sitzungen, zu denen online kein Protokoll abrufbar ist.</p>
+      <p>89 Ausgaben mit zusammen 316 Beschl&uuml;ssen, eine f&uuml;r jede
+      Kalenderwoche, in der getagt wurde. Jede Ausgabe nennt auch die Sitzungen,
+      zu denen online kein Protokoll abrufbar ist.</p>
       <p class="meta">Jahrg&auml;nge 2024–2026 &middot; maschinell erzeugt</p>
     </a>
   </div>

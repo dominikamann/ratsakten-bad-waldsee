@@ -311,9 +311,8 @@ def auffaelligkeiten(w: dict) -> list[dict]:
             "art": "Verfahren abgeschlossen",
             "ton": "neutral",
             "text": "Ein Planverfahren endet damit, dass das Ergebnis als Satzung "
-                    "beschlossen wird. Das Verfahren ist dann abgeschlossen — über "
-                    "die Qualität des Ergebnisses sagt das nichts, wohl aber, dass es "
-                    "nicht liegen geblieben ist.",
+                    "beschlossen wird. Das Verfahren ist dann abgeschlossen; über "
+                    "die Qualität des Ergebnisses sagt das nichts.",
             "posten": [f"{b['vorlage']} — {b['titel']}" for b in abgeschlossen],
         })
 
@@ -339,8 +338,8 @@ def auffaelligkeiten(w: dict) -> list[dict]:
         treffer.append({
             "art": "Rückstand aufgearbeitet",
             "ton": "neutral",
-            "text": "Diese Beschlüsse betreffen zurückliegende Haushaltsjahre. Sie zeigen, "
-                    "dass ein Rückstand abgearbeitet wird — und zugleich, wie groß er war.",
+            "text": "Diese Beschlüsse betreffen Haushaltsjahre, die länger zurückliegen. "
+                    "Die Fristen dazu nennt § 95b GemO; der Abstand steht bei jedem Posten.",
             "posten": [f"{b['vorlage']} — {b['titel']} ({verzug} Monate nach Ablauf "
                        f"der Zwölfmonatsfrist des § 95b GemO)"
                        for b, jahr, verzug in aufgearbeitet],
@@ -761,7 +760,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
       <p>Über den Bestand der Niederschriften sagt das nichts: § 38 Abs. 1 GemO verlangt
       sie, § 38 Abs. 2 Satz 4 GemO gibt Einwohnern ein Einsichtsrecht, eine Pflicht zur
       Veröffentlichung im Internet besteht nicht. Es geht um Zugänglichkeit.</p>
-      <p>Nach § 16 Abs. 4 der Hauptsatzung entscheiden die Ortschaftsräte allerdings auch
+      <p>Nach § 16 Abs. 4 der Hauptsatzung entscheiden die Ortschaftsräte auch
       selbst — etwa über Haushaltsmittel bis 26.000 € und Grundstücksgeschäfte bis
       52.000 € im Einzelfall.</p>
     </div>
