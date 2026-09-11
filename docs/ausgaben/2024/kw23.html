@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -543,16 +542,15 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 6 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-68/2024 — 18 : 3 : 3</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Größere Beträge</p>
       <p>In diesen Beschlusstexten steht ein Betrag ab 250.000 €. Haushalts- und Wirtschaftspläne enthalten naturgemäß große Summen.</p>
       <ul class="beschluesse kompakt">
@@ -560,7 +558,7 @@ section.gruppe{scroll-margin-top:14px}
         <li><span class="sache">690.000 € — SV-111/2024 Sanierung des Eugen-Bolz-Kindergartens</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Erneut auf der Tagesordnung</p>
       <p>Diese Vorlagen standen schon früher auf einer Tagesordnung — durch Vorberatung in einem Ausschuss, durch Vertagung oder durch erneute Befassung.</p>
       <ul class="beschluesse kompakt">
@@ -615,7 +613,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">Zuweisung weiterer Aufgabengebiete und Umbenennung des seitherigen Ausschusses für Technik und Umwelt<span class="sv">SV-56/2024</span><span class="wortlaut">1. Der Zuweisung weiterer Aufgabengebiete an den Ausschuss für Technik und Umwelt sowie dessen Umbenennung in „Ausschuss für Umwelt, Technik und Nachhaltigkeit“ (AUTN) ab dem 15. Juli 2024 wird zugestimmt. 2. Der Auflösung des Arbeitskreises Radverkehr ab dem Zeitpunkt der Kommunalwahlen und der damit verbundenen Abbestellung der Arbeitskreismitglieder wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZShePgRPlP0_U0nY9woooYjGQYbMkx2A40xDmric1k-C/Sitzungsvorlage_SV-56-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-56/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Änderung der Hauptsatzung: Zuweisung weiterer Aufgabengebiete und Umbenennung des seitherigen Ausschusses für Technik und Umwelt<span class="sv">SV-57/2024</span><span class="wortlaut">Der Gemeinderat stimmt der vorliegenden Satzung zur Änderung der Hauptsatzung zum Zweck der Zuweisung weiterer Aufgabengebiete und zur Umbenennung des seitherigen Ausschusses für Technik und Umwelt zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcqzleHp1n1oHg9BkQl3utAVu3PxbjX1NLNzMLFYqw7G/Sitzungsvorlage_SV-57-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-57/2024</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXTNy1nBzv8WhJpBRn478fitro_0IrJ7_xPaH-os8UrI/Aenderungssatzung_Hauptsatzung.pdf" target="_blank" rel="noopener noreferrer">Änderungssatzung Hauptsatzung</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 6 Beschlüssen fielen nicht einstimmig:
       <b>SV-68/2024</b> (18 : 3 : 3).
@@ -662,7 +660,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

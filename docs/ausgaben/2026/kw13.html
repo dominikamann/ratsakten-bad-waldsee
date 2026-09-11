@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -559,9 +558,8 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>3 von 7 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
@@ -635,7 +633,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-16/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 09.01.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden wird in der Planfassung vom 09.01.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 22. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdFFi-BodShHIXlQXiOv79atYMuM8ugWHzVvz7EBI1dS/Sitzungsvorlage_SV-16-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-16/2026</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplans "Lohbühl I - Erweiterung", Gemarkung Bergatreute – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-17/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 15.04.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute für die Wohnbaufläche im Bereich Lohbühl I – Erweiterung, Gemarkung Bergatreute wird in der übersandten Planfassung vom 15.04.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt im gemeinsamen Ausschuss der 21. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdcIioq06MTBmw4M17KnZPpEI2-dril7RthaVy2q1N38/Sitzungsvorlage_SV-17-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-17/2026</a></span></span><span class="erg split">12 : 0 : 2</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>3 von 6 Beschlüssen fielen nicht einstimmig:
       <b>SV-165/2025</b> (12 : 0 : 2), <b>SV-276/2025</b> (12 : 0 : 2), <b>SV-17/2026</b> (12 : 0 : 2).
@@ -706,7 +704,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

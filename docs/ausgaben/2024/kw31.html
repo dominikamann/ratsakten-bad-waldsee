@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -580,7 +579,7 @@ section.gruppe{scroll-margin-top:14px}
     <ul class="beschluesse">
       <li><span class="sache">Ortschaftsrat Mittelurbach<span class="sv">Sitzung vom 30.07.2024</span></span><span class="erg split">kein Protokoll</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Wiederkehrende Rubrik</p>
       <p>Seit Januar 2024 tagten die vier Ortschaftsräte <b>85 Mal öffentlich</b> — rund die
       Hälfte aller öffentlichen Sitzungen der Stadt. Zu keiner dieser Sitzungen ist im
@@ -643,7 +642,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

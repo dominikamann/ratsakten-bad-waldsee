@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -559,9 +558,8 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 5 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
@@ -627,7 +625,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">Gemeindliches Einvernehmen zu Windenergieanlagen zwischen Oberurbach und Hittisweiler<span class="sv">SV-42/2026</span><span class="wortlaut">Die Große Kreisstadt Bad Waldsee verweigert den beantragten Windenergieanlagen zwischen Oberurbach und Hittisweiler das gemeindliche Einvernehmen nach § 36 BauGB.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWJoDBmdGFzny1uA10BJBOqudJlnTBDsrz41CwcjwEhg/Sitzungsvorlage_SV-42-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-42/2026</a></span></span><span class="erg split">21 : 4 : 1</span></li>
       <li><span class="sache">Sanierungsgebiet „Altstadt III“ – 4. Änderungssatzung zur Teilaufhebung des Sanierungsgebietes<span class="sv">SV-49/2026</span><span class="wortlaut">1. Die als Anlage beigefügte 4. Änderungssatzung zur Teilaufhebung des Sanierungsgebietes "Alt stadt III" in Bad Waldsee wird als Satzung beschlossen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZ5OgVJSGyOasoYslmn6iUi1DR_d8CXzU191fS1UgO8I/Sitzungsvorlage_SV-49-2026_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-49/2026 1. Nachtrag</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 5 Beschlüssen fielen nicht einstimmig:
       <b>SV-42/2026</b> (21 : 4 : 1).
@@ -649,7 +647,7 @@ section.gruppe{scroll-margin-top:14px}
     <ul class="beschluesse">
       <li><span class="sache">Ortschaftsrat Haisterkirch<span class="sv">Sitzung vom 04.03.2026</span></span><span class="erg split">kein Protokoll</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Wiederkehrende Rubrik</p>
       <p>Seit Januar 2024 tagten die vier Ortschaftsräte <b>85 Mal öffentlich</b> — rund die
       Hälfte aller öffentlichen Sitzungen der Stadt. Zu keiner dieser Sitzungen ist im
@@ -703,7 +701,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

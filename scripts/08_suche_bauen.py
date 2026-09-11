@@ -463,7 +463,7 @@ article.vorgang{{
   font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.04em;
   color:var(--s1);white-space:nowrap;
 }}
-.station .erg.split{{color:var(--flag)}}
+.station .erg.split{{color:var(--s1)}}
 .station .svnr{{
   font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--muted);
   opacity:.75;white-space:nowrap;

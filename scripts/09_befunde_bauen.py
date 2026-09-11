@@ -315,7 +315,7 @@ def bauen() -> str:
     <span><b>Herkunft</b> gezählt und gedeutet</span>
   </div>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Was auf dieser Seite steht</p>
     <p>Zweierlei, deutlich unterschieden. Die Rubrik <b>„Was eingehalten wird“</b>
     ist <b>regelbasiert gezählt</b> und enthält keine Deutung. Alles Übrige sind

@@ -203,7 +203,7 @@ def bauen() -> str:
   </div>
 </section>
 
-{zeitleiste(register, stichtag)}
+{zeitleiste(register, stichtag)}{naechste_termine(kennzahlen)}
 <section>
   <h2>Worum es geht</h2>
   <p>Lokaljournalismus ist vielerorts zur&uuml;ckgegangen, w&auml;hrend kommunale Unterlagen
@@ -293,12 +293,16 @@ def zeitleiste(register: dict, stichtag: str) -> str:
                     f'<span class="w leer" title="KW {kw}/{jahr} &middot; keine Sitzung"></span>')
                 continue
             n = a["sitzungen"]
-            stufe = 1 if n <= 1 else 2 if n == 2 else 3 if n == 3 else 4
+            # Fuer die laufende Woche gibt es stets eine Ausgabe, auch wenn noch
+            # nichts getagt hat. Sie bleibt anklickbar, wird aber nicht gefaerbt —
+            # sonst zeigte die Skala eine Sitzung an, die es nicht gab.
+            stufe = 0 if n == 0 else 1 if n == 1 else 2 if n == 2 else 3 if n == 3 else 4
             wort = "Sitzung" if n == 1 else "Sitzungen"
+            klasse = "w leer" if stufe == 0 else f"w s{stufe}"
             titel = (f'KW {kw}/{jahr} &middot; {a["zeitraum"]} &middot; {n} {wort}, '
                      f'{a["beschluesse"]} Beschl&uuml;sse')
             zellen.append(
-                f'<a class="w s{stufe}" href="./ausgaben/{jahr}/kw{schluessel}.html" '
+                f'<a class="{klasse}" href="./ausgaben/{jahr}/kw{schluessel}.html" '
                 f'title="{titel}"><span class="sr">KW {kw}/{jahr}, {n} {wort}</span></a>')
         zeilen.append(
             '      <div class="jahrzeile">\n'
@@ -306,21 +310,87 @@ def zeitleiste(register: dict, stichtag: str) -> str:
             f'        <div class="wochen">{"".join(zellen)}</div>\n'
             '      </div>')
 
+    # Kopfzeile mit den Kalenderwochen. Nicht jede Nummer passt ueber eine
+    # 11px breite Spalte — beschriftet wird jede fuenfte, die uebrigen Spalten
+    # halten nur den Platz, damit die Beschriftung ueber ihrer Woche steht.
+    marken = []
+    for kw in range(1, 54):
+        try:
+            dt.date.fromisocalendar(int(max(register)), kw, 1)
+        except ValueError:
+            continue
+        if kw == 1 or kw % 5 == 0:
+            marken.append(f'<span class="kw beschriftet">{kw}</span>')
+        else:
+            marken.append('<span class="kw"></span>')
+    kopfzeile = ('      <div class="jahrzeile kopf">\n'
+                 '        <span class="jahr">KW</span>\n'
+                 f'        <div class="wochen">{"".join(marken)}</div>\n'
+                 '      </div>')
+    zeilen.insert(0, kopfzeile)
+
     inhalt = "\n".join(zeilen)
     return (
         '\n<section>\n'
         '  <h2>Zeitleiste</h2>\n'
-        '  <p class="hinweis">Jede Zelle ist eine Kalenderwoche; je heller, desto mehr\n'
-        '  Sitzungen fanden in ihr statt. Ein Klick f&uuml;hrt in die Ausgabe dieser Woche.\n'
-        '  Wochen ohne Sitzung bleiben leer.</p>\n'
         '  <div class="zeitleiste">\n'
         f'{inhalt}\n'
         '  </div>\n'
+        '  <p class="hinweis">Jede Zelle ist eine Kalenderwoche; je heller, desto mehr\n'
+        '  Sitzungen fanden in ihr statt. Ein Klick f&uuml;hrt in die Ausgabe dieser Woche.\n'
+        '  Wochen ohne Sitzung bleiben leer.</p>\n'
         '  <p class="skala"><span>weniger</span>'
         '<span class="w s1"></span><span class="w s2"></span>'
         '<span class="w s3"></span><span class="w s4"></span>'
         '<span>mehr</span><span class="trenn">&middot;</span>'
         '<a href="./ausgaben/index.html">alle Ausgaben als Liste</a></p>\n'
+        '</section>\n')
+
+
+def naechste_termine(kennzahlen: dict) -> str:
+    """Die naechsten angekuendigten Sitzungen.
+
+    Das Ratsinformationssystem fuehrt Termine, die noch bevorstehen. Sie
+    beantworten die Frage, die vor jeder Auswertung kommt: Was steht an? Ob zu
+    einem Termin schon eine Tagesordnung vorliegt, steht ausdruecklich dabei —
+    meistens liegt sie erst kurz vorher vor, und das ist eine Auskunft wert.
+    """
+    kommend = kennzahlen.get("kommende_sitzungen") or []
+    if not kommend:
+        return ""
+    tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag",
+            "Freitag", "Samstag", "Sonntag"]
+    monate = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
+              "August", "September", "Oktober", "November", "Dezember"]
+    heute = dt.date.fromisoformat(kennzahlen["stichtag"])
+    zeilen = []
+    for t in kommend:
+        d = dt.date.fromisoformat(t["datum"])
+        tage_hin = (d - heute).days
+        wann = ("morgen" if tage_hin == 1 else
+                f"in {tage_hin} Tagen" if tage_hin <= 14 else "")
+        n = t.get("tops") or 0
+        agenda = (f'{n} Tagesordnungspunkt{"" if n == 1 else "e"}' if n
+                  else "Tagesordnung noch nicht ver&ouml;ffentlicht")
+        zeilen.append(
+            '    <li>\n'
+            f'      <span class="wann">{tage[d.weekday()]}, {d.day}. {monate[d.month - 1]}'
+            f'{"" if d.year == heute.year else " " + str(d.year)}'
+            f'<span class="uhr">{t["zeit"]} Uhr</span>'
+            f'{f"<span class=&quot;bald&quot;>{wann}</span>" if wann else ""}</span>\n'
+            f'      <span class="gremium">{t["gremium"]}</span>\n'
+            f'      <span class="agenda">{agenda}</span>\n'
+            '    </li>')
+
+    return (
+        '\n<section>\n'
+        '  <h2>Was als N&auml;chstes ansteht</h2>\n'
+        f'  <ol class="termine">\n{chr(10).join(zeilen)}\n  </ol>\n'
+        '  <p class="hinweis">Angek&uuml;ndigte Sitzungen aus dem Ratsinformationssystem.\n'
+        '  Sie sind &ouml;ffentlich, soweit nicht ausdr&uuml;cklich nicht&ouml;ffentlich beraten wird —\n'
+        '  wer hingehen will, kann das ohne Anmeldung. Tagesordnungen erscheinen meist\n'
+        '  wenige Tage vorher unter\n'
+        '  <a href="https://ris.bad-waldsee.de/termine" rel="noopener">ris.bad-waldsee.de</a>.</p>\n'
         '</section>\n')
 
 

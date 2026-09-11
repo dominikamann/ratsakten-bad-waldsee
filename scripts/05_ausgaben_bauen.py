@@ -534,7 +534,7 @@ def fuss(zusatz: str = "") -> str:
 
 
 DISCLAIMER = """
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein
@@ -623,7 +623,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 f'        <li><span class="sache">{e(p)}</span></li>\n' for p in h["posten"])
             liste = (f'      <ul class="beschluesse kompakt">\n{posten}      </ul>\n'
                      if h["posten"] else "")
-            klasse = "kasten warn" if h.get("ton", "warn") == "warn" else "kasten"
+            # Keine farbliche Unterscheidung mehr: Das Alarmrot liess eine
+            # nicht einstimmige Abstimmung wie einen Fehler aussehen. Was ein
+            # Punkt ist, sagt seine Ueberschrift — das genuegt und wertet nicht.
+            klasse = "kasten"
             bloecke.append(f"""    <div class="{klasse}">
       <p class="lab">{e(h['art'])}</p>
       <p>{e(h['text'])}</p>
@@ -642,8 +645,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
 {chr(10).join(bloecke)}
   </div>
 </article>""")
@@ -733,7 +735,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             t.append("    </ul>")
             if any(b["strittig"] for b in liste):
                 st = [b for b in liste if b["strittig"]]
-                t.append(f"""    <div class="kasten warn">
+                t.append(f"""    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>{len(st)} von {len(liste)} Beschlüssen fielen nicht einstimmig:
       {', '.join(f"<b>{e(b['vorlage'] or '—')}</b> ({e(b['ergebnis'])})" for b in st)}.
@@ -781,7 +783,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     Niederschrift abrufbar:</p>
     <ul class="beschluesse">
 {zeilen}    </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Wiederkehrende Rubrik</p>
       <p>Seit Januar 2024 tagten die vier Ortschaftsräte <b>85 Mal öffentlich</b> — rund die
       Hälfte aller öffentlichen Sitzungen der Stadt. Zu keiner dieser Sitzungen ist im

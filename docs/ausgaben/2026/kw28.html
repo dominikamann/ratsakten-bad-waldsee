@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -559,9 +558,8 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 7 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
@@ -636,7 +634,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">15. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Wohnbaufläche im Bereich des Bebauungsplans „Waldseer Straße“, Gemarkung Mittelurbach – Abwägungs- und Feststellungsbeschluss<span class="sv">SV-167/2025</span><span class="wortlaut">1. Die 15. Änderung des Flächennutzungsplans zur Ausweisung einer Wohnbaufläche im Bereich des Bebauungsplans „Waldseer Straße“, Gemarkung Mittelurbach wird entsprechend dem beigefügten Lageplan und der Begründung mit Umweltbericht, jeweils mit dem Datum vom 29.05.2026, festgestellt. 2. Die Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 29.05.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, beim Regierungspräsidium Tübingen die Genehmigung zu be - antragen. 4. Die Verwaltung wird beauftragt, den Beschluss des gemeinsamen Ausschusses der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee - Bergatreute öffentlich bekannt zu machen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSAYLy3W5BZPzt9M5EvJSSpxjg5be7jS7rTUkYEFf-47/Sitzungsvorlage_SV-167-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-167/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">21. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplans "Lohbühl I - Erweiterung", Gemeinde Bergatreute – Abwägungs- und Feststellungsbeschluss<span class="sv">SV-104/2026</span><span class="wortlaut">1. Die 21. Änderung des Flächennutzungsplans zur Ausweisung einer Wohnbaufläche entsprechend dem Bebauungsplan „Lohbühl I – Erweiterung“, Gemeinde Bergatreute wird entsprechend dem beigefügten Lageplan und der Begründung mit Umweltbericht jeweils mit dem Datum vom 09.06.2026, festgestellt. 2. Die Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 09.06.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, beim Regierungspräsidium Tübingen die Genehmigung zu be - antragen. 4. Die Verwaltung wird beauftragt, den Beschluss des gemeinsamen Ausschusses der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute öffentlich bekannt zu machen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYYmEQtSjVh-IteZBPaoKltPzgnzMoVTgIlFVA2tWOa6/Sitzungsvorlage_SV-104-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-104/2026</a></span></span><span class="erg split">11 : 0 : 1</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 7 Beschlüssen fielen nicht einstimmig:
       <b>SV-104/2026</b> (11 : 0 : 1).
@@ -692,7 +690,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

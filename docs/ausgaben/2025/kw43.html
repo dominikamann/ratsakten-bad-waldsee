@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -543,9 +542,8 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>2 von 13 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
@@ -553,7 +551,7 @@ section.gruppe{scroll-margin-top:14px}
         <li><span class="sache">SV-171/2025 — 20 : 1 : 2</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Erneut auf der Tagesordnung</p>
       <p>Diese Vorlagen standen schon früher auf einer Tagesordnung — durch Vorberatung in einem Ausschuss, durch Vertagung oder durch erneute Befassung.</p>
       <ul class="beschluesse kompakt">
@@ -640,7 +638,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">Beteiligungsbericht für das Jahr 2024<span class="sv">SV-197/2025</span><span class="wortlaut">1. Der Beteiligungsbericht für das Jahr 2024 wird zur Kenntnis genommen. 2. Der Einstufung der Beteiligungsunternehmen in die Steuerungsstufen wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRqVHg6Jxierqx9W-O1EEUGeIIvYvwZ1xrhwoxWyyLR1/Sitzungsvorlage_SV-197-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-197/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Pflegesatzverhandlungen Städt. Alten- und Pflegeheim Spital zum Hl. Geist<span class="sv">SV-200/2025</span><span class="wortlaut">1. Der Gemeinderat stimmt dem Ergebnis der Pflegesatzverhandlungen für das Alten- und Pflegeheim Spital zum Hl. Geist entsprechend der Sitzungsvorlage zu. 2. Die Verwaltung wird für die Zukunft ermächtigt, die Pflegesätze zu vereinbaren und im Anschluss dem Gemeinderat Kenntnis zu geben.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbVIBFliPDE9naXGH5TjSEzsFZvdWdAl_rz3hG8_W0Ai/Sitzungsvorlage_SV-200-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-200/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZ1xSqxiyNdLWLz_oXppvxOQFVXNTWT7ahegSKDJwABM/Heimentgelt_Spital_Bad_Waldsee_Oktober2025.pdf" target="_blank" rel="noopener noreferrer">Heimentgelt Spital Bad Waldsee Oktober2025</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>2 von 12 Beschlüssen fielen nicht einstimmig:
       <b>SV-204/2025</b> (22 : 1 : 0), <b>SV-171/2025</b> (20 : 1 : 2).
@@ -702,7 +700,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

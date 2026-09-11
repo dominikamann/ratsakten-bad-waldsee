@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -543,23 +542,22 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 9 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-242/2024 — 17 : 7 : 0</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Rat weicht vom Verwaltungsvorschlag ab</p>
       <p>Das Protokoll kennzeichnet diese Beschlüsse als „Modifizierter Beschluss“ — der beschlossene Text weicht vom Vorschlag der Verwaltung ab.</p>
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-242/2024 — Beteiligung an der Kommunalen Beteiligungsgesellschaft Netze BW GmbH &amp; Co. KG</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Größere Beträge</p>
       <p>In diesen Beschlusstexten steht ein Betrag ab 250.000 €. Haushalts- und Wirtschaftspläne enthalten naturgemäß große Summen.</p>
       <ul class="beschluesse kompakt">
@@ -567,7 +565,7 @@ section.gruppe{scroll-margin-top:14px}
         <li><span class="sache">430.000 € — SV-243/2024 Verwaltungsgebäude Neues Rathaus, Hauptstraße 12 Durchführungsbeschluss Außenanlagen</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Erneut auf der Tagesordnung</p>
       <p>Diese Vorlagen standen schon früher auf einer Tagesordnung — durch Vorberatung in einem Ausschuss, durch Vertagung oder durch erneute Befassung.</p>
       <ul class="beschluesse kompakt">
@@ -620,7 +618,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">Beteiligung an der Kommunalen Beteiligungsgesellschaft Netze BW GmbH &amp; Co. KG<span class="sv">SV-242/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">5.000.000 €</span></span><span class="wortlaut">Der Gemeinderat stimmt der Verlängerung und der Aufstockung der Beteiligung an der Kommunalen Beteiligungsgesellschaft Netze BW GmbH &amp; Co. KG auf 5.000.000 €, vorbehaltlich der Zustimmung der Rechtsaufsichtsbehörde, um weitere fünf Jahre zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZW8JO058Jsk2K8wDOSTjtOdB3uUWGWkl0r_DwTyREkp3/Sitzungsvorlage_SV-242-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-242/2024</a></span></span><span class="erg split">17 : 7 : 0</span></li>
       <li><span class="sache">Verwaltungsgebäude Neues Rathaus, Hauptstraße 12 Durchführungsbeschluss Außenanlagen<span class="sv">SV-243/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">430.000 €</span></span><span class="wortlaut">1. Der Planung für die Außenanlagen BA 5.1 mit Kosten von 108.000 € und einem Eigenanteil der Stadt von 65.250 € wird zugestimmt. 2. Der Planung für die Außenanlagen BA 5.2. mit Kosten von 430.000 € und einem Eigenanteil der Stadt von 172.000 € wird zugestimmt. 3. Der Planung für die Außenanlagen BA 3 mit Kosten von 189.000 € und einem Eigenanteil von 76.000 € wird zugestimmt. 4. Dem Abbruch des Gebäudes Oberamteigasse 16 mit Kosten von 40.000 € und einem Eigenanteil von 16.000 € wird zugestimmt. 5. Die Finanzierungsmittel sind größtenteils in den bisherigen Haushalten bereitgestellt, die Restfinanzierung erfolgt über den Haushalt 2025.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYtOFD-l6YuyacLtWVNxclEfFi7n32ZYZd7Bp2xQ7A3i/Sitzungsvorlage_SV-243-2024_4._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-243/2024 4. Nachtrag</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZatVn3dJ56bhvjXZOvmmCn0pzIAMOan1AagcAjR0pQbl/Aussenanlagen_-_Lageplaene_-_Kostengliederung.pdf" target="_blank" rel="noopener noreferrer">Außenanlagen - Lagepläne + Kostengliederung</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 9 Beschlüssen fielen nicht einstimmig:
       <b>SV-242/2024</b> (17 : 7 : 0).
@@ -667,7 +665,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

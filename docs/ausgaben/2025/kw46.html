@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -543,23 +542,22 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 5 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-224/2025 — 18 : 7 : 0</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht im Haushalt vorgesehen</p>
       <p>Diese Ausgaben wurden als außer- oder überplanmäßig beschlossen, standen also nicht im Haushaltsplan.</p>
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-222/2025 — Abriss Augustinerstr. 21, Haslachstr. 26 - außerplanmäßige Ausgaben</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Größere Beträge</p>
       <p>In diesen Beschlusstexten steht ein Betrag ab 250.000 €. Haushalts- und Wirtschaftspläne enthalten naturgemäß große Summen.</p>
       <ul class="beschluesse kompakt">
@@ -608,7 +606,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">Abriss Augustinerstr. 21, Haslachstr. 26 - außerplanmäßige Ausgaben<span class="sv">SV-222/2025</span><span class="wortlaut">1. Der Gemeinderat stimmt den außerplanmäßigen Ausgaben für die Abbruchmaßnahmen Augustinerstraße 21 und Haslachstraße 26 zu. Die Finanzierung der Mehrausgaben erfolgt durch die Zuschüsse aus ELR und Mehreinnahmen im Ergebnishaushalt. 2. Die Verwaltung wird beauftragt, die Maßnahmen durchzuführen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcz1To5s05sdv4zbttKzZuGySkljkUR0T1BGQHi94MNv/Sitzungsvorlage_SV-222-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-222/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Barrierefreier Neubau Verbindungsbau Ravensburger Str.1 zu Ravensburger Str. 2<span class="sv">SV-223/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">1.450.000 €</span></span><span class="wortlaut">1. Der vorgestellten Planung zum Verbindungsbau Ravensburger Str. 1 zu Ravensburger Str. 3 wird zugestimmt 2. Die Planung wird bis zur Leistungsphase 3 (Entwurf mit Kostenberechnung) weiterbearbeitet. 3. Die Finanzierung des Bauvorhabens mit einem Kostenrahmen nach Leistungsphase 02 von ca. 1,45 Mio. € erfolgt über den Haushaltsplan 2025 und 2026.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaiklcIpg33_RfPUBPpz0ifABERAYnuAv9kn-2pJiEBE/Sitzungsvorlage_SV-223-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-223/2025 (aktualisiert: 05.11.2025)</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaEL0zbLfbomu-tlw_I0rs8IZpcKk-b3-JN-f_zDqtVM/Plaene_-_Verbindungsbau_Ravensburger_Str._1_und_3.pdf" target="_blank" rel="noopener noreferrer">Pläne - Verbindungsbau Ravensburger Str. 1 und 3</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 5 Beschlüssen fielen nicht einstimmig:
       <b>SV-224/2025</b> (18 : 7 : 0).
@@ -655,7 +653,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -559,16 +558,15 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 11 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
         <li><span class="sache">SV-104/2026 — 25 : 0 : 1</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Erneut auf der Tagesordnung</p>
       <p>Diese Vorlagen standen schon früher auf einer Tagesordnung — durch Vorberatung in einem Ausschuss, durch Vertagung oder durch erneute Befassung.</p>
       <ul class="beschluesse kompakt">
@@ -652,7 +650,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">Steinstraße - Erstmalige, endgültige Herstellung - Planungsbeschluss<span class="sv">SV-130/2026</span><span class="wortlaut">1. Die erschließungsbeitragsrechtlich erstmalige endgültige Herstellung der Steinstraße auf der aktuellen Straßentrasse soll geplant werden. 2. Die Planungsleistungen zum Ausbau der Steinstraße für die Leistungsphase 1 – 4 HOAI sowie evtl. Vermessungsleistungen werden an das Ing.-Büro Schranz, Bad Saulgau verge ben. Weitere Beratungsleistungen z.B. geotechnische Untersuchungen werden bei Bedarf ebenfalls an externe Partner beauftragt. 3. Die Verwaltung wird ermächtigt, die Planung und die notwendigen Verfahren auf den Weg zu bringen. 4. Die Finanzierung der Planungsleistungen erfolgt über die im Investitions-Haushalt 2026 un ter Konto 233.100.003 bereitgestellten Mittel</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQrZOGz7SIiGU-gyAlOMrDsaGFioskes0gKEbh2EZKtL/Sitzungsvorlage_SV-130-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-130/2026</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Annahme und Vermittlung von Spenden und Sponsoring aus dem 1. Halbjahr 2026<span class="sv">SV-116/2026</span><span class="wortlaut">Der Annahme der im 1. Halbjahr 2026 eingegangenen Spenden und Zuwendungen (im Anhang) wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdv8vXVHNcD1XX62Tdp5b9nkdSbG_U-hoSHzSg2g3ZTq/Sitzungsvorlage_SV-116-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-116/2026</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbFiz6UO_SDtkrx00LlHO6_S-5eJNQ9kqp7UU0gzrF65/Anlage_Spenden_01-2026.pdf" target="_blank" rel="noopener noreferrer">Anlage Spenden 01-2026</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 8 Beschlüssen fielen nicht einstimmig:
       <b>SV-104/2026</b> (25 : 0 : 1).
@@ -733,7 +731,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -543,9 +542,8 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>2 von 8 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
@@ -607,7 +605,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">Bebauungsplan "Rauhe Äcker" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach - Abwägung und Entwurfsbeschluss<span class="sv">SV-76/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägung- und Beschlussvorlage vom 13. Mai 2024 enthaltenen Beschlussvorschlägen abgewogen. 2. Der Bebauungsplan „Rauhe Äcker“ und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach, werden gemäß den übersandten Sitzungsunterlagen in der Fassung vom 15. Mai 2024 als Entwürfe festgestellt. 3. Nach der Vorprüfung des Einzelfalls gemäß § 215a Baugesetzbuch (BauGB) wird festgestellt, dass keine erheblichen Umweltauswirkungen vorliegen und ein Ausgleich nach § 1a Absatz 3 BauGB nicht erforderlich ist. Die Verwaltung wird beauftragt, das Verfahren ohne Durchführung einer Umweltprüfung nach § 2 Absatz 4 BauGB fortzusetzen und den Bebauungsplanentwurf für einen Monat öffentlich auszulegen und der Öffentlichkeit sowie den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Verwaltung wird zum Abschluss des städtebaulichen Vertrages mit der Antragstellerin ermächtigt. 5. Der Entwurf ist für einen Monat öffentlich auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVtBT5qIc0GW_STWNbZoi5re0U_TFx_LeBXw8oiWq3Up/Sitzungsvorlage_SV-76-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-76/2024</a></span></span><span class="erg split">10 : 0 : 3</span></li>
       <li><span class="sache">15. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Wohnbaufläche im Bereich Waldseer Straße, Gemarkung Mittelurbach - Abwägung und Entwurfsbeschluss<span class="sv">SV-92/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 15. Mai 2024 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 15. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Wohnbaufläche im Bereich Waldseer Straße, Gemarkung Mittelurbach, wird in der übersandten Planfassung vom 15. Mai 2024 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 15. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTJlKZnxu8upmpXk1tE44PutFyIgbrjfkmqnjxmL8mrg/Sitzungsvorlage_SV-92-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-92/2024</a></span></span><span class="erg">13 : 0 : 0</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 7 Beschlüssen fielen nicht einstimmig:
       <b>SV-76/2024</b> (10 : 0 : 3).
@@ -628,7 +626,7 @@ section.gruppe{scroll-margin-top:14px}
     <ul class="beschluesse">
       <li><span class="sache">Erwerb einer Skulptur für die Außenanlage des neuen Verwaltungsgebäudes.<span class="sv">SV-120/2024</span><span class="wortlaut">1. Der Verwaltungsausschuss stimmt dem Erwerb der Skulptur „Bronzeboot Nr. 1“ des Bad Waldseer Künstlers Richard W. Allgaier zum Preis von 22.685 Euro zu. 2. Die Finanzierung erfolgt über die Investitionsmittel I-5110-1805.</span></span><span class="erg split">12 : 1 : 0</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>1 von 1 Beschlüssen fielen nicht einstimmig:
       <b>SV-120/2024</b> (12 : 1 : 0).
@@ -675,7 +673,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein

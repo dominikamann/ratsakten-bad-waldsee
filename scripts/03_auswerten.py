@@ -150,8 +150,19 @@ def main() -> None:
             je_jahr[jahr][0] += 1
             je_jahr[jahr][1] += uneins
 
+    # Kuenftige Sitzungen. Das Ratsinformationssystem fuehrt Termine, die noch
+    # bevorstehen; sie gehoeren in keine Auswertung, beantworten aber die Frage,
+    # die ein Buerger als erstes stellt: Was kommt als Naechstes?
+    kommend = [
+        {"datum": s["start"][:10], "zeit": s["start"][11:16],
+         "gremium": gremium(s["titel"]), "tops": s["n_tops"]}
+        for s in sorted(alle, key=lambda x: x["start"])
+        if s["start"][:10] > args.stichtag
+    ][:10]
+
     kennzahlen = {
         "stichtag": args.stichtag,
+        "kommende_sitzungen": kommend,
         "sitzungen": len(sitzungen),
         "tagesordnungspunkte": sum(s["n_tops"] for s in sitzungen),
         "vorlagen": len({v for s in sitzungen for v in s["vorlagen"]}),

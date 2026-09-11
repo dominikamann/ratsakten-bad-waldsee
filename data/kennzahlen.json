@@ -1,5 +1,67 @@
 {
   "stichtag": "2026-09-11",
+  "kommende_sitzungen": [
+    {
+      "datum": "2026-09-15",
+      "zeit": "18:00",
+      "gremium": "Verwaltungsausschuss",
+      "tops": 5
+    },
+    {
+      "datum": "2026-09-22",
+      "zeit": "19:30",
+      "gremium": "Ortschaftsrat Reute-Gaisbeuren",
+      "tops": 0
+    },
+    {
+      "datum": "2026-09-28",
+      "zeit": "18:00",
+      "gremium": "Gemeinderat",
+      "tops": 0
+    },
+    {
+      "datum": "2026-09-30",
+      "zeit": "19:00",
+      "gremium": "Ortschaftsrat Haisterkirch",
+      "tops": 0
+    },
+    {
+      "datum": "2026-10-06",
+      "zeit": "18:00",
+      "gremium": "Ortschaftsrat Michelwinnaden",
+      "tops": 0
+    },
+    {
+      "datum": "2026-10-08",
+      "zeit": "19:00",
+      "gremium": "Ortschaftsrat Mittelurbach",
+      "tops": 0
+    },
+    {
+      "datum": "2026-10-12",
+      "zeit": "18:00",
+      "gremium": "Ausschuss Umwelt/Technik",
+      "tops": 0
+    },
+    {
+      "datum": "2026-10-13",
+      "zeit": "18:00",
+      "gremium": "Verwaltungsausschuss",
+      "tops": 0
+    },
+    {
+      "datum": "2026-10-20",
+      "zeit": "19:30",
+      "gremium": "Ortschaftsrat Reute-Gaisbeuren",
+      "tops": 0
+    },
+    {
+      "datum": "2026-11-02",
+      "zeit": "18:00",
+      "gremium": "Gemeinderat",
+      "tops": 0
+    }
+  ],
   "sitzungen": 166,
   "tagesordnungspunkte": 616,
   "vorlagen": 300,

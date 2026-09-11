@@ -297,7 +297,8 @@ ul.beschluesse .erg{
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
   color:var(--muted);white-space:nowrap;text-transform:uppercase;
 }
-ul.beschluesse .erg.split{color:var(--flag)}
+/* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
+ul.beschluesse .erg.split{color:var(--s1)}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -308,8 +309,6 @@ ul.beschluesse .erg.split{color:var(--flag)}
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--s1);margin:0 0 8px;
 }
-.kasten.warn{border-left-color:var(--flag);background:var(--flag-bg)}
-.kasten.warn .lab{color:var(--flag)}
 .kasten p{margin:0;max-width:62ch}
 .kasten p + p{margin-top:10px}
 
@@ -543,9 +542,8 @@ section.gruppe{scroll-margin-top:14px}
     was formal aus dem Rahmen fällt — ob es inhaltlich bedeutsam ist, steht damit
     nicht fest. Jeder Punkt ist am Originalprotokoll überprüfbar.</p>
     <p>Die Regeln sprechen auf beides an: auf Abweichungen und auf Abschlüsse.
-    Rot hinterlegt ist, was vom Üblichen abweicht; ohne Farbe steht, was
-    abgeschlossen oder aufgearbeitet wurde.</p>
-    <div class="kasten warn">
+    Was ein Punkt ist, steht in seiner Überschrift.</p>
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>2 von 5 Beschlüssen fielen nicht einstimmig. Das Stimmenverhältnis steht bei den Beschlüssen.</p>
       <ul class="beschluesse kompakt">
@@ -553,7 +551,7 @@ section.gruppe{scroll-margin-top:14px}
         <li><span class="sache">SV-101/2024 — 24 : 0 : 1</span></li>
       </ul>
     </div>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Erneut auf der Tagesordnung</p>
       <p>Diese Vorlagen standen schon früher auf einer Tagesordnung — durch Vorberatung in einem Ausschuss, durch Vertagung oder durch erneute Befassung.</p>
       <ul class="beschluesse kompakt">
@@ -635,7 +633,7 @@ section.gruppe{scroll-margin-top:14px}
       <li><span class="sache">Vorhabenbezogener Bebauungsplan "Agri-Solarpark Sankt Josef" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach - Abwägung und Satzungsbeschluss<span class="sv">SV-98/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 30.08.2024 enthaltenen Beschlussvorschlägen abgewogen. 2. Der vorhabenbezogene Bebauungsplan „Agri-Solarpark Sankt Josef“ und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach wird gemäß den übersandten Sitzungsunterlagen in der Fassung vom 30.08.2024 und dem Satzungsentwurf auf der Seite 17 als Satzung beschlossen. 3. Die Verwaltung wird beauftragt, den vorhabenbezogenen Bebauungsplan „Agri-Solarpark Sankt Josef“ und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach öffentlich bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdfc09cM4bpdahjlaz5tq-Ky4WjsxTLJI1SL-wHhuOfD/Sitzungsvorlage_SV-98-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-98/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">16. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Waldsee-Bergatreute für die Sonderbaufläche "Agri-Solarpark Sankt Josef", Gemarkung Mittelurbach - Abwägung und Feststellungsbeschluss<span class="sv">SV-99/2024</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 30.08.2024 enthaltenen Beschlussvorschlägen abgewogen 2. Die 16. Änderung des Flächennutzungsplans für die Sonderbaufläche „Agri-Solarpark Sankt Josef“, Gemarkung Mittelurbach wird in der übersandten Planfassung vom 15.05.2024 festgestellt. 3. Die Verwaltung wird beauftragt, beim Regierungspräsidium Tübingen die Genehmigung zu be- antragen und die Bekanntmachung zu veranlassen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYF32oZzsuCl8O_GdL7H7sj-Ci4Unat24jrejqKcwcqH/Sitzungsvorlage_SV-99-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-99/2024</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Nicht einstimmig</p>
       <p>2 von 5 Beschlüssen fielen nicht einstimmig:
       <b>SV-141/2024</b> (19 : 4 : 1), <b>SV-101/2024</b> (24 : 0 : 1).
@@ -657,7 +655,7 @@ section.gruppe{scroll-margin-top:14px}
     <ul class="beschluesse">
       <li><span class="sache">Ortschaftsrat Haisterkirch<span class="sv">Sitzung vom 25.09.2024</span></span><span class="erg split">kein Protokoll</span></li>
     </ul>
-    <div class="kasten warn">
+    <div class="kasten">
       <p class="lab">Wiederkehrende Rubrik</p>
       <p>Seit Januar 2024 tagten die vier Ortschaftsräte <b>85 Mal öffentlich</b> — rund die
       Hälfte aller öffentlichen Sitzungen der Stadt. Zu keiner dieser Sitzungen ist im
@@ -711,7 +709,7 @@ section.gruppe{scroll-margin-top:14px}
   wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
   vollständig unsichtbar.</p>
 
-  <div class="kasten warn">
+  <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
     <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
     Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein
