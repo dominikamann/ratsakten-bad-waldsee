@@ -498,8 +498,8 @@ button.mehr{
   color:var(--s1);font-family:var(--mono);font-size:10.5px;
   letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
 }
-button.mehr::before{content:"\25B8";font-size:12px;line-height:1}
-button.mehr[aria-expanded="true"]::before{content:"\25BE"}
+button.mehr::before{content:"\\25B8";font-size:12px;line-height:1}
+button.mehr[aria-expanded="true"]::before{content:"\\25BE"}
 button.mehr:hover{text-decoration:underline}
 button.mehr:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
 /* In der Zeitachse eine eigene Zeile unter dem Wortlaut, nicht daneben. */

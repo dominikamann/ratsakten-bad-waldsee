@@ -338,8 +338,8 @@ def bauen() -> str:
 <section class="gruppe" id="beobachtungen">
   <h2>Beobachtungen</h2>
   <p class="einleitung">Stellen, an denen die Aktenlage Fragen offenlässt oder ein
-  Verfahren formal korrekt, in seiner Wirkung aber fragwürdig ist. Keine Vorwürfe —
-  jeder Punkt nennt seinen Beleg.</p>""")
+    Verfahren formal korrekt, in seiner Wirkung aber fragwürdig ist. Die zugrunde
+    liegenden Unterlagen sind jeweils verlinkt.</p>""")
     for b in beobachtungen:
         teile.append(block(b["titel"], b["absaetze"], rname, rpfad, beleg=b["beleg"]))
     teile.append("</section>")

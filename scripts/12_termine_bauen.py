@@ -55,10 +55,10 @@ h2.jahrmarke,details.jahrblock > summary{
 details.jahrblock > summary{cursor:pointer;list-style:none}
 details.jahrblock > summary::-webkit-details-marker{display:none}
 details.jahrblock > summary::after{
-  content:"aufklappen";margin-left:auto;font-family:var(--mono);font-weight:400;
-  font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--s1);
+  content:"\\25B8";margin-left:auto;font-family:var(--mono);font-weight:400;
+  font-size:12px;color:var(--s1);
 }
-details.jahrblock[open] > summary::after{content:"zuklappen"}
+details.jahrblock[open] > summary::after{content:"\\25BE"}
 details.jahrblock > summary:hover{color:var(--s1)}
 .anzahl{
   font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.08em;

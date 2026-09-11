@@ -214,10 +214,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
 .brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
 .brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
 .brandbar nav span[aria-hidden]{opacity:.35}
-/* Sieben Einträge und zwei Randtexte passen nicht in jede Fensterbreite. Statt
-   den letzten Eintrag abzuschneiden, weicht zuerst der Hinweistext, dann
-   bekommt die Navigation eine eigene Zeile. */
-@media (max-width:1000px){.brandbar .disclaimer{display:none}}
 /* Auf dem Telefon darf die Navigation in mehrere Zeilen wachsen, damit die
    Seite ihre Breite am Viewport ausrichtet und nicht horizontal ueberlaeuft. */
 @media (max-width:620px){
@@ -290,6 +286,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 footer p{
   margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
   color:var(--muted);max-width:none;
+}
+footer .disclaimer{
+  font-family:var(--serif);font-size:12px;font-style:italic;letter-spacing:0;
+  color:var(--muted);
 }
 footer .brand{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bar-ink);font-weight:600}
 footer a{color:var(--s1);text-decoration:none}
@@ -635,7 +635,6 @@ section.gruppe{scroll-margin-top:14px}
     <span aria-hidden="true">/</span>
     <a href="../../gremien.html">Wer entscheidet was</a>
   </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
 
 <div class="wrap">
@@ -804,7 +803,7 @@ section.gruppe{scroll-margin-top:14px}
     <a href="../../gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 3/2024 &middot; erzeugt am 11.09.2026</p>
+  <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; Ausgabe KW 3/2024 &middot; erzeugt am 11.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>

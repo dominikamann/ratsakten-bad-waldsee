@@ -109,7 +109,6 @@ def kopf(titel: str, *, hoch: str = "", hier: str = "", beschreibung: str = "",
   <nav aria-label="Bereiche">
     {navigation(hoch, hier)}
   </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
 """
 
@@ -129,6 +128,6 @@ def fuss(hoch: str = "", meta: str = "", ende: bool = True) -> str:
     {navigation(hoch)}
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr{zusatz}</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr{zusatz}</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>{schluss}"""

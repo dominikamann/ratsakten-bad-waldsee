@@ -214,10 +214,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
 .brandbar nav a:hover{color:var(--s1);opacity:1;text-decoration:underline}
 .brandbar nav a[aria-current="page"]{color:var(--s1);opacity:1;font-weight:600}
 .brandbar nav span[aria-hidden]{opacity:.35}
-/* Sieben Einträge und zwei Randtexte passen nicht in jede Fensterbreite. Statt
-   den letzten Eintrag abzuschneiden, weicht zuerst der Hinweistext, dann
-   bekommt die Navigation eine eigene Zeile. */
-@media (max-width:1000px){.brandbar .disclaimer{display:none}}
 /* Auf dem Telefon darf die Navigation in mehrere Zeilen wachsen, damit die
    Seite ihre Breite am Viewport ausrichtet und nicht horizontal ueberlaeuft. */
 @media (max-width:620px){
@@ -290,6 +286,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 footer p{
   margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
   color:var(--muted);max-width:none;
+}
+footer .disclaimer{
+  font-family:var(--serif);font-size:12px;font-style:italic;letter-spacing:0;
+  color:var(--muted);
 }
 footer .brand{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bar-ink);font-weight:600}
 footer a{color:var(--s1);text-decoration:none}
@@ -738,8 +738,8 @@ button.mehr{
   color:var(--s1);font-family:var(--mono);font-size:10.5px;
   letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
 }
-button.mehr::before{content:"B8";font-size:12px;line-height:1}
-button.mehr[aria-expanded="true"]::before{content:"BE"}
+button.mehr::before{content:"\25B8";font-size:12px;line-height:1}
+button.mehr[aria-expanded="true"]::before{content:"\25BE"}
 button.mehr:hover{text-decoration:underline}
 button.mehr:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
 /* In der Zeitachse eine eigene Zeile unter dem Wortlaut, nicht daneben. */
@@ -794,7 +794,6 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
     <span aria-hidden="true">/</span>
     <a href="gremien.html">Wer entscheidet was</a>
   </nav>
-  <span class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr</span>
 </div></div>
 
 <div class="wrap">
@@ -915,7 +914,7 @@ mark{background:rgba(57,135,229,.25);color:var(--ink);padding:0 2px}
     <a href="gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-  <p>Alle Angaben und Insights ohne Gew&auml;hr &middot; Stand 11.09.2026</p>
+  <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; Stand 11.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 
