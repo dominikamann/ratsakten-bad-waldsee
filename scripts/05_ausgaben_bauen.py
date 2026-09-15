@@ -546,6 +546,22 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
         if gemeldet.get("von_iso") and gemeldet.get("bis_iso"):
             beginn = dt.date.fromisoformat(gemeldet["von_iso"])
             ende = dt.date.fromisoformat(gemeldet["bis_iso"])
+            # Der veroeffentlichte Zeitraum wird gehalten — aber er darf nicht
+            # kleiner sein als das, was die Ausgabe tatsaechlich enthaelt.
+            #
+            # Sitzungen werden nach ihrer Kalenderwoche einsortiert, nicht nach
+            # diesem Zeitraum. Faellt ein Tageslauf aus, friert die Woche am
+            # Stand des letzten Laufs ein, waehrend eine Sitzung von Mittwoch
+            # weiterhin in ihr landet: Die Ausgabe listet dann einen Beschluss
+            # von einem Datum, das ihr eigener Berichtszeitraum nicht abdeckt —
+            # und die Folgeausgabe fuehrt dieselben Tage noch einmal.
+            #
+            # **Erweitern** ist dabei unbedenklich: Es entsteht keine Luecke
+            # und keine Doppelung, der Zeitraum deckt nur wieder ab, was in der
+            # Ausgabe steht. Nur Schrumpfen waere ein Wortbruch.
+            spaeteste = max((x["datum"] for x in w["sitzungen"]), default=None)
+            if spaeteste and spaeteste > ende:
+                ende = min(spaeteste, stichtag)
         else:
             beginn = (anker + dt.timedelta(days=1) if anker
                       else dt.date.fromisocalendar(jahr, kw, 1))

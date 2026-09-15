@@ -109,8 +109,25 @@ case $RC in
 esac
 
 # --- Veroeffentlichen ---------------------------------------------------------
+# „Nichts Neues" war toter Code, seit der Seitenfuss auf jeder Seite den Tag
+# des Laufs nennt: Ab Mitternacht unterscheiden sich alle rund 150 Dokumente,
+# auch wenn die Stadt nichts veroeffentlicht hat. Bei einem taeglichen Lauf
+# haette das jeden Tag einen Commit erzeugt, dessen einzige Aenderung ein
+# Datum in der Fusszeile ist — und die Historie waere binnen eines Jahres
+# unbrauchbar.
+#
+# Gezaehlt werden deshalb nur Zeilen, die etwas anderes sagen als „aktualisiert
+# am". Bleibt keine uebrig, wird der Lauf verworfen: Die Dokumente sind
+# inhaltlich dieselben wie beim letzten Mal.
 if [[ -z "$(git status --porcelain)" ]]; then
   log "Nichts Neues — keine Aenderung gegenueber dem letzten Lauf."
+  exit 0
+fi
+
+INHALTLICH=$(git diff -U0 | grep -E '^[-+][^-+]' | grep -cv 'aktualisiert am' || true)
+if [[ "$INHALTLICH" -eq 0 && -z "$(git status --porcelain --untracked-files=all | grep -v '^ M')" ]]; then
+  log "Nichts Neues — nur das Datum in den Fusszeilen. Aenderungen verworfen."
+  git checkout -- .
   exit 0
 fi
 
