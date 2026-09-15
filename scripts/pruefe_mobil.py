@@ -6,6 +6,7 @@ Aufruf: python scripts/pruefe_mobil.py
 """
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import json
 from pathlib import Path
 import sys
 from threading import Thread
@@ -13,10 +14,30 @@ from threading import Thread
 from playwright.sync_api import sync_playwright
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
+
+
+def neueste_ausgabe() -> str:
+    """Die jeweils aktuelle Wochenausgabe.
+
+    Stand hier fest verdrahtet und zeigte deshalb auf KW 37, als es laengst
+    KW 38 gab: Geprueft wurde eine Ausgabe, die niemand mehr aufruft, und die
+    neue gar nicht. Ein Pruefskript, das an der Wirklichkeit vorbeisieht, ist
+    schlimmer als keines.
+    """
+    register = json.loads(
+        (DOCS.parent / "data" / "ausgaben.json").read_text(encoding="utf-8"))
+    jahr = max(register, key=int)
+    return f"ausgaben/{jahr}/kw{max(register[jahr], key=int)}.html"
+
+
+def neuester_report() -> str:
+    """Der zuletzt datierte Report — aus demselben Grund nicht fest benannt."""
+    return f"report/{max(p.name for p in (DOCS / 'report').glob('*.html'))}"
+
+
 SEITEN = ["index.html", "termine.html", "suche.html", "befunde.html",
           "gremien.html", "themen/index.html", "themen/drei-eichen-vi.html",
-          "ausgaben/index.html", "ausgaben/2026/kw37.html",
-          "report/2026-09-09.html"]
+          "ausgaben/index.html", neueste_ausgabe(), neuester_report()]
 
 
 class Handler(SimpleHTTPRequestHandler):

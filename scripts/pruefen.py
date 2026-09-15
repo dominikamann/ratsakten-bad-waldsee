@@ -181,9 +181,11 @@ BEHAUPTUNGEN = [
 def pruefe_readme() -> None:
     """Zahlen in der README gegen die Daten halten.
 
-    Die README wird von Hand gepflegt. Zweimal stand dort eine Zahl, die aus
-    einem frueheren Lauf stammte — „436 Dokumente", als es laengst 625 waren.
-    Solche Angaben veralten still, weil niemand sie nachrechnet.
+    Die README wurde frueher von Hand gepflegt; zweimal stand dort eine Zahl
+    aus einem frueheren Lauf — „436 Dokumente", als es laengst 625 waren.
+    Seither traegt Schritt 13 sie ein. Diese Pruefung bleibt trotzdem: Sie
+    laeuft auch in der GitHub-Pruefung, wo Schritt 13 nicht laeuft, und faengt
+    einen Stand ab, der ohne vollstaendigen Lauf committet wurde.
     """
     readme = WURZEL / "README.md"
     if not readme.exists():
