@@ -677,6 +677,14 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     mo, so = w["von"], w["bis"]
     n_besch = len(w["beschluesse"])
     mit_prot = sum(1 for s in w["sitzungen"] if s["protokoll"])
+    # Alle Tagesordnungspunkte des Zeitraums. Die Zeile nannte Sitzungen und
+    # Beschluesse — aber nicht, wie viele Themen dazwischen lagen. Bei elf
+    # Beschluessen waren es achtzehn; die Differenz ist genau das, was sonst
+    # unsichtbar bleibt.
+    n_themen = sum(len(x.get("tops") or []) for x in w["sitzungen"])
+    # Null waere hier eine Behauptung: Wo keine Tagesordnung veroeffentlicht
+    # ist, gab es sehr wohl Themen — sie sind nur nicht bekannt. Der
+    # Gedankenstrich sagt das, die Null saehe aus wie ein Messwert.
 
     # Der Untertitel stand auf jeder der 90 Ausgaben Wort fuer Wort gleich:
     # „Was der Gemeinderat und seine Ausschuesse entschieden haben." Er
@@ -849,6 +857,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   <div class="issueline">
     <span><b>Berichtszeitraum</b> {mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span>
     <span><b>Sitzungen</b> {len(w['sitzungen'])} · {mit_prot} protokolliert</span>
+    <span><b>Themen</b> {n_themen or '—'}</span>
     <span><b>Beschlüsse</b> {n_besch}</span>
   </div>{laufend_hinweis}
 </header>""")
@@ -946,7 +955,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             # dass die Sitzung mehr Punkte hatte. „8 Beschluesse" klang nach
             # der ganzen Sitzung; es waren 8 von 14.
             ueberschrift = (
-                f"{len(liste)} von {n_tops} Punkten mit Beschluss "
+                f"{len(liste)} von {n_tops} Themen mit Beschluss "
                 f"am {datum_lang(tag)}" if n_tops > len(liste) else
                 f"{len(liste)} {'Beschluss' if len(liste) == 1 else 'Beschlüsse'} "
                 f"am {datum_lang(tag)}")
@@ -955,7 +964,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   <div class="rail">
     <div class="field"><span class="lab">Sitzung</span><span class="val">{e(name)}</span></div>
     <div class="field"><span class="lab">Datum</span><span class="val">{tag.strftime('%d.%m.%Y')}</span></div>
-    <div class="field"><span class="lab">Punkte</span><span class="val">{n_tops or '—'}</span></div>
+    <div class="field"><span class="lab">Themen</span><span class="val">{n_tops or '—'}</span></div>
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">{len(liste)}</span></div>
   </div>
   <div class="body-col">
