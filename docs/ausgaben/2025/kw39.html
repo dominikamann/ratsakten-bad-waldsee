@@ -472,9 +472,13 @@ a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
    eine Stufe leiser. Auf schmalen Anzeigen rutscht sie in die naechste
    Zeile, statt den Namen umzubrechen. */
 h1 .nummer{
-  display:inline-block;font-family:var(--mono);font-weight:400;
-  font-size:.42em;letter-spacing:.06em;color:var(--ink-2);
-  vertical-align:middle;margin-left:.6em;white-space:nowrap;
+  /* Dieselbe Schrift wie der Titel, damit die Zeile eine bleibt — die
+     Unterscheidung macht das Gewicht und die Farbe, nicht die Schriftart.
+     Der Name ist die Marke, die Nummer sagt, welche Ausgabe man vor sich
+     hat. */
+  display:inline-block;font-weight:400;color:var(--ink-2);
+  font-size:.62em;letter-spacing:-.01em;
+  margin-left:.4em;white-space:nowrap;
 }
 
 /* ---------- Beschlussliste ---------- */
