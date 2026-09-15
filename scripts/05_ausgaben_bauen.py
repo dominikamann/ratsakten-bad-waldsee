@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Schritt 5 — die wöchentliche „Waldseer Aktenlage“ erzeugen.
+"""Schritt 5 — die wöchentliche „Waldseer Ratswoche“ erzeugen.
 
 Eine Ausgabe entsteht für jede Kalenderwoche, in der mindestens eine Sitzung
 stattgefunden hat — und zusätzlich immer für die laufende Woche, damit es stets
@@ -723,7 +723,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     else:
         laufend_hinweis = ""
 
-    t = [kopf(f"Aktenlage KW {kw}/{jahr} · Ratsakten Bad Waldsee", hoch="../../",
+    t = [kopf(f"Ratswoche KW {kw}/{jahr} · Ratsakten Bad Waldsee", hoch="../../",
           beschreibung=f"Was der Gemeinderat und seine Ausschüsse in der "
                        f"Kalenderwoche {kw}/{jahr} entschieden haben.",
           koerper=""),
@@ -843,8 +843,8 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
 
     t.append(f"""
 <header>
-  <p class="eyebrow">Aktenlage &middot; {'Wochenausgabe · Zwischenstand' if w.get('laufend') else 'Wochenausgabe'}</p>
-  <h1>Waldseer Aktenlage <span class="nummer">KW {kw} / {jahr}</span></h1>
+  <p class="eyebrow">{'Wochenausgabe &middot; Zwischenstand' if w.get('laufend') else 'Wochenausgabe'}</p>
+  <h1>Waldseer Ratswoche <span class="nummer">KW {kw} / {jahr}</span></h1>
   <p class="lede">{lede}</p>
   <div class="issueline">
     <span><b>Berichtszeitraum</b> {mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span>
@@ -1274,13 +1274,13 @@ def archiv_bauen(register: dict) -> str:
 
     t = [kopf("Archiv · Ratsakten Bad Waldsee", hoch="../", hier="archiv",
           beschreibung="Alle bisher erschienenen Wochenausgaben der "
-                       "Waldseer Aktenlage."),
+                       "Waldseer Ratswoche."),
      '<div class="wrap">']
     t.append(f"""
 <header>
-  <p class="eyebrow">Aktenlage &middot; alle Jahrgänge</p>
+  <p class="eyebrow">Ratswoche &middot; alle Jahrgänge</p>
   <h1>Archiv</h1>
-  <p class="lede">Alle bisher erschienenen Ausgaben der Waldseer Aktenlage —
+  <p class="lede">Alle bisher erschienenen Ausgaben der Waldseer Ratswoche —
   eine für jede Kalenderwoche, in der getagt wurde.</p>
   <div class="issueline">
     <span><b>Jahrgänge</b> {', '.join(jahre)}</span>

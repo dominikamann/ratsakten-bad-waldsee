@@ -52,7 +52,7 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 ## Der Report
 
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
-➡️ **[Aktuelle Ausgabe, KW 38/2026](./docs/ausgaben/2026/kw38.html)** — die wöchentliche Aktenlage
+➡️ **[Aktuelle Ausgabe, KW 38/2026](./docs/ausgaben/2026/kw38.html)** — die wöchentliche Ratswoche
 ➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 90 Ausgaben der Jahrgänge 2024 bis 2026
 ➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
 ➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf

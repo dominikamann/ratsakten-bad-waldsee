@@ -181,8 +181,8 @@ def bauen() -> str:
         # „zuletzt entschieden" klingt abgeschlossen, und „keine Beschluesse"
         # liest sich dann als Befund statt als Stand von Dienstagmittag.
         laufend = meta.get("laufend")
-        art = ("Aktenlage &middot; laufende Woche" if laufend
-               else "Aktenlage &middot; aktuelle Ausgabe")
+        art = ("Ratswoche &middot; laufende Woche" if laufend
+               else "Ratswoche &middot; aktuelle Ausgabe")
         einleitung = ("Was der Gemeinderat und seine Aussch&uuml;sse in dieser Woche "
                       "<b>bisher</b> entschieden haben." if laufend else
                       "Was der Gemeinderat und seine Aussch&uuml;sse zuletzt "
@@ -191,7 +191,7 @@ def bauen() -> str:
                     if laufend else f"Berichtszeitraum {e(meta['zeitraum'])}")
         karten.append((10, f"""    <a class="karte" href="{pfad}">
       <p class="art">{art}</p>
-      <h3>Waldseer Aktenlage, KW {kw}/{jahr}</h3>
+      <h3>Waldseer Ratswoche, KW {kw}/{jahr}</h3>
       <p>{einleitung}
       {beschreibung}.</p>
       <p class="meta">{zeitraum}</p>
@@ -204,7 +204,7 @@ def bauen() -> str:
         spanne = (f"Jahrg&auml;nge {jahre[-1]}–{jahre[0]}" if len(jahre) > 1
                   else f"Jahrgang {jahre[0]}")
         karten.append((70, f"""    <a class="karte" href="./ausgaben/index.html">
-      <p class="art">Aktenlage &middot; Archiv</p>
+      <p class="art">Ratswoche &middot; Archiv</p>
       <h3>Alle bisherigen Ausgaben</h3>
       <p>{zahlwort(ges_a)} Ausgaben mit zusammen {ges_b} Beschl&uuml;ssen, eine f&uuml;r jede
       Kalenderwoche, in der getagt wurde. Jede Ausgabe nennt auch die Sitzungen,

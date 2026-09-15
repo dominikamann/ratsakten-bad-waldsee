@@ -106,7 +106,7 @@ def aus_einordnungen() -> list[dict]:
             "titel": ein.get("titel", ""),
             "absaetze": ein.get("absaetze", []),
             "geprueft": ein.get("status") == "geprueft",
-            "quelle": f"Aktenlage KW {int(kw)}/{jahr}",
+            "quelle": f"Ratswoche KW {int(kw)}/{jahr}",
             "zeitraum": meta.get("zeitraum", ""),
             "sortier": meta.get("bis_iso", f"{jahr}-01-01"),
             "pfad": f"./ausgaben/{jahr}/kw{int(kw):02d}.html",
