@@ -263,27 +263,24 @@ def bauen() -> str:
 <section style="border-bottom:none">
   <h2>Hinweise</h2>
   <div class="hinweis">
-    <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
-    <p><b>Dies ist ein privates Lern- und Technologieprojekt</b> zur automatisierten Auswertung
-    &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Es ist kein journalistisches
-    Erzeugnis, kein Pr&uuml;fbericht und keine rechtliche oder fachliche Bewertung.</p>
-    <p><b>F&uuml;r Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t wird keine
-    Gew&auml;hr &uuml;bernommen.</b> Alle Auswertungen beruhen auf maschineller Verarbeitung
-    von PDF-Dokumenten; Fehler bei Texterkennung und Zuordnung sind m&ouml;glich. Verbindlich
-    ist ausschlie&szlig;lich das jeweilige Originaldokument der Stadt Bad Waldsee.</p>
-    <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Weder der Stadtverwaltung noch einzelnen
-    Personen wird rechtswidriges oder schuldhaftes Verhalten unterstellt. Einordnungen und
-    Wertungen sind als <b>KI-Deutung</b> gekennzeichnet: maschinell erzeugt, auf belegten
-    Zahlen beruhend, nicht redaktionell gepr&uuml;ft. Es sind Schlussfolgerungen, keine
-    Tatsachenbehauptungen.</p>
-    <p><b>Deutungen sind gekennzeichnet.</b> Wo eine Aussage &uuml;ber das reine
-    Z&auml;hlen hinausgeht — also Fakten ausw&auml;hlt, verkn&uuml;pft oder
-    gewichtet — steht die Marke <i>KI-Deutung</i> daneben. Diese Abschnitte sind
-    maschinell erzeugt und <b>nicht redaktionell gepr&uuml;ft</b>. Die
-    zugrunde liegenden Zahlen stammen aus den Protokollen und sind dort
-    nachpr&uuml;fbar.</p>
-    <p><b>Korrekturen sind erw&uuml;nscht</b> und werden zeitnah eingearbeitet. Es besteht
-    keine Verbindung zur Stadt Bad Waldsee.</p>
+    <p class="lab">Privates Lernprojekt &middot; maschinell erzeugt &middot; ohne Gew&auml;hr</p>
+    <p>F&uuml;r Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t wird keine
+    Gew&auml;hr &uuml;bernommen. <b>Verbindlich ist ausschlie&szlig;lich das
+    Originaldokument der Stadt Bad Waldsee.</b></p>
+    <details class="mehr">
+      <summary>Ausf&uuml;hrlicher Hinweis</summary>
+      <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Diese Seite ist ein privates Lern- und
+      Technologieprojekt zur automatisierten Auswertung &ouml;ffentlich zug&auml;nglicher
+      Verwaltungsdokumente — kein journalistisches Erzeugnis, kein Pr&uuml;fbericht und keine
+      rechtliche oder fachliche Bewertung. Weder der Stadtverwaltung noch einzelnen Personen
+      wird rechtswidriges oder schuldhaftes Verhalten unterstellt.</p>
+      <p>Alle Auswertungen beruhen auf maschineller Verarbeitung von PDF-Dokumenten; Fehler
+      bei Texterkennung und Zuordnung sind m&ouml;glich. Einordnungen und Wertungen sind als
+      <b>KI-Deutung</b> gekennzeichnet: maschinell erzeugt und nicht redaktionell
+      gepr&uuml;ft. Namen von Privatpersonen werden nicht wiedergegeben. Korrekturen sind
+      erw&uuml;nscht und werden zeitnah eingearbeitet. Es besteht keine Verbindung zur
+      Stadt Bad Waldsee.</p>
+    </details>
   </div>
 </section>
 

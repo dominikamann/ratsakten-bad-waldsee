@@ -583,14 +583,14 @@ def e(t: str) -> str:
 
 DISCLAIMER = """
   <div class="kasten">
-    <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
-    <p><b>Privates Lern- und Technologieprojekt.</b> F&uuml;r Richtigkeit,
-    Vollst&auml;ndigkeit und Aktualit&auml;t wird keine Gew&auml;hr &uuml;bernommen —
-    verbindlich ist ausschlie&szlig;lich das Originaldokument der Stadt Bad Waldsee.
-    Es werden keine Vorw&uuml;rfe erhoben.</p>
+    <p class="lab">Privates Lernprojekt &middot; maschinell erzeugt &middot; ohne Gew&auml;hr</p>
+    <p>F&uuml;r Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t wird keine
+    Gew&auml;hr &uuml;bernommen. <b>Verbindlich ist ausschlie&szlig;lich das
+    Originaldokument der Stadt Bad Waldsee.</b></p>
     <details class="mehr">
       <summary>Ausf&uuml;hrlicher Hinweis</summary>
-      <p>Diese Publikation ist kein journalistisches Erzeugnis, kein Pr&uuml;fbericht und
+      <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Diese Publikation ist ein privates
+      Lern- und Technologieprojekt, kein journalistisches Erzeugnis, kein Pr&uuml;fbericht und
       keine rechtliche oder fachliche Bewertung. Alle Angaben beruhen auf maschineller
       Verarbeitung von PDF-Dokumenten; Fehler bei Texterkennung und Zuordnung sind
       m&ouml;glich.</p>

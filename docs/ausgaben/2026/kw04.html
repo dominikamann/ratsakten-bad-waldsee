@@ -381,6 +381,34 @@ footer nav span[aria-hidden]{opacity:.35}
   h1,h2,h3{break-after:avoid}
 }
 
+/* ---------- Aufklappbares ----------
+   Zwei Drittel des Textes einer beschlussarmen Ausgabe waren fruehere
+   Erklaerung: „Wie diese Ausgabe entsteht" und der Haftungshinweis zusammen
+   384 Woerter, der Inhalt 177. Wer die Seite oeffnete, las mehrheitlich ueber
+   die Seite statt ueber den Gemeinderat.
+
+   Was jeder wissen muss, steht weiterhin offen da; die Ausfuehrung klappt
+   auf. `<details>` braucht dafuer kein JavaScript — in der iOS-Dateivorschau
+   und im Ausdruck bleibt alles erreichbar. */
+details.mehr{margin:10px 0 0}
+details.mehr > summary{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--s1);cursor:pointer;
+  list-style:none;
+  /* Ein Aufklapper ist ein Tippziel wie ein Link und haelt dieselben 44 px
+     ein — mit 11,5px-Schrift und knappem Innenabstand waren es 27. */
+  display:flex;align-items:center;min-height:44px;
+}
+details.mehr > summary::-webkit-details-marker{display:none}
+/* Dasselbe Zeichen wie die Tagesordnungen auf der Terminseite: ein Dreieck,
+   das sich beim Aufklappen dreht. „+" und „−" klebten am Text und lasen sich
+   in Versalien wie ein Bindestrich. */
+details.mehr > summary::before{content:"\25B8";margin-right:8px;font-size:13px}
+details.mehr[open] > summary::before{content:"\25BE"}
+details.mehr > summary:hover{text-decoration:underline}
+details.mehr > summary:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
+details.mehr > p{font-size:15px;color:var(--ink-2);margin:10px 0 0}
+
 /* Die zweispaltigen Seiten: Wochenausgaben, Erkenntnisse, Themen, Suche, Termine.
 
    Voraussetzung ist basis.css — dort stehen Farben, Grundschrift,
@@ -464,31 +492,6 @@ p.fussnote{
   font-size:13.5px;font-style:italic;color:var(--ink-2);
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
-
-/* ---------- Aufklappbares ----------
-   Zwei Drittel des Textes einer beschlussarmen Ausgabe waren fruehere
-   Erklaerung: „Wie diese Ausgabe entsteht" und der Haftungshinweis zusammen
-   384 Woerter, der Inhalt 177. Wer die Seite oeffnete, las mehrheitlich ueber
-   die Seite statt ueber den Gemeinderat.
-
-   Was jeder wissen muss, steht weiterhin offen da; die Ausfuehrung klappt
-   auf. `<details>` braucht dafuer kein JavaScript — in der iOS-Dateivorschau
-   und im Ausdruck bleibt alles erreichbar. */
-details.mehr{margin:10px 0 0}
-details.mehr > summary{
-  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--s1);cursor:pointer;
-  list-style:none;
-  /* Ein Aufklapper ist ein Tippziel wie ein Link und haelt dieselben 44 px
-     ein — mit 11,5px-Schrift und knappem Innenabstand waren es 27. */
-  display:flex;align-items:center;min-height:44px;
-}
-details.mehr > summary::-webkit-details-marker{display:none}
-details.mehr > summary::before{content:"+ ";font-weight:700}
-details.mehr[open] > summary::before{content:"\2212 "}
-details.mehr > summary:hover{text-decoration:underline}
-details.mehr > summary:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
-details.mehr > p{font-size:15px;color:var(--ink-2);margin:10px 0 0}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -852,14 +855,14 @@ section.gruppe{scroll-margin-top:14px}
   </details>
 
   <div class="kasten">
-    <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
-    <p><b>Privates Lern- und Technologieprojekt.</b> F&uuml;r Richtigkeit,
-    Vollst&auml;ndigkeit und Aktualit&auml;t wird keine Gew&auml;hr &uuml;bernommen —
-    verbindlich ist ausschlie&szlig;lich das Originaldokument der Stadt Bad Waldsee.
-    Es werden keine Vorw&uuml;rfe erhoben.</p>
+    <p class="lab">Privates Lernprojekt &middot; maschinell erzeugt &middot; ohne Gew&auml;hr</p>
+    <p>F&uuml;r Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t wird keine
+    Gew&auml;hr &uuml;bernommen. <b>Verbindlich ist ausschlie&szlig;lich das
+    Originaldokument der Stadt Bad Waldsee.</b></p>
     <details class="mehr">
       <summary>Ausf&uuml;hrlicher Hinweis</summary>
-      <p>Diese Publikation ist kein journalistisches Erzeugnis, kein Pr&uuml;fbericht und
+      <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Diese Publikation ist ein privates
+      Lern- und Technologieprojekt, kein journalistisches Erzeugnis, kein Pr&uuml;fbericht und
       keine rechtliche oder fachliche Bewertung. Alle Angaben beruhen auf maschineller
       Verarbeitung von PDF-Dokumenten; Fehler bei Texterkennung und Zuordnung sind
       m&ouml;glich.</p>
