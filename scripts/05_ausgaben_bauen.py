@@ -65,6 +65,18 @@ AUSGABEN = WURZEL / "docs" / "ausgaben"
 # Die Frist ist bewusst grosszuegig. Sie soll niemandem ein Versaeumnis
 # vorwerfen, das keines ist. Wird sie nachgerechnet, die Zahl hier mitziehen —
 # das Skript nennt sie am Ende.
+# Wiederkehrende Formalpunkte. Sie stehen auf fast jeder Tagesordnung —
+# „Verschiedenes" 74 Mal im Bestand, „Bekanntgaben" 62 Mal — und sagen fuer
+# sich genommen nichts darueber, was in der Stadt los war. Sie verschwinden
+# nicht, aber sie rechtfertigen keinen eigenen Abschnitt: Ein Block mit der
+# Ueberschrift „1 weiterer Punkt der Tagesordnung", dem Eintrag
+# „Verschiedenes" und drei Zeilen Fussnote ist mehr Rahmen als Inhalt.
+FORMALIA = re.compile(
+    r"^(Verschiedenes|Bekanntgaben|Anfragen|Einwohnerfragestunde"
+    r"|Bekanntgabe der in nicht\s?öffentlicher Sitzung.*"
+    r"|Informationen des Oberbürgermeisters"
+    r"|Genehmigung der Niederschrift.*)$", re.IGNORECASE)
+
 KARENZ_TAGE = 14
 
 ERGEBNIS = re.compile(r"Ergebnis der Beschlussfassung\s*:?\s*(.{0,70})")
@@ -892,7 +904,14 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             # Beides verlinken, was es zu sehen gibt: die Beschluesse und
             # die uebrigen Punkte derselben Sitzung. Wer nach einem Thema
             # sucht, das nicht beschlossen wurde, kommt sonst nicht hin.
-            weitere = max(len(x["tops"]) - anzahl, 0) if x["tops"] else 0
+            # Nur sachliche Punkte zaehlen — dieselbe Auswahl wie im Block
+            # darunter. Sonst versprach die Uebersicht "6 weitere Themen" und
+            # der Sprung fuehrte zu zweien.
+            beschlossen_hier = {(b.get("titel") or "").strip() for b in w["beschluesse"]
+                                if b["datum"] == x["datum"] and b["gremium"] == x["gremium"]}
+            weitere = sum(1 for top in x["tops"]
+                          if top.strip() and top.strip() not in beschlossen_hier
+                          and not FORMALIA.match(top.strip()))
             teile = []
             if anzahl:
                 teile.append(f'<a href="#{marke}">{anzahl} '
@@ -917,7 +936,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                     teile.append("kein Beschluss protokolliert")
             was = " &middot; ".join(teile)
             punkte = (f"{len(x['tops'])} "
-                      f"{'Punkt' if len(x['tops']) == 1 else 'Punkte'}"
+                      f"{'Thema' if len(x['tops']) == 1 else 'Themen'}"
                       if x["tops"] else "Tagesordnung nicht veröffentlicht")
             zeilen_s.append(
                 f'      <li><span class="sache">'
@@ -1021,16 +1040,20 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             beschlossen = {(b.get("titel") or "").strip() for b in liste}
             offen_tops = [x for x in (sitzung or {}).get("tops", [])
                           if x.strip() and x.strip() not in beschlossen]
-            if offen_tops:
+            sachlich = [x for x in offen_tops if not FORMALIA.match(x.strip())]
+            formal = [x for x in offen_tops if FORMALIA.match(x.strip())]
+            if sachlich:
                 zeilen_tops = "".join(
-                    f"      <li>{markieren(e(x), erklaert)}</li>\n" for x in offen_tops)
+                    f"      <li>{markieren(e(x), erklaert)}</li>\n" for x in sachlich)
+                nachsatz = ("" if not formal else
+                            f'      <p class="fussnote">Dazu die wiederkehrenden Punkte '
+                            f'{", ".join(e(x) for x in formal)}.</p>\n')
                 t.append(f"""    <details class="mehr" id="{marke}-tops" open>
-      <summary>{len(offen_tops)} {'weiterer Punkt' if len(offen_tops) == 1 else 'weitere Punkte'} der Tagesordnung</summary>
+      <summary>{len(sachlich)} {'weiteres Thema' if len(sachlich) == 1 else 'weitere Themen'} ohne Beschluss</summary>
       <ol class="agenda">
 {zeilen_tops}      </ol>
-      <p class="fussnote">{'Zu diesem Punkt weist' if len(offen_tops) == 1 else 'Zu diesen Punkten weist'} das Beschlussprotokoll keinen
-      Beschluss aus — Berichte, Kenntnisnahmen und Formalia stehen ebenso darunter
-      wie Beratungen, die vertagt wurden.</p>
+{nachsatz}      <p class="fussnote">Beraten, aber nicht beschlossen — das Protokoll nennt
+      den Grund nicht.</p>
     </details>""")
             t.append("  </div>\n</article>")
 
