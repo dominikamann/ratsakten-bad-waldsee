@@ -465,6 +465,31 @@ p.fussnote{
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
 
+/* ---------- Aufklappbares ----------
+   Zwei Drittel des Textes einer beschlussarmen Ausgabe waren fruehere
+   Erklaerung: „Wie diese Ausgabe entsteht" und der Haftungshinweis zusammen
+   384 Woerter, der Inhalt 177. Wer die Seite oeffnete, las mehrheitlich ueber
+   die Seite statt ueber den Gemeinderat.
+
+   Was jeder wissen muss, steht weiterhin offen da; die Ausfuehrung klappt
+   auf. `<details>` braucht dafuer kein JavaScript — in der iOS-Dateivorschau
+   und im Ausdruck bleibt alles erreichbar. */
+details.mehr{margin:10px 0 0}
+details.mehr > summary{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--s1);cursor:pointer;
+  list-style:none;
+  /* Ein Aufklapper ist ein Tippziel wie ein Link und haelt dieselben 44 px
+     ein — mit 11,5px-Schrift und knappem Innenabstand waren es 27. */
+  display:flex;align-items:center;min-height:44px;
+}
+details.mehr > summary::-webkit-details-marker{display:none}
+details.mehr > summary::before{content:"+ ";font-weight:700}
+details.mehr[open] > summary::before{content:"\2212 "}
+details.mehr > summary:hover{text-decoration:underline}
+details.mehr > summary:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
+details.mehr > p{font-size:15px;color:var(--ink-2);margin:10px 0 0}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -740,7 +765,7 @@ section.gruppe{scroll-margin-top:14px}
   </div>
   <div class="body-col">
     <p class="rubrik">Demnächst · öffentlich</p>
-    <h2 class="headline">Als Nächstes: Ortschaftsrat Haisterkirch am 12. Januar 2026</h2>
+    <p>Als Nächstes tagt <b>Ortschaftsrat Haisterkirch</b> am 12. Januar 2026 um 18:00 Uhr.</p>
     <p class="note">Zum Redaktionsschluss war für diese Sitzung noch keine Tagesordnung im Ratsinformationssystem veröffentlicht.</p>
   </div>
 </article>
@@ -756,36 +781,42 @@ section.gruppe{scroll-margin-top:14px}
   Sie zeigt, was abrufbar ist, und sagt nichts darüber, was geleistet wurde.</p>
 
   <h3>Wie diese Ausgabe entsteht</h3>
-  <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
+  <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a> erzeugt. Beschlusstitel stammen aus der Tagesordnung,
-  Abstimmungsergebnisse wörtlich aus der Zeile „Ergebnis der Beschlussfassung“ des
-  Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
-  Ja : Nein : Enthaltungen.</p>
-  <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
-  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
-  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
-  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
-  <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
-  wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
-  vollständig unsichtbar.</p>
+  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
+  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
+  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  <details class="mehr">
+    <summary>Was dabei zu beachten ist</summary>
+    <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus
+    der Zeile „Ergebnis der Beschlussfassung“ des Protokolls. Wo eine Sitzungsvorlage
+    oder Anlage vorliegt, ist sie direkt verlinkt; diese Adressen waren im Test über
+    Tage hinweg abrufbar, zugesichert ist ihre Haltbarkeit aber nirgends. Die
+    Vorlagennummer bleibt der verlässlichere Weg.</p>
+    <p>Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt wurde,
+    ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
+    vollständig unsichtbar.</p>
+  </details>
 
   <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
-    <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
-    Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein
-    journalistisches Erzeugnis, kein Pr&uuml;fbericht und keine rechtliche oder fachliche
-    Bewertung.</p>
-    <p><b>F&uuml;r Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t wird keine Gew&auml;hr
-    &uuml;bernommen.</b> Alle Angaben beruhen auf maschineller Verarbeitung von PDF-Dokumenten;
-    Fehler bei Texterkennung und Zuordnung sind m&ouml;glich. Verbindlich ist ausschlie&szlig;lich
-    das jeweilige Originaldokument der Stadt Bad Waldsee.</p>
-    <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Weder der Stadtverwaltung noch einzelnen
-    Personen wird rechtswidriges oder schuldhaftes Verhalten unterstellt. Einordnungen
-    und Wertungen sind als <b>KI-Deutung</b> gekennzeichnet: maschinell erzeugt und
-    nicht redaktionell gepr&uuml;ft. Namen von Privatpersonen werden nicht wiedergegeben. Korrekturen sind erw&uuml;nscht und werden
-    zeitnah eingearbeitet. Es besteht keine Verbindung zur Stadt Bad Waldsee.</p>
+    <p><b>Privates Lern- und Technologieprojekt.</b> F&uuml;r Richtigkeit,
+    Vollst&auml;ndigkeit und Aktualit&auml;t wird keine Gew&auml;hr &uuml;bernommen —
+    verbindlich ist ausschlie&szlig;lich das Originaldokument der Stadt Bad Waldsee.
+    Es werden keine Vorw&uuml;rfe erhoben.</p>
+    <details class="mehr">
+      <summary>Ausf&uuml;hrlicher Hinweis</summary>
+      <p>Diese Publikation ist kein journalistisches Erzeugnis, kein Pr&uuml;fbericht und
+      keine rechtliche oder fachliche Bewertung. Alle Angaben beruhen auf maschineller
+      Verarbeitung von PDF-Dokumenten; Fehler bei Texterkennung und Zuordnung sind
+      m&ouml;glich.</p>
+      <p>Weder der Stadtverwaltung noch einzelnen Personen wird rechtswidriges oder
+      schuldhaftes Verhalten unterstellt. Einordnungen und Wertungen sind als
+      <b>KI-Deutung</b> gekennzeichnet: maschinell erzeugt und nicht redaktionell
+      gepr&uuml;ft. Namen von Privatpersonen werden nicht wiedergegeben. Korrekturen sind
+      erw&uuml;nscht und werden zeitnah eingearbeitet. Es besteht keine Verbindung zur
+      Stadt Bad Waldsee.</p>
+    </details>
   </div>
 
   <p class="note"><a class="doc" href="../index.html">Alle Ausgaben im Archiv</a></p>

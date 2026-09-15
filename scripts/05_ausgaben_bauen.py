@@ -584,19 +584,23 @@ def e(t: str) -> str:
 DISCLAIMER = """
   <div class="kasten">
     <p class="lab">Lernprojekt &middot; keine Gew&auml;hr &middot; keine Vorw&uuml;rfe</p>
-    <p><b>Diese Publikation ist ein privates Lern- und Technologieprojekt</b> zur automatisierten
-    Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente. Sie ist kein
-    journalistisches Erzeugnis, kein Pr&uuml;fbericht und keine rechtliche oder fachliche
-    Bewertung.</p>
-    <p><b>F&uuml;r Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t wird keine Gew&auml;hr
-    &uuml;bernommen.</b> Alle Angaben beruhen auf maschineller Verarbeitung von PDF-Dokumenten;
-    Fehler bei Texterkennung und Zuordnung sind m&ouml;glich. Verbindlich ist ausschlie&szlig;lich
-    das jeweilige Originaldokument der Stadt Bad Waldsee.</p>
-    <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Weder der Stadtverwaltung noch einzelnen
-    Personen wird rechtswidriges oder schuldhaftes Verhalten unterstellt. Einordnungen
-    und Wertungen sind als <b>KI-Deutung</b> gekennzeichnet: maschinell erzeugt und
-    nicht redaktionell gepr&uuml;ft. Namen von Privatpersonen werden nicht wiedergegeben. Korrekturen sind erw&uuml;nscht und werden
-    zeitnah eingearbeitet. Es besteht keine Verbindung zur Stadt Bad Waldsee.</p>
+    <p><b>Privates Lern- und Technologieprojekt.</b> F&uuml;r Richtigkeit,
+    Vollst&auml;ndigkeit und Aktualit&auml;t wird keine Gew&auml;hr &uuml;bernommen —
+    verbindlich ist ausschlie&szlig;lich das Originaldokument der Stadt Bad Waldsee.
+    Es werden keine Vorw&uuml;rfe erhoben.</p>
+    <details class="mehr">
+      <summary>Ausf&uuml;hrlicher Hinweis</summary>
+      <p>Diese Publikation ist kein journalistisches Erzeugnis, kein Pr&uuml;fbericht und
+      keine rechtliche oder fachliche Bewertung. Alle Angaben beruhen auf maschineller
+      Verarbeitung von PDF-Dokumenten; Fehler bei Texterkennung und Zuordnung sind
+      m&ouml;glich.</p>
+      <p>Weder der Stadtverwaltung noch einzelnen Personen wird rechtswidriges oder
+      schuldhaftes Verhalten unterstellt. Einordnungen und Wertungen sind als
+      <b>KI-Deutung</b> gekennzeichnet: maschinell erzeugt und nicht redaktionell
+      gepr&uuml;ft. Namen von Privatpersonen werden nicht wiedergegeben. Korrekturen sind
+      erw&uuml;nscht und werden zeitnah eingearbeitet. Es besteht keine Verbindung zur
+      Stadt Bad Waldsee.</p>
+    </details>
   </div>
 """
 
@@ -692,9 +696,8 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 f'<span class="erg">Protokoll steht aus*</span></li>\n'
                 for b in sorted(w["ausstehend"], key=lambda x: x["datum"]))
             liste = (f'    <ul class="beschluesse">\n{zeilen_aus}    </ul>\n'
-                     f'    <p class="fussnote">* Beschlussprotokolle werden typischerweise '
-                     f'innerhalb von zwei bis {KARENZ_TAGE} Tagen nach der Sitzung abrufbar '
-                     f'— die Hälfte nach zwei Tagen, knapp neun von zehn nach {KARENZ_TAGE}.</p>')
+                     f'    <p class="fussnote">* Beschlussprotokolle sind meist zwei bis '
+                     f'{KARENZ_TAGE} Tage nach der Sitzung abrufbar.</p>')
 
         t.append(f"""
 <article>
@@ -879,7 +882,6 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
 <article>
   <div class="rail">
     <div class="field"><span class="lab">Sitzungen</span><span class="val">{len(aus)}</span></div>
-    <div class="field"><span class="lab">Herkunft</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
     <p class="rubrik">Sitzungen im Berichtszeitraum</p>
@@ -887,10 +889,8 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     öffentlich:</p>
     <ul class="beschluesse">
 {zeilen}    </ul>
-    <p class="fussnote">* Beschlussprotokolle werden typischerweise innerhalb von
-    zwei bis {KARENZ_TAGE} Tagen nach der Sitzung abrufbar — die Hälfte nach zwei Tagen,
-    knapp neun von zehn nach {KARENZ_TAGE}. Erst danach zählt eine Sitzung in dieser
-    Auswertung als Sitzung ohne abrufbare Unterlagen.</p>
+    <p class="fussnote">* Beschlussprotokolle sind meist zwei bis {KARENZ_TAGE} Tage
+    nach der Sitzung abrufbar.</p>
   </div>
 </article>""")
 
@@ -948,7 +948,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
   <div class="body-col">
     <p class="rubrik">Demnächst · öffentlich</p>
-    <h2 class="headline">Als Nächstes: {e(name)} am {datum_lang(tag)}</h2>
+    <p>Als Nächstes tagt <b>{e(name)}</b> am {datum_lang(tag)} um {uhr} Uhr.</p>
 {liste}
   </div>
 </article>""")
@@ -981,20 +981,22 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   {wertschaetzung}
 
   <h3>Wie diese Ausgabe entsteht</h3>
-  <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des
+  <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a> erzeugt. Beschlusstitel stammen aus der Tagesordnung,
-  Abstimmungsergebnisse wörtlich aus der Zeile „Ergebnis der Beschlussfassung“ des
-  Protokolls. Die Schreibweise <span class="mono">25 : 0 : 1</span> steht für
-  Ja : Nein : Enthaltungen.</p>
-  <p>Jeder Beschluss nennt seine Vorlagennummer (<span class="mono">SV-000/JJJJ</span>);
-  damit ist der Vorgang im Ratsinformationssystem unter „Vorlagen“ auffindbar. Wo eine
-  Sitzungsvorlage oder Anlage vorliegt, ist sie zusätzlich direkt verlinkt. Diese Adressen
-  waren im Test über Tage hinweg abrufbar; zugesichert ist ihre Haltbarkeit aber nirgends.
-  Die Vorlagennummer bleibt deshalb der verlässlichere Weg.</p>
-  <p class="note">Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt
-  wurde, ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
-  vollständig unsichtbar.</p>
+  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
+  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
+  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  <details class="mehr">
+    <summary>Was dabei zu beachten ist</summary>
+    <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus
+    der Zeile „Ergebnis der Beschlussfassung“ des Protokolls. Wo eine Sitzungsvorlage
+    oder Anlage vorliegt, ist sie direkt verlinkt; diese Adressen waren im Test über
+    Tage hinweg abrufbar, zugesichert ist ihre Haltbarkeit aber nirgends. Die
+    Vorlagennummer bleibt der verlässlichere Weg.</p>
+    <p>Beschlussprotokolle halten keine Aussprache fest: <em>wie</em> abgestimmt wurde,
+    ist nachlesbar, <em>warum</em> nicht. Nichtöffentliche Sitzungsteile sind
+    vollständig unsichtbar.</p>
+  </details>
 {DISCLAIMER}
   <p class="note"><a class="doc" href="../index.html">Alle Ausgaben im Archiv</a></p>
 </section>

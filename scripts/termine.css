@@ -26,6 +26,11 @@ details.agenda > summary{
   cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:7px;
   font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;
   text-transform:uppercase;color:var(--s1);
+  /* Ein Aufklapper ist ein Tippziel wie ein Link und haelt dieselben 44 px
+     ein. Auf dieser Seite stehen 57 davon untereinander, jeder war 21,6 px
+     hoch — auf einem Telefon trifft man da regelmaessig den falschen. Gesehen
+     hat es niemand: Die Browserpruefung mass nur die Navigationsleiste. */
+  min-height:44px;
 }
 details.agenda > summary::-webkit-details-marker{display:none}
 details.agenda > summary::before{content:"\25B8";font-size:13px}

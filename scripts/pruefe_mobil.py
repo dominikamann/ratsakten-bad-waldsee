@@ -111,7 +111,17 @@ def main():
                               return {text:a.textContent, height:r.height,
                                 inside:r.left >= bounds.left - 1 && r.right <= bounds.right + 1
                                   && r.top >= bounds.top - 1 && r.bottom <= bounds.bottom + 1};
-                            })
+                            }),
+                            // Aufklapper sind Tippziele wie Links und wurden
+                            // bisher nicht gemessen: Die Pruefung sah nur die
+                            // Navigationsleiste, meldete aber „mobile
+                            // Tippziele >=44px". Ein neuer <summary> kam mit
+                            // 27 px durch.
+                            falter: [...document.querySelectorAll('details > summary')]
+                              .map(d => {
+                                const r = d.getBoundingClientRect();
+                                return {text:d.textContent.trim().slice(0,40), height:r.height};
+                              })
                           };
                         }""")
                         label = f"{engine.name} {width}px {path}"
@@ -120,6 +130,8 @@ def main():
                         assert all(a["inside"] for a in result["links"]), (label, result)
                         if width <= 620:
                             assert all(a["height"] >= 44 for a in result["links"]), label
+                            zu_klein = [d for d in result["falter"] if d["height"] < 44]
+                            assert not zu_klein, (label, zu_klein)
                         # Auch der letzte Link muss per Tastatur erreichbar bleiben.
                         page.locator('.brandbar nav a').first.focus()
                         for _ in range(6):
