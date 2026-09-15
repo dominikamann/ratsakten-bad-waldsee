@@ -170,6 +170,12 @@ def bauen() -> str:
             beschreibung += (f", dazu {meta['ohne_protokoll']} &ouml;ffentliche "
                              f"{'Sitzung' if meta['ohne_protokoll'] == 1 else 'Sitzungen'} "
                              f"ohne Protokoll")
+        # „steht noch aus" ist etwas anderes als „fehlt". Eine Sitzung von
+        # vorgestern hat kein Protokoll, weil noch keine Zeit vergangen ist.
+        if meta.get("ausstehend"):
+            n = meta["ausstehend"]
+            beschreibung += (f", dazu {n} {'Sitzung' if n == 1 else 'Sitzungen'}, "
+                             f"{'deren Protokoll noch aussteht' if n == 1 else 'deren Protokolle noch ausstehen'}")
         # Die laufende Woche ist ein Zwischenstand. Stand das nur in der
         # Ausgabe selbst, versprach die Startseite mehr, als die Ausgabe haelt:
         # „zuletzt entschieden" klingt abgeschlossen, und „keine Beschluesse"

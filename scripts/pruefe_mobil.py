@@ -11,7 +11,7 @@ from pathlib import Path
 import sys
 from threading import Thread
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import Error as PlaywrightError, sync_playwright
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 
@@ -53,7 +53,21 @@ def main():
     try:
         with sync_playwright() as p:
             for engine in (p.chromium, p.webkit):
-                browser = engine.launch()
+                try:
+                    browser = engine.launch()
+                except PlaywrightError as fehler:
+                    # Die Browser liegen ausserhalb des Pakets in
+                    # ~/Library/Caches/ms-playwright und wandern **nicht** mit,
+                    # wenn `uv run --with playwright` eine neuere Version
+                    # aufloest: Dann sucht das Paket einen Build, den es lokal
+                    # nicht gibt. Das ist ein Einrichtungsstand und kein Befund
+                    # an den Seiten — ein Traceback verwechselt beides.
+                    print(f"   Browser nicht einsatzbereit ({engine.name}):",
+                          file=sys.stderr)
+                    print(f"     {str(fehler).splitlines()[0][:120]}", file=sys.stderr)
+                    print("   Nachholen mit: uv run --with playwright "
+                          "playwright install chromium webkit", file=sys.stderr)
+                    raise SystemExit(2) from None
                 # Die Navigation muss ohne JavaScript vollstaendig benutzbar sein.
                 context = browser.new_context(java_script_enabled=False)
                 page = context.new_page()

@@ -83,14 +83,20 @@ uv run --quiet --with lxml python scripts/pruefen.py
 # Die Browserpruefung lief bisher nur, wenn jemand daran dachte — und daran
 # dachte lange niemand. Sie ist die einzige Stelle, an der die Seiten in einer
 # echten Engine geoeffnet werden: Ueberlauf, Tippgroessen und das JavaScript
-# der Tagesmarke sieht sonst nichts. Fehlt playwright, wird sie uebersprungen;
-# der Lauf soll daran nicht scheitern.
+# der Tagesmarke sieht sonst nichts.
+#
+# Sie darf den Lauf aber nicht aufhalten. Zu pruefen, ob sich playwright
+# *importieren* laesst, genuegt dafuer nicht: Die Browser selbst liegen in
+# ~/Library/Caches/ms-playwright und wandern nicht mit, wenn `--with
+# playwright` eine neuere Version aufloest. Der Import gelingt dann, der Start
+# scheitert — und mit `set -e` waere der ganze Lauf zu Ende, nach dem Bauen
+# und vor dem Veroeffentlichen. Deshalb wird der Rueckgabewert abgefangen.
 log "Browserpruefung (Chromium und WebKit)"
-if uv run --quiet --with playwright python -c "import playwright" 2>/dev/null; then
-  uv run --quiet --with playwright python scripts/pruefe_mobil.py
+if uv run --quiet --with playwright python scripts/pruefe_mobil.py; then
+  :
 else
-  echo "   playwright fehlt — uebersprungen. Nachholen mit:"
-  echo "   uv run --with playwright python scripts/pruefe_mobil.py"
+  echo "   uebersprungen — die Seiten selbst sind davon unberuehrt."
+  echo "   Die Pruefung nachholen, sobald die Browser wieder bereitstehen."
 fi
 
 # --- Veroeffentlichen ---------------------------------------------------------

@@ -50,6 +50,21 @@ DATEN = WURZEL / "data"
 WORTSCHATZ = wortschatz_laden(DATEN / "wortschatz.json")
 AUSGABEN = WURZEL / "docs" / "ausgaben"
 
+# Wie lange ein Beschlussprotokoll nach der Sitzung auf sich warten darf, ehe
+# sein Fehlen als „Blinder Fleck" gilt.
+#
+# Nicht gegriffen, sondern gemessen: `scripts/14_protokollfrist.py` haelt das
+# Aenderungsdatum jedes der 72 Beschlussprotokolle gegen sein Sitzungsdatum.
+# Der Median liegt bei 2 Tagen; nach 14 Tagen liegen 64 von 72 vor (88,9 %) —
+# und **bis 28 Tage kommt danach kein einziges mehr nach**. Was bis dahin
+# fehlt, fehlt dann 42 bis 391 Tage lang: Nachreichungen, keine laufende
+# Bearbeitung. Genau dort liegt der Schnitt.
+#
+# Die Frist ist bewusst grosszuegig. Sie soll niemandem ein Versaeumnis
+# vorwerfen, das keines ist. Wird sie nachgerechnet, die Zahl hier mitziehen —
+# das Skript nennt sie am Ende.
+KARENZ_TAGE = 14
+
 ERGEBNIS = re.compile(r"Ergebnis der Beschlussfassung\s*:?\s*(.{0,70})")
 VORLAGE = re.compile(r"SV-\d+/\d{4}")
 # Die Protokolle schreiben das Ergebnis uneinheitlich: "Ja-Stimme(n) 18",
@@ -529,12 +544,19 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
         w["von"], w["bis"] = beginn, ende
         # Sitzungen ohne Protokoll aus dem gesamten Berichtszeitraum aufnehmen,
         # nicht nur aus der Kalenderwoche selbst.
-        w["blind"] = [
+        ohne = [
             {"datum": dt.date.fromisoformat(x["start"][:10]), "gremium": gremium(x["titel"])}
             for x in alle
             if not x["protokolle"]
             and beginn <= dt.date.fromisoformat(x["start"][:10]) <= ende
         ]
+        # Frische Sitzungen gehoeren nicht unter „Blinder Fleck". Zu ihnen
+        # *kann* noch kein Protokoll vorliegen, und die Rubrik rahmt ein
+        # Fehlen als Auffaelligkeit. Sie werden getrennt als „steht noch aus"
+        # gefuehrt — gezaehlt werden sie weiterhin, nur nicht beanstandet.
+        grenze = stichtag - dt.timedelta(days=KARENZ_TAGE)
+        w["blind"] = [b for b in ohne if b["datum"] <= grenze]
+        w["ausstehend"] = [b for b in ohne if b["datum"] > grenze]
         # Laeuft die Woche noch? Dann ist die Ausgabe ein Zwischenstand und
         # sagt das auch. Ohne den Hinweis liest sich eine Ausgabe, die am
         # Mittwoch gebaut wurde, wie die fertige Bilanz der Woche — und „keine
@@ -809,6 +831,37 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
 </article>""")
 
+    # --- Kürzlich getagt, Protokoll steht noch aus
+    # Bewusst vor dem „Blinden Fleck" und bewusst wertungsfrei: Hier fehlt
+    # nichts, hier ist nur noch keine Zeit vergangen.
+    if w.get("ausstehend"):
+        aus = sorted(w["ausstehend"], key=lambda x: x["datum"])
+        zeilen = "".join(
+            f"      <li><span class=\"sache\">{e(b['gremium'])}"
+            f"<span class=\"sv\">Sitzung vom {b['datum'].strftime('%d.%m.%Y')}</span></span>"
+            f"<span class=\"erg\">Protokoll erwartet</span></li>\n"
+            for b in aus)
+        t.append(f"""
+<article>
+  <div class="rail">
+    <div class="field"><span class="lab">Sitzungen</span><span class="val">{len(aus)}</span></div>
+    <div class="field"><span class="lab">Herkunft</span><span class="val">regelbasiert</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Kürzlich getagt</p>
+    <h2 class="headline">{len(aus)} {'Sitzung' if len(aus) == 1 else 'Sitzungen'}, {'deren Protokoll noch aussteht' if len(aus) == 1 else 'deren Protokolle noch ausstehen'}</h2>
+    <p>Diese {'Sitzung liegt' if len(aus) == 1 else 'Sitzungen liegen'} weniger als
+    {KARENZ_TAGE} Tage zurück. Ein Beschlussprotokoll ist dazu noch nicht abrufbar —
+    das ist der Regelfall und keine Auffälligkeit.</p>
+    <ul class="beschluesse">
+{zeilen}    </ul>
+    <p class="note">Gemessen an den bisher erschienenen Protokollen: Die Hälfte ist
+    zwei Tage nach der Sitzung abrufbar, nach {KARENZ_TAGE} Tagen knapp neun von zehn.
+    Erst danach zählt eine Sitzung in dieser Auswertung als Sitzung ohne abrufbare
+    Unterlagen.</p>
+  </div>
+</article>""")
+
     # --- Blinder Fleck
     if w["blind"]:
         zeilen = "".join(
@@ -1029,6 +1082,9 @@ def main() -> None:
                 "sitzungen": len(w["sitzungen"]),
                 "beschluesse": len(w["beschluesse"]),
                 "ohne_protokoll": len(w["blind"]),
+                # Getrennt gefuehrt, damit Startseite und Archiv eine frische
+                # Sitzung nicht als fehlende Unterlage ausweisen.
+                "ausstehend": len(w.get("ausstehend", [])),
                 "gremien": sorted({s["kuerzel"] for s in w["sitzungen"]}),
                 "einordnung": schluessel in einordnungen,
                 # Auch ins Register, nicht nur in die Ausgabe: Startseite und
