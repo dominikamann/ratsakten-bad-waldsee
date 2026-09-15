@@ -477,6 +477,56 @@ def pruefe_zukunft() -> None:
     notiz.append(f"{getroffen} Sitzungsangabe(n) gegen die Uhr geprüft")
 
 
+def pruefe_wochenzuordnung() -> None:
+    """Steht in einer Ausgabe nur, was auch aus ihrer Kalenderwoche stammt?
+
+    Der Berichtszeitraum einer Ausgabe ist nicht ihre Kalenderwoche: Er
+    schliesst an das Ende der Vorgaengerausgabe an, damit kein Tag durchfaellt
+    und keiner doppelt gezaehlt wird. KW 38/2026 beginnt deshalb am Samstag,
+    dem 12.09. — die Vorgaengerausgabe endete am 11.09. Bei 24 der 90 Ausgaben
+    faengt der Zeitraum vor dem Montag ihrer Woche an, in den Sommerpausen bis
+    zu sechs Wochen frueher.
+
+    Das geht nur gut, solange in diesem Vorlauf **nicht getagt** wurde. Sonst
+    truege eine Ausgabe „KW 38" eine Sitzung aus KW 37 — und die Wochennummer,
+    nach der Archiv und Startseite verweisen, waere eine falsche Angabe.
+
+    Derzeit gilt das ausnahmslos: Es gibt eine Ausgabe nur fuer Wochen, in
+    denen getagt wurde, also kann der Vorlauf keine Sitzung enthalten. Die
+    Invariante folgt bisher allein aus der Bau-Logik und wurde nirgends
+    geprueft; eine Aenderung an der Wochenauswahl koennte sie still brechen.
+    """
+    register = DATEN / "ausgaben.json"
+    sitzungen = DATEN / "sitzungen.json"
+    if not (register.exists() and sitzungen.exists()):
+        return                            # ohne Crawl-Daten nicht pruefbar
+
+    tage = [dt.date.fromisoformat(e["start"][:10])
+            for e in json.loads(sitzungen.read_text(encoding="utf-8"))]
+    r = json.loads(register.read_text(encoding="utf-8"))
+
+    geprueft = 0
+    for jahr in r:
+        for kw, eintrag in r[jahr].items():
+            if not (eintrag.get("von_iso") and eintrag.get("bis_iso")):
+                continue
+            von = dt.date.fromisoformat(eintrag["von_iso"])
+            bis = dt.date.fromisoformat(eintrag["bis_iso"])
+            try:
+                montag = dt.date.fromisocalendar(int(jahr), int(kw), 1)
+                sonntag = dt.date.fromisocalendar(int(jahr), int(kw), 7)
+            except ValueError:
+                continue
+            geprueft += 1
+            fremd = [t for t in tage if von <= t <= bis and not montag <= t <= sonntag]
+            if fremd:
+                fehler.append(
+                    f"Ausgabe KW {kw}/{jahr} (Zeitraum {eintrag['zeitraum']}) enthält "
+                    f"{len(fremd)} Sitzung(en) außerhalb ihrer Kalenderwoche, "
+                    f"z. B. vom {min(fremd).strftime('%d.%m.%Y')}.")
+    notiz.append(f"{geprueft} Ausgaben auf ihre Kalenderwoche geprüft")
+
+
 def main() -> None:
     if not DOCS.exists():
         sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
@@ -488,6 +538,7 @@ def main() -> None:
                      pruefe_themenverweise,
                      pruefe_wortwahl,
                      pruefe_zukunft,
+                     pruefe_wochenzuordnung,
                      pruefe_reportalter):
         pruefung()
 

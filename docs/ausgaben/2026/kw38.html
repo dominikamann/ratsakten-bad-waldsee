@@ -451,6 +451,20 @@ p.zwischenstand{
 }
 p.zwischenstand b{font-weight:600}
 
+/* ---------- Nebenbemerkung und Fussnote ----------
+   `.note` wurde auf 94 Seiten verwendet und war nur in src/report.html
+   definiert — ausserhalb des Reports sah eine Nebenbemerkung damit aus wie
+   Fliesstext. Die Absicht stand im Markup, die Umsetzung fehlte. Wert aus
+   dem Report uebernommen, damit beide gleich aussehen. */
+p.note{font-size:15px;color:var(--ink-2)}
+
+/* Die Fussnote traegt, was sonst einen eigenen Absatz gebraucht haette:
+   eine Einordnung, die man lesen kann und nicht muss. */
+p.fussnote{
+  font-size:13.5px;font-style:italic;color:var(--ink-2);
+  margin:14px 0 0;max-width:62ch;line-height:1.55;
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -675,18 +689,16 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Herkunft</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Kürzlich getagt</p>
-    <h2 class="headline">1 Sitzung, deren Protokoll noch aussteht</h2>
-    <p>Diese Sitzung liegt weniger als
-    14 Tage zurück. Ein Beschlussprotokoll ist dazu noch nicht abrufbar —
-    das ist der Regelfall und keine Auffälligkeit.</p>
+    <p class="rubrik">Sitzungen im Berichtszeitraum</p>
+    <p>In diesem Zeitraum tagte ein Gremium
+    öffentlich:</p>
     <ul class="beschluesse">
-      <li><span class="sache">Verwaltungsausschuss<span class="sv">Sitzung vom 15.09.2026</span></span><span class="erg">Protokoll erwartet</span></li>
+      <li><span class="sache">Verwaltungsausschuss<span class="sv">Sitzung vom 15.09.2026</span></span><span class="erg">Protokoll steht aus*</span></li>
     </ul>
-    <p class="note">Gemessen an den bisher erschienenen Protokollen: Die Hälfte ist
-    zwei Tage nach der Sitzung abrufbar, nach 14 Tagen knapp neun von zehn.
-    Erst danach zählt eine Sitzung in dieser Auswertung als Sitzung ohne abrufbare
-    Unterlagen.</p>
+    <p class="fussnote">* Beschlussprotokolle werden typischerweise innerhalb von
+    zwei bis 14 Tagen nach der Sitzung abrufbar — die Hälfte nach zwei Tagen,
+    knapp neun von zehn nach 14. Erst danach zählt eine Sitzung in dieser
+    Auswertung als Sitzung ohne abrufbare Unterlagen.</p>
   </div>
 </article>
 

@@ -68,6 +68,20 @@ p.zwischenstand{
 }
 p.zwischenstand b{font-weight:600}
 
+/* ---------- Nebenbemerkung und Fussnote ----------
+   `.note` wurde auf 94 Seiten verwendet und war nur in src/report.html
+   definiert — ausserhalb des Reports sah eine Nebenbemerkung damit aus wie
+   Fliesstext. Die Absicht stand im Markup, die Umsetzung fehlte. Wert aus
+   dem Report uebernommen, damit beide gleich aussehen. */
+p.note{font-size:15px;color:var(--ink-2)}
+
+/* Die Fussnote traegt, was sonst einen eigenen Absatz gebraucht haette:
+   eine Einordnung, die man lesen kann und nicht muss. */
+p.fussnote{
+  font-size:13.5px;font-style:italic;color:var(--ink-2);
+  margin:14px 0 0;max-width:62ch;line-height:1.55;
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);

@@ -831,15 +831,21 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
 </article>""")
 
-    # --- Kürzlich getagt, Protokoll steht noch aus
-    # Bewusst vor dem „Blinden Fleck" und bewusst wertungsfrei: Hier fehlt
-    # nichts, hier ist nur noch keine Zeit vergangen.
+    # --- Sitzungen im Berichtszeitraum, Protokoll noch nicht abrufbar
+    # Bewusst vor dem „Blinden Fleck", bewusst wertungsfrei — und bewusst
+    # **ohne grosse Ueberschrift**: In der Schlagzeilengroesse der Befunde
+    # gesetzt, bekam ein Nicht-Ereignis dasselbe Gewicht wie ein Befund. Die
+    # Schieflage steckte nicht im Wort, sondern in der Typografie.
+    #
+    # Der Block sagt jetzt, was **war** („In diesem Zeitraum tagte ein
+    # Gremium oeffentlich"), nicht was fehlt. Die Protokollfrage steht als
+    # Nachsatz darunter, wo sie hingehoert.
     if w.get("ausstehend"):
         aus = sorted(w["ausstehend"], key=lambda x: x["datum"])
         zeilen = "".join(
             f"      <li><span class=\"sache\">{e(b['gremium'])}"
             f"<span class=\"sv\">Sitzung vom {b['datum'].strftime('%d.%m.%Y')}</span></span>"
-            f"<span class=\"erg\">Protokoll erwartet</span></li>\n"
+            f"<span class=\"erg\">Protokoll steht aus*</span></li>\n"
             for b in aus)
         t.append(f"""
 <article>
@@ -848,17 +854,15 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     <div class="field"><span class="lab">Herkunft</span><span class="val">regelbasiert</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Kürzlich getagt</p>
-    <h2 class="headline">{len(aus)} {'Sitzung' if len(aus) == 1 else 'Sitzungen'}, {'deren Protokoll noch aussteht' if len(aus) == 1 else 'deren Protokolle noch ausstehen'}</h2>
-    <p>Diese {'Sitzung liegt' if len(aus) == 1 else 'Sitzungen liegen'} weniger als
-    {KARENZ_TAGE} Tage zurück. Ein Beschlussprotokoll ist dazu noch nicht abrufbar —
-    das ist der Regelfall und keine Auffälligkeit.</p>
+    <p class="rubrik">Sitzungen im Berichtszeitraum</p>
+    <p>In diesem Zeitraum {'tagte ein Gremium' if len(aus) == 1 else 'tagten Gremien'}
+    öffentlich:</p>
     <ul class="beschluesse">
 {zeilen}    </ul>
-    <p class="note">Gemessen an den bisher erschienenen Protokollen: Die Hälfte ist
-    zwei Tage nach der Sitzung abrufbar, nach {KARENZ_TAGE} Tagen knapp neun von zehn.
-    Erst danach zählt eine Sitzung in dieser Auswertung als Sitzung ohne abrufbare
-    Unterlagen.</p>
+    <p class="fussnote">* Beschlussprotokolle werden typischerweise innerhalb von
+    zwei bis {KARENZ_TAGE} Tagen nach der Sitzung abrufbar — die Hälfte nach zwei Tagen,
+    knapp neun von zehn nach {KARENZ_TAGE}. Erst danach zählt eine Sitzung in dieser
+    Auswertung als Sitzung ohne abrufbare Unterlagen.</p>
   </div>
 </article>""")
 
