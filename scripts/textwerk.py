@@ -30,6 +30,7 @@ from pypdf import PdfReader
 # ansetzt und nicht an „zu be".
 TRENNSTELLE = re.compile(r"(\w+?)\s*-\s+([a-zäöüß]\w*)")
 _WORT = re.compile(r"[A-Za-zÄÖÜäöüß]{2,}")
+_WORT_POS = re.compile(r"[A-Za-zÄÖÜäöüß]+")
 
 
 def wortschatz_aus(text: str, zaehler: collections.Counter) -> None:
@@ -120,21 +121,42 @@ def leertrennung_reparieren(text: str, haeufig: dict[str, int]) -> str:
     zerrissenes Wort als ein verfaelschter Beschlusswortlaut: Der Text ist
     Zitat, und ein falsch zusammengezogenes Wort waere eine Aenderung am
     Zitat, die niemand bemerkt.
+
+    Geprueft wird Paar fuer Paar und nicht mit `re.sub`. Das ersetzt ohne
+    Ueberlappung und haette in „Wohnbaeflaeche entspre chend" zuerst
+    („Wohnbaeflaeche", „entspre") betrachtet, verworfen — und „chend" waere
+    damit verbraucht gewesen, ehe das richtige Paar an der Reihe war. Nach
+    einem Verzicht rueckt die Suche deshalb nur um ein Wort vor.
     """
     if not haeufig:
         return text
 
-    def entscheiden(m: re.Match[str]) -> str:
-        links, rechts = m.group(1), m.group(2)
-        zusammen = (links + rechts).lower()
+    woerter = list(_WORT_POS.finditer(text))
+    teile: list[str] = []
+    zuletzt = 0
+    i = 0
+    while i < len(woerter) - 1:
+        links, rechts = woerter[i], woerter[i + 1]
+        # Nur ein einzelnes Leerzeichen dazwischen, nichts sonst.
+        if text[links.end():rechts.start()] != " ":
+            i += 1
+            continue
+        a, b = links.group(), rechts.group()
+        zusammen = (a + b).lower()
         n_zus = haeufig.get(zusammen, 0)
-        n_links = haeufig.get(links.lower(), 0)
-        if (n_zus and n_links <= BRUCHSTUECK_HOECHSTENS
-                and n_zus >= max(VERHAELTNIS, n_links * VERHAELTNIS)):
-            return links + rechts
-        return m.group(0)
-
-    return LEERSTELLE.sub(entscheiden, text)
+        n_links = haeufig.get(a.lower(), 0)
+        passt = (len(a) >= 4 and 2 <= len(b) <= 10 and b[0].islower()
+                 and n_zus and n_links <= BRUCHSTUECK_HOECHSTENS
+                 and n_zus >= max(VERHAELTNIS, n_links * VERHAELTNIS))
+        if passt:
+            teile.append(text[zuletzt:links.start()])
+            teile.append(a + b)
+            zuletzt = rechts.end()
+            i += 2                       # beide Haelften sind verbraucht
+        else:
+            i += 1                       # nur um ein Wort weiter
+    teile.append(text[zuletzt:])
+    return "".join(teile)
 
 
 # --- Auslesen mit Zwischenspeicher ------------------------------------------
