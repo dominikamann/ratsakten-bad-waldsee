@@ -455,6 +455,17 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
     if stichtag.year == jahr:
         wochen[stichtag.isocalendar()[1]]  # legt bei Bedarf eine leere Woche an
 
+    # Und jede Woche, zu der bereits eine Ausgabe erschienen ist, wird wieder
+    # mitgebaut — auch wenn in ihr nicht getagt wurde.
+    #
+    # Sonst entsteht eine verwaiste Seite: KW 37/2026 wurde als laufende Woche
+    # erzeugt, blieb ohne Sitzung und wurde nie wieder angefasst. Verlinkt war
+    # sie weiterhin, aus Archiv und Startseite. Als sich der Seitenfuss
+    # aenderte, trug sie als einzige Ausgabe des Jahrgangs noch den alten —
+    # und niemandem waere das aufgefallen, weil die Seite einwandfrei aussieht.
+    for kw in (erschienen or {}):
+        wochen[int(kw)]
+
     # Berichtszeitraum: vom Ende der vorigen erschienenen Ausgabe bis zum Ende
     # dieser Woche. Der Anschluss haengt am tatsaechlichen Ende der Vorgaenger-
     # ausgabe aus dem Register, nicht am Sonntag ihrer Kalenderwoche — sonst
@@ -471,9 +482,19 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
         anker = max(frueher) if frueher else None
         if letztes_ende and (anker is None or letztes_ende > anker):
             anker = letztes_ende
-        beginn = (anker + dt.timedelta(days=1) if anker
-                  else dt.date.fromisocalendar(jahr, kw, 1))
-        ende = min(dt.date.fromisocalendar(jahr, kw, 7), stichtag)
+        # Ein einmal veroeffentlichter Berichtszeitraum bleibt stehen. Er ist
+        # eine Zusage: Wer die Ausgabe gelesen hat, weiss, welche Tage sie
+        # abdeckt. Wuerde ein spaeterer Lauf ihn verschieben, aenderte sich
+        # rueckwirkend, worueber eine bereits gelesene Ausgabe berichtet hat —
+        # und die Anschlussausgabe bekaeme eine Luecke oder eine Doppelung.
+        gemeldet = (erschienen or {}).get(f"{kw:02d}", {})
+        if gemeldet.get("von_iso") and gemeldet.get("bis_iso"):
+            beginn = dt.date.fromisoformat(gemeldet["von_iso"])
+            ende = dt.date.fromisoformat(gemeldet["bis_iso"])
+        else:
+            beginn = (anker + dt.timedelta(days=1) if anker
+                      else dt.date.fromisocalendar(jahr, kw, 1))
+            ende = min(dt.date.fromisocalendar(jahr, kw, 7), stichtag)
         letztes_ende = ende
         w["von"], w["bis"] = beginn, ende
         # Sitzungen ohne Protokoll aus dem gesamten Berichtszeitraum aufnehmen,
@@ -793,16 +814,31 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
 </article>""")
 
     # --- Kolophon
-    t.append(f"""
-<section class="kolophon">
-  <p class="rubrik">Zur Ausgabe</p>
-  <h3>Zu den Menschen hinter den Beschlüssen</h3>
+    # Der Absatz sprach auch dann von „den Beschluessen dieser Ausgabe", wenn
+    # die Ausgabe keinen einzigen enthielt — in einer beschlussfreien Woche
+    # las er sich ueber etwas hinweg, das gar nicht da war. Die Haltung ist in
+    # beiden Faellen dieselbe; sie muss nur den richtigen Gegenstand nennen.
+    if w["beschluesse"]:
+        wertschaetzung = """<h3>Zu den Menschen hinter den Beschlüssen</h3>
   <p>Die Beschlüsse dieser Ausgabe stammen aus Sitzungen, die fast ausnahmslos abends
   nach der Arbeit stattfinden. Die Mitglieder der Räte und Ausschüsse tun das
   ehrenamtlich, unter ihrem Namen und in öffentlicher Sitzung — und ihre
   Entscheidungen werden anschließend öffentlich diskutiert. Diese Auswertung misst
   Unterlagen, nicht Personen: Sie zeigt, was in den Akten steht, und sagt nichts
-  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>
+  darüber, mit welcher Sorgfalt oder Absicht jemand entschieden hat.</p>"""
+    else:
+        wertschaetzung = """<h3>Zu den Menschen hinter den Sitzungen</h3>
+  <p>In diesem Berichtszeitraum ist kein Beschluss nachlesbar — das heißt nicht, dass
+  nicht gearbeitet wurde. Die Sitzungen der Räte und Ausschüsse finden fast ausnahmslos
+  abends nach der Arbeit statt, ehrenamtlich, unter dem eigenen Namen und in
+  öffentlicher Sitzung; Vorbereitung, Fraktionssitzungen und Ortstermine kommen hinzu
+  und tauchen in keiner Akte auf. Diese Auswertung misst Unterlagen, nicht Personen:
+  Sie zeigt, was abrufbar ist, und sagt nichts darüber, was geleistet wurde.</p>"""
+
+    t.append(f"""
+<section class="kolophon">
+  <p class="rubrik">Zur Ausgabe</p>
+  {wertschaetzung}
 
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Diese Ausgabe wurde maschinell aus den Beschlussprotokollen und Tagesordnungen des

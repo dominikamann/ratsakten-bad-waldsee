@@ -80,6 +80,19 @@ uv run --quiet python scripts/13_readme_pflegen.py
 log "Pruefung"
 uv run --quiet --with lxml python scripts/pruefen.py
 
+# Die Browserpruefung lief bisher nur, wenn jemand daran dachte — und daran
+# dachte lange niemand. Sie ist die einzige Stelle, an der die Seiten in einer
+# echten Engine geoeffnet werden: Ueberlauf, Tippgroessen und das JavaScript
+# der Tagesmarke sieht sonst nichts. Fehlt playwright, wird sie uebersprungen;
+# der Lauf soll daran nicht scheitern.
+log "Browserpruefung (Chromium und WebKit)"
+if uv run --quiet --with playwright python -c "import playwright" 2>/dev/null; then
+  uv run --quiet --with playwright python scripts/pruefe_mobil.py
+else
+  echo "   playwright fehlt — uebersprungen. Nachholen mit:"
+  echo "   uv run --with playwright python scripts/pruefe_mobil.py"
+fi
+
 # --- Veroeffentlichen ---------------------------------------------------------
 if [[ -z "$(git status --porcelain)" ]]; then
   log "Nichts Neues — keine Aenderung gegenueber dem letzten Lauf."

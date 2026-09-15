@@ -420,6 +420,53 @@ def pruefe_reportalter() -> None:
     notiz.append(f"Report vom {datiert}")
 
 
+def pruefe_zukunft() -> None:
+    """Behauptet eine Seite etwas ueber eine Sitzung, die noch bevorsteht?
+
+    Am 15.09.2026 wies die Ausgabe KW 38 die Sitzung des
+    Verwaltungsausschusses vom selben Tag, 18:00 Uhr, unter „Blinder Fleck"
+    als oeffentlich getagt und ohne abrufbare Niederschrift aus — gebaut wurde
+    sie um 16:49 Uhr. Der Stichtag verglich nur das Datum und nicht die
+    Uhrzeit.
+
+    Das ist die Fehlerklasse, an der dieses Projekt haengt: eine Abwesenheit
+    behaupten, die noch gar nicht eintreten konnte. Keine der damals
+    vorhandenen Pruefungen konnte sie sehen — sie zaehlten Verweise, Betraege
+    und Formulierungen, aber keine hielt eine Aussage gegen die Uhr.
+
+    Diese hier tut genau das: Jede Sitzung, die eine Ausgabe als getagt
+    ausweist, muss zum Zeitpunkt der Pruefung begonnen haben. Gemessen wird
+    die Sache selbst — das Datum in der Liste unter „Blinder Fleck" gegen den
+    Beginn derselben Sitzung in den Daten.
+    """
+    sitzungen = DATEN / "sitzungen.json"
+    if not sitzungen.exists():           # ohne Crawl-Daten nicht pruefbar
+        return
+    beginn: dict[str, str] = {}
+    for e in json.loads(sitzungen.read_text(encoding="utf-8")):
+        tag = e["start"][:10]
+        # Der frueheste Beginn des Tages ist die grosszuegigste Annahme:
+        # Schlaegt die Pruefung damit an, steht die Aussage in jedem Fall fest.
+        if tag not in beginn or e["start"] < beginn[tag]:
+            beginn[tag] = e["start"]
+
+    jetzt = dt.datetime.now().isoformat(timespec="seconds")
+    # „<span class="sv">Sitzung vom 15.09.2026</span>" in der Rubrik Blinder Fleck
+    muster = re.compile(r'Sitzung vom (\d{2})\.(\d{2})\.(\d{4})')
+    getroffen = 0
+    for seite in sorted((DOCS / "ausgaben").rglob("*.html")):
+        text = seite.read_text(encoding="utf-8")
+        for tt, mm, jj in muster.findall(text):
+            tag = f"{jj}-{mm}-{tt}"
+            getroffen += 1
+            if beginn.get(tag, tag) > jetzt:
+                fehler.append(
+                    f"{seite.relative_to(WURZEL)} weist die Sitzung vom "
+                    f"{tt}.{mm}.{jj} als getagt aus — sie beginnt erst "
+                    f"{beginn[tag][11:16]} Uhr und hat noch nicht stattgefunden.")
+    notiz.append(f"{getroffen} Sitzungsangabe(n) gegen die Uhr geprüft")
+
+
 def main() -> None:
     if not DOCS.exists():
         sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
@@ -430,6 +477,7 @@ def main() -> None:
                      pruefe_fundstuecke,
                      pruefe_themenverweise,
                      pruefe_wortwahl,
+                     pruefe_zukunft,
                      pruefe_reportalter):
         pruefung()
 
