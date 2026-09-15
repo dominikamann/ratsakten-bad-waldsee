@@ -39,39 +39,42 @@ case "$CODE" in
 esac
 
 # --- Verarbeitungskette -------------------------------------------------------
-log "1/11  Sitzungen und Tagesordnungen laden"
+log "1/12  Sitzungen und Tagesordnungen laden"
 uv run --quiet --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 
-log "2/11  Neue Protokolle laden"
+log "2/12  Neue Protokolle laden"
 uv run --quiet --with requests python scripts/02_protokolle_laden.py
 
-log "3/11  Kennzahlen berechnen"
+log "3/12  Kennzahlen berechnen"
 uv run --quiet --with pypdf python scripts/03_auswerten.py | head -3
 
-log "4/11  Ausgaben erzeugen (alle Jahrgänge)"
+log "4/12  Ausgaben erzeugen (alle Jahrgänge)"
 uv run --quiet --with pypdf python scripts/05_ausgaben_bauen.py | tail -2
 
-log "5/11  Tabellen und Suche erzeugen"
+log "5/12  Tabellen und Suche erzeugen"
 uv run --quiet --with pypdf python scripts/07_tabellen_bauen.py | tail -4
 uv run --quiet --with pypdf python scripts/08_suche_bauen.py
 
-log "6/11  Themenseiten erzeugen"
+log "6/12  Themenseiten erzeugen"
 uv run --quiet python scripts/11_themen_bauen.py
 
-log "7/11  Terminseite erzeugen"
+log "7/12  Terminseite erzeugen"
 uv run --quiet python scripts/12_termine_bauen.py
 
-log "8/11  Erkenntnisse sammeln"
+log "8/12  Erkenntnisse sammeln"
 uv run --quiet --with lxml python scripts/09_befunde_bauen.py
 
-log "9/11  Seite „Wer entscheidet was“ erzeugen"
+log "9/12  Seite „Wer entscheidet was“ erzeugen"
 uv run --quiet python scripts/10_gremien_bauen.py
 
-log "10/11  Startseite erzeugen"
+log "10/12  Startseite erzeugen"
 uv run --quiet python scripts/06_startseite_bauen.py
 
-log "11/11  Report vorrendern"
+log "11/12  Report vorrendern"
 node scripts/04_vorrendern.js | tail -1
+
+log "12/12  Kennzahlen in die README eintragen"
+uv run --quiet python scripts/13_readme_pflegen.py
 
 # --- Pruefen ------------------------------------------------------------------
 log "Pruefung"

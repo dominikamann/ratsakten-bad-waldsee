@@ -289,7 +289,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── 2025/         35 Ausgaben
 │       └── 2026/         22 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
-├── scripts/    die Verarbeitungskette, Schritt 01 bis 12
+├── scripts/    die Verarbeitungskette, Schritt 01 bis 13
 │   ├── wochenlauf.sh   ein Befehl für den ganzen Wochenlauf
 │   ├── seite.py        Seitenrahmen und Navigation — für alle Seiten dieselben
 │   ├── basis.css       Farben, Schrift, Seitenkopf und Fuß — für alle Seiten dieselben
@@ -316,6 +316,7 @@ uv run --with lxml                           python scripts/09_befunde_bauen.py
 uv run                                       python scripts/10_gremien_bauen.py
 uv run                                       python scripts/06_startseite_bauen.py
 npm install jsdom && node scripts/04_vorrendern.js
+uv run                                       python scripts/13_readme_pflegen.py
 
 # kontrollieren
 uv run --with lxml                           python scripts/pruefen.py
@@ -325,6 +326,12 @@ Die Reihenfolge ist nicht beliebig: Schritt 6 (Startseite) liest Kennzahlen aus
 dem, was die vorigen Schritte geschrieben haben, und Schritt 9 liest den
 vorgerenderten Report — deshalb steht Schritt 4 am Ende und wird beim nächsten
 Lauf gelesen. `scripts/wochenlauf.sh` führt genau diese Kette aus.
+
+Schritt 13 trägt die Kennzahlen dieses Laufs in die Tabellen und Sätze dieser
+README ein — Sitzungszahl, Stichtag, Ausgabenzahl, aktuelle Ausgabe und so
+fort. Die Zahlen hier werden deshalb nicht von Hand gepflegt. Findet der
+Schritt eine dieser Stellen nicht mehr, **bricht er ab**, statt sie
+stillschweigend zu überspringen.
 
 Schritt 5 erzeugt eine Ausgabe je Kalenderwoche mit Sitzung, dazu stets eine für
 die laufende Woche. Gebaut werden **alle Jahrgänge**, nicht nur der laufende —
