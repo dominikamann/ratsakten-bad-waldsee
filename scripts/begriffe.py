@@ -96,6 +96,55 @@ BEGRIFFE: list[dict[str, str]] = [
         "fundstelle": "Schreibweise der Beschlussprotokolle des Ratsinformationssystems",
     },
     {
+        "name": "Bebauungsplan",
+        # Vor dem Flaechennutzungsplan-Eintrag ausgeben waere falsch herum:
+        # Der Bebauungsplan wird aus ihm entwickelt. Die Reihenfolge der Liste
+        # ist die Ausgabereihenfolge.
+        "muster": r"Bebauungsplan",
+        "satz": (
+            "Der Plan, der für ein bestimmtes Gebiet verbindlich festlegt, was dort "
+            "gebaut werden darf — Art und Maß der Bebauung, überbaubare Flächen, "
+            "Verkehrsflächen. Anders als der Flächennutzungsplan, der nur die "
+            "Grundzüge für das ganze Stadtgebiet umreißt, begründet er unmittelbar "
+            "Baurecht: Wer ein Vorhaben plant, das seinen Festsetzungen entspricht, "
+            "hat einen Anspruch auf Genehmigung."),
+        "fundstelle": "§ 1 Abs. 2, § 8 Abs. 1 und § 30 Abs. 1 Baugesetzbuch",
+    },
+    {
+        "name": "Aufstellungsbeschluss",
+        "muster": r"Aufstellungsbeschluss|Aufstellung des Bebauungsplans",
+        "satz": (
+            "Der erste Schritt eines Bauleitplanverfahrens — das Gegenstück zum "
+            "Satzungsbeschluss am Ende. Er entscheidet noch nichts über den Inhalt, "
+            "sondern eröffnet das Verfahren. Zwischen beiden liegen Entwurf, "
+            "Beteiligung der Öffentlichkeit und Abwägung; bei größeren Vorhaben "
+            "vergehen dabei mehrere Jahre und der Plan kommt mehrfach auf die "
+            "Tagesordnung."),
+        "fundstelle": "§ 2 Abs. 1 Satz 2 Baugesetzbuch",
+    },
+    {
+        "name": "Feststellungsbeschluss",
+        "muster": r"Feststellungsbeschluss|Feststellung des Flächennutzungsplans",
+        "satz": (
+            "Der Abschluss eines Flächennutzungsplan-Verfahrens. Was beim "
+            "Bebauungsplan der Satzungsbeschluss ist, ist hier der "
+            "Feststellungsbeschluss — mit einem Unterschied: Der "
+            "Flächennutzungsplan wird damit noch nicht wirksam, er bedarf "
+            "zusätzlich der Genehmigung der höheren Verwaltungsbehörde."),
+        "fundstelle": "§ 6 Abs. 1 und Abs. 5 Baugesetzbuch",
+    },
+    {
+        "name": "Jahresabschluss und Entlastung",
+        "muster": r"Jahresabschluss|Entlastung",
+        "satz": (
+            "Die Rechnung über ein abgelaufenes Haushaltsjahr. Der Gemeinderat "
+            "stellt sie fest und entscheidet über die Entlastung — eine Aussage "
+            "darüber, dass die Mittel wie beschlossen verwendet wurden. Das Gesetz "
+            "kennt dafür zwei Fristen: sechs Monate für die Aufstellung durch die "
+            "Verwaltung und zwölf Monate für die Feststellung durch den Gemeinderat."),
+        "fundstelle": "§ 95b Gemeindeordnung für Baden-Württemberg",
+    },
+    {
         "name": "Über- und außerplanmäßige Ausgaben",
         "muster": r"außerplanmäßig|überplanmäßig|ausserplanmäßig",
         "satz": (

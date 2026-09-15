@@ -379,6 +379,34 @@ footer nav span[aria-hidden]{opacity:.35}
   article,section,li,tr{break-inside:avoid}
   h1,h2,h3{break-after:avoid}
 }
+
+/* ---------- Aufklappbares ----------
+   Zwei Drittel des Textes einer beschlussarmen Ausgabe waren fruehere
+   Erklaerung: „Wie diese Ausgabe entsteht" und der Haftungshinweis zusammen
+   384 Woerter, der Inhalt 177. Wer die Seite oeffnete, las mehrheitlich ueber
+   die Seite statt ueber den Gemeinderat.
+
+   Was jeder wissen muss, steht weiterhin offen da; die Ausfuehrung klappt
+   auf. `<details>` braucht dafuer kein JavaScript — in der iOS-Dateivorschau
+   und im Ausdruck bleibt alles erreichbar. */
+details.mehr{margin:10px 0 0}
+details.mehr > summary{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--s1);cursor:pointer;
+  list-style:none;
+  /* Ein Aufklapper ist ein Tippziel wie ein Link und haelt dieselben 44 px
+     ein — mit 11,5px-Schrift und knappem Innenabstand waren es 27. */
+  display:flex;align-items:center;min-height:44px;
+}
+details.mehr > summary::-webkit-details-marker{display:none}
+/* Dasselbe Zeichen wie die Tagesordnungen auf der Terminseite: ein Dreieck,
+   das sich beim Aufklappen dreht. „+" und „−" klebten am Text und lasen sich
+   in Versalien wie ein Bindestrich. */
+details.mehr > summary::before{content:"\25B8";margin-right:8px;font-size:13px}
+details.mehr[open] > summary::before{content:"\25BE"}
+details.mehr > summary:hover{text-decoration:underline}
+details.mehr > summary:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
+details.mehr > p{font-size:15px;color:var(--ink-2);margin:10px 0 0}
 </style>
 
 <style>
@@ -520,6 +548,8 @@ ul.plain li{margin-bottom:8px;max-width:70ch}
 <meta name="description" content="Datenanalyse der Gremienarbeit der Stadt Bad Waldsee, Januar 2024 bis September 2026."></head><body><div class="brandbar" id="seitenanfang"><div class="wrap">
   <nav aria-label="Bereiche">
     <a href="../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../ausgaben/2026/kw38.html">Aktuelle Ausgabe</a>
     <span aria-hidden="true">/</span>
     <a href="../termine.html#heute">Termine</a>
     <span aria-hidden="true">/</span>
@@ -807,6 +837,8 @@ ul.plain li{margin-bottom:8px;max-width:70ch}
 <footer><div class="wrap">
   <nav aria-label="Bereiche">
     <a href="../index.html">Startseite</a>
+    <span aria-hidden="true">/</span>
+    <a href="../ausgaben/2026/kw38.html">Aktuelle Ausgabe</a>
     <span aria-hidden="true">/</span>
     <a href="../termine.html#heute">Termine</a>
     <span aria-hidden="true">/</span>

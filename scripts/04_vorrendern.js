@@ -77,9 +77,26 @@ function rendern(quelle, ziel, beschreibung) {
       // Quelle, aus der die Bauskripte sie erzeugen. Sonst muesste man beim
       // Hinzufuegen einer Seite daran denken, den Report von Hand nachzuziehen.
       const hoch = path.dirname(ziel).endsWith("report") ? "../" : "";
+      // „Aktuelle Ausgabe" steht als Platzhalter in navigation.json — ihr Ziel
+      // wechselt jede Woche. Aufgeloest wird es aus demselben Register, das
+      // auch seite.py liest; sonst zeigte der Report auf eine alte Ausgabe.
+      const aktuelleAusgabe = (() => {
+        try {
+          const r = JSON.parse(fs.readFileSync(
+            path.join(__dirname, "..", "data", "ausgaben.json"), "utf8"));
+          const jahre = Object.keys(r).map(Number).sort((a, b) => b - a);
+          if (!jahre.length) return "ausgaben/index.html";
+          const jahr = jahre[0];
+          const kw = Object.keys(r[jahr]).map(Number).sort((a, b) => b - a)[0];
+          return `ausgaben/${jahr}/kw${String(kw).padStart(2, "0")}.html`;
+        } catch {
+          return "ausgaben/index.html";       // Archiv als Rueckfallebene
+        }
+      })();
       const verweise = (markieren) => "\n    " + NAVIGATION.map((e) => {
         const hier = markieren && e.name === "report" ? ' aria-current="page"' : "";
-        return `<a href="${hoch}${e.ziel}"${hier}>${e.text}</a>`;
+        const zielE = e.ziel.replace("{aktuelle_ausgabe}", aktuelleAusgabe);
+        return `<a href="${hoch}${zielE}"${hier}>${e.text}</a>`;
       }).join('\n    <span aria-hidden="true">/</span>\n    ') + "\n  ";
       // Oben in der Markenleiste, unten im Fuss — wie auf allen uebrigen Seiten.
       d.querySelectorAll('nav[aria-label="Bereiche"]').forEach((n, i) => {

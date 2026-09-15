@@ -15,6 +15,12 @@ from playwright.sync_api import Error as PlaywrightError, sync_playwright
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 
+# Wie viele Verweise die Markenleiste traegt, stand hier als 7 fest verdrahtet
+# und schlug fehl, sobald ein Menuepunkt dazukam. Gezaehlt wird jetzt dieselbe
+# Quelle, aus der die Seiten die Leiste bauen.
+ERWARTETE_LINKS = len(json.loads(
+    (Path(__file__).resolve().parent / "navigation.json").read_text(encoding="utf-8")))
+
 
 def neueste_ausgabe() -> str:
     """Die jeweils aktuelle Wochenausgabe.
@@ -126,7 +132,8 @@ def main():
                         }""")
                         label = f"{engine.name} {width}px {path}"
                         assert result["scrollWidth"] <= result["width"] + 1, (label, result)
-                        assert len(result["links"]) == 7, label
+                        assert len(result["links"]) == ERWARTETE_LINKS, (
+                            label, len(result["links"]), ERWARTETE_LINKS)
                         assert all(a["inside"] for a in result["links"]), (label, result)
                         if width <= 620:
                             assert all(a["height"] >= 44 for a in result["links"]), label
@@ -134,7 +141,9 @@ def main():
                             assert not zu_klein, (label, zu_klein)
                         # Auch der letzte Link muss per Tastatur erreichbar bleiben.
                         page.locator('.brandbar nav a').first.focus()
-                        for _ in range(6):
+                        # Vom ersten zum letzten Verweis: ein Tastendruck
+                        # weniger, als es Verweise gibt. Stand als 6 fest da.
+                        for _ in range(ERWARTETE_LINKS - 1):
                             # WebKit folgt unter macOS der Safari-Voreinstellung:
                             # Option-Tab nimmt Links in die Tab-Reihenfolge auf.
                             page.keyboard.press("Alt+Tab" if engine.name == "webkit"

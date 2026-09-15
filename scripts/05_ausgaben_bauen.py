@@ -627,20 +627,49 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     n_besch = len(w["beschluesse"])
     mit_prot = sum(1 for s in w["sitzungen"] if s["protokoll"])
 
-    # Die laufende Woche ist ein Zwischenstand, kein Abschluss. Steht das
-    # nirgends, liest sich die Ausgabe wie die fertige Bilanz der Woche.
+    # Der Untertitel stand auf jeder der 90 Ausgaben Wort fuer Wort gleich:
+    # „Was der Gemeinderat und seine Ausschuesse entschieden haben." Er
+    # beschrieb die Reihe, nicht diese Ausgabe — und der Platz direkt unter
+    # der Ueberschrift ist der, den jeder liest. Dort steht jetzt, was in
+    # diesem Zeitraum tatsaechlich los war.
+    gremien_kurz = sorted({x["gremium"] for x in w["sitzungen"]})
+    n_s, n_b = len(w["sitzungen"]), len(w["beschluesse"])
+    strittig_n = sum(1 for b in w["beschluesse"] if b["strittig"])
+
+    if not n_s:
+        lede = (f"Zwischen {mo.strftime('%d.%m.')} und {so.strftime('%d.%m.%Y')} "
+                "hat kein Gremium der Stadt öffentlich getagt.")
+    else:
+        wer = (f"tagte {artikel(gremien_kurz[0])} {e(gremien_kurz[0])}"
+               if len(gremien_kurz) == 1 else
+               f"tagten {len(gremien_kurz)} Gremien in {n_s} Sitzungen")
+        if n_s == 1:
+            # Ein genaues Datum ist mehr wert als eine Zeitspanne, und der
+            # Berichtszeitraum steht ohnehin eine Zeile tiefer. `capitalize()`
+            # taugt dafuer nicht: Es macht aus „der Verwaltungsausschuss" ein
+            # „Der verwaltungsausschuss".
+            wer = (f"{artikel(gremien_kurz[0]).capitalize()} <b>{e(gremien_kurz[0])}</b> "
+                   f"tagte am {w['sitzungen'][0]['datum'].strftime('%d.%m.%Y')}")
+        if n_b:
+            bilanz = (f"{n_b} {'Beschluss' if n_b == 1 else 'Beschlüsse'} "
+                      "sind daraus nachlesbar")
+            if strittig_n:
+                bilanz += (f", {strittig_n} davon "
+                           f"{'fiel' if strittig_n == 1 else 'fielen'} nicht einstimmig")
+        else:
+            bilanz = "nachlesbare Beschlüsse liegen daraus noch nicht vor"
+        lede = (f"{wer} — {bilanz}." if n_s == 1 else
+                f"Zwischen {mo.strftime('%d.%m.')} und {so.strftime('%d.%m.%Y')} "
+                f"{wer} — {bilanz}.")
+
     if w.get("laufend"):
         sonntag = dt.date.fromisocalendar(jahr, kw, 7)
-        lede = ("Was der Gemeinderat und seine Ausschüsse in dieser Woche <b>bisher</b> "
-                "entschieden haben — gelesen aus den Originalunterlagen.")
         laufend_hinweis = (
             f'\n  <p class="zwischenstand"><b>Diese Woche läuft noch.</b> '
             f'Die Ausgabe zeigt den Datenstand vom {so.strftime("%d.%m.%Y")} und wächst bis '
             f'Sonntag, {sonntag.strftime("%d.%m.%Y")}. Was danach noch protokolliert '
             f'wird, erscheint hier, sobald es abrufbar ist.</p>')
     else:
-        lede = ("Was der Gemeinderat und seine Ausschüsse entschieden haben — "
-                "gelesen aus den Originalunterlagen.")
         laufend_hinweis = ""
 
     t = [kopf(f"Aktenlage KW {kw}/{jahr} · Ratsakten Bad Waldsee", hoch="../../",
@@ -694,7 +723,19 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # wurde. Die Ausgaben mit redaktioneller Einordnung nannten die Sitzungen
     # laengst; das war eine Inkonsistenz, keine Gestaltung.
     lage_zeigt_sitzungen = False
-    if not w["beschluesse"] and not einordnung:
+    # Bei genau einer Sitzung steht die Auskunft schon im Untertitel. Ein
+    # Block, der sie wiederholt, ist kein Gewinn — nur die Fussnote zur
+    # Protokollfrist wird noch gebraucht.
+    if len(w["sitzungen"]) == 1 and not w["beschluesse"] and not einordnung:
+        lage_zeigt_sitzungen = bool(w.get("ausstehend"))
+        if w.get("ausstehend"):
+            laufend_hinweis += (
+                f'\n  <p class="fussnote">* Beschlussprotokolle sind meist zwei bis '
+                f'{KARENZ_TAGE} Tage nach der Sitzung abrufbar.</p>')
+            lede = lede.replace(
+                "nachlesbare Beschlüsse liegen daraus noch nicht vor.",
+                "das Beschlussprotokoll steht noch aus.*")
+    elif not w["beschluesse"] and not einordnung:
         n_sitz = len(w["sitzungen"])
         # „Ein Gremium tagte" ist eine Leerformel — welches, ist die Auskunft,
         # auf die es ankommt. Bei einer einzelnen Sitzung steht der Name

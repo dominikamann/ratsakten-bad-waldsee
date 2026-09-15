@@ -54,6 +54,23 @@ def kurz(wert) -> str:
 
 # ---------- Navigation ----------
 
+def aktuelle_ausgabe() -> str:
+    """Pfad der juengsten Wochenausgabe, relativ zu docs/.
+
+    Der Menuepunkt „Aktuelle Ausgabe" kann nicht fest in navigation.json
+    stehen: Sein Ziel wechselt jede Woche. Ermittelt wird es aus dem
+    Ausgabenregister — derselben Quelle, aus der die Startseite verlinkt.
+    """
+    register = WURZEL / "data" / "ausgaben.json"
+    if not register.exists():
+        return "ausgaben/index.html"          # Archiv als Rueckfallebene
+    r = json.loads(register.read_text(encoding="utf-8"))
+    if not r:
+        return "ausgaben/index.html"
+    jahr = max(r, key=int)
+    return f"ausgaben/{jahr}/kw{max(r[jahr], key=int)}.html"
+
+
 def navigation(hoch: str = "", hier: str = "") -> str:
     """Die Verweise der Markenleiste.
 
@@ -63,7 +80,8 @@ def navigation(hoch: str = "", hier: str = "") -> str:
     teile = []
     for x in EINTRAEGE:
         aktuell = ' aria-current="page"' if x["name"] == hier else ""
-        teile.append(f'<a href="{hoch}{x["ziel"]}"{aktuell}>{x["text"]}</a>')
+        ziel = x["ziel"].replace("{aktuelle_ausgabe}", aktuelle_ausgabe())
+        teile.append(f'<a href="{hoch}{ziel}"{aktuell}>{x["text"]}</a>')
     return "\n    <span aria-hidden=\"true\">/</span>\n    ".join(teile)
 
 
