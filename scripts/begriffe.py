@@ -106,8 +106,8 @@ BEGRIFFE: list[dict[str, str]] = [
             "gebaut werden darf — Art und Maß der Bebauung, überbaubare Flächen, "
             "Verkehrsflächen. Anders als der Flächennutzungsplan, der nur die "
             "Grundzüge für das ganze Stadtgebiet umreißt, begründet er unmittelbar "
-            "Baurecht: Wer ein Vorhaben plant, das seinen Festsetzungen entspricht, "
-            "hat einen Anspruch auf Genehmigung."),
+            "Baurecht: Ein Vorhaben ist dort zulässig, wenn es seinen Festsetzungen "
+            "nicht widerspricht <b>und die Erschließung gesichert ist</b>."),
         "fundstelle": "§ 1 Abs. 2, § 8 Abs. 1 und § 30 Abs. 1 Baugesetzbuch",
     },
     {
@@ -129,8 +129,9 @@ BEGRIFFE: list[dict[str, str]] = [
             "Der Abschluss eines Flächennutzungsplan-Verfahrens. Was beim "
             "Bebauungsplan der Satzungsbeschluss ist, ist hier der "
             "Feststellungsbeschluss — mit einem Unterschied: Der "
-            "Flächennutzungsplan wird damit noch nicht wirksam, er bedarf "
-            "zusätzlich der Genehmigung der höheren Verwaltungsbehörde."),
+            "Flächennutzungsplan wird damit noch nicht wirksam. Er bedarf der "
+            "Genehmigung der höheren Verwaltungsbehörde, und wirksam wird er erst, "
+            "wenn deren Erteilung ortsüblich bekannt gemacht ist."),
         "fundstelle": "§ 6 Abs. 1 und Abs. 5 Baugesetzbuch",
     },
     {
