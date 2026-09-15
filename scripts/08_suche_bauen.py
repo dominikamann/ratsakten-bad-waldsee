@@ -21,7 +21,6 @@ from __future__ import annotations
 
 import argparse
 import collections
-import datetime as dt
 import json
 import logging
 import re
@@ -659,7 +658,7 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
 </section>
 </div>
 
-{fuss(meta=f"Stand {kurz(stichtag)}", ende=False)}
+{fuss(meta=f"Datenstand {kurz(stichtag)}", ende=False)}
 
 <script id="daten" type="application/json">{index}</script>
 <script>

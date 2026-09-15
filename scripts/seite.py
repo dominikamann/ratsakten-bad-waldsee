@@ -113,13 +113,22 @@ def kopf(titel: str, *, hoch: str = "", hier: str = "", beschreibung: str = "",
 """
 
 
-def fuss(hoch: str = "", meta: str = "", ende: bool = True) -> str:
+def fuss(hoch: str = "", meta: str = "", ende: bool = True,
+         stand: bool = True) -> str:
     """Der Fuß — auf jeder Seite gleich.
 
     Die Seiten sind lang; wer unten ankommt, findet dort dieselben Verweise wie
     oben, statt zurückscrollen zu müssen.
+
+    Das Datum des letzten Laufs steht auf **jeder** Seite. Es stand vorher nur
+    auf dreien, und wer eine der uebrigen aufrief, konnte nicht erkennen, ob er
+    den Stand von gestern oder von vor drei Monaten vor sich hat. Bei einer
+    Seite, die Beschluesse wiedergibt, ist das keine Nebensache.
     """
-    zusatz = f" &middot; {meta}" if meta else ""
+    teile = [meta] if meta else []
+    if stand:
+        teile.append(f"aktualisiert am {kurz(dt.date.today())}")
+    zusatz = "".join(f" &middot; {x}" for x in teile)
     # `ende=False` fuer Seiten, die nach dem Fuss noch ein Skript mitgeben.
     schluss = "\n</body>\n</html>" if ende else ""
     return f"""

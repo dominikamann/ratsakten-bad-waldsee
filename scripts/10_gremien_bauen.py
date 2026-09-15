@@ -201,7 +201,7 @@ und entschieden wurde, kann die Einsicht bei der Stadt verlangen.</p>
 """)
 
     t.append("</div>")
-    t.append(fuss(meta=f"Stand {kurz(zeitraum)}"))
+    t.append(fuss(meta=f"Datenstand {kurz(zeitraum)}"))
 
     ziel = DOCS / "gremien.html"
     ziel.write_text("\n".join(t), encoding="utf-8")

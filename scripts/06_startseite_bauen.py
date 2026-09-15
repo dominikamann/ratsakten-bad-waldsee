@@ -267,7 +267,7 @@ def bauen() -> str:
 </section>
 
 </div>
-{fuss(meta=f"Datenstand {kurz(stichtag)} &middot; Seite erzeugt am {kurz(heute)}")}
+{fuss(meta=f"Datenstand {kurz(stichtag)}")}
 """
 
 

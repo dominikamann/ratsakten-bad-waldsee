@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import argparse
 import collections
-import datetime as dt
 import json
 import logging
 import re

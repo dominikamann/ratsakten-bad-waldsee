@@ -113,7 +113,9 @@ def eintrag(t: dict, register: dict, vergangen: bool) -> str:
                    f'Im Ratsinformationssystem</a>')
     else:
         zustand = ""
-    return (f'  <li>\n'
+    # Der Beginn steht maschinenlesbar am Eintrag, damit das Skript die
+    # Tagesmarke beim Lesen an die richtige Stelle setzen kann.
+    return (f'  <li data-beginn="{t["datum"]}T{t["zeit"]}">\n'
             f'    <div class="zeile">\n'
             f'      <span class="wann">{lang(d)} &middot; {t["zeit"]} Uhr</span>\n'
             f'      <span class="gremium">{e(t["gremium"])}</span>\n'
@@ -155,8 +157,12 @@ def main() -> None:
     jahre = sorted({dt.date.fromisoformat(x["datum"]).year for x in termine} | {heute.year})
     je_jahr: dict[int, list[str]] = {j: [] for j in jahre}
     heute_gesetzt = False
-    marke = (f'  <li class="marke" id="heute"><span>Heute &middot; '
-             f'{lang(heute)}</span></li>')
+    # Ohne JavaScript kann die Seite nur den Tag nennen, an dem sie gebaut
+    # wurde — sie weiss nicht, wann sie gelesen wird. Sie behauptet deshalb
+    # nicht "Heute", sondern sagt, worauf sie sich stuetzt. Erst das Skript
+    # weiter unten macht daraus "Heute", und nur wenn es wirklich heute ist.
+    marke = (f'  <li class="marke" id="heute" data-stand="{heute.isoformat()}">'
+             f'<span>Stand &middot; {lang(heute)}</span></li>')
     for x in termine:
         d = dt.date.fromisoformat(x["datum"])
         if not heute_gesetzt and not begonnen(x):
@@ -209,7 +215,49 @@ def main() -> None:
 {chr(10).join(bloecke)}
 """)
     t.append("</div>")
-    t.append(fuss(meta=f"Stand {lang(heute)}"))
+    t.append(fuss(ende=False))
+
+    # --- Die Tagesmarke beim Lesen nachfuehren -------------------------------
+    # Die Seite ist statisch: Gebaut wird sie beim Wochenlauf, gelesen
+    # vielleicht drei Tage spaeter. Ohne dieses Skript stuende die Marke auf
+    # dem Tag des Laufs — als Stand korrekt bezeichnet, aber eben nicht heute.
+    #
+    # Das Skript ist reine Zugabe: Ohne JavaScript bleibt die Stand-Marke
+    # stehen und sagt die Wahrheit. Mit JavaScript wandert sie an den
+    # heutigen Tag und heisst dann auch so. Die Zustandsangaben der Eintraege
+    # ruehrt es nicht an — ob zu einer Sitzung eine Ausgabe vorliegt, weiss
+    # nur der Wochenlauf, nicht der Browser.
+    t.append("""<script>
+(function () {
+  var marke = document.getElementById("heute");
+  if (!marke) return;
+
+  var jetzt = new Date();
+  var tag = new Intl.DateTimeFormat("de-DE", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric"
+  }).format(jetzt);
+
+  var iso = jetzt.getFullYear() + "-"
+    + String(jetzt.getMonth() + 1).padStart(2, "0") + "-"
+    + String(jetzt.getDate()).padStart(2, "0");
+
+  // Der erste Termin, der noch nicht begonnen hat. Vor ihn gehoert die Marke.
+  var naechster = null;
+  document.querySelectorAll("ol.kalender > li[data-beginn]").forEach(function (li) {
+    if (naechster) return;
+    if (new Date(li.getAttribute("data-beginn")) > jetzt) naechster = li;
+  });
+
+  // Die Reihe ist nach Jahrgaengen aufgeteilt. insertBefore holt die Marke
+  // auch dann an die richtige Stelle, wenn das ein anderer Block ist.
+  if (naechster) naechster.parentNode.insertBefore(marke, naechster);
+
+  marke.querySelector("span").innerHTML = "Heute &middot; " + tag;
+  marke.setAttribute("data-stand", iso);
+})();
+</script>
+</body>
+</html>""")
 
     ziel = DOCS / "termine.html"
     ziel.write_text("\n".join(t), encoding="utf-8")

@@ -823,9 +823,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   <p class="note"><a class="doc" href="../index.html">Alle Ausgaben im Archiv</a></p>
 </section>
 </div>""")
-    t.append(fuss(hoch="../../",
-                  meta=f"Ausgabe KW {kw}/{jahr} &middot; erzeugt am "
-                       f"{dt.date.today().strftime('%d.%m.%Y')}"))
+    t.append(fuss(hoch="../../", meta=f"Ausgabe KW {kw}/{jahr}"))
     return "\n".join(t)
 
 
