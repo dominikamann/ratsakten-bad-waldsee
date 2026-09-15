@@ -45,8 +45,24 @@ class Handler(SimpleHTTPRequestHandler):
         pass
 
 
+class Server(ThreadingHTTPServer):
+    """Der Testserver schweigt auch, wenn der Browser die Verbindung kappt.
+
+    Ein Browser, der eine Seite fertig geladen hat, schliesst offene
+    Verbindungen ohne Abmeldung — der Server meldet das als
+    ConnectionResetError samt Traceback. Das ist erwartetes Verhalten und
+    kein Fehler, sieht in der Ausgabe des taeglichen Laufs aber aus wie
+    einer. Wer Rauschen nicht abstellt, liest irgendwann ueber die echten
+    Meldungen hinweg.
+    """
+
+    def handle_error(self, request, client_address):
+        if not isinstance(sys.exc_info()[1], (ConnectionResetError, BrokenPipeError)):
+            super().handle_error(request, client_address)
+
+
 def main():
-    server = ThreadingHTTPServer(("127.0.0.1", 0), partial(Handler, directory=str(DOCS)))
+    server = Server(("127.0.0.1", 0), partial(Handler, directory=str(DOCS)))
     Thread(target=server.serve_forever, daemon=True).start()
     origin = f"http://127.0.0.1:{server.server_port}"
     checks = 0
