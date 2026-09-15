@@ -527,6 +527,25 @@ p.fussnote{
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
 
+/* ---------- Legende ----------
+   Zwei Schreibweisen, die man kennen muss, standen als Einschuebe mitten im
+   Fliesstext: „… der Stadt Bad Waldsee. 25 : 0 : 1 heisst Ja : Nein :
+   Enthaltungen. SV-000/JJJJ ist die Vorlagennummer — …". Drei Gedanken in
+   einem Absatz, zwei davon in Schreibmaschinenschrift. Eine Legende gehoert
+   nicht in einen Satz, sondern neben das, was sie erklaert. */
+dl.legende{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 20px;
+  margin:14px 0 0;max-width:62ch;align-items:baseline;
+}
+dl.legende dt{white-space:nowrap}
+dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){
+  /* Nebeneinander wird es auf dem Telefon zu eng — untereinander mit
+     Einzug bleibt die Zuordnung erhalten. */
+  dl.legende{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.legende dd{margin:0 0 10px 0}
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -845,7 +864,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">14</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GR</p>
+    <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">14 Beschlüsse am 22. April 2024</h2>
     <ul class="beschluesse">
       <li><span class="sache">Sanierung Bad Waldsee "Altstadt III" – Sanierungssatzung – Verlängerung der Durchführungsfrist<span class="sv">SV-63/2024</span><span class="wortlaut">1. Die Änderungssatzung „Satzung zur Änderung der Sanierungssatzung für das Gebiet Altstadt III vom 09.03.2017“ wird beschlossen. 2. Die Satzung ist öffentlich bekannt zu machen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTHSE4Z5W6daQ7SqECMkl8XGecd5-AMOe5Bh6DGUe-8x/Sitzungsvorlage_SV-63-2024_1._Ergaenzung_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-63/2024 1. Ergänzung 1. Nachtrag</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQb9Y4Y6ciubCZklBHzO7tvDwvUajbILyxFIMVIU_eFf/Aenderungssatzung_zur_Sanierungssatzung_2017.pdf" target="_blank" rel="noopener noreferrer">Änderungssatzung zur Sanierungssatzung 2017</a></span></span><span class="erg">Einstimmig</span></li>
@@ -879,7 +898,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">3</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GA</p>
+    <p class="rubrik">Beschlossen · Gemeinsamer Ausschuss</p>
     <h2 class="headline">3 Beschlüsse am 23. April 2024</h2>
     <ul class="beschluesse">
       <li><span class="sache">16. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Sonderbaufläche "Agri-Solarpark Sankt Josef", Gemarkung Mittelurbach - Aufstellungsbeschluss<span class="sv">SV-34/2024</span><span class="wortlaut">1. Im Bereich nordöstlich von Unterurbach, Gemarkung Mittelurbach, Flst. Nr. 25 wird eine Fläche von ca. 8,34 ha von Fläche für die Landwirtschaft in Sonderbaufläche „Photovoltaik- Freiflächenanlage“ geändert. Grundlage ist die Darstellung im Lageplan vom 29.01.2024. 2. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 3. Die Verwaltung wird beauftragt, im weiteren Verfahren die frühzeitige Beteiligung der Öffentlichkeit nach § 3 Abs. 1 Baugesetzbuch (BauGB) und die Beteiligung der Behörden und Träger öffentlicher Belange nach § 4 Abs. 1 BauGB durchzuführen. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 16. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaafrrJtmrGiXjhwfRE10iezFa-Vs9S2N3TKi9oOC2t_/Sitzungsvorlage_SV-34-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-34/2024</a></span></span><span class="erg">Einstimmig</span></li>
@@ -943,9 +962,14 @@ section.gruppe{scroll-margin-top:14px}
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
-  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
-  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  der Stadt Bad Waldsee</a>.</p>
+  <dl class="legende">
+    <dt><span class="mono">25 : 0 : 1</span></dt>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dt><span class="mono">SV-000/JJJJ</span></dt>
+    <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
+    unter „Vorlagen“</dd>
+  </dl>
   <details class="mehr">
     <summary>Was dabei zu beachten ist</summary>
     <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus

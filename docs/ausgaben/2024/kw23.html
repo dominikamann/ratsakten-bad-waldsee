@@ -527,6 +527,25 @@ p.fussnote{
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
 
+/* ---------- Legende ----------
+   Zwei Schreibweisen, die man kennen muss, standen als Einschuebe mitten im
+   Fliesstext: „… der Stadt Bad Waldsee. 25 : 0 : 1 heisst Ja : Nein :
+   Enthaltungen. SV-000/JJJJ ist die Vorlagennummer — …". Drei Gedanken in
+   einem Absatz, zwei davon in Schreibmaschinenschrift. Eine Legende gehoert
+   nicht in einen Satz, sondern neben das, was sie erklaert. */
+dl.legende{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 20px;
+  margin:14px 0 0;max-width:62ch;align-items:baseline;
+}
+dl.legende dt{white-space:nowrap}
+dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){
+  /* Nebeneinander wird es auf dem Telefon zu eng — untereinander mit
+     Einzug bleibt die Zuordnung erhalten. */
+  dl.legende{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.legende dd{margin:0 0 10px 0}
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -805,7 +824,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">6</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GR</p>
+    <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">6 Beschlüsse am 3. Juni 2024</h2>
     <ul class="beschluesse">
       <li><span class="sache">Kläranlage Bad Waldsee: Durchführungsbeschluss für die Erweiterung und Sanierung der mechanischen Stufe<span class="sv">SV-82/2024</span><span class="wortlaut">1. Dem Durchführungsbeschluss zur Erweiterung und Sanierung der mechanischen Stufe auf der Kläranlage Bad Waldsee mit Kosten von circa 5 Millionen € wird zugestimmt. 2. Die Verwaltung wird beauftragt, die Arbeiten auszuschreiben und zu vergeben. 3. Die Finanzierung erfolgt über den Vermögensplan des Wirtschaftsplans 2024 des Eigenbetriebs Städt. Abwasserbeseitigung, Konto 0886. 4. Aufgrund der aktuellen teilweise nicht kalkulierbaren Kostensituation, insbesondere im Bereich der Maschinen- und Verfahrenstechnik, wird die Verwaltung ermächtigt, die entsprechenden Aufträge auch dann zu vergeben, wenn diese bis maximal 15 % über den angenommenen Kostenaufwand von 5 Millionen € liegen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZU4MlAlAW-sV__zhoDaBTTBhA9Y3xHaUMmMOU7nfu5jH/Sitzungsvorlage_SV-82-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-82/2024</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVFjkAcfNQojJWiZui3py5koYi8ZIiDWr7e-sT9x4HHU/Lageplan-_Klaeranlage_Bad_Waldsee_-_Erweiterung_und_Sanierung_der_mechanischen_Stufe.pdf" target="_blank" rel="noopener noreferrer">Lageplan: Kläranlage Bad Waldsee - Erweiterung und Sanierung der mechanischen Stufe</a></span></span><span class="erg">Einstimmig</span></li>
@@ -849,9 +868,14 @@ section.gruppe{scroll-margin-top:14px}
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
-  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
-  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  der Stadt Bad Waldsee</a>.</p>
+  <dl class="legende">
+    <dt><span class="mono">25 : 0 : 1</span></dt>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dt><span class="mono">SV-000/JJJJ</span></dt>
+    <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
+    unter „Vorlagen“</dd>
+  </dl>
   <details class="mehr">
     <summary>Was dabei zu beachten ist</summary>
     <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus

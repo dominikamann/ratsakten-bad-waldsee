@@ -527,6 +527,25 @@ p.fussnote{
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
 
+/* ---------- Legende ----------
+   Zwei Schreibweisen, die man kennen muss, standen als Einschuebe mitten im
+   Fliesstext: „… der Stadt Bad Waldsee. 25 : 0 : 1 heisst Ja : Nein :
+   Enthaltungen. SV-000/JJJJ ist die Vorlagennummer — …". Drei Gedanken in
+   einem Absatz, zwei davon in Schreibmaschinenschrift. Eine Legende gehoert
+   nicht in einen Satz, sondern neben das, was sie erklaert. */
+dl.legende{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 20px;
+  margin:14px 0 0;max-width:62ch;align-items:baseline;
+}
+dl.legende dt{white-space:nowrap}
+dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){
+  /* Nebeneinander wird es auf dem Telefon zu eng — untereinander mit
+     Einzug bleibt die Zuordnung erhalten. */
+  dl.legende{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.legende dd{margin:0 0 10px 0}
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -812,7 +831,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">9</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GR</p>
+    <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">9 Beschlüsse am 9. Dezember 2024</h2>
     <ul class="beschluesse">
       <li><span class="sache">Jahresabschluss 2023 Eigenbetrieb Städt. Abwasserbeseitigung<span class="sv">SV-195/2024</span><span class="wortlaut">Der Jahresabschluss 2023 wird wie folgt zum Beschluss vorgeschlagen: 1. Feststellung des Jahresabschlusses: 1. Erfolgsrechnung 1.1 Summe Erträge 5.972.727,85 1.2 Summe Aufwendungen 6.238.006,20 1.3 Jahresüberschuss/Jahresfehlbetrag (Saldo aus 1.1 und 1.2) -265.278,35 2. Liquiditätsrechnung 2.1 Zahlungsmittelüberschuss/-bedarf aus laufender Geschäftstätigkeit 1.508.208,71 2.2 Finanzierungsmittelüberschuss/-bedarf aus Investitionstätigkeit -2.639.020,72 2.3 Finanzierungsmittelüberschuss/-bedarf (Saldo aus 2.1 und 2.4) -1.130.812,01 2.4 Finanzierungsmittelüberschuss/-bedarf aus Finanzierungstätigkeit 1.369.596,33 2.5 Änderungdes Finanzierungsmittelbestans zum Ende des Wirtschaftsjahres (Saldo aus 2.3 und 2.4) 238.784,32 2.6 Überschuss/Bedarf aus wirtschaftsplanunwirksamen Einzahlungen und Auszahlungen 0,00 3. Bilanzsumme 31.023.283,64 2. Verwendung des Jahresfehlbetrags Verwendung des Jahresfehlbetrags Euro 1. Verrechnung mit Gewinnvortrag -265.278,35 2. Einstellung in Rücklagen 3. Abführung an den Haushalt der Stadt 4. Vortrag auf neue Rechnung 3. Der Betriebsleitung wird Entlastung erteilt. 4. Der festgestellte Jahresabschluss ist ortsüblich bekanntzugeben und mit dem Lagebericht an sieben Tagen öffentlich auszulegen. In der Bekanntgabe ist auf die Auslegung hinzuweisen Bad Waldsee, Matthias Henne Oberbürgermeister</span></span><span class="erg">Einstimmig</span></li>
@@ -859,9 +878,14 @@ section.gruppe{scroll-margin-top:14px}
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
-  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
-  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  der Stadt Bad Waldsee</a>.</p>
+  <dl class="legende">
+    <dt><span class="mono">25 : 0 : 1</span></dt>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dt><span class="mono">SV-000/JJJJ</span></dt>
+    <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
+    unter „Vorlagen“</dd>
+  </dl>
   <details class="mehr">
     <summary>Was dabei zu beachten ist</summary>
     <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus

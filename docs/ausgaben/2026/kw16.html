@@ -527,6 +527,25 @@ p.fussnote{
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
 
+/* ---------- Legende ----------
+   Zwei Schreibweisen, die man kennen muss, standen als Einschuebe mitten im
+   Fliesstext: „… der Stadt Bad Waldsee. 25 : 0 : 1 heisst Ja : Nein :
+   Enthaltungen. SV-000/JJJJ ist die Vorlagennummer — …". Drei Gedanken in
+   einem Absatz, zwei davon in Schreibmaschinenschrift. Eine Legende gehoert
+   nicht in einen Satz, sondern neben das, was sie erklaert. */
+dl.legende{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 20px;
+  margin:14px 0 0;max-width:62ch;align-items:baseline;
+}
+dl.legende dt{white-space:nowrap}
+dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){
+  /* Nebeneinander wird es auf dem Telefon zu eng — untereinander mit
+     Einzug bleibt die Zuordnung erhalten. */
+  dl.legende{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.legende dd{margin:0 0 10px 0}
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -883,7 +902,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">9</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GR</p>
+    <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">9 Beschlüsse am 13. April 2026</h2>
     <ul class="beschluesse">
       <li><span class="sache">Wahl des 2. Stellvertreters des Ortsvorstehers im Ortschaftsrat Reute-Gaisbeuren<span class="sv">SV-66/2026</span><span class="wortlaut">Der Gemeinderat wählt auf Vorschlag des Ortschaftsrats Reute-Gaisbeuren Herrn Hubert Gärtner für die verbleibenden vier Jahre der Amtsperiode 2024–2029 zum 2. stellvertretenden Ortsvorsteher.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZd7WpE22lin7oWWd1_VRIwW_ZfJoI8S3DXpicbYulRGM/Sitzungsvorlage_SV-66-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-66/2026</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZe9ODfps7cuXM2Ofh1_lNqCarmDo3kav-Ygl7zHpUI5Q/Schreiben_Ortsvorsteher_Achim_Strobel.pdf" target="_blank" rel="noopener noreferrer">Schreiben Ortsvorsteher Achim Strobel</a></span></span><span class="erg">Einstimmig</span></li>
@@ -912,7 +931,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">2</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GA</p>
+    <p class="rubrik">Beschlossen · Gemeinsamer Ausschuss</p>
     <h2 class="headline">2 Beschlüsse am 15. April 2026</h2>
     <ul class="beschluesse">
       <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-16/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 09.01.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden wird in der Planfassung vom 09.01.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu ge ben. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 22. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdFFi-BodShHIXlQXiOv79atYMuM8ugWHzVvz7EBI1dS/Sitzungsvorlage_SV-16-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-16/2026</a></span></span><span class="erg">Einstimmig</span></li>
@@ -975,9 +994,14 @@ section.gruppe{scroll-margin-top:14px}
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
-  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
-  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  der Stadt Bad Waldsee</a>.</p>
+  <dl class="legende">
+    <dt><span class="mono">25 : 0 : 1</span></dt>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dt><span class="mono">SV-000/JJJJ</span></dt>
+    <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
+    unter „Vorlagen“</dd>
+  </dl>
   <details class="mehr">
     <summary>Was dabei zu beachten ist</summary>
     <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus

@@ -527,6 +527,25 @@ p.fussnote{
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
 
+/* ---------- Legende ----------
+   Zwei Schreibweisen, die man kennen muss, standen als Einschuebe mitten im
+   Fliesstext: „… der Stadt Bad Waldsee. 25 : 0 : 1 heisst Ja : Nein :
+   Enthaltungen. SV-000/JJJJ ist die Vorlagennummer — …". Drei Gedanken in
+   einem Absatz, zwei davon in Schreibmaschinenschrift. Eine Legende gehoert
+   nicht in einen Satz, sondern neben das, was sie erklaert. */
+dl.legende{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 20px;
+  margin:14px 0 0;max-width:62ch;align-items:baseline;
+}
+dl.legende dt{white-space:nowrap}
+dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){
+  /* Nebeneinander wird es auf dem Telefon zu eng — untereinander mit
+     Einzug bleibt die Zuordnung erhalten. */
+  dl.legende{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.legende dd{margin:0 0 10px 0}
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -790,7 +809,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">7</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GR</p>
+    <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">7 Beschlüsse am 29. Januar 2024</h2>
     <ul class="beschluesse">
       <li><span class="sache">Haushaltsplan und Haushaltssatzung 2024 – Große Kreisstadt Bad Waldsee<span class="sv">SV-252/2023</span><span class="wortlaut">Der Haushaltssatzung 2024 wird wie folgt zum Beschluss vorgeschlagen: § 1 Ergebnishaushalt und Finanzhaushalt 1. im Ergebnishaushalt mit den folgenden Beträgen 1.1 Gesamtbetrag der ordentlichen Erträge von 62.150.100 EUR 1.2 Gesamtbetrag der ordentlichen Aufwendungen von 63.465.100 EUR 1.3 Veranschlagtes ordentliches Ergebnis (Saldo aus 1.1 und 1.2) von -1.315.000 EUR 1.4 Gesamtbetrag der außerordentlichen Erträge von 700.000 EUR 1.5 Gesamtbetrag der außerordentlichen Aufwendungen von -- EUR 1.6 Veranschlagtes Sonderergebnis (Saldo aus 1.4 und 1.5) von 700.000 EUR 1.7 Veranschlagtes Gesamtergebnis (Summe aus 1.3 und 1.6) von -615.000 EUR 2. im Finanzhaushalt mit den folgenden Beträgen EUR 2.1 Gesamtbetrag der Einzahlungen aus laufender Verwaltungstätigkeit von 61.286.500 EUR 2.2 Gesamtbetrag der Auszahlungen aus laufender Verwaltungstätigkeit von 59.820.700 EUR 2.3 Zahlungsmittelüberschuss /-bedarf des Ergebnishaushalts (Saldo aus 2.1 und 2.2) von 1.465.800 EUR 2.4 Gesamtbetrag der Einzahlungen aus Investitionstätigkeit von 12.372.000 EUR 2.5 Gesamtbetrag der Auszahlungen aus Investitionstätigkeit von 34.673.700 EUR 2.6 Veranschlagter Finanzierungsmittelüberschuss /-bedarf aus Investitionstätigkeit (Saldo aus 2.4 und 2.5) von -22.301.700 EUR 2.7 Veranschlagter Finanzierungsmittelüberschuss /-bedarf (Saldo aus 2.3 und 2.6) von -20.835.900 EUR 2.9 Gesamtbetrag der Auszahlungen au …</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbj1D5dTaxfXsHJLtpwFU5UgHDbiBH_lT8GWI5MBYPeG/Sitzungsvorlage_SV-252-2023.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-252/2023</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZY0eXrtDUq1zJiOiC96sRXVHbgEsRn_RdICbo4O5Z89P/Haushaltsplan_2024_Bad_Waldsee.pdf" target="_blank" rel="noopener noreferrer">Haushaltsplan 2024 Bad Waldsee</a></span></span><span class="erg">Einstimmig</span></li>
@@ -852,9 +871,14 @@ section.gruppe{scroll-margin-top:14px}
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
-  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
-  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  der Stadt Bad Waldsee</a>.</p>
+  <dl class="legende">
+    <dt><span class="mono">25 : 0 : 1</span></dt>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dt><span class="mono">SV-000/JJJJ</span></dt>
+    <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
+    unter „Vorlagen“</dd>
+  </dl>
   <details class="mehr">
     <summary>Was dabei zu beachten ist</summary>
     <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus

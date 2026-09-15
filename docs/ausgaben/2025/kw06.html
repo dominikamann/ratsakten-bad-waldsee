@@ -527,6 +527,25 @@ p.fussnote{
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
 
+/* ---------- Legende ----------
+   Zwei Schreibweisen, die man kennen muss, standen als Einschuebe mitten im
+   Fliesstext: „… der Stadt Bad Waldsee. 25 : 0 : 1 heisst Ja : Nein :
+   Enthaltungen. SV-000/JJJJ ist die Vorlagennummer — …". Drei Gedanken in
+   einem Absatz, zwei davon in Schreibmaschinenschrift. Eine Legende gehoert
+   nicht in einen Satz, sondern neben das, was sie erklaert. */
+dl.legende{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 20px;
+  margin:14px 0 0;max-width:62ch;align-items:baseline;
+}
+dl.legende dt{white-space:nowrap}
+dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){
+  /* Nebeneinander wird es auf dem Telefon zu eng — untereinander mit
+     Einzug bleibt die Zuordnung erhalten. */
+  dl.legende{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.legende dd{margin:0 0 10px 0}
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -828,7 +847,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">10</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GR</p>
+    <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">10 Beschlüsse am 3. Februar 2025</h2>
     <ul class="beschluesse">
       <li><span class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R 18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung der frühzeitigen Beteiligung, Aufstellungs- und Entwurfsbeschluss<span class="sv">SV-249/2024</span><span class="wortlaut">1. Am nordöstlichen Ende von Reute werden die Grundstücke Flst. Nrn. 233 (Teilfläche) und 237 (Teilfläche) von Fläche für die Landwirtschaft in Wohnbaufläche geändert. 2. Am östlichen Ende von Reute südlich des Durlesbachs werden die Grundstücke Flst. Nrn. 175 (Teilfläche), 175/1 (Teilfläche), 175/4 (Teilfläche), 175/5 (Teilfläche) und 336 (Teilfläche) von Wohnbaufläche in Fläche für die Landwirtschaft geändert. 3. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 4. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 16.12.2024 enthaltenen Beschlussvorschlägen abgewogen. 5. Die 20. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Wohnbaufläche im Bereich Drei Eichen VI sowie die Fläche für die Landwirtschaft südlich des Durlesbachs, Gemarkungen Reute und Gaisbeuren, wird in der übersandten Planfassung vom 16.12.2024 festgestellt. 6. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 7. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 20. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaWoj_bXhiIW6HNpDokyDwrmlblmz4vCLo_pSA-A2jyT/Sitzungsvorlage_SV-249-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-249/2024</a></span></span><span class="erg split">22 : 0 : 3</span></li>
@@ -858,7 +877,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">2</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · GA</p>
+    <p class="rubrik">Beschlossen · Gemeinsamer Ausschuss</p>
     <h2 class="headline">2 Beschlüsse am 4. Februar 2025</h2>
     <ul class="beschluesse">
       <li><span class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R 18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung der frühzeitigen Beteiligung, Aufstellungs- und Entwurfsbeschluss<span class="sv">SV-249/2024</span><span class="wortlaut">1. Am nordöstlichen Ende von Reute werden die Grundstücke Flst. Nrn. 233 (Teilfläche) und 237 (Teilfläche) von Fläche für die Landwirtschaft in Wohnbaufläche geändert. 2. Am östlichen Ende von Reute südlich des Durlesbachs werden die Grundstücke Flst. Nrn. 175 (Teilfläche), 175/1 (Teilfläche), 175/4 (Teilfläche), 175/5 (Teilfläche) und 336 (Teilfläche) von Wohnbaufläche in Fläche für die Landwirtschaft geändert. 2. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 3. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 16.12.2024 enthaltenen Beschlussvorschlägen abgewogen. 4. Die 20. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Wohnbaufläche im Bereich Drei Eichen VI sowie die Fläche für die Landwirtschaft südlich des Durlesbachs, Gemarkungen Reute und Gaisbeuren, wird in der übersandten Planfassung vom 16.12.2024 festgestellt. 5. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 6. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 20. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaWoj_bXhiIW6HNpDokyDwrmlblmz4vCLo_pSA-A2jyT/Sitzungsvorlage_SV-249-2024_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-249/2024 1. Nachtrag</a></span></span><span class="erg split">8 : 0 : 1</span></li>
@@ -898,9 +917,14 @@ section.gruppe{scroll-margin-top:14px}
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
-  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
-  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  der Stadt Bad Waldsee</a>.</p>
+  <dl class="legende">
+    <dt><span class="mono">25 : 0 : 1</span></dt>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dt><span class="mono">SV-000/JJJJ</span></dt>
+    <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
+    unter „Vorlagen“</dd>
+  </dl>
   <details class="mehr">
     <summary>Was dabei zu beachten ist</summary>
     <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus

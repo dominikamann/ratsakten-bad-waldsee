@@ -527,6 +527,25 @@ p.fussnote{
   margin:14px 0 0;max-width:62ch;line-height:1.55;
 }
 
+/* ---------- Legende ----------
+   Zwei Schreibweisen, die man kennen muss, standen als Einschuebe mitten im
+   Fliesstext: „… der Stadt Bad Waldsee. 25 : 0 : 1 heisst Ja : Nein :
+   Enthaltungen. SV-000/JJJJ ist die Vorlagennummer — …". Drei Gedanken in
+   einem Absatz, zwei davon in Schreibmaschinenschrift. Eine Legende gehoert
+   nicht in einen Satz, sondern neben das, was sie erklaert. */
+dl.legende{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 20px;
+  margin:14px 0 0;max-width:62ch;align-items:baseline;
+}
+dl.legende dt{white-space:nowrap}
+dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){
+  /* Nebeneinander wird es auf dem Telefon zu eng — untereinander mit
+     Einzug bleibt die Zuordnung erhalten. */
+  dl.legende{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.legende dd{margin:0 0 10px 0}
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -806,7 +825,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">7</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · AUT</p>
+    <p class="rubrik">Beschlossen · Ausschuss für Umwelt und Technik</p>
     <h2 class="headline">7 Beschlüsse am 17. Juni 2024</h2>
     <ul class="beschluesse">
       <li><span class="sache">Bebauungsplan "Am Rädlesbach" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Aufstellungsbeschluss<span class="sv">SV-85/2024</span><span class="wortlaut">1. Für den im Lageplan vom 16. Mai 2024 dargestellten Geltungsbereich mit ca. 5,31 Hektar wird der Bebauungsplan „Am Rädlesbach“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee, im beschleunigten Verfahren nach § 13a Baugesetzbuch (BauGB) aufgestellt. 2. Für den Bebauungsplan der Innenentwicklung soll ein „Urbanes Gebiet“ nach § 6a Baunutzungsverordnung (BauNVO) festgesetzt werden. 3. Dem städtebaulichen Entwurf vom 14. Mai 2023 wird zugestimmt. 4. Die Verwaltung wird beauftragt, den Aufstellungsbeschluss bekanntzumachen und das weitere Verfahren durchzuführen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQx_nqEujgoYW7s0SBSH9XTExkJjsyXTNhinwUFL9ovf/Sitzungsvorlage_SV-85-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-85/2024</a></span></span><span class="erg">13 : 0 : 0</span></li>
@@ -833,7 +852,7 @@ section.gruppe{scroll-margin-top:14px}
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">1</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · VA</p>
+    <p class="rubrik">Beschlossen · Verwaltungsausschuss</p>
     <h2 class="headline">1 Beschluss am 18. Juni 2024</h2>
     <ul class="beschluesse">
       <li><span class="sache">Erwerb einer Skulptur für die Außenanlage des neuen Verwaltungsgebäudes.<span class="sv">SV-120/2024</span><span class="wortlaut">1. Der Verwaltungsausschuss stimmt dem Erwerb der Skulptur „Bronzeboot Nr. 1“ des Bad Waldseer Künstlers Richard W. Allgaier zum Preis von 22.685 Euro zu. 2. Die Finanzierung erfolgt über die Investitionsmittel I-5110-1805.</span></span><span class="erg split">12 : 1 : 0</span></li>
@@ -872,9 +891,14 @@ section.gruppe{scroll-margin-top:14px}
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
-  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
-  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  der Stadt Bad Waldsee</a>.</p>
+  <dl class="legende">
+    <dt><span class="mono">25 : 0 : 1</span></dt>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dt><span class="mono">SV-000/JJJJ</span></dt>
+    <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
+    unter „Vorlagen“</dd>
+  </dl>
   <details class="mehr">
     <summary>Was dabei zu beachten ist</summary>
     <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus

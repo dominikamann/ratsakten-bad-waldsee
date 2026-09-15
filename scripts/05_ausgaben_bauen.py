@@ -96,6 +96,20 @@ ABSCHLUSS = re.compile(r"Satzungsbeschluss|als Satzung beschlossen|wird als Satz
 # betreffen. Liegt es weit zurueck, wird ein Rueckstand aufgearbeitet.
 RUECKSTAND = re.compile(r"Jahresabschluss\w*\s+(?:der\s+\w+\s+)?(\d{4})", re.I)
 
+# Fuer Rubriken: ein Name, den man lesen kann. Das Kuerzel („GR", „GA") ist
+# die Sprache des Ratsinformationssystems und sagt einem Buerger nichts; der
+# volle Name des Gemeinsamen Ausschusses ist dagegen 86 Zeichen lang und
+# sprengt jede Rubrikzeile.
+RUBRIKNAME = {
+    "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft "
+    "Bad Waldsee-Bergatreute": "Gemeinsamer Ausschuss",
+}
+
+
+def rubrikname(name: str) -> str:
+    return RUBRIKNAME.get(name, name)
+
+
 KURZ = {
     "Gemeinderat": "GR",
     "Verwaltungsausschuss": "VA",
@@ -949,7 +963,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">{len(liste)}</span></div>
   </div>
   <div class="body-col">
-    <p class="rubrik">Beschlossen · {e(kz)}</p>
+    <p class="rubrik">Beschlossen · {e(rubrikname(name))}</p>
     <h2 class="headline">{len(liste)} {'Beschluss' if len(liste) == 1 else 'Beschlüsse'} am {datum_lang(tag)}</h2>
     <ul class="beschluesse">""")
             for b in liste:
@@ -1126,9 +1140,14 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   <h3>Wie diese Ausgabe entsteht</h3>
   <p>Maschinell erzeugt aus den Beschlussprotokollen und Tagesordnungen des
   <a class="doc" href="https://ris.bad-waldsee.de/" rel="noopener">Ratsinformationssystems
-  der Stadt Bad Waldsee</a>. <span class="mono">25 : 0 : 1</span> heißt
-  Ja : Nein : Enthaltungen. <span class="mono">SV-000/JJJJ</span> ist die
-  Vorlagennummer — damit findet man den Vorgang dort unter „Vorlagen“.</p>
+  der Stadt Bad Waldsee</a>.</p>
+  <dl class="legende">
+    <dt><span class="mono">25 : 0 : 1</span></dt>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dt><span class="mono">SV-000/JJJJ</span></dt>
+    <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
+    unter „Vorlagen“</dd>
+  </dl>
   <details class="mehr">
     <summary>Was dabei zu beachten ist</summary>
     <p>Beschlusstitel stammen aus der Tagesordnung, Abstimmungsergebnisse wörtlich aus
