@@ -782,7 +782,12 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             laufend_hinweis += (
                 f'\n  <p class="fussnote">* Beschlussprotokolle sind meist zwei bis '
                 f'{KARENZ_TAGE} Tage nach der Sitzung abrufbar.</p>')
-    elif not w["beschluesse"] and not einordnung:
+    elif (not w["beschluesse"] and not einordnung
+            and len(w["sitzungen"]) <= 1):
+        # Bei mehreren Sitzungen entfaellt dieser Block: Der Untertitel nennt
+        # ihre Zahl, und „Sitzungen in diesem Zeitraum" fuehrt jede einzeln
+        # mit Datum und Stand auf. Eine Aufzaehlung derselben Gremien
+        # dazwischen war die dritte Nennung derselben Sache.
         n_sitz = len(w["sitzungen"])
         # „Ein Gremium tagte" ist eine Leerformel — welches, ist die Auskunft,
         # auf die es ankommt. Bei einer einzelnen Sitzung steht der Name
@@ -887,8 +892,20 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 teile.append(f'<a href="#{marke}-tops">{weitere} '
                              f"{'weiteres Thema' if weitere == 1 else 'weitere Themen'}</a>")
             if not teile:
-                teile.append("Protokoll steht noch aus" if not x["protokoll"]
-                             else "kein Beschluss protokolliert")
+                # „Steht noch aus" gilt nur, solange die Frist laeuft. Bei einer
+                # Sitzung von 2024 steht nichts mehr aus — dort ist schlicht
+                # keines abrufbar, und das ist eine andere Aussage.
+                if not x["protokoll"]:
+                    # `ausstehend` fuehrt genau die Sitzungen innerhalb der
+                    # Karenzfrist — dieselbe Quelle, aus der sich auch
+                    # entscheidet, was unter „Blinder Fleck" steht.
+                    frisch = any(a["datum"] == x["datum"]
+                                 and a["gremium"] == x["gremium"]
+                                 for a in w.get("ausstehend", []))
+                    teile.append("Protokoll steht noch aus" if frisch
+                                 else "kein Protokoll abrufbar")
+                else:
+                    teile.append("kein Beschluss protokolliert")
             was = " &middot; ".join(teile)
             punkte = (f"{len(x['tops'])} "
                       f"{'Punkt' if len(x['tops']) == 1 else 'Punkte'}"
