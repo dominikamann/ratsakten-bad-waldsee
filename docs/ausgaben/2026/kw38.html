@@ -420,6 +420,14 @@ article{
   display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;
   padding:48px 0;border-bottom:1px solid var(--rule);
 }
+/* Wo die Seitenspalte nur wiederholen wuerde, was schon im Seitenkopf steht,
+   entfaellt sie — und der Text bekommt die Breite. Berichtszeitraum,
+   Sitzungen und Beschluesse standen zweimal untereinander; auf dem Telefon
+   direkt hintereinander. */
+article.voll{grid-template-columns:minmax(0,1fr)}
+/* Der Einstiegssatz traegt die Nachricht und darf etwas groesser sein als
+   der Fliesstext — aber deutlich kleiner als eine Befund-Schlagzeile. */
+p.lage{font-size:19px;line-height:1.5;max-width:60ch}
 .rail{
   font-family:var(--mono);font-size:11.5px;line-height:1.55;
   color:var(--muted);display:flex;flex-direction:column;gap:15px;
@@ -454,6 +462,11 @@ ul.beschluesse li{
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 18px;
   padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline;
 }
+/* Die Zeile spannte sich ueber die volle Breite: Auf einem grossen Bildschirm
+   stand „Protokoll steht aus" einen halben Meter vom Gremiumsnamen entfernt
+   am rechten Rand, und die Zuordnung ging verloren. Die Liste bleibt deshalb
+   so breit, wie der Text lesbar ist. */
+ul.beschluesse{max-width:74ch}
 ul.beschluesse li:last-child{border-bottom:none}
 ul.beschluesse .sache{font-size:16px;line-height:1.45}
 ul.beschluesse .sache b{font-weight:600}
@@ -697,15 +710,10 @@ section.gruppe{scroll-margin-top:14px}
   <p class="zwischenstand"><b>Diese Woche läuft noch.</b> Die Ausgabe zeigt den Datenstand vom 15.09.2026 und wächst bis Sonntag, 20.09.2026. Was danach noch protokolliert wird, erscheint hier, sobald es abrufbar ist.</p>
 </header>
 
-<article>
-  <div class="rail">
-    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">12.09.–15.09.2026</span></div>
-    <div class="field"><span class="lab">Sitzungen</span><span class="val">1</span></div>
-    <div class="field"><span class="lab">Beschlüsse</span><span class="val">0</span></div>
-  </div>
+<article class="voll">
   <div class="body-col">
     <p class="rubrik">Zur Lage</p>
-    <p>Der <b>Verwaltungsausschuss</b> tagte am 15.09.2026 öffentlich. Das Beschlussprotokoll steht noch aus.*</p>
+    <p class="lage">Der <b>Verwaltungsausschuss</b> tagte am 15.09.2026 öffentlich. Das Beschlussprotokoll steht noch aus.*</p>
     <p class="fussnote">* Beschlussprotokolle sind meist zwei bis 14 Tage nach der Sitzung abrufbar.</p>
   </div>
 </article>

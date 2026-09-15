@@ -420,6 +420,14 @@ article{
   display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;
   padding:48px 0;border-bottom:1px solid var(--rule);
 }
+/* Wo die Seitenspalte nur wiederholen wuerde, was schon im Seitenkopf steht,
+   entfaellt sie — und der Text bekommt die Breite. Berichtszeitraum,
+   Sitzungen und Beschluesse standen zweimal untereinander; auf dem Telefon
+   direkt hintereinander. */
+article.voll{grid-template-columns:minmax(0,1fr)}
+/* Der Einstiegssatz traegt die Nachricht und darf etwas groesser sein als
+   der Fliesstext — aber deutlich kleiner als eine Befund-Schlagzeile. */
+p.lage{font-size:19px;line-height:1.5;max-width:60ch}
 .rail{
   font-family:var(--mono);font-size:11.5px;line-height:1.55;
   color:var(--muted);display:flex;flex-direction:column;gap:15px;
@@ -454,6 +462,11 @@ ul.beschluesse li{
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 18px;
   padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline;
 }
+/* Die Zeile spannte sich ueber die volle Breite: Auf einem grossen Bildschirm
+   stand „Protokoll steht aus" einen halben Meter vom Gremiumsnamen entfernt
+   am rechten Rand, und die Zuordnung ging verloren. Die Liste bleibt deshalb
+   so breit, wie der Text lesbar ist. */
+ul.beschluesse{max-width:74ch}
 ul.beschluesse li:last-child{border-bottom:none}
 ul.beschluesse .sache{font-size:16px;line-height:1.45}
 ul.beschluesse .sache b{font-weight:600}
@@ -696,15 +709,10 @@ section.gruppe{scroll-margin-top:14px}
   </div>
 </header>
 
-<article>
-  <div class="rail">
-    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">14.07.–20.07.2025</span></div>
-    <div class="field"><span class="lab">Sitzungen</span><span class="val">2</span></div>
-    <div class="field"><span class="lab">Beschlüsse</span><span class="val">0</span></div>
-  </div>
+<article class="voll">
   <div class="body-col">
     <p class="rubrik">Zur Lage</p>
-    <p>Öffentlich getagt haben der <b>Kulturbeirat (große Runde)</b> und der <b>Ortschaftsrat Haisterkirch</b> — 2 Sitzungen insgesamt. Nachlesbare Beschlüsse liegen daraus noch nicht vor.</p>
+    <p class="lage">Öffentlich getagt haben der <b>Kulturbeirat (große Runde)</b> und der <b>Ortschaftsrat Haisterkirch</b> — 2 Sitzungen insgesamt. Nachlesbare Beschlüsse liegen daraus noch nicht vor.</p>
 
   </div>
 </article>

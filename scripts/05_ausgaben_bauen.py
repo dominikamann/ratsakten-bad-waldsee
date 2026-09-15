@@ -734,15 +734,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                      f'{KARENZ_TAGE} Tage nach der Sitzung abrufbar.</p>')
 
         t.append(f"""
-<article>
-  <div class="rail">
-    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">{mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span></div>
-    <div class="field"><span class="lab">Sitzungen</span><span class="val">{n_sitz}</span></div>
-    <div class="field"><span class="lab">Beschlüsse</span><span class="val">0</span></div>
-  </div>
+<article class="voll">
   <div class="body-col">
     <p class="rubrik">Zur Lage</p>
-    <p>{satz}</p>
+    <p class="lage">{satz}</p>
 {liste}
   </div>
 </article>""")
