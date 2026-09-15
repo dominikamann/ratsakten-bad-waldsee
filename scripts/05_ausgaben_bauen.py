@@ -30,7 +30,7 @@ import logging
 import re
 from pathlib import Path
 
-from begriffe import begriffe_finden
+from begriffe import markieren
 from seite import fuss, kopf
 from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
                       haeufigkeiten_laden, leertrennung_reparieren,
@@ -724,6 +724,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # eine spaetere Aenderung an `lede` waere wirkungslos — der Kopf ist
     # dann laengst gebaut.
     lage_zeigt_sitzungen = False
+    # Jeder Begriff wird in einer Ausgabe nur einmal aufgemacht — beim
+    # ersten Vorkommen. Beim zweiten stoert die Erklaerung mehr, als sie
+    # hilft.
+    erklaert: set[str] = set()
     # Bloecke, die direkt nach dem Kopf stehen sollen.
     nach_kopf: list[str] = []
     # Bei genau einer Sitzung steht die Auskunft schon im Untertitel. Ein
@@ -884,7 +888,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 if b.get("betrag") and b["betrag"] >= BETRAGSSCHWELLE:
                     geld = (f"""<span class="betrag" title="größter im Beschlusstext """
                             f"""genannter Betrag">{euro(b['betrag'])}</span>""")
-                wortlaut = (f"""<span class="wortlaut">{e(b['wortlaut'])}</span>"""
+                # Erst maskieren, dann markieren: `markieren` erwartet
+                # Text ohne eigenes Markup und setzt selbst welches.
+                wortlaut = (f"""<span class="wortlaut">"""
+                            f"""{markieren(e(b['wortlaut']), erklaert)}</span>"""
                             if b.get("wortlaut") else "")
                 unterlagen = ""
                 if b.get("dokumente"):
@@ -892,7 +899,8 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                         f'<a href="{d["url"]}" target="_blank" rel="noopener noreferrer">'
                         f'{e(d["titel"])}</a>' for d in b["dokumente"])
                     unterlagen = f'<span class="unterlagen">{verweise}</span>' 
-                t.append(f"""      <li><span class="sache">{e(b['titel'])}"""
+                t.append(f"""      <li><span class="sache">"""
+                         f"""{markieren(e(b['titel']), erklaert)}"""
                          f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span>"""
                          f"""{wortlaut}{unterlagen}</span>"""
                          f"""<span class="erg{klasse}">{e(b['ergebnis'])}</span></li>""")
@@ -929,7 +937,11 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
 
     # --- Redaktionelle Einordnung, falls hinterlegt
     if einordnung:
-        absaetze = "\n".join(f"    <p>{e(a)}</p>" for a in einordnung.get("absaetze", []))
+        # Auch hier Amtsdeutsch — und diese Absaetze stehen weiter oben als
+        # manche Beschlussliste, in der derselbe Begriff sonst zuerst
+        # aufgemacht wuerde.
+        absaetze = "\n".join(f"    <p>{markieren(e(a), erklaert)}</p>"
+                             for a in einordnung.get("absaetze", []))
         geprueft = einordnung.get("status") == "geprueft"
         marke = ('<p class="herkunft geprueft">Redaktionell geprüft</p>' if geprueft else
                  '<p class="herkunft ki">KI-Deutung · am Beleg nachprüfbar</p>')
@@ -966,7 +978,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             klasse = "kasten"
             bloecke.append(f"""    <div class="{klasse}">
       <p class="lab">{e(h['art'])}</p>
-      <p>{e(h['text'])}</p>
+      <p>{markieren(e(h['text']), erklaert)}</p>
 {liste}    </div>""")
         t.append(f"""
 <article id="auffaelligkeiten">
@@ -987,48 +999,12 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
 </article>""")
 
-    # --- Begriffe, die in dieser Ausgabe vorkommen
-    # Steht bewusst vor den Beschlusslisten: Der Leser soll die Erklaerung
-    # haben, bevor er ueber den Begriff stolpert.
-    # Nur gegen den Text pruefen, den der Leser auch sieht. Wuerde man die
-    # ganze Wochenstruktur serialisieren, loesten Dateinamen von Anlagen und
-    # interne Felder Erklaerungen fuer Begriffe aus, die in der Ausgabe gar
-    # nicht vorkommen.
-    sichtbar = " ".join(filter(None, (
-        [b.get("titel") or "" for b in w["beschluesse"]]
-        + [b.get("wortlaut") or "" for b in w["beschluesse"]]
-        + [b.get("gremium") or "" for b in w["beschluesse"]]
-        + [s.get("gremium") or "" for s in w["sitzungen"]]
-        + [b.get("gremium") or "" for b in w["blind"]]
-        + [h["art"] + " " + h["text"] for h in hinweise]
-    )))
-    gefunden = begriffe_finden(sichtbar)
-    if gefunden:
-        eintraege = "\n".join(
-            f"""      <div class="begriff">
-        <p class="wort">{e(b['name'])}</p>
-        <p>{b['satz']}</p>
-        <p class="fundstelle">{e(b['fundstelle'])}</p>
-      </div>""" for b in gefunden)
-        t.append(f"""
-<article id="begriffe">
-  <div class="rail">
-    <div class="field"><span class="lab">Begriffe</span><span class="val">{len(gefunden)}</span></div>
-    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">Begriffe</p>
-    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
-    <h2 class="headline">Was die Amtssprache meint</h2>
-    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
-    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
-    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
-    <details class="begriffe" open>
-      <summary>{len(gefunden)} Begriffe in dieser Ausgabe</summary>
-{eintraege}
-    </details>
-  </div>
-</article>""")
+    # Die Begriffe standen bis hierher als eigener Abschnitt am Ende der
+    # Ausgabe. Wer beim Lesen ueber ein Wort stolperte, fand die Antwort
+    # erst, wenn er ohnehin schon weiter war — und musste dafuer die
+    # Stelle verlassen, an der die Frage aufkam. Die Erklaerungen stehen
+    # jetzt im Text, beim ersten Vorkommen des Begriffs: siehe
+    # `begriffe.markieren`.
 
     # --- Sitzungen im Berichtszeitraum, Protokoll noch nicht abrufbar
     # Bewusst vor dem „Blinden Fleck", bewusst wertungsfrei — und bewusst
@@ -1042,7 +1018,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     if w.get("ausstehend") and not lage_zeigt_sitzungen:
         aus = sorted(w["ausstehend"], key=lambda x: x["datum"])
         zeilen = "".join(
-            f"      <li><span class=\"sache\">{e(b['gremium'])}"
+            f"      <li><span class=\"sache\">{markieren(e(b['gremium']), erklaert)}"
             f"<span class=\"sv\">Sitzung vom {b['datum'].strftime('%d.%m.%Y')}</span></span>"
             f"<span class=\"erg\">Protokoll steht aus*</span></li>\n"
             for b in aus)
@@ -1065,7 +1041,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # --- Blinder Fleck
     if w["blind"]:
         zeilen = "".join(
-            f"      <li><span class=\"sache\">{e(b['gremium'])}"
+            f"      <li><span class=\"sache\">{markieren(e(b['gremium']), erklaert)}"
             f"<span class=\"sv\">Sitzung vom {b['datum'].strftime('%d.%m.%Y')}</span></span>"
             f"<span class=\"erg split\">kein Protokoll</span></li>\n"
             for b in sorted(w["blind"], key=lambda x: x["datum"]))
@@ -1154,7 +1130,8 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   der Stadt Bad Waldsee</a>.</p>
   <dl class="legende">
     <dt><span class="mono">25 : 0 : 1</span></dt>
-    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen — <i>Beispiel</i>; in den Beschlüssen
+    oben stehen die tatsächlichen Verhältnisse</dd>
     <dt><span class="mono">SV-000/JJJJ</span></dt>
     <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
     unter „Vorlagen“</dd>

@@ -554,6 +554,57 @@ dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
 p.wann{font-size:17px;margin:0 0 4px}
 p.wann b{font-weight:600}
 
+/* ---------- Begriff im Text erklaert ----------
+   Die Erklaerung steht dort, wo das Wort steht — nicht als Kapitel am Ende,
+   das man erst erreicht, wenn die Frage laengst aufgekommen ist.
+
+   Ohne JavaScript: Sichtbar wird sie ueber `:hover` fuer die Maus und
+   `:focus-within` fuers Antippen und die Tastatur. Das Wort traegt dafuer
+   `tabindex`. Im Ausdruck und in der iOS-Dateivorschau, wo weder gezeigt noch
+   getippt werden kann, steht die Erklaerung ausgeschrieben da. */
+.erklaert{
+  position:relative;
+  border-bottom:1px dotted var(--s1);
+  cursor:help;
+}
+.erklaert:focus{outline:2px solid var(--s1);outline-offset:2px}
+.erklaert > .tooltip{
+  position:absolute;left:0;top:calc(100% + 8px);z-index:20;
+  display:none;width:max(260px,min(38ch,80vw));
+  padding:13px 15px;background:var(--surface);
+  border-left:3px solid var(--s1);box-shadow:var(--shadow);
+  font-family:var(--sans);font-size:14.5px;line-height:1.5;
+  font-weight:400;font-style:normal;color:var(--ink-2);
+  text-align:left;white-space:normal;
+}
+.erklaert > .tooltip b{display:block;color:var(--ink);margin-bottom:4px}
+.erklaert > .tooltip .fundstelle{
+  display:block;margin-top:8px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.04em;color:var(--muted);
+}
+.erklaert:hover > .tooltip,
+.erklaert:focus-within > .tooltip{display:block}
+
+/* Auf dem Telefon taugt ein Kasten am Wort nicht: Steht der Begriff weit
+   links oder rechts, ragt die Erklaerung aus dem Bild — am Wort ausgerichtet
+   laesst sich das nicht loesen, weil das Wort ueberall stehen kann. Sie legt
+   sich deshalb als Leiste an den unteren Rand, wo sie immer vollstaendig
+   sichtbar ist und den Text nicht verschiebt. */
+@media (max-width:620px){
+  .erklaert > .tooltip{
+    position:fixed;left:12px;right:12px;bottom:12px;top:auto;
+    width:auto;max-height:50vh;overflow-y:auto;
+    box-shadow:0 -6px 24px rgba(0,0,0,.45);
+  }
+}
+
+@media print{
+  .erklaert > .tooltip{
+    display:block;position:static;width:auto;margin:6px 0;
+    box-shadow:none;
+  }
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -769,9 +820,9 @@ section.gruppe{scroll-margin-top:14px}
     <h2 class="headline">6 Beschlüsse am 24. März 2025</h2>
     <ul class="beschluesse">
       <li><span class="sache">Benennung des Weges Flst. Nr. 319, Flst. Nr. 300 (Teilfläche) und Flst. Nr. 300/1 (Teilfläche), Gemarkung Waldsee<span class="sv">SV-24/2025</span><span class="wortlaut">1. Der Gemeinderat stimmt dem Vorschlag der Verwaltung zur Benennung des Wegs auf den Flurstücken Nr. 319, Nr. 300 (Teilfläche) und Nr. 300/1 (Teilfläche) zu. 2. Die Verwaltung wird beauftragt, die für die Benennung des Wegs erforderlichen Schritte einzuleiten und den Beschluss bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRiBmQS7DCck7HFFaV5dWZE23cxeSHf6_ycJ6IizaIjt/Sitzungsvorlage_SV-24-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-24/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWlp19QpGoKlb92H5hYziKYi26QQoCH9rBJHc6gBK-k_/Abgrenzung_Weg_Flst._Nr._319-_300_-Teilflaeche--_300-1_-Teilflaeche-.pdf" target="_blank" rel="noopener noreferrer">Abgrenzung Weg Flst. Nr. 319, 300 (Teilfläche), 300/1 (Teilfläche)</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Jahresabschluss 2020 der Stadt Bad Waldsee<span class="sv">SV-20/2025</span><span class="wortlaut">1. Dem Rechenschaftsbericht, dem Anhang und den Anlagen wird zugestimmt. 2. Der Leistung von über- und außerplanmäßigen Auszahlungen und Aufwendungen im Haushaltsjahr 2020 wird zugestimmt. 3. Aufgrund von § 95b der Gemeindeordnung für Baden-Württemberg wird der Jahresabschluss 2020 der Stadt Bad Waldsee wie folgt festgestellt: 1. Ergebnisrechnung EUR 1.1 Summe der ordentlichen Erträge 53.465.657,22 1.2 Summe der ordentlichen Aufwendungen -47.995.252,18 1.3 Ordentliches Ergebnis (Saldo aus 1.1 und 1.2) 5.470.405,04 1.4 Außerordentliche Erträge 387.781,41 1.5 Außerordentliche Aufwendungen -122.004,00 1.6 Sonderergebnis (Saldo aus 1.4 und 1.5) 265.777,41 1.7 Gesamtergebnis (Summe aus 1.3 und 1.6) 5.736.182,45 2. …</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQXQPWGQON1TLM_-iI62FmCBO1JFcx73eOcpBNRdyhU2/Sitzungsvorlage_SV-20-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-20/2025</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Jahresabschluss 2020 der Stadt Bad Waldsee<span class="sv">SV-20/2025</span><span class="wortlaut">1. Dem Rechenschaftsbericht, dem Anhang und den Anlagen wird zugestimmt. 2. Der Leistung von über- und <span class="erklaert" tabindex="0">außerplanmäßig<span class="tooltip" role="note"><b>Über- und außerplanmäßige Ausgaben</b> Ausgaben, die im beschlossenen Haushaltsplan nicht oder nicht in dieser Höhe vorgesehen waren. Sie sind zulässig, brauchen aber eine eigene Zustimmung. Sie kann vorab als einzelner Tagesordnungspunkt erfolgen oder nachträglich gesammelt im Jahresabschluss.<span class="fundstelle">Beschlussprotokolle; § 16 Abs. 4.2 Hauptsatzung für die Ortschaftsräte</span></span></span>en Auszahlungen und Aufwendungen im Haushaltsjahr 2020 wird zugestimmt. 3. Aufgrund von § 95b der Gemeindeordnung für Baden-Württemberg wird der <span class="erklaert" tabindex="0">Jahresabschluss<span class="tooltip" role="note"><b>Jahresabschluss und Entlastung</b> Die Rechnung über ein abgelaufenes Haushaltsjahr. Der Gemeinderat stellt sie fest und entscheidet über die Entlastung — eine Aussage darüber, dass die Mittel wie beschlossen verwendet wurden. Das Gesetz kennt dafür zwei Fristen: sechs Monate für die Aufstellung durch die Verwaltung und zwölf Monate für die Feststellung durch den Gemeinderat.<span class="fundstelle">§ 95b Gemeindeordnung für Baden-Württemberg</span></span></span> 2020 der Stadt Bad Waldsee wie folgt festgestellt: 1. Ergebnisrechnung EUR 1.1 Summe der ordentlichen Erträge 53.465.657,22 1.2 Summe der ordentlichen Aufwendungen -47.995.252,18 1.3 Ordentliches Ergebnis (Saldo aus 1.1 und 1.2) 5.470.405,04 1.4 Außerordentliche Erträge 387.781,41 1.5 Außerordentliche Aufwendungen -122.004,00 1.6 Sonderergebnis (Saldo aus 1.4 und 1.5) 265.777,41 1.7 Gesamtergebnis (Summe aus 1.3 und 1.6) 5.736.182,45 2. …</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQXQPWGQON1TLM_-iI62FmCBO1JFcx73eOcpBNRdyhU2/Sitzungsvorlage_SV-20-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-20/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Jahresabschluss 2021 der Stadt Bad Waldsee<span class="sv">SV-21/2025</span><span class="wortlaut">1. Dem Rechenschaftsbericht, dem Anhang und den Anlagen wird zugestimmt. 2. Der Leistung von über- und außerplanmäßigen Auszahlungen und Aufwendungen im Haushaltsjahr 2021 wird zugestimmt. 3. Aufgrund von § 95b der Gemeindeordnung für Baden-Württemberg wird der Jahresabschluss 2021 der Stadt Bad Waldsee wie folgt festgestellt: 1. Ergebnisrechnung EUR 1.1 Summe der ordentlichen Erträge 53.285.267,41 1.2 Summe der ordentlichen Aufwendungen -50.336.894,19 1.3 Ordentliches Ergebnis (Saldo aus 1.1 und 1.2) 2.948.373,22 1.4 Außerordentliche Erträge 4.605.353,75 1.5 Außerordentliche Aufwendungen -808,04 1.6 Sonderergebnis (Saldo aus 1.4 und 1.5) 4.604.545,71 1.7 Gesamtergebnis (Summe aus 1.3 und 1.6) 7.552.918,93 2. …</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbbnOuzdEpNKFTeObLM9adKw6h9tSpu7C89VSfRfwWjQ/Sitzungsvorlage_SV-21-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-21/2025</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Bauabrechnung Neubau Kindergarten in Reute mit zwei Gruppen<span class="sv">SV-32/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">3.081.765 €</span></span><span class="wortlaut">1. Die Informationen werden zur Kenntnis genommen. 2. Der Bauabrechnung in Höhe von insgesamt 3.081.765 €, den Mehrkosten von 281.765 € und den Zuwendungen von insgesamt 579.000 € wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZPKFTqaNybqLjUNgLt7pr8SvdYgbipa_35ScBZoPiR1/Sitzungsvorlage_SV-32-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-32/2025</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Bauabrechnung Neubau Kindergarten in Reute mit zwei Gruppen<span class="sv">SV-32/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">3.081.765 €</span></span><span class="wortlaut">1. Die Informationen werden <span class="erklaert" tabindex="0">zur Kenntnis<span class="tooltip" role="note"><b>Ohne Beschlussfassung</b> Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht abgestimmt. Das Protokoll führt ihn dann als „Ohne Beschlussfassung“ oder als Kenntnisnahme. Über den Inhalt sagt das nichts — wohl aber, dass das Gremium darüber nicht entschieden hat.<span class="fundstelle">Schreibweise der Beschlussprotokolle des Ratsinformationssystems</span></span></span> genommen. 2. Der Bauabrechnung in Höhe von insgesamt 3.081.765 €, den Mehrkosten von 281.765 € und den Zuwendungen von insgesamt 579.000 € wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZPKFTqaNybqLjUNgLt7pr8SvdYgbipa_35ScBZoPiR1/Sitzungsvorlage_SV-32-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-32/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Bauabrechnung Erweiterung Kindergarten Haisterkirch<span class="sv">SV-33/2025<span class="betrag" title="größter im Beschlusstext genannter Betrag">3.138.118 €</span></span><span class="wortlaut">1. Die Informationen werden zur Kenntnis genommen. 2. Der Bauabrechnung in Höhe von insgesamt 3.138.118 €, den Mehrkosten von 338.118 € und den Zuwendungen von insgesamt 434.900 € wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUISmqe9oi2Gp26RWCGUnbVqR_3lgiKaVpXzyfFRgpUO/Sitzungsvorlage_SV-33-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-33/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Vorkaufsrechtssatzung Ortsmitte Haisterkirch<span class="sv">SV-246/2024</span><span class="wortlaut">1. Für den im Lageplan dargestellten Geltungsbereich wird eine Vorkaufsrechtssatzung nach § 25 Baugesetzbuch (BauGB) gemäß beigefügtem Satzungsentwurf beschlossen. 2. Die Verwaltung wird beauftragt, die Vorkaufsrechtssatzung bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVSsNbzKfySHMAtF_QZSVTNqwlxGll09D-1IY3oph_kW/Sitzungsvorlage_SV-246-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-246/2024</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZR4w45e54WCjfrdN3WymAIAbv7d08Me4azPtNWF40hvp/VKR_Ortsmitte_Haisterkirch.pdf" target="_blank" rel="noopener noreferrer">VKR Ortsmitte Haisterkirch</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
@@ -815,44 +866,6 @@ section.gruppe{scroll-margin-top:14px}
   </div>
 </article>
 
-<article id="begriffe">
-  <div class="rail">
-    <div class="field"><span class="lab">Begriffe</span><span class="val">4</span></div>
-    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">Begriffe</p>
-    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
-    <h2 class="headline">Was die Amtssprache meint</h2>
-    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
-    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
-    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
-    <details class="begriffe" open>
-      <summary>4 Begriffe in dieser Ausgabe</summary>
-      <div class="begriff">
-        <p class="wort">Ortschaftsrat</p>
-        <p>Jede der vier Ortschaften hat einen eigenen Rat. Er berät die örtliche Verwaltung und ist zu wichtigen Angelegenheiten seiner Ortschaft zu hören. Darüber hinaus sind ihm bestimmte Entscheidungen übertragen, etwa die Bewirtschaftung von Haushaltsmitteln über 3.000 € bis 26.000 € im Einzelfall.</p>
-        <p class="fundstelle">§ 16 Hauptsatzung der Stadt Bad Waldsee</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Ohne Beschlussfassung</p>
-        <p>Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht abgestimmt. Das Protokoll führt ihn dann als „Ohne Beschlussfassung“ oder als Kenntnisnahme. Über den Inhalt sagt das nichts — wohl aber, dass das Gremium darüber nicht entschieden hat.</p>
-        <p class="fundstelle">Schreibweise der Beschlussprotokolle des Ratsinformationssystems</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Jahresabschluss und Entlastung</p>
-        <p>Die Rechnung über ein abgelaufenes Haushaltsjahr. Der Gemeinderat stellt sie fest und entscheidet über die Entlastung — eine Aussage darüber, dass die Mittel wie beschlossen verwendet wurden. Das Gesetz kennt dafür zwei Fristen: sechs Monate für die Aufstellung durch die Verwaltung und zwölf Monate für die Feststellung durch den Gemeinderat.</p>
-        <p class="fundstelle">§ 95b Gemeindeordnung für Baden-Württemberg</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Über- und außerplanmäßige Ausgaben</p>
-        <p>Ausgaben, die im beschlossenen Haushaltsplan nicht oder nicht in dieser Höhe vorgesehen waren. Sie sind zulässig, brauchen aber eine eigene Zustimmung. Sie kann vorab als einzelner Tagesordnungspunkt erfolgen oder nachträglich gesammelt im Jahresabschluss.</p>
-        <p class="fundstelle">Beschlussprotokolle; § 16 Abs. 4.2 Hauptsatzung für die Ortschaftsräte</p>
-      </div>
-    </details>
-  </div>
-</article>
-
 <article>
   <div class="rail">
     <div class="field"><span class="lab">Betroffen</span><span class="val">1 Sitzung(en)</span></div>
@@ -864,7 +877,7 @@ section.gruppe{scroll-margin-top:14px}
     <p>Diese Gremien tagten öffentlich; im Ratsinformationssystem ist zu ihnen keine
     Niederschrift abrufbar:</p>
     <ul class="beschluesse">
-      <li><span class="sache">Ortschaftsrat Mittelurbach<span class="sv">Sitzung vom 27.03.2025</span></span><span class="erg split">kein Protokoll</span></li>
+      <li><span class="sache"><span class="erklaert" tabindex="0">Ortschaftsrat<span class="tooltip" role="note"><b>Ortschaftsrat</b> Jede der vier Ortschaften hat einen eigenen Rat. Er berät die örtliche Verwaltung und ist zu wichtigen Angelegenheiten seiner Ortschaft zu hören. Darüber hinaus sind ihm bestimmte Entscheidungen übertragen, etwa die Bewirtschaftung von Haushaltsmitteln über 3.000 € bis 26.000 € im Einzelfall.<span class="fundstelle">§ 16 Hauptsatzung der Stadt Bad Waldsee</span></span></span> Mittelurbach<span class="sv">Sitzung vom 27.03.2025</span></span><span class="erg split">kein Protokoll</span></li>
     </ul>
     <div class="kasten">
       <p class="lab">Wiederkehrende Rubrik</p>
@@ -915,7 +928,8 @@ section.gruppe{scroll-margin-top:14px}
   der Stadt Bad Waldsee</a>.</p>
   <dl class="legende">
     <dt><span class="mono">25 : 0 : 1</span></dt>
-    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen — <i>Beispiel</i>; in den Beschlüssen
+    oben stehen die tatsächlichen Verhältnisse</dd>
     <dt><span class="mono">SV-000/JJJJ</span></dt>
     <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
     unter „Vorlagen“</dd>

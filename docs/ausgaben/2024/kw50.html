@@ -554,6 +554,57 @@ dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
 p.wann{font-size:17px;margin:0 0 4px}
 p.wann b{font-weight:600}
 
+/* ---------- Begriff im Text erklaert ----------
+   Die Erklaerung steht dort, wo das Wort steht — nicht als Kapitel am Ende,
+   das man erst erreicht, wenn die Frage laengst aufgekommen ist.
+
+   Ohne JavaScript: Sichtbar wird sie ueber `:hover` fuer die Maus und
+   `:focus-within` fuers Antippen und die Tastatur. Das Wort traegt dafuer
+   `tabindex`. Im Ausdruck und in der iOS-Dateivorschau, wo weder gezeigt noch
+   getippt werden kann, steht die Erklaerung ausgeschrieben da. */
+.erklaert{
+  position:relative;
+  border-bottom:1px dotted var(--s1);
+  cursor:help;
+}
+.erklaert:focus{outline:2px solid var(--s1);outline-offset:2px}
+.erklaert > .tooltip{
+  position:absolute;left:0;top:calc(100% + 8px);z-index:20;
+  display:none;width:max(260px,min(38ch,80vw));
+  padding:13px 15px;background:var(--surface);
+  border-left:3px solid var(--s1);box-shadow:var(--shadow);
+  font-family:var(--sans);font-size:14.5px;line-height:1.5;
+  font-weight:400;font-style:normal;color:var(--ink-2);
+  text-align:left;white-space:normal;
+}
+.erklaert > .tooltip b{display:block;color:var(--ink);margin-bottom:4px}
+.erklaert > .tooltip .fundstelle{
+  display:block;margin-top:8px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.04em;color:var(--muted);
+}
+.erklaert:hover > .tooltip,
+.erklaert:focus-within > .tooltip{display:block}
+
+/* Auf dem Telefon taugt ein Kasten am Wort nicht: Steht der Begriff weit
+   links oder rechts, ragt die Erklaerung aus dem Bild — am Wort ausgerichtet
+   laesst sich das nicht loesen, weil das Wort ueberall stehen kann. Sie legt
+   sich deshalb als Leiste an den unteren Rand, wo sie immer vollstaendig
+   sichtbar ist und den Text nicht verschiebt. */
+@media (max-width:620px){
+  .erklaert > .tooltip{
+    position:fixed;left:12px;right:12px;bottom:12px;top:auto;
+    width:auto;max-height:50vh;overflow-y:auto;
+    box-shadow:0 -6px 24px rgba(0,0,0,.45);
+  }
+}
+
+@media print{
+  .erklaert > .tooltip{
+    display:block;position:static;width:auto;margin:6px 0;
+    box-shadow:none;
+  }
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -768,11 +819,11 @@ section.gruppe{scroll-margin-top:14px}
     <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">9 Beschlüsse am 9. Dezember 2024</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Jahresabschluss 2023 Eigenbetrieb Städt. Abwasserbeseitigung<span class="sv">SV-195/2024</span><span class="wortlaut">Der Jahresabschluss 2023 wird wie folgt zum Beschluss vorgeschlagen: 1. Feststellung des Jahresabschlusses: 1. Erfolgsrechnung 1.1 Summe Erträge 5.972.727,85 1.2 Summe Aufwendungen 6.238.006,20 1.3 Jahresüberschuss/Jahresfehlbetrag (Saldo aus 1.1 und 1.2) -265.278,35 2. Liquiditätsrechnung 2.1 Zahlungsmittelüberschuss/-bedarf aus laufender Geschäftstätigkeit 1.508.208,71 2.2 Finanzierungsmittelüberschuss/-bedarf aus Investitionstätigkeit -2.639.020,72 2.3 Finanzierungsmittelüberschuss/-bedarf (Saldo aus 2.1 und 2.4) -1.130.812,01 2.4 Finanzierungsmittelüberschuss/-bedarf aus Finanzierungstätigkeit 1.369.596,33 2.5 Änderungdes Finanzierungsmittelbestans zum Ende des Wirtschaftsjahres (Saldo aus 2.3 und 2.4) 238.784,32 2.6 Überschuss/Bedarf aus wirtschaftsplanunwirksamen Einzahlungen und Auszahlungen 0,00 3. Bilanzsumme 31.023.283,64 2. Verwendung des Jahresfehlbetrags Verwendung des Jahresfehlbetrags Euro 1. Verrechnung mit Gewinnvortrag -265.278,35 2. Einstellung in Rücklagen 3. Abführung an den Haushalt der Stadt 4. Vortrag auf neue Rechnung 3. Der Betriebsleitung wird Entlastung erteilt. 4. Der festgestellte Jahresabschluss ist ortsüblich bekanntzugeben und mit dem Lagebericht an sieben Tagen öffentlich auszulegen. In der Bekanntgabe ist auf die Auslegung hinzuweisen Bad Waldsee, Matthias Henne Oberbürgermeister</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Jahresabschluss 2023 Eigenbetrieb Städt. Abwasserbeseitigung<span class="sv">SV-195/2024</span><span class="wortlaut">Der <span class="erklaert" tabindex="0">Jahresabschluss<span class="tooltip" role="note"><b>Jahresabschluss und Entlastung</b> Die Rechnung über ein abgelaufenes Haushaltsjahr. Der Gemeinderat stellt sie fest und entscheidet über die Entlastung — eine Aussage darüber, dass die Mittel wie beschlossen verwendet wurden. Das Gesetz kennt dafür zwei Fristen: sechs Monate für die Aufstellung durch die Verwaltung und zwölf Monate für die Feststellung durch den Gemeinderat.<span class="fundstelle">§ 95b Gemeindeordnung für Baden-Württemberg</span></span></span> 2023 wird wie folgt zum Beschluss vorgeschlagen: 1. Feststellung des Jahresabschlusses: 1. Erfolgsrechnung 1.1 Summe Erträge 5.972.727,85 1.2 Summe Aufwendungen 6.238.006,20 1.3 Jahresüberschuss/Jahresfehlbetrag (Saldo aus 1.1 und 1.2) -265.278,35 2. Liquiditätsrechnung 2.1 Zahlungsmittelüberschuss/-bedarf aus laufender Geschäftstätigkeit 1.508.208,71 2.2 Finanzierungsmittelüberschuss/-bedarf aus Investitionstätigkeit -2.639.020,72 2.3 Finanzierungsmittelüberschuss/-bedarf (Saldo aus 2.1 und 2.4) -1.130.812,01 2.4 Finanzierungsmittelüberschuss/-bedarf aus Finanzierungstätigkeit 1.369.596,33 2.5 Änderungdes Finanzierungsmittelbestans zum Ende des Wirtschaftsjahres (Saldo aus 2.3 und 2.4) 238.784,32 2.6 Überschuss/Bedarf aus wirtschaftsplanunwirksamen Einzahlungen und Auszahlungen 0,00 3. Bilanzsumme 31.023.283,64 2. Verwendung des Jahresfehlbetrags Verwendung des Jahresfehlbetrags Euro 1. Verrechnung mit Gewinnvortrag -265.278,35 2. Einstellung in Rücklagen 3. Abführung an den Haushalt der Stadt 4. Vortrag auf neue Rechnung 3. Der Betriebsleitung wird Entlastung erteilt. 4. Der festgestellte Jahresabschluss ist ortsüblich bekanntzugeben und mit dem Lagebericht an sieben Tagen öffentlich auszulegen. In der Bekanntgabe ist auf die Auslegung hinzuweisen Bad Waldsee, Matthias Henne Oberbürgermeister</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Bestellung des Abschlussprüfers für das Geschäftsjahr 2024 für den Eigenbetrieb Städtische Rehakliniken<span class="sv">SV-205/2024</span><span class="wortlaut">Der Betriebsausschuss Städtische Rehakliniken schlägt dem Gemeinderat vor, als Abschlussprüfer für das Geschäftsjahr 2024 Herrn Dipl. Kaufmann Alius (Steuerberater und Wirtschaftsprüfer) in Ravensburg zu bestellen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZccKFDSy3sGJsCbPeHY5hSbGtmrgKWJ-RpVBKWCc94xV/Sitzungsvorlage_SV-205-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-205/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Bestellung des Abschlussprüfers für das Geschäftsjahr 2024 für die Kurbetriebe Bad Waldsee Dienstleistungs-GmbH<span class="sv">SV-207/2024</span><span class="wortlaut">Der Aufsichtsrat schlägt dem Gemeinderat vor, als Abschlussprüfer für das Geschäftsjahr 2024 Herrn Dipl. Kaufmann Alius (Steuerberater und Wirtschaftsprüfer) in Ravensburg zu bestellen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUceYq6vB8ycU-Xlm3U8BERz90DwWEKqPl8AYKcIOoNV/Sitzungsvorlage_SV-207-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-207/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Bestellung Abschlussprüfer für das Geschäftsjahr 2024 für die Stadtwerke Bad Waldsee GmbH<span class="sv">SV-241/2024</span><span class="wortlaut">Der Aufsichtsrat schlägt dem Gemeinderat vor, als Abschlussprüfer für das Geschäftsjahr 2024 Herrn Dipl. Kfm. Martin Alius, Steuerberatung und Wirtschaftsprüfung, Ravensburg zu bestellen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUSiXFyboD_Svy1TwKZTQKh_zEstFsyE3r73c-45qC6E/Sitzungsvorlage_SV-241-2024_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-241/2024 1. Nachtrag</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Beteiligungsbericht für das Jahr 2023<span class="sv">SV-152/2024</span><span class="wortlaut">1. Der Beteiligungsbericht für das Jahr 2023 wird zur Kenntnis genommen. 2. Der Einstufung der Beteiligungsunternehmen in die Steuerungsstufen wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSbpk5wSMVVNOWB33BLjgtz994vG2ux0S9uI0-o-uNZh/Sitzungsvorlage_SV-152-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-152/2024</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Beteiligungsbericht für das Jahr 2023<span class="sv">SV-152/2024</span><span class="wortlaut">1. Der Beteiligungsbericht für das Jahr 2023 wird <span class="erklaert" tabindex="0">zur Kenntnis<span class="tooltip" role="note"><b>Ohne Beschlussfassung</b> Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht abgestimmt. Das Protokoll führt ihn dann als „Ohne Beschlussfassung“ oder als Kenntnisnahme. Über den Inhalt sagt das nichts — wohl aber, dass das Gremium darüber nicht entschieden hat.<span class="fundstelle">Schreibweise der Beschlussprotokolle des Ratsinformationssystems</span></span></span> genommen. 2. Der Einstufung der Beteiligungsunternehmen in die Steuerungsstufen wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSbpk5wSMVVNOWB33BLjgtz994vG2ux0S9uI0-o-uNZh/Sitzungsvorlage_SV-152-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-152/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Grundsteuerreform 2025 - Festlegung der Hebesätze<span class="sv">SV-203/2024</span><span class="wortlaut">1. Die Hebesätze für die Grundsteuer ab 2025 werden festgelegt a) für die Betriebe der Land- und Forstwirtschaft (Grundsteuer A) auf 425 v.H., b) für die Grundstücke (Grundsteuer B) auf 220 v.H. der Steuermessbeträge. 3. Die beigefügte Satzung zur Erhebung der Grundsteuer (Hebesatzsatzung) wird beschlossen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZeScIDLbGxgRfvos04NMoWN1-adYn3yC73CBoxHaUiNs/Sitzungsvorlage_SV-203-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-203/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Kreditaufnahme für den Eigenbetrieb Städt. Abwasserbeseitigung<span class="sv">SV-240/2024</span><span class="wortlaut">Der Gemeinderat nimmt von der Neuaufnahme eines Darlehens über drei Millionen Euro für den Eigenbetrieb Städt. Abwasserbeseitigung zu Lasten der Kreditermächtigung 2023 Kenntnis und stimmt dieser zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXXxR6b4OyfKIh5NsBrgAZImpAbRdylan9bnJGGWy_0p/Sitzungsvorlage_SV-240-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-240/2024</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Beteiligung an der Kommunalen Beteiligungsgesellschaft Netze BW GmbH &amp; Co. KG<span class="sv">SV-242/2024<span class="betrag" title="größter im Beschlusstext genannter Betrag">5.000.000 €</span></span><span class="wortlaut">Der Gemeinderat stimmt der Verlängerung und der Aufstockung der Beteiligung an der Kommunalen Beteiligungsgesellschaft Netze BW GmbH &amp; Co. KG auf 5.000.000 €, vorbehaltlich der Zustimmung der Rechtsaufsichtsbehörde, um weitere fünf Jahre zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZW8JO058Jsk2K8wDOSTjtOdB3uUWGWkl0r_DwTyREkp3/Sitzungsvorlage_SV-242-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-242/2024</a></span></span><span class="erg split">17 : 7 : 0</span></li>
@@ -833,34 +884,6 @@ section.gruppe{scroll-margin-top:14px}
   </div>
 </article>
 
-<article id="begriffe">
-  <div class="rail">
-    <div class="field"><span class="lab">Begriffe</span><span class="val">2</span></div>
-    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">Begriffe</p>
-    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
-    <h2 class="headline">Was die Amtssprache meint</h2>
-    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
-    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
-    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
-    <details class="begriffe" open>
-      <summary>2 Begriffe in dieser Ausgabe</summary>
-      <div class="begriff">
-        <p class="wort">Ohne Beschlussfassung</p>
-        <p>Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht abgestimmt. Das Protokoll führt ihn dann als „Ohne Beschlussfassung“ oder als Kenntnisnahme. Über den Inhalt sagt das nichts — wohl aber, dass das Gremium darüber nicht entschieden hat.</p>
-        <p class="fundstelle">Schreibweise der Beschlussprotokolle des Ratsinformationssystems</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Jahresabschluss und Entlastung</p>
-        <p>Die Rechnung über ein abgelaufenes Haushaltsjahr. Der Gemeinderat stellt sie fest und entscheidet über die Entlastung — eine Aussage darüber, dass die Mittel wie beschlossen verwendet wurden. Das Gesetz kennt dafür zwei Fristen: sechs Monate für die Aufstellung durch die Verwaltung und zwölf Monate für die Feststellung durch den Gemeinderat.</p>
-        <p class="fundstelle">§ 95b Gemeindeordnung für Baden-Württemberg</p>
-      </div>
-    </details>
-  </div>
-</article>
-
 <article>
   <div class="rail">
     <div class="field"><span class="lab">Termin</span><span class="val">17.12.2024<br>19:30 Uhr</span></div>
@@ -889,7 +912,8 @@ section.gruppe{scroll-margin-top:14px}
   der Stadt Bad Waldsee</a>.</p>
   <dl class="legende">
     <dt><span class="mono">25 : 0 : 1</span></dt>
-    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen — <i>Beispiel</i>; in den Beschlüssen
+    oben stehen die tatsächlichen Verhältnisse</dd>
     <dt><span class="mono">SV-000/JJJJ</span></dt>
     <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
     unter „Vorlagen“</dd>

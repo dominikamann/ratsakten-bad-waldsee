@@ -554,6 +554,57 @@ dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
 p.wann{font-size:17px;margin:0 0 4px}
 p.wann b{font-weight:600}
 
+/* ---------- Begriff im Text erklaert ----------
+   Die Erklaerung steht dort, wo das Wort steht — nicht als Kapitel am Ende,
+   das man erst erreicht, wenn die Frage laengst aufgekommen ist.
+
+   Ohne JavaScript: Sichtbar wird sie ueber `:hover` fuer die Maus und
+   `:focus-within` fuers Antippen und die Tastatur. Das Wort traegt dafuer
+   `tabindex`. Im Ausdruck und in der iOS-Dateivorschau, wo weder gezeigt noch
+   getippt werden kann, steht die Erklaerung ausgeschrieben da. */
+.erklaert{
+  position:relative;
+  border-bottom:1px dotted var(--s1);
+  cursor:help;
+}
+.erklaert:focus{outline:2px solid var(--s1);outline-offset:2px}
+.erklaert > .tooltip{
+  position:absolute;left:0;top:calc(100% + 8px);z-index:20;
+  display:none;width:max(260px,min(38ch,80vw));
+  padding:13px 15px;background:var(--surface);
+  border-left:3px solid var(--s1);box-shadow:var(--shadow);
+  font-family:var(--sans);font-size:14.5px;line-height:1.5;
+  font-weight:400;font-style:normal;color:var(--ink-2);
+  text-align:left;white-space:normal;
+}
+.erklaert > .tooltip b{display:block;color:var(--ink);margin-bottom:4px}
+.erklaert > .tooltip .fundstelle{
+  display:block;margin-top:8px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.04em;color:var(--muted);
+}
+.erklaert:hover > .tooltip,
+.erklaert:focus-within > .tooltip{display:block}
+
+/* Auf dem Telefon taugt ein Kasten am Wort nicht: Steht der Begriff weit
+   links oder rechts, ragt die Erklaerung aus dem Bild — am Wort ausgerichtet
+   laesst sich das nicht loesen, weil das Wort ueberall stehen kann. Sie legt
+   sich deshalb als Leiste an den unteren Rand, wo sie immer vollstaendig
+   sichtbar ist und den Text nicht verschiebt. */
+@media (max-width:620px){
+  .erklaert > .tooltip{
+    position:fixed;left:12px;right:12px;bottom:12px;top:auto;
+    width:auto;max-height:50vh;overflow-y:auto;
+    box-shadow:0 -6px 24px rgba(0,0,0,.45);
+  }
+}
+
+@media print{
+  .erklaert > .tooltip{
+    display:block;position:static;width:auto;margin:6px 0;
+    box-shadow:none;
+  }
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -768,17 +819,17 @@ section.gruppe{scroll-margin-top:14px}
     <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">12 Beschlüsse am 21. Oktober 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Antrag Bündnis 90/Die Grünen - Großspeicher<span class="sv">SV-204/2025</span><span class="wortlaut">1. Dem Antrag der Fraktion Bündnis 90/Die Grünen wird zugestimmt. 2. Die Verwaltung wird beauftragt, auf der Gemarkung Bad Waldsee einen geeigneten Standort zu suchen und im Falle eines Antrags durch einen Investor ggfls. einen Bebauungsplan auf den Weg zu bringen und die Ansiedlung zu unterstützen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZU-e6H5znIFSoGMaYW3e6tYIcOvzDLLuby1DDgUIOmVY/Sitzungsvorlage_SV-204-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-204/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVvfmS-1E_dg7ttFJzt1mKlSomhwyf1RMAGtqkNJ2Acj/Antrag_Grossspeicher_Die_Fraktion_Buendnis90.pdf" target="_blank" rel="noopener noreferrer">Antrag_Großspeicher_Die Fraktion Bündnis90</a></span></span><span class="erg split">22 : 1 : 0</span></li>
+      <li><span class="sache">Antrag Bündnis 90/Die Grünen - Großspeicher<span class="sv">SV-204/2025</span><span class="wortlaut">1. Dem Antrag der Fraktion Bündnis 90/Die Grünen wird zugestimmt. 2. Die Verwaltung wird beauftragt, auf der Gemarkung Bad Waldsee einen geeigneten Standort zu suchen und im Falle eines Antrags durch einen Investor ggfls. einen <span class="erklaert" tabindex="0">Bebauungsplan<span class="tooltip" role="note"><b>Bebauungsplan</b> Der Plan, der für ein bestimmtes Gebiet verbindlich festlegt, was dort gebaut werden darf — Art und Maß der Bebauung, überbaubare Flächen, Verkehrsflächen. Anders als der Flächennutzungsplan, der nur die Grundzüge für das ganze Stadtgebiet umreißt, begründet er unmittelbar Baurecht: Ein Vorhaben ist dort zulässig, wenn es seinen Festsetzungen nicht widerspricht <b>und die Erschließung gesichert ist</b>.<span class="fundstelle">§ 1 Abs. 2, § 8 Abs. 1 und § 30 Abs. 1 Baugesetzbuch</span></span></span> auf den Weg zu bringen und die Ansiedlung zu unterstützen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZU-e6H5znIFSoGMaYW3e6tYIcOvzDLLuby1DDgUIOmVY/Sitzungsvorlage_SV-204-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-204/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVvfmS-1E_dg7ttFJzt1mKlSomhwyf1RMAGtqkNJ2Acj/Antrag_Grossspeicher_Die_Fraktion_Buendnis90.pdf" target="_blank" rel="noopener noreferrer">Antrag_Großspeicher_Die Fraktion Bündnis90</a></span></span><span class="erg split">22 : 1 : 0</span></li>
       <li><span class="sache">Zustimmung zur Wahl des Abteilungskommandanten und seines Stellvertreters der Freiwilligen Feuerwehr, Einsatzabteilung Reute-Gaisbeuren<span class="sv">SV-199/2025</span><span class="wortlaut">Der Gemeinderat stimmt der Wahl von: Herrn Bernd Miller zum Abteilungskommandanten und Herrn Markus Rist zum stellvertretenden Abteilungskommandanten der Einsatzabteilung Reute-Gaisbeuren zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRjDXcQTW4VW7q03_4_mzw-3iFYjJ4PgoLFFQZm7Z53_/Sitzungsvorlage_SV-199-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-199/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Anpassung der Elternbeiträge für die Ganztagesbetreuung ab dem 01.02.2026<span class="sv">SV-189/2025</span><span class="wortlaut">1. Die Elternbeiträge für Kinder über 3 Jahre in der Ganztagesbetreuung der Kindertagesstätten in Bad Waldsee werden zum 01.02.2026 auf 315,00 € pro Monat für 45 Stunden Betreuungszeit pro Woche für Familien mit einem Kind erhöht. Für eine abweichende Betreuungszeit verringert sich der Beitrag entsprechend. Für Familien mit mehr als einem Kind unter 18 Jahren werden die Beiträge entsprechend der bisherigen prozentualen Reduzierung gestaffelt. 2. Zukünftig wird dieser Beitrag entsprechend der gemeinsamen Empfehlungen der Kirchen und der Kommunalen Landesverbände Baden-Württemberg jährlich dynamisch erhöht.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZe13ZgXuwQWlHsHP2_v48pGVPBJuboxfuy7kZa6p7bE8/Sitzungsvorlage_SV-189-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-189/2025</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">17. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich der "2. Änderung des Sport- und Gesundheitsparks Hopfenweiler", Gemarkung Waldsee – Abwägungs- und Feststellungsbeschluss<span class="sv">SV-164/2025</span><span class="wortlaut">1. Die 17. Änderung des Flächennutzungsplans zur Ausweisung einer Sonderbaufläche mit der Zweckbestimmung „Gesundheit, Erholung, Freizeit“ entsprechend dem Bebauungsplan „Sport- und Gesundheitspark Hopfenweiler, 2. Änderung“, Gemarkung Waldsee wird entsprechend dem beigefügten Lageplan und der Begründung mit Umweltbericht, jeweils mit dem Datum vom 06.10.2025, festgestellt. 2. Die Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 06.10.2025 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, beim Regierungspräsidium Tübingen die Genehmigung zu be- antragen. 4. Die Verwaltung wird beauftragt, den Beschluss des gemeinsamen Ausschusses der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee - Bergatreute öffentlich bekannt zu machen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdl638IvJ807FpeT8F-CN1vaA3WK5fULg3GHKbfJgZ-_/Sitzungsvorlage_SV-164-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-164/2025</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Vorhabenbezogener Bebauungsplan "Frauenbergstraße-Friedhofstraße" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Abwägung und Satzungsbeschluss<span class="sv">SV-171/2025</span><span class="wortlaut">1. Der vorhabenbezogene Bebauungsplan „Frauenbergstraße - Friedhofstraße“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee werden gemäß den übersandten Sitzungsunterlagen in der Fassung vom 15.05.2025 und dem Satzungsentwurf auf den Seiten 28 und 29 als Satzung beschlossen. 2. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 15.05.2025 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, den vorhabenbezogenen Bebauungsplan „Frauenbergstraße- Friedhofstraße“ und die örtlichen Bauschriften hierzu, Gemarkung Waldsee öffentlich bekanntzumachen. 4. Die Verwaltung wird ermächtigt, den Durchführungsvertrag mit dem Vorhabenträger zu schließen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQvVTANV9fMp5GQold-vs-xJE24wJ5X_o9bFomdoLsXM/Sitzungsvorlage_SV-171-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-171/2025 (aktualisiert: 29.09.2025)</a></span></span><span class="erg split">20 : 1 : 2</span></li>
+      <li><span class="sache">17. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich der "2. Änderung des Sport- und Gesundheitsparks Hopfenweiler", Gemarkung Waldsee – Abwägungs- und <span class="erklaert" tabindex="0">Feststellungsbeschluss<span class="tooltip" role="note"><b>Feststellungsbeschluss</b> Der Abschluss eines Flächennutzungsplan-Verfahrens. Was beim Bebauungsplan der Satzungsbeschluss ist, ist hier der Feststellungsbeschluss — mit einem Unterschied: Der Flächennutzungsplan wird damit noch nicht wirksam. Er bedarf der Genehmigung der höheren Verwaltungsbehörde, und wirksam wird er erst, wenn deren Erteilung ortsüblich bekannt gemacht ist.<span class="fundstelle">§ 6 Abs. 1 und Abs. 5 Baugesetzbuch</span></span></span><span class="sv">SV-164/2025</span><span class="wortlaut">1. Die 17. Änderung des <span class="erklaert" tabindex="0">Flächennutzungsplan<span class="tooltip" role="note"><b>Flächennutzungsplan</b> Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht erst über den Bebauungsplan.<span class="fundstelle">§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch</span></span></span>s zur Ausweisung einer Sonderbaufläche mit der Zweckbestimmung „Gesundheit, Erholung, Freizeit“ entsprechend dem Bebauungsplan „Sport- und Gesundheitspark Hopfenweiler, 2. Änderung“, Gemarkung Waldsee wird entsprechend dem beigefügten Lageplan und der Begründung mit Umweltbericht, jeweils mit dem Datum vom 06.10.2025, festgestellt. 2. Die <span class="erklaert" tabindex="0">Stellungnahmen<span class="tooltip" role="note"><b>Abwägung</b> Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.<span class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</span></span></span> werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 06.10.2025 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, beim Regierungspräsidium Tübingen die Genehmigung zu be- antragen. 4. Die Verwaltung wird beauftragt, den Beschluss des <span class="erklaert" tabindex="0">gemeinsamen Ausschuss<span class="tooltip" role="note"><b>Gemeinsamer Ausschuss</b> Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.<span class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</span></span></span>es der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee - Bergatreute öffentlich bekannt zu machen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdl638IvJ807FpeT8F-CN1vaA3WK5fULg3GHKbfJgZ-_/Sitzungsvorlage_SV-164-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-164/2025</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Vorhabenbezogener Bebauungsplan "Frauenbergstraße-Friedhofstraße" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee - Abwägung und Satzungsbeschluss<span class="sv">SV-171/2025</span><span class="wortlaut">1. Der vorhabenbezogene Bebauungsplan „Frauenbergstraße - Friedhofstraße“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee werden gemäß den übersandten Sitzungsunterlagen in der Fassung vom 15.05.2025 und dem Satzungsentwurf auf den Seiten 28 und 29 <span class="erklaert" tabindex="0">als Satzung<span class="tooltip" role="note"><b>Satzungsbeschluss</b> Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.<span class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</span></span></span> beschlossen. 2. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 15.05.2025 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, den vorhabenbezogenen Bebauungsplan „Frauenbergstraße- Friedhofstraße“ und die örtlichen Bauschriften hierzu, Gemarkung Waldsee öffentlich bekanntzumachen. 4. Die Verwaltung wird ermächtigt, den Durchführungsvertrag mit dem Vorhabenträger zu schließen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQvVTANV9fMp5GQold-vs-xJE24wJ5X_o9bFomdoLsXM/Sitzungsvorlage_SV-171-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-171/2025 (aktualisiert: 29.09.2025)</a></span></span><span class="erg split">20 : 1 : 2</span></li>
       <li><span class="sache">Satzung über die Veränderungssperre für den Bereich der 1. Änderung des Bebauungsplanes "Biberacher Straße Nord", Gemarkung Waldsee<span class="sv">SV-168/2025</span><span class="wortlaut">1. Für den im Lageplan vom 22.09.2025 dargestellten Geltungsbereich des künftigen Bebauungsplanes „1. Änderung Biberacher Straße Nord“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee, wird eine Satzung über eine Veränderungssperre gemäß beigefügtem Satzungsentwurf beschlossen. 2. Ziel ist die Festsetzung eines Gewerbegebietes nach § 8 Baunutzungsverordnung (BauNVO), in dem die vom Gemeinderat beschlossene Vergnügungsstättenkonzeption und das bestehende Einzelhandelskonzept eingearbeitet werden. Außerdem sollen die bestehenden Festsetzungen des rechtsverbindlichen Bebauungsplanes auf zeitgemäße Inhalte hin überprüft werden. 3. Die Verwaltung wird beauftragt, die Veränderungssperre bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTbXOyq1KC4oYeOJIqqNa0Ig5BgDf_6-h0ND2L3Q1cno/Sitzungsvorlage_SV-168-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-168/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Vorkaufsrechtssatzung Fuß- und Radweg Frauenberg<span class="sv">SV-202/2025</span><span class="wortlaut">1. Für den im Lageplan vom 07.10.2025 dargestellten Geltungsbereich wird eine Vorkaufsrechtssatzung nach § 25 Baugesetzbuch (BauGB) gemäß beigefügtem Satzungsentwurf beschlossen. 2. Die Verwaltung wird beauftragt, die Vorkaufsrechtssatzung bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSEP60uW0YHiBgY5GQt9Kb7lTgXUwHlE792U544odcM7/Sitzungsvorlage_SV-202-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-202/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVZpbMTY4oJ0S1JfQPJfbsVNE1-5tgB3pFDdQSSu8Huf/Vorkaufsrechtssatzung_Fuss-_und_Radweg_Frauenberg.pdf" target="_blank" rel="noopener noreferrer">Vorkaufsrechtssatzung Fuß- und Radweg Frauenberg</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Jahresabschluss 2024 Eigenbetrieb Städt. Abwasserbeseitigung<span class="sv">SV-182/2025</span><span class="wortlaut">Der Jahresabschluss 2024 wird wie folgt zum Beschluss vorgeschlagen: 1. Feststellung des Jahresabschlusses: 1. Erfolgsrechnung Euro 1.1 Summe Erträge 5.254.644,66 1.2 Summe Aufwendungen 5.108.317,96 1.3 Jahresüberschuss/Jahresfehlbetrag (Saldo aus 1.1 und 1.2) 146.326,70 2. Liquiditätsrechnung 2.1 Zahlungsmittelüberschuss/-bedarf aus laufender Geschäftstätigkeit 1.612.477,94 2.2 Finanzierungsmittelüberschuss/-bedarf aus Investitionstätigkeit -4.613.707,91 2.3 Finanzierungsmittelüberschuss/-bedarf (Saldo aus 2.1 und 2.4) -3.001.229,97 2.4 Finanzierungsmittelüberschuss/-bedarf aus Finanzierungstätigkeit 1.386.883,89 2.5 Änderung des Finanzierungsmittelbestands zum Ende des Wirtschaftsjahres (Saldo aus 2.3 und 2.4) -1.614.346,08 2.6 Überschuss/Bedarf aus wirtschaftsplanunwirksamen Einzahlungen und Auszahlungen 0,00 3. Bilanzsumme 32.446.202,70 2. Verwendung des Jahresüberschusses Verwendung des Jahresüberschusses Euro 1. Verrechnung mit Gewinnvortrag ° 2. Einstellung in Rücklagen 3. Abführung an den Haushalt der Stadt 4. Vortrag auf neue Rechnung 146.326,70 3. Der Betriebsleitung wird Entlastung erteilt. 4. Der festgestellte Jahresabschluss ist ortsüblich bekanntzugeben und mit dem Lagebericht an sieben Tagen öffentlich auszulegen. In der Bekanntgabe ist auf die Auslegung hinzuweisen Bad Waldsee, Matthias Henne Oberbürgermeister</span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Jahresabschluss 2024 Eigenbetrieb Städt. Abwasserbeseitigung<span class="sv">SV-182/2025</span><span class="wortlaut">Der <span class="erklaert" tabindex="0">Jahresabschluss<span class="tooltip" role="note"><b>Jahresabschluss und Entlastung</b> Die Rechnung über ein abgelaufenes Haushaltsjahr. Der Gemeinderat stellt sie fest und entscheidet über die Entlastung — eine Aussage darüber, dass die Mittel wie beschlossen verwendet wurden. Das Gesetz kennt dafür zwei Fristen: sechs Monate für die Aufstellung durch die Verwaltung und zwölf Monate für die Feststellung durch den Gemeinderat.<span class="fundstelle">§ 95b Gemeindeordnung für Baden-Württemberg</span></span></span> 2024 wird wie folgt zum Beschluss vorgeschlagen: 1. Feststellung des Jahresabschlusses: 1. Erfolgsrechnung Euro 1.1 Summe Erträge 5.254.644,66 1.2 Summe Aufwendungen 5.108.317,96 1.3 Jahresüberschuss/Jahresfehlbetrag (Saldo aus 1.1 und 1.2) 146.326,70 2. Liquiditätsrechnung 2.1 Zahlungsmittelüberschuss/-bedarf aus laufender Geschäftstätigkeit 1.612.477,94 2.2 Finanzierungsmittelüberschuss/-bedarf aus Investitionstätigkeit -4.613.707,91 2.3 Finanzierungsmittelüberschuss/-bedarf (Saldo aus 2.1 und 2.4) -3.001.229,97 2.4 Finanzierungsmittelüberschuss/-bedarf aus Finanzierungstätigkeit 1.386.883,89 2.5 Änderung des Finanzierungsmittelbestands zum Ende des Wirtschaftsjahres (Saldo aus 2.3 und 2.4) -1.614.346,08 2.6 Überschuss/Bedarf aus wirtschaftsplanunwirksamen Einzahlungen und Auszahlungen 0,00 3. Bilanzsumme 32.446.202,70 2. Verwendung des Jahresüberschusses Verwendung des Jahresüberschusses Euro 1. Verrechnung mit Gewinnvortrag ° 2. Einstellung in Rücklagen 3. Abführung an den Haushalt der Stadt 4. Vortrag auf neue Rechnung 146.326,70 3. Der Betriebsleitung wird Entlastung erteilt. 4. Der festgestellte Jahresabschluss ist ortsüblich bekanntzugeben und mit dem Lagebericht an sieben Tagen öffentlich auszulegen. In der Bekanntgabe ist auf die Auslegung hinzuweisen Bad Waldsee, Matthias Henne Oberbürgermeister</span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Bestellung des Abschlussprüfers für das Geschäftsjahr 2025 für den Eigenbetrieb Städtische Rehakliniken<span class="sv">SV-187/2025</span><span class="wortlaut">Der Betriebsausschuss Städtische Rehakliniken schlägt dem Gemeinderat vor, als Abschlussprüfer für das Geschäftsjahr 2025 Herrn Dipl. Kaufmann Alius (Steuerberater und Wirtschaftsprüfer) in Ravensburg zu bestellen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdFQw61eNVI7mA26xKpz_HdGcAb4Mv7PL-bKY8_rrtp-/Sitzungsvorlage_SV-187-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-187/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Bestellung Abschlussprüfer für das Geschäftsjahr 2025 für die Stadtwerke Bad Waldsee GmbH<span class="sv">SV-191/2025</span><span class="wortlaut">Der Aufsichtsrat schlägt dem Gemeinderat vor, als Abschlussprüfer für das Geschäftsjahr 2025 Herrn Dipl. Kfm. Martin Alius, Steuerberatung und Wirtschaftsprüfung, Ravensburg zu bestellen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdQlny-zlJYCcI7IzTrbLJfcFzrp141k4WVeUk9DlfUc/Sitzungsvorlage_SV-191-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-191/2025</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Beteiligungsbericht für das Jahr 2024<span class="sv">SV-197/2025</span><span class="wortlaut">1. Der Beteiligungsbericht für das Jahr 2024 wird zur Kenntnis genommen. 2. Der Einstufung der Beteiligungsunternehmen in die Steuerungsstufen wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRqVHg6Jxierqx9W-O1EEUGeIIvYvwZ1xrhwoxWyyLR1/Sitzungsvorlage_SV-197-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-197/2025</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Beteiligungsbericht für das Jahr 2024<span class="sv">SV-197/2025</span><span class="wortlaut">1. Der Beteiligungsbericht für das Jahr 2024 wird <span class="erklaert" tabindex="0">zur Kenntnis<span class="tooltip" role="note"><b>Ohne Beschlussfassung</b> Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht abgestimmt. Das Protokoll führt ihn dann als „Ohne Beschlussfassung“ oder als Kenntnisnahme. Über den Inhalt sagt das nichts — wohl aber, dass das Gremium darüber nicht entschieden hat.<span class="fundstelle">Schreibweise der Beschlussprotokolle des Ratsinformationssystems</span></span></span> genommen. 2. Der Einstufung der Beteiligungsunternehmen in die Steuerungsstufen wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRqVHg6Jxierqx9W-O1EEUGeIIvYvwZ1xrhwoxWyyLR1/Sitzungsvorlage_SV-197-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-197/2025</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Pflegesatzverhandlungen Städt. Alten- und Pflegeheim Spital zum Hl. Geist<span class="sv">SV-200/2025</span><span class="wortlaut">1. Der Gemeinderat stimmt dem Ergebnis der Pflegesatzverhandlungen für das Alten- und Pflegeheim Spital zum Hl. Geist entsprechend der Sitzungsvorlage zu. 2. Die Verwaltung wird für die Zukunft ermächtigt, die Pflegesätze zu vereinbaren und im Anschluss dem Gemeinderat Kenntnis zu geben.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbVIBFliPDE9naXGH5TjSEzsFZvdWdAl_rz3hG8_W0Ai/Sitzungsvorlage_SV-200-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-200/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZ1xSqxiyNdLWLz_oXppvxOQFVXNTWT7ahegSKDJwABM/Heimentgelt_Spital_Bad_Waldsee_Oktober2025.pdf" target="_blank" rel="noopener noreferrer">Heimentgelt Spital Bad Waldsee Oktober2025</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
     <div class="kasten">
@@ -848,64 +899,6 @@ section.gruppe{scroll-margin-top:14px}
   </div>
 </article>
 
-<article id="begriffe">
-  <div class="rail">
-    <div class="field"><span class="lab">Begriffe</span><span class="val">8</span></div>
-    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">Begriffe</p>
-    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
-    <h2 class="headline">Was die Amtssprache meint</h2>
-    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
-    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
-    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
-    <details class="begriffe" open>
-      <summary>8 Begriffe in dieser Ausgabe</summary>
-      <div class="begriff">
-        <p class="wort">Gemeinsamer Ausschuss</p>
-        <p>Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.</p>
-        <p class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Flächennutzungsplan</p>
-        <p>Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht erst über den Bebauungsplan.</p>
-        <p class="fundstelle">§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Abwägung</p>
-        <p>Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.</p>
-        <p class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Satzungsbeschluss</p>
-        <p>Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.</p>
-        <p class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Ohne Beschlussfassung</p>
-        <p>Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht abgestimmt. Das Protokoll führt ihn dann als „Ohne Beschlussfassung“ oder als Kenntnisnahme. Über den Inhalt sagt das nichts — wohl aber, dass das Gremium darüber nicht entschieden hat.</p>
-        <p class="fundstelle">Schreibweise der Beschlussprotokolle des Ratsinformationssystems</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Bebauungsplan</p>
-        <p>Der Plan, der für ein bestimmtes Gebiet verbindlich festlegt, was dort gebaut werden darf — Art und Maß der Bebauung, überbaubare Flächen, Verkehrsflächen. Anders als der Flächennutzungsplan, der nur die Grundzüge für das ganze Stadtgebiet umreißt, begründet er unmittelbar Baurecht: Ein Vorhaben ist dort zulässig, wenn es seinen Festsetzungen nicht widerspricht <b>und die Erschließung gesichert ist</b>.</p>
-        <p class="fundstelle">§ 1 Abs. 2, § 8 Abs. 1 und § 30 Abs. 1 Baugesetzbuch</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Feststellungsbeschluss</p>
-        <p>Der Abschluss eines Flächennutzungsplan-Verfahrens. Was beim Bebauungsplan der Satzungsbeschluss ist, ist hier der Feststellungsbeschluss — mit einem Unterschied: Der Flächennutzungsplan wird damit noch nicht wirksam. Er bedarf der Genehmigung der höheren Verwaltungsbehörde, und wirksam wird er erst, wenn deren Erteilung ortsüblich bekannt gemacht ist.</p>
-        <p class="fundstelle">§ 6 Abs. 1 und Abs. 5 Baugesetzbuch</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Jahresabschluss und Entlastung</p>
-        <p>Die Rechnung über ein abgelaufenes Haushaltsjahr. Der Gemeinderat stellt sie fest und entscheidet über die Entlastung — eine Aussage darüber, dass die Mittel wie beschlossen verwendet wurden. Das Gesetz kennt dafür zwei Fristen: sechs Monate für die Aufstellung durch die Verwaltung und zwölf Monate für die Feststellung durch den Gemeinderat.</p>
-        <p class="fundstelle">§ 95b Gemeindeordnung für Baden-Württemberg</p>
-      </div>
-    </details>
-  </div>
-</article>
-
 <article>
   <div class="rail">
     <div class="field"><span class="lab">Termin</span><span class="val">03.11.2025<br>19:30 Uhr</span></div>
@@ -934,7 +927,8 @@ section.gruppe{scroll-margin-top:14px}
   der Stadt Bad Waldsee</a>.</p>
   <dl class="legende">
     <dt><span class="mono">25 : 0 : 1</span></dt>
-    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen — <i>Beispiel</i>; in den Beschlüssen
+    oben stehen die tatsächlichen Verhältnisse</dd>
     <dt><span class="mono">SV-000/JJJJ</span></dt>
     <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
     unter „Vorlagen“</dd>

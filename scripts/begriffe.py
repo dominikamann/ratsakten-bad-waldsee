@@ -164,3 +164,56 @@ for _b in BEGRIFFE:
 def begriffe_finden(text: str) -> list[dict[str, str]]:
     """Die Begriffe zurueckgeben, die in diesem Text vorkommen."""
     return [b for b in BEGRIFFE if b["regex"].search(text)]
+
+
+# --- Erklaerung im Text statt als Kapitel ------------------------------------
+
+def markieren(text: str, schon_erklaert: set[str]) -> str:
+    """Den ersten Treffer jedes Begriffs im Text mit seiner Erklaerung versehen.
+
+    Vorher standen die Erklaerungen als eigener Abschnitt am Ende der Ausgabe.
+    Wer beim Lesen ueber „Abwaegungs- und Satzungsbeschluss" stolperte, fand
+    die Antwort erst, wenn er ohnehin schon weitergelesen hatte — und musste
+    dafuer die Stelle verlassen, an der die Frage aufkam.
+
+    Jetzt steht die Erklaerung dort, wo das Wort steht. Der Begriff ist
+    gepunktet unterstrichen; die Erklaerung erscheint beim Zeigen mit der Maus
+    und beim Antippen. Fuer beides genuegt CSS — das Wort ist ueber `tabindex`
+    fokussierbar, damit es auch ohne Zeigegeraet erreichbar bleibt.
+
+    **Erwartet maskierten Text ohne eigenes Markup.** Sonst geriete die
+    Ersetzung in ein Attribut oder zerschnitte ein Tag.
+
+    Gesucht wird auf dem **unveraenderten** Text und erst danach ersetzt, von
+    hinten nach vorn. Wuerde man Treffer fuer Treffer ersetzen, suchte der
+    naechste Begriff bereits im eingefuegten Erklaerungstext — „Abwaegung"
+    erklaert den Bauleitplan, und „Bebauungsplan" haette sich mitten in dieses
+    Markup gesetzt.
+
+    `schon_erklaert` verhindert, dass derselbe Begriff in einer Ausgabe
+    mehrfach aufgemacht wird; einmal reicht.
+    """
+    treffer = []
+    for b in BEGRIFFE:
+        if b["name"] in schon_erklaert:
+            continue
+        m = b["regex"].search(text)
+        if not m:
+            continue
+        # Ueberschneidungen verwerfen: „Bebauungsplan" und „Aufstellung des
+        # Bebauungsplans" koennen dieselbe Stelle treffen.
+        if any(m.start() < e and a < m.end() for a, e, _ in treffer):
+            continue
+        treffer.append((m.start(), m.end(), b))
+
+    for anfang, ende, b in sorted(treffer, reverse=True):
+        wort = text[anfang:ende]
+        schon_erklaert.add(b["name"])
+        text = (text[:anfang]
+                + f'<span class="erklaert" tabindex="0">{wort}'
+                + '<span class="tooltip" role="note">'
+                + f'<b>{b["name"]}</b> {b["satz"]}'
+                + f'<span class="fundstelle">{b["fundstelle"]}</span>'
+                + '</span></span>'
+                + text[ende:])
+    return text

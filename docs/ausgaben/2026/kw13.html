@@ -554,6 +554,57 @@ dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
 p.wann{font-size:17px;margin:0 0 4px}
 p.wann b{font-weight:600}
 
+/* ---------- Begriff im Text erklaert ----------
+   Die Erklaerung steht dort, wo das Wort steht — nicht als Kapitel am Ende,
+   das man erst erreicht, wenn die Frage laengst aufgekommen ist.
+
+   Ohne JavaScript: Sichtbar wird sie ueber `:hover` fuer die Maus und
+   `:focus-within` fuers Antippen und die Tastatur. Das Wort traegt dafuer
+   `tabindex`. Im Ausdruck und in der iOS-Dateivorschau, wo weder gezeigt noch
+   getippt werden kann, steht die Erklaerung ausgeschrieben da. */
+.erklaert{
+  position:relative;
+  border-bottom:1px dotted var(--s1);
+  cursor:help;
+}
+.erklaert:focus{outline:2px solid var(--s1);outline-offset:2px}
+.erklaert > .tooltip{
+  position:absolute;left:0;top:calc(100% + 8px);z-index:20;
+  display:none;width:max(260px,min(38ch,80vw));
+  padding:13px 15px;background:var(--surface);
+  border-left:3px solid var(--s1);box-shadow:var(--shadow);
+  font-family:var(--sans);font-size:14.5px;line-height:1.5;
+  font-weight:400;font-style:normal;color:var(--ink-2);
+  text-align:left;white-space:normal;
+}
+.erklaert > .tooltip b{display:block;color:var(--ink);margin-bottom:4px}
+.erklaert > .tooltip .fundstelle{
+  display:block;margin-top:8px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.04em;color:var(--muted);
+}
+.erklaert:hover > .tooltip,
+.erklaert:focus-within > .tooltip{display:block}
+
+/* Auf dem Telefon taugt ein Kasten am Wort nicht: Steht der Begriff weit
+   links oder rechts, ragt die Erklaerung aus dem Bild — am Wort ausgerichtet
+   laesst sich das nicht loesen, weil das Wort ueberall stehen kann. Sie legt
+   sich deshalb als Leiste an den unteren Rand, wo sie immer vollstaendig
+   sichtbar ist und den Text nicht verschiebt. */
+@media (max-width:620px){
+  .erklaert > .tooltip{
+    position:fixed;left:12px;right:12px;bottom:12px;top:auto;
+    width:auto;max-height:50vh;overflow-y:auto;
+    box-shadow:0 -6px 24px rgba(0,0,0,.45);
+  }
+}
+
+@media print{
+  .erklaert > .tooltip{
+    display:block;position:static;width:auto;margin:6px 0;
+    box-shadow:none;
+  }
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -768,11 +819,11 @@ section.gruppe{scroll-margin-top:14px}
     <p class="rubrik">Beschlossen · Ausschuss für Umwelt, Technik und Nachhaltigkeit</p>
     <h2 class="headline">6 Beschlüsse am 23. März 2026</h2>
     <ul class="beschluesse">
-      <li><span class="sache">2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss<span class="sv">SV-165/2025</span><span class="wortlaut">1. Der Bebauungsplan „2. Änderung Sport- und Gesundheitspark Hopfenweiler“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee werden in der Fassung vom 13.02.2026 gemäß den Planunterlagen sowie dem Satzungsentwurf auf den Seiten 18 und 19 als Satzung beschlossen. 2. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 13.02.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, die 2. Änderung des Bebauungsplanes „Sport- und Gesundheitspark Hopfenweiler“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee öffentlich bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZfJX2mCq5En7VcRwGF_Awod3yg5FPK_B2zWgvP6ycp65/Sitzungsvorlage_SV-165-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-165/2025 (aktualisiert: 17.03.2026)</a></span></span><span class="erg split">12 : 0 : 2</span></li>
+      <li><span class="sache">2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss<span class="sv">SV-165/2025</span><span class="wortlaut">1. Der <span class="erklaert" tabindex="0">Bebauungsplan<span class="tooltip" role="note"><b>Bebauungsplan</b> Der Plan, der für ein bestimmtes Gebiet verbindlich festlegt, was dort gebaut werden darf — Art und Maß der Bebauung, überbaubare Flächen, Verkehrsflächen. Anders als der Flächennutzungsplan, der nur die Grundzüge für das ganze Stadtgebiet umreißt, begründet er unmittelbar Baurecht: Ein Vorhaben ist dort zulässig, wenn es seinen Festsetzungen nicht widerspricht <b>und die Erschließung gesichert ist</b>.<span class="fundstelle">§ 1 Abs. 2, § 8 Abs. 1 und § 30 Abs. 1 Baugesetzbuch</span></span></span> „2. Änderung Sport- und Gesundheitspark Hopfenweiler“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee werden in der Fassung vom 13.02.2026 gemäß den Planunterlagen sowie dem Satzungsentwurf auf den Seiten 18 und 19 <span class="erklaert" tabindex="0">als Satzung<span class="tooltip" role="note"><b>Satzungsbeschluss</b> Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.<span class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</span></span></span> beschlossen. 2. Die eingegangenen <span class="erklaert" tabindex="0">Stellungnahmen<span class="tooltip" role="note"><b>Abwägung</b> Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.<span class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</span></span></span> werden gemäß den in der Abwägungs- und Beschlussvorlage vom 13.02.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, die 2. Änderung des Bebauungsplanes „Sport- und Gesundheitspark Hopfenweiler“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee öffentlich bekanntzumachen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZfJX2mCq5En7VcRwGF_Awod3yg5FPK_B2zWgvP6ycp65/Sitzungsvorlage_SV-165-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-165/2025 (aktualisiert: 17.03.2026)</a></span></span><span class="erg split">12 : 0 : 2</span></li>
       <li><span class="sache">Anreizprogramme Klimaschutz 2026<span class="sv">SV-276/2025</span><span class="wortlaut">Der Gemeinderat stimmt dem Klimaschutzbudget mit folgendem Inhalt zu: - Den Aufbau von Gebäudesteckbriefen zur Erkennung von Sanierungspotenzial aller Gebäude in Bad Waldsee, - Eine Sammelbestellung von PV-Anlagen und/oder Wärmepumpten sowie der - Implementierung der App „Klimataler“ in Bad Waldsee mit Förderungen/Belohnungen für nachhaltiges Verhalten</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSn9AVxAn-m_v3_pJGu2D1xUJqz5GvkGqnCI_P7eky66/Sitzungsvorlage_SV-276-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-276/2025</a></span></span><span class="erg split">12 : 0 : 2</span></li>
       <li><span class="sache">1. Änderung des Bebauungsplans "Biberacher Straße Nord" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-18/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 07.01.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Der Bebauungsplan der 1. Änderung „Biberacher Straße Nord“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee, werden in der Fassung vom 07.01.2026 gemäß den Planunterlagen als Entwürfe festgestellt. 3. Die Verwaltung wird beauftragt, die Stellungnahmen der berührten Behörden und sonstigen Träger öffentlicher Belange zum Planentwurf und der Begründung gemäß § 4 Abs. 2 Baugesetzbuch (BauGB) einzuholen und die Unterlagen gemäß § 3 Abs. 2 BauGB für einen Monat öffentlich auszulegen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZULP-Yb-d6PkgiVR2SeYgdqI1m4jclDTd1uFRyzMEhb_/Sitzungsvorlage_SV-18-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-18/2026</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">Bebauungsplan "Feuerwehrgerätehaus Michelwinnaden" und die örtlichen Bauvorschriften hierzu, Gemarkung Michelwinnaden – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-14/2026</span><span class="wortlaut">1. Der Bebauungsplan „Feuerwehrgerätehaus Michelwinnaden“ und die örtlichen Bauvorschriften hierzu, Gemarkung Michelwinnaden, werden in der übersandten Planfassung vom 09.01.2026 als Entwürfe festgestellt. 2. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 09.01.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, die Stellungnahmen der berührten Behörden und sonstigen Träger öffentlicher Belange zum Planentwurf und der Begründung gemäß § 4 Abs. 2 Baugesetzbuch (BauGB) einzuholen und die Unterlagen gemäß § 3 Abs. 2 BauGB für einen Monat öffentlich auszulegen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSz-C6CTAKT98gtnI5aoSb0gh-qQFPmp7BE0CIo2CN7p/Sitzungsvorlage_SV-14-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-14/2026</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-16/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 09.01.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden wird in der Planfassung vom 09.01.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 22. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdFFi-BodShHIXlQXiOv79atYMuM8ugWHzVvz7EBI1dS/Sitzungsvorlage_SV-16-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-16/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">22. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-16/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 09.01.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 22. Änderung des <span class="erklaert" tabindex="0">Flächennutzungsplan<span class="tooltip" role="note"><b>Flächennutzungsplan</b> Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht erst über den Bebauungsplan.<span class="fundstelle">§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch</span></span></span>s der vereinbarten <span class="erklaert" tabindex="0">Verwaltungsgemeinschaft<span class="tooltip" role="note"><b>Gemeinsamer Ausschuss</b> Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.<span class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</span></span></span> Bad Waldsee – Bergatreute im Bereich des Bebauungsplanes „Feuerwehrgerätehaus Michelwinnaden“, Gemarkung Michelwinnaden wird in der Planfassung vom 09.01.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 22. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdFFi-BodShHIXlQXiOv79atYMuM8ugWHzVvz7EBI1dS/Sitzungsvorlage_SV-16-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-16/2026</a></span></span><span class="erg">Einstimmig</span></li>
       <li><span class="sache">21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute im Bereich des Bebauungsplans "Lohbühl I - Erweiterung", Gemarkung Bergatreute – Abwägungs- und Entwurfsbeschluss<span class="sv">SV-17/2026</span><span class="wortlaut">1. Die eingegangenen Stellungnahmen werden gemäß den in der übersandten Abwägungs- und Beschlussvorlage vom 15.04.2026 enthaltenen Beschlussvorschlägen abgewogen. 2. Die 21. Änderung des Flächennutzungsplans der vereinbarten Verwaltungsgemeinschaft Bad Waldsee – Bergatreute für die Wohnbaufläche im Bereich Lohbühl I – Erweiterung, Gemarkung Bergatreute wird in der übersandten Planfassung vom 15.04.2026 im Entwurf festgestellt. 3. Der Entwurf ist für einen Monat in Bad Waldsee und Bergatreute auszulegen und den betroffenen Behörden und sonstigen Trägern öffentlicher Belange Gelegenheit zur Stellungnahme zu geben. 4. Die Vertreter von Bad Waldsee werden beauftragt im gemeinsamen Ausschuss der 21. Änderung des Flächennutzungsplans zuzustimmen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdcIioq06MTBmw4M17KnZPpEI2-dril7RthaVy2q1N38/Sitzungsvorlage_SV-17-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-17/2026</a></span></span><span class="erg split">12 : 0 : 2</span></li>
     </ul>
     <div class="kasten">
@@ -844,49 +895,6 @@ section.gruppe{scroll-margin-top:14px}
   </div>
 </article>
 
-<article id="begriffe">
-  <div class="rail">
-    <div class="field"><span class="lab">Begriffe</span><span class="val">5</span></div>
-    <div class="field"><span class="lab">Herkunft</span><span class="val">Gesetz</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">Begriffe</p>
-    <p class="herkunft geprueft">Beleg · Gesetzestext und Hauptsatzung</p>
-    <h2 class="headline">Was die Amtssprache meint</h2>
-    <p>Die Beschlüsse unten stehen im Wortlaut des Protokolls. Diese Begriffe kommen
-    darin vor und bedeuten nicht immer das, was sie auf den ersten Blick nahelegen.
-    Ausführlicher steht das unter <a href="../../gremien.html">Wer entscheidet was</a>.</p>
-    <details class="begriffe" open>
-      <summary>5 Begriffe in dieser Ausgabe</summary>
-      <div class="begriff">
-        <p class="wort">Gemeinsamer Ausschuss</p>
-        <p>Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.</p>
-        <p class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Flächennutzungsplan</p>
-        <p>Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht erst über den Bebauungsplan.</p>
-        <p class="fundstelle">§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Abwägung</p>
-        <p>Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.</p>
-        <p class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Satzungsbeschluss</p>
-        <p>Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.</p>
-        <p class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</p>
-      </div>
-      <div class="begriff">
-        <p class="wort">Bebauungsplan</p>
-        <p>Der Plan, der für ein bestimmtes Gebiet verbindlich festlegt, was dort gebaut werden darf — Art und Maß der Bebauung, überbaubare Flächen, Verkehrsflächen. Anders als der Flächennutzungsplan, der nur die Grundzüge für das ganze Stadtgebiet umreißt, begründet er unmittelbar Baurecht: Ein Vorhaben ist dort zulässig, wenn es seinen Festsetzungen nicht widerspricht <b>und die Erschließung gesichert ist</b>.</p>
-        <p class="fundstelle">§ 1 Abs. 2, § 8 Abs. 1 und § 30 Abs. 1 Baugesetzbuch</p>
-      </div>
-    </details>
-  </div>
-</article>
-
 <article>
   <div class="rail">
     <div class="field"><span class="lab">Termin</span><span class="val">13.04.2026<br>18:50 Uhr</span></div>
@@ -924,7 +932,8 @@ section.gruppe{scroll-margin-top:14px}
   der Stadt Bad Waldsee</a>.</p>
   <dl class="legende">
     <dt><span class="mono">25 : 0 : 1</span></dt>
-    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen</dd>
+    <dd>Ja&nbsp;: Nein&nbsp;: Enthaltungen — <i>Beispiel</i>; in den Beschlüssen
+    oben stehen die tatsächlichen Verhältnisse</dd>
     <dt><span class="mono">SV-000/JJJJ</span></dt>
     <dd>Vorlagennummer — damit findet man den Vorgang im Ratsinformationssystem
     unter „Vorlagen“</dd>
