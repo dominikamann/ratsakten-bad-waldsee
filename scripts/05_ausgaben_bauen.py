@@ -554,8 +554,16 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
         w["von"], w["bis"] = beginn, ende
         # Sitzungen ohne Protokoll aus dem gesamten Berichtszeitraum aufnehmen,
         # nicht nur aus der Kalenderwoche selbst.
+        # Die Tagesordnung wird mitgefuehrt: Sie steht im
+        # Ratsinformationssystem, sobald die Sitzung einberufen ist — also
+        # lange bevor das Protokoll erscheint. Fuer eine Ausgabe, in der noch
+        # kein Beschluss nachlesbar ist, ist sie das einzige, was ueberhaupt
+        # etwas ueber die Sitzung sagt.
         ohne = [
-            {"datum": dt.date.fromisoformat(x["start"][:10]), "gremium": gremium(x["titel"])}
+            {"datum": dt.date.fromisoformat(x["start"][:10]),
+             "gremium": gremium(x["titel"]),
+             "tops": x.get("tops") or [],
+             "url": x.get("url") or ""}
             for x in alle
             if not x["protokolle"]
             and beginn <= dt.date.fromisoformat(x["start"][:10]) <= ende
@@ -682,52 +690,12 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                        f"Kalenderwoche {kw}/{jahr} entschieden haben.",
           koerper=""),
      '<div class="wrap">']
-    t.append(f"""
-<header>
-  <p class="eyebrow">Aktenlage &middot; {'Wochenausgabe · Zwischenstand' if w.get('laufend') else 'Wochenausgabe'}</p>
-  <h1>Waldseer Aktenlage</h1>
-  <p class="lede">{lede}</p>
-  <div class="issueline">
-    <span><b>Ausgabe</b> KW {kw} / {jahr}</span>
-    <span><b>Berichtszeitraum</b> {mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span>
-    <span><b>Sitzungen</b> {len(w['sitzungen'])} · {mit_prot} protokolliert</span>
-    <span><b>Beschlüsse</b> {n_besch}</span>
-  </div>{laufend_hinweis}
-</header>""")
-
-    # --- Redaktionelle Einordnung, falls hinterlegt
-    if einordnung:
-        absaetze = "\n".join(f"    <p>{e(a)}</p>" for a in einordnung.get("absaetze", []))
-        geprueft = einordnung.get("status") == "geprueft"
-        marke = ('<p class="herkunft geprueft">Redaktionell geprüft</p>' if geprueft else
-                 '<p class="herkunft ki">KI-Deutung · am Beleg nachprüfbar</p>')
-        fussnote = ("" if geprueft else
-                    '\n    <p class="note">Dieser Abschnitt ist eine maschinell erzeugte '
-                    'Einordnung. Die genannten Zahlen und Beschlüsse stammen aus den '
-                    'Protokollen und sind dort nachprüfbar; die Verknüpfung und Gewichtung '
-                    'wurde nicht von einem Menschen geprüft.</p>')
-        t.append(f"""
-<article>
-  <div class="rail">
-    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">{mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span></div>
-    <div class="field"><span class="lab">Sitzungen</span><span class="val">{len(w['sitzungen'])}</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">{e(einordnung.get('rubrik', 'Zur Lage'))}</p>
-    {marke}
-    <h2 class="headline">{e(einordnung.get('titel', ''))}</h2>
-{absaetze}{fussnote}
-  </div>
-</article>""")
-
-    # --- Wenn nichts entschieden wurde, das ausdrücklich sagen
-    #
-    # Der Block sagt die Lage in einem Satz und zeigt danach, was war. Vorher
-    # nannte die Seitenspalte hier nur „Beschluesse 0" — ausgerechnet dort,
-    # wo die Null steht, fehlte die Zahl, die zeigt, dass trotzdem getagt
-    # wurde. Die Ausgaben mit redaktioneller Einordnung nannten die Sitzungen
-    # laengst; das war eine Inkonsistenz, keine Gestaltung.
+    # Die Lage wird vor dem Kopf bestimmt: Der Untertitel nennt sie, und
+    # eine spaetere Aenderung an `lede` waere wirkungslos — der Kopf ist
+    # dann laengst gebaut.
     lage_zeigt_sitzungen = False
+    # Bloecke, die direkt nach dem Kopf stehen sollen.
+    nach_kopf: list[str] = []
     # Bei genau einer Sitzung steht die Auskunft schon im Untertitel. Ein
     # Block, der sie wiederholt, ist kein Gewinn — nur die Fussnote zur
     # Protokollfrist wird noch gebraucht.
@@ -737,14 +705,39 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # verschwand die zweite Sitzung von der Seite.
     if (len(w.get("ausstehend", [])) == 1 and len(w["sitzungen"]) == 1
             and not w["beschluesse"] and not einordnung):
-        lage_zeigt_sitzungen = bool(w.get("ausstehend"))
-        if w.get("ausstehend"):
+        lage_zeigt_sitzungen = True
+        lede = lede.replace(
+            "nachlesbare Beschlüsse liegen daraus noch nicht vor.",
+            "das Beschlussprotokoll steht noch aus.*")
+        # Solange kein Beschluss nachlesbar ist, ist die Tagesordnung das
+        # Einzige, was ueber die Sitzung bekannt ist — und bekannt ist sie,
+        # denn ohne sie waere nicht eingeladen worden. Ohne sie bleibt eine
+        # Ausgabe uebrig, die nichts erzaehlt.
+        offen = w["ausstehend"][0]
+        punkte = "".join(
+            f"      <li>{e(str(x))}</li>\n" for x in offen["tops"])
+        quelle = (f'    <p class="note"><a class="doc" href="{e(offen["url"])}" '
+                  f'target="_blank" rel="noopener noreferrer">Sitzung im '
+                  f'Ratsinformationssystem</a></p>\n' if offen["url"] else "")
+        if offen["tops"]:
+            nach_kopf.append(
+                '<article class="voll">\n'
+                '  <div class="body-col">\n'
+                '    <p class="rubrik">Tagesordnung</p>\n'
+                f'    <p>Worüber {artikel(offen["gremium"])} '
+                f'<b>{e(offen["gremium"])}</b> am '
+                f'{offen["datum"].strftime("%d.%m.%Y")} beraten hat, steht in der '
+                'Tagesordnung. Wie entschieden wurde, sagt erst das Protokoll.</p>\n'
+                f'    <ol class="agenda">\n{punkte}    </ol>\n'
+                f'{quelle}'
+                f'    <p class="fussnote">* Beschlussprotokolle sind meist zwei bis '
+                f'{KARENZ_TAGE} Tage nach der Sitzung abrufbar.</p>\n'
+                '  </div>\n'
+                '</article>')
+        else:
             laufend_hinweis += (
                 f'\n  <p class="fussnote">* Beschlussprotokolle sind meist zwei bis '
                 f'{KARENZ_TAGE} Tage nach der Sitzung abrufbar.</p>')
-            lede = lede.replace(
-                "nachlesbare Beschlüsse liegen daraus noch nicht vor.",
-                "das Beschlussprotokoll steht noch aus.*")
     elif not w["beschluesse"] and not einordnung:
         n_sitz = len(w["sitzungen"])
         # „Ein Gremium tagte" ist eine Leerformel — welches, ist die Auskunft,
@@ -798,6 +791,57 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
 </article>""")
 
+
+    t.append(f"""
+<header>
+  <p class="eyebrow">Aktenlage &middot; {'Wochenausgabe · Zwischenstand' if w.get('laufend') else 'Wochenausgabe'}</p>
+  <h1>Waldseer Aktenlage</h1>
+  <p class="lede">{lede}</p>
+  <div class="issueline">
+    <span><b>Ausgabe</b> KW {kw} / {jahr}</span>
+    <span><b>Berichtszeitraum</b> {mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span>
+    <span><b>Sitzungen</b> {len(w['sitzungen'])} · {mit_prot} protokolliert</span>
+    <span><b>Beschlüsse</b> {n_besch}</span>
+  </div>{laufend_hinweis}
+</header>""")
+
+    # Was direkt nach dem Kopf steht — derzeit die Tagesordnung einer Sitzung,
+    # deren Protokoll noch aussteht. Sie gehoert nach vorn: In einer Ausgabe
+    # ohne Beschluesse ist sie das Einzige mit Inhalt.
+    t.extend(nach_kopf)
+
+    # --- Redaktionelle Einordnung, falls hinterlegt
+    if einordnung:
+        absaetze = "\n".join(f"    <p>{e(a)}</p>" for a in einordnung.get("absaetze", []))
+        geprueft = einordnung.get("status") == "geprueft"
+        marke = ('<p class="herkunft geprueft">Redaktionell geprüft</p>' if geprueft else
+                 '<p class="herkunft ki">KI-Deutung · am Beleg nachprüfbar</p>')
+        fussnote = ("" if geprueft else
+                    '\n    <p class="note">Dieser Abschnitt ist eine maschinell erzeugte '
+                    'Einordnung. Die genannten Zahlen und Beschlüsse stammen aus den '
+                    'Protokollen und sind dort nachprüfbar; die Verknüpfung und Gewichtung '
+                    'wurde nicht von einem Menschen geprüft.</p>')
+        t.append(f"""
+<article>
+  <div class="rail">
+    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">{mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span></div>
+    <div class="field"><span class="lab">Sitzungen</span><span class="val">{len(w['sitzungen'])}</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">{e(einordnung.get('rubrik', 'Zur Lage'))}</p>
+    {marke}
+    <h2 class="headline">{e(einordnung.get('titel', ''))}</h2>
+{absaetze}{fussnote}
+  </div>
+</article>""")
+
+    # --- Wenn nichts entschieden wurde, das ausdrücklich sagen
+    #
+    # Der Block sagt die Lage in einem Satz und zeigt danach, was war. Vorher
+    # nannte die Seitenspalte hier nur „Beschluesse 0" — ausgerechnet dort,
+    # wo die Null steht, fehlte die Zahl, die zeigt, dass trotzdem getagt
+    # wurde. Die Ausgaben mit redaktioneller Einordnung nannten die Sitzungen
+    # laengst; das war eine Inkonsistenz, keine Gestaltung.
     # --- Auffälligkeiten
     hinweise = auffaelligkeiten(w)
     if hinweise:
