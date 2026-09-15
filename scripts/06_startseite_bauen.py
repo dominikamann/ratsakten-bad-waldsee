@@ -269,11 +269,13 @@ def bauen() -> str:
     Originaldokument der Stadt Bad Waldsee.</b></p>
     <details class="mehr">
       <summary>Ausf&uuml;hrlicher Hinweis</summary>
-      <p><b>Es werden keine Vorw&uuml;rfe erhoben.</b> Diese Seite ist ein privates Lern- und
-      Technologieprojekt zur automatisierten Auswertung &ouml;ffentlich zug&auml;nglicher
-      Verwaltungsdokumente — kein journalistisches Erzeugnis, kein Pr&uuml;fbericht und keine
-      rechtliche oder fachliche Bewertung. Weder der Stadtverwaltung noch einzelnen Personen
-      wird rechtswidriges oder schuldhaftes Verhalten unterstellt.</p>
+      <p>Diese Auswertung beschreibt, was in den Unterlagen steht. Sie sucht nicht nach
+      Missst&auml;nden und bewertet weder die Arbeit der Verwaltung noch die einzelner
+      Personen; rechtswidriges oder schuldhaftes Verhalten wird niemandem unterstellt.</p>
+      <p>Die Seite ist ein privates Lern- und Technologieprojekt zur automatisierten
+      Auswertung &ouml;ffentlich zug&auml;nglicher Verwaltungsdokumente — kein
+      journalistisches Erzeugnis, kein Pr&uuml;fbericht und keine rechtliche oder fachliche
+      Bewertung.</p>
       <p>Alle Auswertungen beruhen auf maschineller Verarbeitung von PDF-Dokumenten; Fehler
       bei Texterkennung und Zuordnung sind m&ouml;glich. Einordnungen und Wertungen sind als
       <b>KI-Deutung</b> gekennzeichnet: maschinell erzeugt und nicht redaktionell
