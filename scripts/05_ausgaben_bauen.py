@@ -754,14 +754,16 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 '<article class="voll">\n'
                 '  <div class="body-col">\n'
                 '    <p class="rubrik">Tagesordnung</p>\n'
-                f'    <p>Worüber {artikel(offen["gremium"])} '
-                f'<b>{e(offen["gremium"])}</b> am '
-                f'{offen["datum"].strftime("%d.%m.%Y")} beraten hat, steht in der '
-                'Tagesordnung. Wie entschieden wurde, sagt erst das Protokoll.</p>\n'
+                # Kein erklaerender Satz: Die Ueberschrift sagt bereits, was
+                # folgt, und „worueber beraten wurde, steht in der
+                # Tagesordnung" sagt dasselbe noch einmal. Der Vorbehalt ist
+                # wichtig, aber er gehoert zur Fussnote, die ohnehin dasteht.
+                f'    <p class="wann"><b>{e(offen["gremium"])}</b> &middot; '
+                f'{offen["datum"].strftime("%d.%m.%Y")}</p>\n'
                 f'    <ol class="agenda">\n{punkte}    </ol>\n'
                 f'{quelle}'
-                f'    <p class="fussnote">* Beschlussprotokolle sind meist zwei bis '
-                f'{KARENZ_TAGE} Tage nach der Sitzung abrufbar.</p>\n'
+                f'    <p class="fussnote">* Wie entschieden wurde, sagt erst das '
+                f'Protokoll — meist zwei bis {KARENZ_TAGE} Tage nach der Sitzung.</p>\n'
                 '  </div>\n'
                 '</article>')
         else:
