@@ -464,6 +464,19 @@ a.doc{color:var(--s1);text-decoration:none;border-bottom:1px solid rgba(57,135,2
 a.doc:hover{border-bottom-color:var(--s1)}
 a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 
+/* ---------- Ausgabenummer im Titel ----------
+   „Waldseer Aktenlage" stand auf allen 90 Ausgaben gleich und sagte nichts
+   ueber die, die man gerade offen hat. Die Nummer gehoert dazu — aber als
+   Beisatz, nicht gleichberechtigt: Der Name ist die Marke, die Nummer die
+   Fundstelle. Deshalb in der Schreibmaschinenschrift der Kennzahlen und
+   eine Stufe leiser. Auf schmalen Anzeigen rutscht sie in die naechste
+   Zeile, statt den Namen umzubrechen. */
+h1 .nummer{
+  display:inline-block;font-family:var(--mono);font-weight:400;
+  font-size:.42em;letter-spacing:.06em;color:var(--ink-2);
+  vertical-align:middle;margin-left:.6em;white-space:nowrap;
+}
+
 /* ---------- Beschlussliste ---------- */
 ul.beschluesse{margin:20px 0;padding:0;list-style:none}
 ul.beschluesse li{
@@ -709,10 +722,9 @@ section.gruppe{scroll-margin-top:14px}
 
 <header>
   <p class="eyebrow">Aktenlage &middot; Wochenausgabe</p>
-  <h1>Waldseer Aktenlage</h1>
+  <h1>Waldseer Aktenlage <span class="nummer">KW 6 / 2025</span></h1>
   <p class="lede">Zwischen 03.02. und 09.02.2025 tagten 2 Gremien in 2 Sitzungen — 12 Beschlüsse sind daraus nachlesbar, 2 davon fielen nicht einstimmig.</p>
   <div class="issueline">
-    <span><b>Ausgabe</b> KW 6 / 2025</span>
     <span><b>Berichtszeitraum</b> 03.02.–09.02.2025</span>
     <span><b>Sitzungen</b> 2 · 2 protokolliert</span>
     <span><b>Beschlüsse</b> 12</span>

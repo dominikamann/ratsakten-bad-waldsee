@@ -811,10 +811,9 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     t.append(f"""
 <header>
   <p class="eyebrow">Aktenlage &middot; {'Wochenausgabe · Zwischenstand' if w.get('laufend') else 'Wochenausgabe'}</p>
-  <h1>Waldseer Aktenlage</h1>
+  <h1>Waldseer Aktenlage <span class="nummer">KW {kw} / {jahr}</span></h1>
   <p class="lede">{lede}</p>
   <div class="issueline">
-    <span><b>Ausgabe</b> KW {kw} / {jahr}</span>
     <span><b>Berichtszeitraum</b> {mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span>
     <span><b>Sitzungen</b> {len(w['sitzungen'])} · {mit_prot} protokolliert</span>
     <span><b>Beschlüsse</b> {n_besch}</span>
@@ -837,12 +836,11 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                     'Einordnung. Die genannten Zahlen und Beschlüsse stammen aus den '
                     'Protokollen und sind dort nachprüfbar; die Verknüpfung und Gewichtung '
                     'wurde nicht von einem Menschen geprüft.</p>')
+        # Ohne Seitenspalte: Berichtszeitraum und Sitzungszahl stehen schon
+        # im Seitenkopf, keine zwei Zentimeter darueber. Dieselbe Doppelung
+        # wie beim Lage-Block, nur an der Einordnung.
         t.append(f"""
-<article>
-  <div class="rail">
-    <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">{mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span></div>
-    <div class="field"><span class="lab">Sitzungen</span><span class="val">{len(w['sitzungen'])}</span></div>
-  </div>
+<article class="voll">
   <div class="body-col">
     <p class="rubrik">{e(einordnung.get('rubrik', 'Zur Lage'))}</p>
     {marke}
