@@ -875,12 +875,22 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             anzahl = sum(1 for b in w["beschluesse"]
                          if b["datum"] == x["datum"] and b["gremium"] == x["gremium"])
             marke = f"s-{x['datum']:%Y%m%d}-{x['kuerzel']}"
-            was = (f'<a href="#{marke}">{anzahl} '
-                   f"{'Beschluss' if anzahl == 1 else 'Beschlüsse'}</a>"
-                   if anzahl else
-                   ("Protokoll steht noch aus" if not x["protokoll"]
-                    else "kein Beschluss protokolliert"))
-            punkte = (f"{x['tops'] and len(x['tops']) or 0} "
+            # Beides verlinken, was es zu sehen gibt: die Beschluesse und
+            # die uebrigen Punkte derselben Sitzung. Wer nach einem Thema
+            # sucht, das nicht beschlossen wurde, kommt sonst nicht hin.
+            weitere = max(len(x["tops"]) - anzahl, 0) if x["tops"] else 0
+            teile = []
+            if anzahl:
+                teile.append(f'<a href="#{marke}">{anzahl} '
+                             f"{'Beschluss' if anzahl == 1 else 'Beschlüsse'}</a>")
+            if weitere:
+                teile.append(f'<a href="#{marke}-tops">{weitere} '
+                             f"{'weiteres Thema' if weitere == 1 else 'weitere Themen'}</a>")
+            if not teile:
+                teile.append("Protokoll steht noch aus" if not x["protokoll"]
+                             else "kein Beschluss protokolliert")
+            was = " &middot; ".join(teile)
+            punkte = (f"{len(x['tops'])} "
                       f"{'Punkt' if len(x['tops']) == 1 else 'Punkte'}"
                       if x["tops"] else "Tagesordnung nicht veröffentlicht")
             zeilen_s.append(
@@ -912,16 +922,28 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             je_gremium[(b["datum"], b["gremium"], b["kuerzel"])].append(b)
         for (tag, name, kz), liste in sorted(je_gremium.items()):
             marke = f"s-{tag:%Y%m%d}-{kz}"
+            sitzung = next((x for x in w["sitzungen"]
+                            if x["datum"] == tag and x["gremium"] == name), None)
+            n_tops = len((sitzung or {}).get("tops", []))
+            # Die Ueberschrift nannte nur die Beschluesse und verschwieg,
+            # dass die Sitzung mehr Punkte hatte. „8 Beschluesse" klang nach
+            # der ganzen Sitzung; es waren 8 von 14.
+            ueberschrift = (
+                f"{len(liste)} von {n_tops} Punkten mit Beschluss "
+                f"am {datum_lang(tag)}" if n_tops > len(liste) else
+                f"{len(liste)} {'Beschluss' if len(liste) == 1 else 'Beschlüsse'} "
+                f"am {datum_lang(tag)}")
             t.append(f"""
 <article id="{marke}">
   <div class="rail">
     <div class="field"><span class="lab">Sitzung</span><span class="val">{e(name)}</span></div>
     <div class="field"><span class="lab">Datum</span><span class="val">{tag.strftime('%d.%m.%Y')}</span></div>
+    <div class="field"><span class="lab">Punkte</span><span class="val">{n_tops or '—'}</span></div>
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">{len(liste)}</span></div>
   </div>
   <div class="body-col">
     <p class="rubrik">Beschlossen · {e(rubrikname(name))}</p>
-    <h2 class="headline">{len(liste)} {'Beschluss' if len(liste) == 1 else 'Beschlüsse'} am {datum_lang(tag)}</h2>
+    <h2 class="headline">{ueberschrift}</h2>
     <ul class="beschluesse">""")
             for b in liste:
                 klasse = " split" if b["strittig"] else ""
@@ -970,15 +992,13 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             #
             # Verglichen wird ueber den Titel: Ein Punkt gilt als behandelt,
             # wenn ein Beschluss dieser Sitzung denselben Titel traegt.
-            sitzung = next((x for x in w["sitzungen"]
-                            if x["datum"] == tag and x["gremium"] == name), None)
             beschlossen = {(b.get("titel") or "").strip() for b in liste}
             offen_tops = [x for x in (sitzung or {}).get("tops", [])
                           if x.strip() and x.strip() not in beschlossen]
             if offen_tops:
                 zeilen_tops = "".join(
                     f"      <li>{markieren(e(x), erklaert)}</li>\n" for x in offen_tops)
-                t.append(f"""    <details class="mehr">
+                t.append(f"""    <details class="mehr" id="{marke}-tops" open>
       <summary>{len(offen_tops)} {'weiterer Punkt' if len(offen_tops) == 1 else 'weitere Punkte'} der Tagesordnung</summary>
       <ol class="agenda">
 {zeilen_tops}      </ol>
