@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Startet den Wochenlauf montags um 7:00 Uhr.
+  Startet den Lauf taeglich um 7:00 Uhr.
+
+  Taeglich, weil die Stadt unregelmaessig veroeffentlicht: Tagesordnungen
+  erscheinen wenige Tage vor der Sitzung, Protokolle irgendwann danach. Die
+  Ausgabe bleibt die Wochenausgabe und waechst taeglich mit; die laufende
+  Woche ist als Zwischenstand gekennzeichnet.
+
+  Achtung: Dieser Agent laeuft in der Praxis nicht durch — macOS verweigert
+  launchd-Prozessen den Zugriff auf ~/Documents (TCC). Verlaesslich ist
+  die Erinnerung plus Doppelklick auf dem Schreibtisch.
 
   Einrichten:
       cp scripts/launchd/eu.amannlabs.ratsakten.plist ~/Library/LaunchAgents/
@@ -26,9 +35,9 @@
     <string>/Users/dominikamannprivat/Documents/AmannLabs/ratsakten-bad-waldsee/scripts/wochenlauf.sh</string>
   </array>
 
+  <!-- Ohne Weekday-Schluessel feuert launchd jeden Tag zur genannten Zeit. -->
   <key>StartCalendarInterval</key>
   <dict>
-    <key>Weekday</key><integer>1</integer>
     <key>Hour</key><integer>7</integer>
     <key>Minute</key><integer>0</integer>
   </dict>

@@ -163,17 +163,32 @@ def bauen() -> str:
         beschreibung = (
             f"{n_b} {'Beschluss' if n_b == 1 else 'Beschl&uuml;sse'} mit Vorlagennummer und "
             f"Stimmenverh&auml;ltnis" if n_b else
-            "In diesem Berichtszeitraum wurde kein Beschlussprotokoll ver&ouml;ffentlicht")
+            # „abrufbar", nicht „veroeffentlicht": Erhoben ist, was im
+            # Ratsinformationssystem steht, nicht was die Stadt getan hat.
+            "In diesem Berichtszeitraum ist kein Beschlussprotokoll abrufbar")
         if meta["ohne_protokoll"]:
             beschreibung += (f", dazu {meta['ohne_protokoll']} &ouml;ffentliche "
                              f"{'Sitzung' if meta['ohne_protokoll'] == 1 else 'Sitzungen'} "
                              f"ohne Protokoll")
+        # Die laufende Woche ist ein Zwischenstand. Stand das nur in der
+        # Ausgabe selbst, versprach die Startseite mehr, als die Ausgabe haelt:
+        # „zuletzt entschieden" klingt abgeschlossen, und „keine Beschluesse"
+        # liest sich dann als Befund statt als Stand von Dienstagmittag.
+        laufend = meta.get("laufend")
+        art = ("Aktenlage &middot; laufende Woche" if laufend
+               else "Aktenlage &middot; aktuelle Ausgabe")
+        einleitung = ("Was der Gemeinderat und seine Aussch&uuml;sse in dieser Woche "
+                      "<b>bisher</b> entschieden haben." if laufend else
+                      "Was der Gemeinderat und seine Aussch&uuml;sse zuletzt "
+                      "entschieden haben.")
+        zeitraum = (f"Berichtszeitraum {e(meta['zeitraum'])} &middot; w&auml;chst noch"
+                    if laufend else f"Berichtszeitraum {e(meta['zeitraum'])}")
         karten.append((10, f"""    <a class="karte" href="{pfad}">
-      <p class="art">Aktenlage &middot; aktuelle Ausgabe</p>
+      <p class="art">{art}</p>
       <h3>Waldseer Aktenlage, KW {kw}/{jahr}</h3>
-      <p>Was der Gemeinderat und seine Aussch&uuml;sse zuletzt entschieden haben.
+      <p>{einleitung}
       {beschreibung}.</p>
-      <p class="meta">Berichtszeitraum {e(meta['zeitraum'])}</p>
+      <p class="meta">{zeitraum}</p>
     </a>"""))
 
     if register:

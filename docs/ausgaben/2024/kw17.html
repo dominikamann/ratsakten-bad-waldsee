@@ -440,6 +440,17 @@ ul.beschluesse .erg{
 /* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
 ul.beschluesse .erg.split{color:var(--s1)}
 
+/* ---------- Zwischenstand einer laufenden Woche ----------
+   Zurueckhaltend gehalten: Es ist ein Hinweis auf den Stand, keine Warnung.
+   Wer die Ausgabe am Mittwoch liest, soll wissen, dass sie noch waechst —
+   nicht erschrecken. */
+p.zwischenstand{
+  margin:16px 0 0;padding:12px 16px;max-width:62ch;
+  background:var(--surface);border-left:3px solid var(--rule);
+  font-size:14.5px;line-height:1.5;
+}
+p.zwischenstand b{font-weight:600}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -634,8 +645,7 @@ section.gruppe{scroll-margin-top:14px}
 <header>
   <p class="eyebrow">Aktenlage &middot; Wochenausgabe</p>
   <h1>Waldseer Aktenlage</h1>
-  <p class="lede">Was der Gemeinderat und seine Ausschüsse entschieden haben —
-  gelesen aus den Originalunterlagen.</p>
+  <p class="lede">Was der Gemeinderat und seine Ausschüsse entschieden haben — gelesen aus den Originalunterlagen.</p>
   <div class="issueline">
     <span><b>Ausgabe</b> KW 17 / 2024</span>
     <span><b>Berichtszeitraum</b> 22.04.–28.04.2024</span>

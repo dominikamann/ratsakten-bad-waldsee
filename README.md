@@ -38,15 +38,15 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 
 | Kennzahl | Wert |
 |---|---|
-| Erfasste Sitzungen | 166 |
-| Tagesordnungspunkte | 616 |
-| Sitzungsvorlagen | 300 |
-| Dokumente | 625 |
+| Erfasste Sitzungen | 167 |
+| Tagesordnungspunkte | 621 |
+| Sitzungsvorlagen | 302 |
+| Dokumente | 628 |
 | Ausgewertete Beschlussprotokolle | 72 |
 | Ausgezählte Abstimmungen | 337 |
 | Gremien | 12 |
 
-**Zeitraum:** 01.01.2024 – 14.09.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 15.09.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
@@ -57,7 +57,7 @@ Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 ➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
 ➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf
 ➡️ **[Termine](./docs/termine.html#heute)** — alle Sitzungen, vergangene wie angekündigte
-➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 506 Vorgänge mit ihrem Weg durch die Gremien
+➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 511 Vorgänge mit ihrem Weg durch die Gremien
 ➡️ **[Erkenntnisse](./docs/befunde.html)** — alle 25 Erkenntnisse an einem Ort, eingehaltene wie kritische
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
@@ -180,7 +180,7 @@ Umweltbericht —, sind sie **verlinkt und öffnen in einem neuen Tab**. Die
 Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum die
 Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
 Diese Begründung wird **nicht wiedergegeben** — wer sie lesen will, liest sie im
-Original. 625 Dokumente sind so erreichbar.
+Original. 628 Dokumente sind so erreichbar.
 
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst

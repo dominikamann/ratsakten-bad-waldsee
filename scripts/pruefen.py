@@ -20,6 +20,7 @@ from __future__ import annotations
 import collections
 import csv
 import datetime as dt
+import html
 import json
 import re
 import sys
@@ -172,7 +173,11 @@ BEHAUPTUNGEN = [
     # Diese Fassung stand bis 11.09.2026 in jeder Wochenausgabe und ist am
     # Waechter vorbeigelaufen, weil er nur die Variante mit „kein einziges"
     # kannte. Erhoben ist die Abrufbarkeit, nicht die Veroeffentlichung.
-    (r"kein(?:e)? (?:Protokoll|Niederschrift)\w* ver(?:ö|oe)ffentlicht",
+    # Und dieselbe Aussage als Kompositum: „kein Beschlussprotokoll
+    # veroeffentlicht" stand in 38 Ausgaben und ist dem Waechter entgangen,
+    # weil sein Muster ein Wort verlangte, das mit „Protokoll" *beginnt*.
+    # Dritter Anlauf auf dieselbe Behauptung — deshalb jetzt mit Vorsilbe.
+    (r"kein(?:e)? \w*(?:protokoll|niederschrift)\w* ver(?:ö|oe)ffentlicht",
      "„kein Protokoll veröffentlicht“ — geprüft ist nur die Abrufbarkeit"),
 ]
 
@@ -370,7 +375,12 @@ def pruefe_wortwahl() -> None:
     """Keine Aussage über den Bestand von Unterlagen, die nicht geprüft wurde."""
     treffer = []
     for f in sorted(DOCS.rglob("*.html")):
-        text = f.read_text(encoding="utf-8")
+        # Entities zuerst aufloesen. Der Waechter suchte im rohen Quelltext und
+        # war damit auf jeder Seite blind, die Umlaute als Entities schreibt —
+        # die Startseite tut das durchgaengig. Dort stand „kein Beschluss-
+        # protokoll ver&ouml;ffentlicht", und die Pruefung meldete „alles in
+        # Ordnung". Gesucht wird ab jetzt in dem Text, den der Leser sieht.
+        text = html.unescape(f.read_text(encoding="utf-8"))
         for muster, erklaerung in BEHAUPTUNGEN:
             if re.search(muster, text, re.I):
                 treffer.append(f"{f.relative_to(WURZEL)}: {erklaerung}")

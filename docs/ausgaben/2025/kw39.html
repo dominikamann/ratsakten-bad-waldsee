@@ -440,6 +440,17 @@ ul.beschluesse .erg{
 /* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
 ul.beschluesse .erg.split{color:var(--s1)}
 
+/* ---------- Zwischenstand einer laufenden Woche ----------
+   Zurueckhaltend gehalten: Es ist ein Hinweis auf den Stand, keine Warnung.
+   Wer die Ausgabe am Mittwoch liest, soll wissen, dass sie noch waechst —
+   nicht erschrecken. */
+p.zwischenstand{
+  margin:16px 0 0;padding:12px 16px;max-width:62ch;
+  background:var(--surface);border-left:3px solid var(--rule);
+  font-size:14.5px;line-height:1.5;
+}
+p.zwischenstand b{font-weight:600}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -634,8 +645,7 @@ section.gruppe{scroll-margin-top:14px}
 <header>
   <p class="eyebrow">Aktenlage &middot; Wochenausgabe</p>
   <h1>Waldseer Aktenlage</h1>
-  <p class="lede">Was der Gemeinderat und seine Ausschüsse entschieden haben —
-  gelesen aus den Originalunterlagen.</p>
+  <p class="lede">Was der Gemeinderat und seine Ausschüsse entschieden haben — gelesen aus den Originalunterlagen.</p>
   <div class="issueline">
     <span><b>Ausgabe</b> KW 39 / 2025</span>
     <span><b>Berichtszeitraum</b> 22.09.–28.09.2025</span>
@@ -651,10 +661,10 @@ section.gruppe{scroll-margin-top:14px}
   </div>
   <div class="body-col">
     <p class="rubrik">Zur Lage</p>
-    <h2 class="headline">Kein dokumentierter Beschluss in diesem Zeitraum</h2>
-    <p>In diesem Berichtszeitraum wurde kein Beschlussprotokoll veröffentlicht. Entweder
+    <h2 class="headline">Kein nachlesbarer Beschluss in diesem Zeitraum</h2>
+    <p>In diesem Berichtszeitraum ist kein Beschlussprotokoll abrufbar. Entweder
     hat kein protokollierendes Gremium getagt, oder die Protokolle der stattgefundenen
-    Sitzungen lagen zum Redaktionsschluss noch nicht vor.</p>
+    Sitzungen waren zum Redaktionsschluss noch nicht eingestellt.</p>
   </div>
 </article>
 

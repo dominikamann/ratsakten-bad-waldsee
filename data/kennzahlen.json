@@ -1,50 +1,6 @@
 {
-  "stichtag": "2026-09-14",
+  "stichtag": "2026-09-15",
   "kommende_sitzungen": [
-    {
-      "datum": "2026-09-15",
-      "zeit": "18:00",
-      "gremium": "Verwaltungsausschuss",
-      "tops": 5,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZRKoRnhnLLCFV_DehXmy-js",
-      "punkte": [
-        {
-          "top": "1",
-          "titel": "Bekanntgabe der in nichtöffentlicher Sitzung getroffenen Entscheidung/en",
-          "vorlage": "",
-          "dokumente": []
-        },
-        {
-          "top": "2",
-          "titel": "Integrationsbericht",
-          "vorlage": "SV-118/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-118/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZeJXS3Qaoe0etmy6qc8o5ptpsUI03eRHT53pXg4z98M4/Sitzungsvorlage_SV-118-2026.pdf"
-            }
-          ]
-        },
-        {
-          "top": "3",
-          "titel": "Dorfmitte Osterhofen – Sanierung des Gebäudes auf Flst. 1623 sowie Gestaltung und Überlassung der Außenanlagen",
-          "vorlage": "SV-152/2026",
-          "dokumente": []
-        },
-        {
-          "top": "4",
-          "titel": "Verschiedenes",
-          "vorlage": "",
-          "dokumente": []
-        },
-        {
-          "top": "5",
-          "titel": "Bekanntgaben",
-          "vorlage": "",
-          "dokumente": []
-        }
-      ]
-    },
     {
       "datum": "2026-09-22",
       "zeit": "19:30",
@@ -116,12 +72,20 @@
       "tops": 0,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZaF1uk3NCXRrkNMW_k7x0IU",
       "punkte": []
+    },
+    {
+      "datum": "2026-11-23",
+      "zeit": "18:00",
+      "gremium": "Ausschuss Umwelt/Technik",
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZSqHGgfamzfxg9dIcjnYomE",
+      "punkte": []
     }
   ],
-  "sitzungen": 166,
-  "tagesordnungspunkte": 616,
-  "vorlagen": 300,
-  "dokumente": 625,
+  "sitzungen": 167,
+  "tagesordnungspunkte": 621,
+  "vorlagen": 302,
+  "dokumente": 628,
   "protokolle": 72,
   "gremien": {
     "Gemeinderat": {
@@ -155,9 +119,9 @@
       "tops": 131
     },
     "Verwaltungsausschuss": {
-      "sitzungen": 16,
+      "sitzungen": 17,
       "protokolle": 14,
-      "tops": 63
+      "tops": 68
     },
     "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute": {
       "sitzungen": 11,
@@ -186,13 +150,13 @@
     }
   },
   "themen": {
-    "Formalia ohne Sachinhalt": 248,
+    "Formalia ohne Sachinhalt": 251,
     "Bauleitplanung": 120,
     "Finanzen & Haushalt": 78,
-    "Bau & Sanierung": 49,
+    "Bau & Sanierung": 50,
     "Energie & Klima": 40,
     "Sonstige Sachthemen": 32,
-    "Kinder, Schule, Soziales": 28,
+    "Kinder, Schule, Soziales": 29,
     "Gremien & Wahlen": 8,
     "Kultur, Tourismus, Sport": 7,
     "Verkehr & Mobilität": 6

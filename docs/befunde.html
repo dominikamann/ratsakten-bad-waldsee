@@ -440,6 +440,17 @@ ul.beschluesse .erg{
 /* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
 ul.beschluesse .erg.split{color:var(--s1)}
 
+/* ---------- Zwischenstand einer laufenden Woche ----------
+   Zurueckhaltend gehalten: Es ist ein Hinweis auf den Stand, keine Warnung.
+   Wer die Ausgabe am Mittwoch liest, soll wissen, dass sie noch waechst —
+   nicht erschrecken. */
+p.zwischenstand{
+  margin:16px 0 0;padding:12px 16px;max-width:62ch;
+  background:var(--surface);border-left:3px solid var(--rule);
+  font-size:14.5px;line-height:1.5;
+}
+p.zwischenstand b{font-weight:600}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -703,7 +714,7 @@ section.gruppe{scroll-margin-top:14px}
   <article class="befundblock">
     <p class="herkunft regel">Regelbasiert gezählt · keine Deutung</p>
     <h3>Zu jeder Sitzung der Kerngremien ist ein Protokoll abrufbar</h3>
-    <p>Lückenlos sind: Gemeinderat (30 von 30), Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute (11 von 11). Bei den übrigen beschließenden Gremien fehlen einzelne — Ausschuss Umwelt/Technik: 17 von 18; Verwaltungsausschuss: 14 von 16. Gemeint ist die Abrufbarkeit im Ratsinformationssystem.</p>
+    <p>Lückenlos sind: Gemeinderat (30 von 30), Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute (11 von 11). Bei den übrigen beschließenden Gremien fehlen einzelne — Ausschuss Umwelt/Technik: 17 von 18; Verwaltungsausschuss: 14 von 17. Gemeint ist die Abrufbarkeit im Ratsinformationssystem.</p>
     <p class="evidence">Eigene Auszählung aller Sitzungstermine und der dort verlinkten Beschlussprotokolle.</p>
   </article>
   <article class="befundblock">

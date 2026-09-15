@@ -440,6 +440,17 @@ ul.beschluesse .erg{
 /* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
 ul.beschluesse .erg.split{color:var(--s1)}
 
+/* ---------- Zwischenstand einer laufenden Woche ----------
+   Zurueckhaltend gehalten: Es ist ein Hinweis auf den Stand, keine Warnung.
+   Wer die Ausgabe am Mittwoch liest, soll wissen, dass sie noch waechst —
+   nicht erschrecken. */
+p.zwischenstand{
+  margin:16px 0 0;padding:12px 16px;max-width:62ch;
+  background:var(--surface);border-left:3px solid var(--rule);
+  font-size:14.5px;line-height:1.5;
+}
+p.zwischenstand b{font-weight:600}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -752,8 +763,8 @@ details.jahrblock > summary:hover{color:var(--s1)}
   möchte, kann das ohne Anmeldung.</p>
   <div class="issueline">
     <span><b>Termine</b> 183</span>
-    <span><b>angekündigt</b> 17</span>
-    <span><b>mit Tagesordnung</b> 1</span>
+    <span><b>angekündigt</b> 16</span>
+    <span><b>mit Tagesordnung</b> 0</span>
     <span><b>Stand</b> 15.09.2026</span>
     <span><b>Herkunft</b> regelbasiert gezählt</span>
   </div>
@@ -2701,12 +2712,11 @@ details.jahrblock > summary:hover{color:var(--s1)}
       <span class="zustand"><a href="./ausgaben/2026/kw32.html">In der Ausgabe KW 32/2026</a></span>
     </div>
   </li>
-  <li class="marke" id="heute" data-stand="2026-09-15"><span>Stand &middot; Dienstag, 15. September 2026</span></li>
   <li data-beginn="2026-09-15T18:00">
     <div class="zeile">
       <span class="wann">Dienstag, 15. September 2026 &middot; 18:00 Uhr</span>
       <span class="gremium">Verwaltungsausschuss</span>
-      <span class="zustand"><a href="https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZRKoRnhnLLCFV_DehXmy-js" target="_blank" rel="noopener noreferrer">Im Ratsinformationssystem</a></span>
+      <span class="zustand"><a href="./ausgaben/2026/kw38.html">In der Ausgabe KW 38/2026</a></span>
     </div>
     <details class="agenda">
       <summary>5 Tagesordnungspunkte</summary>
@@ -2719,6 +2729,7 @@ details.jahrblock > summary:hover{color:var(--s1)}
       </ol>
     </details>
   </li>
+  <li class="marke" id="heute" data-stand="2026-09-15"><span>Stand &middot; Dienstag, 15. September 2026</span></li>
   <li data-beginn="2026-09-22T19:30">
     <div class="zeile">
       <span class="wann">Dienstag, 22. September 2026 &middot; 19:30 Uhr</span>

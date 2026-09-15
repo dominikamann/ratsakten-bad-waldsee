@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Woechentliche Erinnerung an den Wochenlauf, montags 9:00 Uhr.
+  Taegliche Erinnerung an den Lauf, 9:00 Uhr.
+
+  Taeglich und nicht woechentlich, weil die Stadt unregelmaessig
+  veroeffentlicht: Tagesordnungen erscheinen wenige Tage vor der Sitzung,
+  Protokolle irgendwann danach. Bei einem Montagslauf steht ein Protokoll vom
+  Dienstag sechs Tage lang nicht da. Die Ausgabe bleibt die Wochenausgabe —
+  sie waechst jetzt nur taeglich mit, statt einmal pro Woche zu erscheinen.
 
   Bewusst nur eine Mitteilung, kein Lauf: Ein von launchd gestarteter Prozess
   darf nicht auf ~/Documents zugreifen. Eine Mitteilung braucht diesen Zugriff
@@ -20,12 +26,12 @@
   <array>
     <string>/usr/bin/osascript</string>
     <string>-e</string>
-    <string>display notification "Wochenlauf starten: Doppelklick auf „Ratsakten Wochenlauf“ auf dem Schreibtisch." with title "Ratsakten Bad Waldsee" subtitle "Neue Sitzungsunterlagen abholen" sound name "Glass"</string>
+    <string>display notification "Lauf starten: Doppelklick auf „Ratsakten Wochenlauf“ auf dem Schreibtisch." with title "Ratsakten Bad Waldsee" subtitle "Neue Sitzungsunterlagen abholen" sound name "Glass"</string>
   </array>
 
+  <!-- Ohne Weekday-Schluessel feuert launchd jeden Tag zur genannten Zeit. -->
   <key>StartCalendarInterval</key>
   <dict>
-    <key>Weekday</key><integer>1</integer>
     <key>Hour</key><integer>9</integer>
     <key>Minute</key><integer>0</integer>
   </dict>

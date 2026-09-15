@@ -416,7 +416,14 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
 
     for s in alle:
         tag = dt.date.fromisoformat(s["start"][:10])
-        if tag.year != jahr or s["start"][:10] > bis:
+        # Nach ISO-Jahr einsortieren, nicht nach Kalenderjahr. Der 01.01.2027
+        # liegt im Kalenderjahr 2027, gehoert aber zur ISO-Woche 2026-W53:
+        # Nach Kalenderjahr gefiltert landete er als „KW 53 des Jahrgangs
+        # 2027" in der Ablage — ein Datum, das es nicht gibt. Der Aufbau des
+        # Berichtszeitraums waere mit ValueError abgebrochen und mit ihm der
+        # ganze Lauf. Derzeit ist keine Sitzung des Bestands betroffen; der
+        # naechste Jahreswechsel kann eine bringen.
+        if tag.isocalendar()[0] != jahr or s["start"][:10] > bis:
             continue
         kw = tag.isocalendar()[1]
         w = wochen[kw]
@@ -464,7 +471,16 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
     # aenderte, trug sie als einzige Ausgabe des Jahrgangs noch den alten —
     # und niemandem waere das aufgefallen, weil die Seite einwandfrei aussieht.
     for kw in (erschienen or {}):
-        wochen[int(kw)]
+        # Nur bis zum Stichtag. Ohne diese Schranke legte ein Lauf mit einem
+        # zurueckdatierten --bis auch alle spaeteren Wochen an und berechnete
+        # ihre Zeitraeume neu — mit einem Ende vor dem Anfang
+        # („Berichtszeitraum 02.03.–01.03.2026") und leerer Sitzungsliste.
+        # Geschrieben wurde das ins Register, wo es stehen blieb.
+        try:
+            if dt.date.fromisocalendar(jahr, int(kw), 1) <= stichtag:
+                wochen[int(kw)]
+        except ValueError:                # KW 53 in einem Jahr mit 52 Wochen
+            continue
 
     # Berichtszeitraum: vom Ende der vorigen erschienenen Ausgabe bis zum Ende
     # dieser Woche. Der Anschluss haengt am tatsaechlichen Ende der Vorgaenger-
@@ -482,12 +498,26 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
         anker = max(frueher) if frueher else None
         if letztes_ende and (anker is None or letztes_ende > anker):
             anker = letztes_ende
+        # Genau eine Woche kann noch laufen: die, in der der Stichtag liegt —
+        # und auch die nur, solange der Stichtag vor ihrem Sonntag liegt.
+        #
+        # Die Definition muss so eng sein. „Endet nach dem Stichtag" waere
+        # falsch: Ein Lauf mit zurueckdatiertem --bis erklaerte damit jede
+        # spaetere Woche fuer laufend. Und „endet am Stichtag oder spaeter"
+        # ebenfalls: Ein Montagslauf, dessen Stichtag wegen einer abends noch
+        # ausstehenden Sitzung auf den Sonntag zurueckfaellt, erklaerte die
+        # gerade abgeschlossene Vorwoche wieder fuer laufend — und verwuerfe
+        # ihren veroeffentlichten Zeitraum.
+        j_iso, kw_iso, _ = stichtag.isocalendar()
+        laeuft_noch = ((jahr, kw) == (j_iso, kw_iso)
+                       and stichtag < dt.date.fromisocalendar(jahr, kw, 7))
+
         # Ein einmal veroeffentlichter Berichtszeitraum bleibt stehen. Er ist
-        # eine Zusage: Wer die Ausgabe gelesen hat, weiss, welche Tage sie
-        # abdeckt. Wuerde ein spaeterer Lauf ihn verschieben, aenderte sich
-        # rueckwirkend, worueber eine bereits gelesene Ausgabe berichtet hat —
-        # und die Anschlussausgabe bekaeme eine Luecke oder eine Doppelung.
-        gemeldet = (erschienen or {}).get(f"{kw:02d}", {})
+        # eine Zusage an den Leser: Wuerde ein spaeterer Lauf ihn verschieben,
+        # aenderte sich rueckwirkend, worueber eine bereits gelesene Ausgabe
+        # berichtet hat. Nur die laufende Woche ist keine solche Zusage — sie
+        # waechst noch, und ihr Zeitraum wird bei jedem Lauf neu bestimmt.
+        gemeldet = {} if laeuft_noch else (erschienen or {}).get(f"{kw:02d}", {})
         if gemeldet.get("von_iso") and gemeldet.get("bis_iso"):
             beginn = dt.date.fromisoformat(gemeldet["von_iso"])
             ende = dt.date.fromisoformat(gemeldet["bis_iso"])
@@ -505,6 +535,16 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
             if not x["protokolle"]
             and beginn <= dt.date.fromisoformat(x["start"][:10]) <= ende
         ]
+        # Laeuft die Woche noch? Dann ist die Ausgabe ein Zwischenstand und
+        # sagt das auch. Ohne den Hinweis liest sich eine Ausgabe, die am
+        # Mittwoch gebaut wurde, wie die fertige Bilanz der Woche — und „keine
+        # Beschluesse" wie ein Befund statt wie ein Zwischenstand.
+        #
+        # Entscheidend ist der Stichtag, nicht das Ende des Berichtszeitraums:
+        # KW 37/2026 endet am 11.09., weil dort der damalige Stichtag lag — die
+        # Woche selbst ist laengst vorbei. Am Zeitraumende gemessen haette sich
+        # jede solche Ausgabe dauerhaft „laufend" genannt.
+        w["laufend"] = laeuft_noch
         spaeter = [x for x in alle if dt.date.fromisoformat(x["start"][:10]) > ende]
         w["naechste"] = spaeter[0] if spaeter else None
         w["kuenftig"] = kuenftig
@@ -544,6 +584,22 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     n_besch = len(w["beschluesse"])
     mit_prot = sum(1 for s in w["sitzungen"] if s["protokoll"])
 
+    # Die laufende Woche ist ein Zwischenstand, kein Abschluss. Steht das
+    # nirgends, liest sich die Ausgabe wie die fertige Bilanz der Woche.
+    if w.get("laufend"):
+        sonntag = dt.date.fromisocalendar(jahr, kw, 7)
+        lede = ("Was der Gemeinderat und seine Ausschüsse in dieser Woche <b>bisher</b> "
+                "entschieden haben — gelesen aus den Originalunterlagen.")
+        laufend_hinweis = (
+            f'\n  <p class="zwischenstand"><b>Diese Woche läuft noch.</b> '
+            f'Die Ausgabe zeigt den Datenstand vom {so.strftime("%d.%m.%Y")} und wächst bis '
+            f'Sonntag, {sonntag.strftime("%d.%m.%Y")}. Was danach noch protokolliert '
+            f'wird, erscheint hier, sobald es abrufbar ist.</p>')
+    else:
+        lede = ("Was der Gemeinderat und seine Ausschüsse entschieden haben — "
+                "gelesen aus den Originalunterlagen.")
+        laufend_hinweis = ""
+
     t = [kopf(f"Aktenlage KW {kw}/{jahr} · Ratsakten Bad Waldsee", hoch="../../",
           beschreibung=f"Was der Gemeinderat und seine Ausschüsse in der "
                        f"Kalenderwoche {kw}/{jahr} entschieden haben.",
@@ -551,16 +607,15 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
      '<div class="wrap">']
     t.append(f"""
 <header>
-  <p class="eyebrow">Aktenlage &middot; Wochenausgabe</p>
+  <p class="eyebrow">Aktenlage &middot; {'Wochenausgabe · Zwischenstand' if w.get('laufend') else 'Wochenausgabe'}</p>
   <h1>Waldseer Aktenlage</h1>
-  <p class="lede">Was der Gemeinderat und seine Ausschüsse entschieden haben —
-  gelesen aus den Originalunterlagen.</p>
+  <p class="lede">{lede}</p>
   <div class="issueline">
     <span><b>Ausgabe</b> KW {kw} / {jahr}</span>
     <span><b>Berichtszeitraum</b> {mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span>
     <span><b>Sitzungen</b> {len(w['sitzungen'])} · {mit_prot} protokolliert</span>
     <span><b>Beschlüsse</b> {n_besch}</span>
-  </div>
+  </div>{laufend_hinweis}
 </header>""")
 
     # --- Redaktionelle Einordnung, falls hinterlegt
@@ -598,10 +653,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
   <div class="body-col">
     <p class="rubrik">Zur Lage</p>
-    <h2 class="headline">Kein dokumentierter Beschluss in diesem Zeitraum</h2>
-    <p>In diesem Berichtszeitraum wurde kein Beschlussprotokoll veröffentlicht. Entweder
+    <h2 class="headline">Kein nachlesbarer Beschluss in diesem Zeitraum</h2>
+    <p>In diesem Berichtszeitraum ist kein Beschlussprotokoll abrufbar. Entweder
     hat kein protokollierendes Gremium getagt, oder die Protokolle der stattgefundenen
-    Sitzungen lagen zum Redaktionsschluss noch nicht vor.</p>
+    Sitzungen waren zum Redaktionsschluss noch nicht eingestellt.</p>
   </div>
 </article>""")
 
@@ -976,6 +1031,12 @@ def main() -> None:
                 "ohne_protokoll": len(w["blind"]),
                 "gremien": sorted({s["kuerzel"] for s in w["sitzungen"]}),
                 "einordnung": schluessel in einordnungen,
+                # Auch ins Register, nicht nur in die Ausgabe: Startseite und
+                # Archiv verweisen auf die laufende Woche und stellten sie als
+                # fertig dar („zuletzt entschieden"). Genau dort — auf der
+                # meistgelesenen Seite — las sich „keine Beschluesse" wieder
+                # wie ein Befund statt wie ein Zwischenstand.
+                "laufend": bool(w.get("laufend")),
                 # Die Abschluss-Regeln dieser Woche mitschreiben. Schritt 09
                 # sammelt sie fuer den Abschnitt „Der Regelfall" — so zeigt die
                 # Erkenntnisseite genau das, was auch in den Ausgaben steht,
