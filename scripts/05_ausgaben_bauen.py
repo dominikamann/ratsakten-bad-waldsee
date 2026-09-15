@@ -666,19 +666,47 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
 </article>""")
 
     # --- Wenn nichts entschieden wurde, das ausdrücklich sagen
+    #
+    # Der Block sagt die Lage in einem Satz und zeigt danach, was war. Vorher
+    # nannte die Seitenspalte hier nur „Beschluesse 0" — ausgerechnet dort,
+    # wo die Null steht, fehlte die Zahl, die zeigt, dass trotzdem getagt
+    # wurde. Die Ausgaben mit redaktioneller Einordnung nannten die Sitzungen
+    # laengst; das war eine Inkonsistenz, keine Gestaltung.
+    lage_zeigt_sitzungen = False
     if not w["beschluesse"] and not einordnung:
+        n_sitz = len(w["sitzungen"])
+        if n_sitz:
+            satz = (f"In diesem Zeitraum tagte {'ein Gremium' if n_sitz == 1 else f'{n_sitz} Gremien'} "
+                    "öffentlich. Nachlesbare Beschlüsse liegen daraus noch nicht vor.")
+        else:
+            satz = ("In diesem Zeitraum hat kein Gremium öffentlich getagt.")
+
+        # Die ausstehenden Sitzungen gehoeren hierher, nicht in einen zweiten
+        # Block darunter — sonst steht dieselbe Sitzung zweimal auf der Seite.
+        liste = ""
+        if w.get("ausstehend"):
+            lage_zeigt_sitzungen = True
+            zeilen_aus = "".join(
+                f'      <li><span class="sache">{e(b["gremium"])}'
+                f'<span class="sv">Sitzung vom {b["datum"].strftime("%d.%m.%Y")}</span></span>'
+                f'<span class="erg">Protokoll steht aus*</span></li>\n'
+                for b in sorted(w["ausstehend"], key=lambda x: x["datum"]))
+            liste = (f'    <ul class="beschluesse">\n{zeilen_aus}    </ul>\n'
+                     f'    <p class="fussnote">* Beschlussprotokolle werden typischerweise '
+                     f'innerhalb von zwei bis {KARENZ_TAGE} Tagen nach der Sitzung abrufbar '
+                     f'— die Hälfte nach zwei Tagen, knapp neun von zehn nach {KARENZ_TAGE}.</p>')
+
         t.append(f"""
 <article>
   <div class="rail">
     <div class="field"><span class="lab">Berichtszeitraum</span><span class="val">{mo.strftime('%d.%m.')}–{so.strftime('%d.%m.%Y')}</span></div>
+    <div class="field"><span class="lab">Sitzungen</span><span class="val">{n_sitz}</span></div>
     <div class="field"><span class="lab">Beschlüsse</span><span class="val">0</span></div>
   </div>
   <div class="body-col">
     <p class="rubrik">Zur Lage</p>
-    <h2 class="headline">Kein nachlesbarer Beschluss in diesem Zeitraum</h2>
-    <p>In diesem Berichtszeitraum ist kein Beschlussprotokoll abrufbar. Entweder
-    hat kein protokollierendes Gremium getagt, oder die Protokolle der stattgefundenen
-    Sitzungen waren zum Redaktionsschluss noch nicht eingestellt.</p>
+    <p>{satz}</p>
+{liste}
   </div>
 </article>""")
 
@@ -840,7 +868,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # Der Block sagt jetzt, was **war** („In diesem Zeitraum tagte ein
     # Gremium oeffentlich"), nicht was fehlt. Die Protokollfrage steht als
     # Nachsatz darunter, wo sie hingehoert.
-    if w.get("ausstehend"):
+    if w.get("ausstehend") and not lage_zeigt_sitzungen:
         aus = sorted(w["ausstehend"], key=lambda x: x["datum"])
         zeilen = "".join(
             f"      <li><span class=\"sache\">{e(b['gremium'])}"
