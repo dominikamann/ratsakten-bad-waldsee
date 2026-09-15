@@ -92,12 +92,21 @@ uv run --quiet --with lxml python scripts/pruefen.py
 # scheitert — und mit `set -e` waere der ganze Lauf zu Ende, nach dem Bauen
 # und vor dem Veroeffentlichen. Deshalb wird der Rueckgabewert abgefangen.
 log "Browserpruefung (Chromium und WebKit)"
-if uv run --quiet --with playwright python scripts/pruefe_mobil.py; then
-  :
-else
-  echo "   uebersprungen — die Seiten selbst sind davon unberuehrt."
-  echo "   Die Pruefung nachholen, sobald die Browser wieder bereitstehen."
-fi
+set +e
+uv run --quiet --with playwright python scripts/pruefe_mobil.py
+RC=$?
+set -e
+case $RC in
+  0) ;;
+  2) # Nur dieser Fall ist ein Einrichtungsstand: Das Skript meldet ihn mit
+     # Exit 2, wenn sich kein Browser starten laesst.
+     echo "   uebersprungen — die Seiten selbst sind davon unberuehrt."
+     echo "   Die Pruefung nachholen, sobald die Browser wieder bereitstehen." ;;
+  *) # Alles andere ist ein Befund an den Seiten. Ihn als „uebersprungen" zu
+     # melden und trotzdem zu veroeffentlichen waere das Gegenteil der
+     # Wahrheit — der Lauf endet hier.
+     fehler "Browserpruefung fehlgeschlagen (Code $RC) — nicht veroeffentlicht." ;;
+esac
 
 # --- Veroeffentlichen ---------------------------------------------------------
 if [[ -z "$(git status --porcelain)" ]]; then

@@ -145,7 +145,15 @@
   --rule:#272C32;
   --grid:#22262B;
   --s1:#3987e5;              /* Hinweis, Verweis, Zahl */
-  /* Der zweite Akzent ist derzeit unbenutzt. Er stand frueher an Rubriken und
+  /* Gedaempftes Grau fuer das, was fehlt — im Report die Balken „ohne
+     Protokoll" und ihr Legendenfeld. Es wurde einmal als totes CSS entfernt,
+     weil kein *Bauskript* es erzeugt; `src/report.html` nutzt es aber an zwei
+     Stellen, und `04_vorrendern.js` zieht basis.css in den Report hinein.
+     Ohne die Definition ist `fill:var(--absent)` ungueltig, faellt auf
+     Schwarz zurueck und die Balken verschwinden auf dunklem Grund. */
+  --absent:#3C444D;
+
+  /* Der zweite Akzent wird von src/report.html verwendet. Er stand frueher an Rubriken und
      Erkenntnissen; dort gelesen wirkten Auffaelligkeiten wie Warnungen, und
      genau das sollen sie nicht. Er bleibt im Farbsatz, weil er zur Marke
      gehoert — wer ihn wieder einsetzt, soll es bewusst tun. */

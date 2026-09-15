@@ -78,6 +78,7 @@ def stellen() -> list[tuple[str, str]]:
     for jahrgang, anzahl in sorted(ausgaben_je_jahr.items()):
         paare.append((rf"(── {jahrgang}/\s+)\d+( Ausgaben)", anzahl))
 
+
     # Die aktuelle Ausgabe: Ueberschrift und Verweis muessen zusammen wandern.
     paare.append((
         r"(\*\*\[Aktuelle Ausgabe, KW )\d+(/)\d+(\]\(\./docs/ausgaben/)\d+(/kw)\d+(\.html\))",
@@ -86,8 +87,36 @@ def stellen() -> list[tuple[str, str]]:
     return paare
 
 
+def jahrgaenge_ergaenzen(text: str) -> str:
+    """Fehlende Jahrgangszeilen in den Verzeichnisbaum einfuegen.
+
+    Der Baum kennt nur Jahrgaenge, die es beim Schreiben gab. Die erste
+    Ausgabe eines neuen Jahres haette den Lauf sonst abgebrochen — jedes Jahr
+    einmal, und zwar nachdem alles gebaut und bevor irgendetwas geprueft oder
+    veroeffentlicht ist. Ein Jahreswechsel ist keine Umformulierung, gegen die
+    der Abbruch schuetzen soll; er ist vorhersehbar.
+    """
+    register = lies(DATEN / "ausgaben.json")
+    zeilen = re.findall(r"^(\s*[│├└─\s]*── )(\d{4})(/\s+)(\d+)( Ausgaben)$",
+                        text, re.M)
+    if not zeilen:
+        return text
+    vorhanden = {j for _, j, _, _, _ in zeilen}
+    fehlen = sorted(set(register) - vorhanden)
+    for jahr in fehlen:
+        # An die letzte vorhandene Zeile anhaengen, Einrueckung uebernehmen.
+        letzte = re.findall(rf"^.*── {max(vorhanden)}/.*$", text, re.M)[-1]
+        neu = re.sub(r"── \d{4}/(\s+)\d+( Ausgaben)",
+                     lambda m: f"── {jahr}/{m.group(1)}{len(register[jahr])}{m.group(2)}",
+                     letzte)
+        # Der vorletzte Jahrgang bekommt den Abzweig, der neue den Abschluss.
+        text = text.replace(letzte, letzte.replace("└──", "├──") + "\n" + neu, 1)
+        vorhanden.add(jahr)
+    return text
+
+
 def main() -> None:
-    text = README.read_text(encoding="utf-8")
+    text = jahrgaenge_ergaenzen(README.read_text(encoding="utf-8"))
     geaendert = 0
 
     for muster, wert in stellen():

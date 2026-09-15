@@ -479,7 +479,12 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
     # Die laufende Woche bekommt immer eine Ausgabe, damit stets eine aktuelle
     # existiert — auch wenn in ihr nicht getagt wurde.
     stichtag = dt.date.fromisoformat(bis)
-    if stichtag.year == jahr:
+    # Nach ISO-Jahr vergleichen, nicht nach Kalenderjahr — sonst legt der
+    # 01.01.2027 (Kalenderjahr 2027, ISO-Woche 2026-W53) eine Woche 53 im
+    # Jahrgang 2027 an, den es nicht gibt, und `fromisocalendar` bricht den
+    # ganzen Lauf ab. Umgekehrt bekaeme die echte Woche 2026-W53 gar keine
+    # Ausgabe. Dieselbe Verwechslung wie beim Einsortieren der Sitzungen.
+    if stichtag.isocalendar()[0] == jahr:
         wochen[stichtag.isocalendar()[1]]  # legt bei Bedarf eine leere Woche an
 
     # Und jede Woche, zu der bereits eine Ausgabe erschienen ist, wird wieder
@@ -726,7 +731,12 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # Bei genau einer Sitzung steht die Auskunft schon im Untertitel. Ein
     # Block, der sie wiederholt, ist kein Gewinn — nur die Fussnote zur
     # Protokollfrist wird noch gebraucht.
-    if len(w["sitzungen"]) == 1 and not w["beschluesse"] and not einordnung:
+    # An der Zahl der **ausstehenden** Sitzungen entscheiden, nicht an der der
+    # Kalenderwoche: `sitzungen` zaehlt die ISO-Woche, `ausstehend` den
+    # Berichtszeitraum, der frueher beginnen kann. Fielen sie auseinander,
+    # verschwand die zweite Sitzung von der Seite.
+    if (len(w.get("ausstehend", [])) == 1 and len(w["sitzungen"]) == 1
+            and not w["beschluesse"] and not einordnung):
         lage_zeigt_sitzungen = bool(w.get("ausstehend"))
         if w.get("ausstehend"):
             laufend_hinweis += (
@@ -1023,7 +1033,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
   <div class="body-col">
     <p class="rubrik">Demnächst · öffentlich</p>
-    <p>Als Nächstes tagt <b>{e(name)}</b> am {datum_lang(tag)} um {uhr} Uhr.</p>
+    <p>Als Nächstes tagt {artikel(name)} <b>{e(name)}</b> am {datum_lang(tag)} um {uhr} Uhr.</p>
 {liste}
   </div>
 </article>""")

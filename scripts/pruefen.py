@@ -469,11 +469,18 @@ def pruefe_zukunft() -> None:
         for tt, mm, jj in muster.findall(text):
             tag = f"{jj}-{mm}-{tt}"
             getroffen += 1
-            if beginn.get(tag, tag) > jetzt:
+            start = beginn.get(tag, tag)
+            if start > jetzt:
+                # `start` und nicht `beginn[tag]`: Steht das Datum nicht mehr
+                # in sitzungen.json — eine Sitzung, die im RIS nach dem Bauen
+                # abgesagt oder verlegt wurde —, gibt es keinen Eintrag, und
+                # der Zugriff haette die Pruefung mit KeyError beendet, statt
+                # den Befund zu melden.
+                wann = f"{start[11:16]} Uhr" if len(start) > 11 else "später"
                 fehler.append(
                     f"{seite.relative_to(WURZEL)} weist die Sitzung vom "
                     f"{tt}.{mm}.{jj} als getagt aus — sie beginnt erst "
-                    f"{beginn[tag][11:16]} Uhr und hat noch nicht stattgefunden.")
+                    f"{wann} und hat noch nicht stattgefunden.")
     notiz.append(f"{getroffen} Sitzungsangabe(n) gegen die Uhr geprüft")
 
 
