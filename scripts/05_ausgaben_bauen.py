@@ -605,6 +605,18 @@ DISCLAIMER = """
 """
 
 
+def artikel(gremium: str) -> str:
+    """Bestimmter Artikel zu einem Gremiumsnamen, im Nominativ.
+
+    Alle zwoelf Gremien der Stadt sind maennlich — Gemeinderat, Ortschaftsrat,
+    Ausschuss, Beirat, Arbeitskreis — bis auf die Baumkommission. Die Regel
+    haengt deshalb an der Endung und nicht an einer Liste, die beim naechsten
+    neuen Gremium veraltet.
+    """
+    name = gremium.lower()
+    return "die" if name.endswith(("kommission", "gruppe", "runde")) else "der"
+
+
 def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     mo, so = w["von"], w["bis"]
     n_besch = len(w["beschluesse"])
@@ -679,17 +691,39 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     lage_zeigt_sitzungen = False
     if not w["beschluesse"] and not einordnung:
         n_sitz = len(w["sitzungen"])
-        if n_sitz:
-            satz = (f"In diesem Zeitraum tagte {'ein Gremium' if n_sitz == 1 else f'{n_sitz} Gremien'} "
-                    "öffentlich. Nachlesbare Beschlüsse liegen daraus noch nicht vor.")
+        # „Ein Gremium tagte" ist eine Leerformel — welches, ist die Auskunft,
+        # auf die es ankommt. Bei einer einzelnen Sitzung steht der Name
+        # deshalb im Satz und nicht klein darunter.
+        if n_sitz == 1:
+            einzige = w["sitzungen"][0]
+            satz = (f"{artikel(einzige['gremium']).capitalize()} "
+                    f"<b>{e(einzige['gremium'])}</b> tagte am "
+                    f"{einzige['datum'].strftime('%d.%m.%Y')} öffentlich. "
+                    "Nachlesbare Beschlüsse liegen daraus noch nicht vor.")
+        elif n_sitz:
+            namen = sorted({x["gremium"] for x in w["sitzungen"]})
+            benannt = [f"{artikel(x)} <b>{e(x)}</b>" for x in namen]
+            aufzaehlung = (", ".join(benannt[:-1]) + f" und {benannt[-1]}"
+                           if len(benannt) > 1 else benannt[0])
+            satz = (f"Öffentlich getagt haben {aufzaehlung} — "
+                    f"{n_sitz} Sitzungen insgesamt. Nachlesbare Beschlüsse liegen "
+                    "daraus noch nicht vor.")
         else:
-            satz = ("In diesem Zeitraum hat kein Gremium öffentlich getagt.")
+            satz = "In diesem Zeitraum hat kein Gremium öffentlich getagt."
 
         # Die ausstehenden Sitzungen gehoeren hierher, nicht in einen zweiten
         # Block darunter — sonst steht dieselbe Sitzung zweimal auf der Seite.
         liste = ""
         if w.get("ausstehend"):
             lage_zeigt_sitzungen = True
+        if w.get("ausstehend") and n_sitz == 1:
+            # Der Satz nennt Gremium und Datum bereits; eine Liste mit einer
+            # Zeile daneben waere dieselbe Angabe ein zweites Mal.
+            liste = (f'    <p class="fussnote">* Beschlussprotokolle sind meist zwei bis '
+                     f'{KARENZ_TAGE} Tage nach der Sitzung abrufbar.</p>')
+            satz = satz.replace("Nachlesbare Beschlüsse liegen daraus noch nicht vor.",
+                                "Das Beschlussprotokoll steht noch aus.*")
+        elif w.get("ausstehend"):
             zeilen_aus = "".join(
                 f'      <li><span class="sache">{e(b["gremium"])}'
                 f'<span class="sv">Sitzung vom {b["datum"].strftime("%d.%m.%Y")}</span></span>'
