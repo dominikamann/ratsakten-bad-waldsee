@@ -381,6 +381,34 @@ footer nav span[aria-hidden]{opacity:.35}
   h1,h2,h3{break-after:avoid}
 }
 
+/* ---------- Aufklappbares ----------
+   Zwei Drittel des Textes einer beschlussarmen Ausgabe waren fruehere
+   Erklaerung: „Wie diese Ausgabe entsteht" und der Haftungshinweis zusammen
+   384 Woerter, der Inhalt 177. Wer die Seite oeffnete, las mehrheitlich ueber
+   die Seite statt ueber den Gemeinderat.
+
+   Was jeder wissen muss, steht weiterhin offen da; die Ausfuehrung klappt
+   auf. `<details>` braucht dafuer kein JavaScript — in der iOS-Dateivorschau
+   und im Ausdruck bleibt alles erreichbar. */
+details.mehr{margin:10px 0 0}
+details.mehr > summary{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--s1);cursor:pointer;
+  list-style:none;
+  /* Ein Aufklapper ist ein Tippziel wie ein Link und haelt dieselben 44 px
+     ein — mit 11,5px-Schrift und knappem Innenabstand waren es 27. */
+  display:flex;align-items:center;min-height:44px;
+}
+details.mehr > summary::-webkit-details-marker{display:none}
+/* Dasselbe Zeichen wie die Tagesordnungen auf der Terminseite: ein Dreieck,
+   das sich beim Aufklappen dreht. „+" und „−" klebten am Text und lasen sich
+   in Versalien wie ein Bindestrich. */
+details.mehr > summary::before{content:"\25B8";margin-right:8px;font-size:13px}
+details.mehr[open] > summary::before{content:"\25BE"}
+details.mehr > summary:hover{text-decoration:underline}
+details.mehr > summary:focus-visible{outline:2px solid var(--s1);outline-offset:3px}
+details.mehr > p{font-size:15px;color:var(--ink-2);margin:10px 0 0}
+
 /* Die zweispaltigen Seiten: Wochenausgaben, Erkenntnisse, Themen, Suche, Termine.
 
    Voraussetzung ist basis.css — dort stehen Farben, Grundschrift,
@@ -392,6 +420,14 @@ article{
   display:grid;grid-template-columns:186px minmax(0,1fr);gap:34px;
   padding:48px 0;border-bottom:1px solid var(--rule);
 }
+/* Wo die Seitenspalte nur wiederholen wuerde, was schon im Seitenkopf steht,
+   entfaellt sie — und der Text bekommt die Breite. Berichtszeitraum,
+   Sitzungen und Beschluesse standen zweimal untereinander; auf dem Telefon
+   direkt hintereinander. */
+article.voll{grid-template-columns:minmax(0,1fr)}
+/* Der Einstiegssatz traegt die Nachricht und darf etwas groesser sein als
+   der Fliesstext — aber deutlich kleiner als eine Befund-Schlagzeile. */
+p.lage{font-size:19px;line-height:1.5;max-width:60ch}
 .rail{
   font-family:var(--mono);font-size:11.5px;line-height:1.55;
   color:var(--muted);display:flex;flex-direction:column;gap:15px;
@@ -426,6 +462,11 @@ ul.beschluesse li{
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 18px;
   padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline;
 }
+/* Die Zeile spannte sich ueber die volle Breite: Auf einem grossen Bildschirm
+   stand „Protokoll steht aus" einen halben Meter vom Gremiumsnamen entfernt
+   am rechten Rand, und die Zuordnung ging verloren. Die Liste bleibt deshalb
+   so breit, wie der Text lesbar ist. */
+ul.beschluesse{max-width:74ch}
 ul.beschluesse li:last-child{border-bottom:none}
 ul.beschluesse .sache{font-size:16px;line-height:1.45}
 ul.beschluesse .sache b{font-weight:600}
@@ -450,6 +491,20 @@ p.zwischenstand{
   font-size:14.5px;line-height:1.5;
 }
 p.zwischenstand b{font-weight:600}
+
+/* ---------- Nebenbemerkung und Fussnote ----------
+   `.note` wurde auf 94 Seiten verwendet und war nur in src/report.html
+   definiert — ausserhalb des Reports sah eine Nebenbemerkung damit aus wie
+   Fliesstext. Die Absicht stand im Markup, die Umsetzung fehlte. Wert aus
+   dem Report uebernommen, damit beide gleich aussehen. */
+p.note{font-size:15px;color:var(--ink-2)}
+
+/* Die Fussnote traegt, was sonst einen eigenen Absatz gebraucht haette:
+   eine Einordnung, die man lesen kann und nicht muss. */
+p.fussnote{
+  font-size:13.5px;font-style:italic;color:var(--ink-2);
+  margin:14px 0 0;max-width:62ch;line-height:1.55;
+}
 
 /* ---------- Kasten ---------- */
 .kasten{
@@ -751,7 +806,7 @@ nicht enthalten.</p>
     <p class="wann">20. Juli 2026 &middot; Gemeinderat
       <span class="sv">SV-101/2026</span></p>
     <p class="sache">1. Änderung des Bebauungsplans "Biberacher Straße Nord" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss</p>
-    <p class="wortlaut">1. Die 1. Änderung des Bebauungsplans „Biberacher Straße Nord“ und die örtlichen Bauvorschrif ten hierzu, Gemarkung Waldsee, werden in der Fassung vom 04.05.2026 gemäß den Planun terlagen sowie dem Satzungsentwurf auf den Seiten 29 und 30 als Satzung beschlossen. 2. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvor lage vom 04.05.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, die 1. Änderung des Bebauungsplans „Biberacher Straße Nord“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee, öffentlich bekanntzumachen.</p>
+    <p class="wortlaut">1. Die 1. Änderung des Bebauungsplans „Biberacher Straße Nord“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee, werden in der Fassung vom 04.05.2026 gemäß den Planun terlagen sowie dem Satzungsentwurf auf den Seiten 29 und 30 als Satzung beschlossen. 2. Die eingegangenen Stellungnahmen werden gemäß den in der Abwägungs- und Beschlussvorlage vom 04.05.2026 enthaltenen Beschlussvorschlägen abgewogen. 3. Die Verwaltung wird beauftragt, die 1. Änderung des Bebauungsplans „Biberacher Straße Nord“ und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee, öffentlich bekanntzumachen.</p>
     <span class="erg">einstimmig</span>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYfXDeChN_5AYB7lplR6JQkmZGc3edJZxzLoke_dBvMg/Sitzungsvorlage_SV-101-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-101/2026</a></div>
     <p class="quelle"><a href="../ausgaben/2026/kw30.html">In der Wochenausgabe nachlesen</a></p>

@@ -43,14 +43,30 @@ def wortschatz_aus(text: str, zaehler: collections.Counter) -> None:
 
 
 def wortschatz_speichern(zaehler: collections.Counter, ziel: Path) -> None:
+    """Woerter mit ihrer Haeufigkeit ablegen.
+
+    Frueher nur die Liste. Damit liess sich nicht unterscheiden, ob ein Wort
+    ein echtes Wort ist oder ein Bruchstueck, das oft genug vorkam, um in die
+    Liste zu geraten: „bauvorschrif" stand darin wie „bauvorschriften". Fuer
+    die Reparatur von Trennungen **ohne** Bindestrich braucht es diesen
+    Unterschied — und der steckt in der Haeufigkeit.
+    """
     ziel.write_text(
-        json.dumps(sorted(zaehler), ensure_ascii=False), encoding="utf-8")
+        json.dumps(dict(sorted(zaehler.items())), ensure_ascii=False),
+        encoding="utf-8")
 
 
 def wortschatz_laden(quelle: Path) -> set[str]:
+    """Nur die Woerter. Liest beide Formate — Liste wie Haeufigkeitstabelle."""
+    return set(haeufigkeiten_laden(quelle))
+
+
+def haeufigkeiten_laden(quelle: Path) -> dict[str, int]:
+    """Wort → Anzahl. Aus einer alten Liste wird jedes Wort einmal gezaehlt."""
     if not quelle.exists():
-        return set()
-    return set(json.loads(quelle.read_text(encoding="utf-8")))
+        return {}
+    roh = json.loads(quelle.read_text(encoding="utf-8"))
+    return roh if isinstance(roh, dict) else {w: 1 for w in roh}
 
 
 def trennung_reparieren(text: str, wortschatz: set[str]) -> str:
@@ -73,6 +89,52 @@ def trennung_reparieren(text: str, wortschatz: set[str]) -> str:
         return m.group(0)
 
     return TRENNSTELLE.sub(entscheiden, text)
+
+
+# Trennung ohne Bindestrich: Beim Auslesen mancher PDF geht der Trennstrich
+# verloren und zurueck bleibt ein Leerzeichen mitten im Wort —
+# „Bauvorschrif ten", „Planunter lagen", „bekanntzuma chen". Der Leser sieht
+# ein zerrissenes Wort mitten im Beschlusswortlaut.
+#
+# Rechts steht dabei immer ein kleingeschriebenes Bruchstueck. Die linke
+# Haelfte darf mit einem Grossbuchstaben beginnen.
+LEERSTELLE = re.compile(r"\b([A-Za-zÄÖÜäöüß]{4,})\s+([a-zäöüß]{2,10})\b")
+
+# Ab welchem Verhaeltnis ein Wortteil als Bruchstueck gilt: Das
+# zusammengesetzte Wort muss mindestens dreimal so haeufig vorkommen wie die
+# linke Haelfte allein, und die linke Haelfte darf selbst kaum auftreten.
+# „bauvorschrif" steht einmal im Bestand, „bauvorschriften" 101 Mal — das ist
+# eindeutig. „Bad Waldsee" bleibt unangetastet: „badwaldsee" gibt es nicht.
+# Dass ein Bruchstueck selbst mehrfach vorkommt, ist der Normalfall: Es
+# entsteht ja jedes Mal neu, wenn dasselbe Wort am Zeilenende getrennt wird.
+# „vereinbar" steht sechsmal im Bestand, „vereinbarten" 111 Mal — Aussagekraft
+# hat das Verhaeltnis, nicht die absolute Zahl.
+BRUCHSTUECK_HOECHSTENS = 8
+VERHAELTNIS = 4
+
+
+def leertrennung_reparieren(text: str, haeufig: dict[str, int]) -> str:
+    """Zerrissene Woerter zusammenfuehren — nur bei klarer Datenlage.
+
+    Ohne Haeufigkeiten bleibt der Text unveraendert. Lieber ein sichtbar
+    zerrissenes Wort als ein verfaelschter Beschlusswortlaut: Der Text ist
+    Zitat, und ein falsch zusammengezogenes Wort waere eine Aenderung am
+    Zitat, die niemand bemerkt.
+    """
+    if not haeufig:
+        return text
+
+    def entscheiden(m: re.Match[str]) -> str:
+        links, rechts = m.group(1), m.group(2)
+        zusammen = (links + rechts).lower()
+        n_zus = haeufig.get(zusammen, 0)
+        n_links = haeufig.get(links.lower(), 0)
+        if (n_zus and n_links <= BRUCHSTUECK_HOECHSTENS
+                and n_zus >= max(VERHAELTNIS, n_links * VERHAELTNIS)):
+            return links + rechts
+        return m.group(0)
+
+    return LEERSTELLE.sub(entscheiden, text)
 
 
 # --- Auslesen mit Zwischenspeicher ------------------------------------------

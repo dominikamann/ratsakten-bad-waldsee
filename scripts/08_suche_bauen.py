@@ -30,6 +30,7 @@ from seite import fuss, kopf, kurz
 
 from vorhaben import seiten_je_vorgang, vergleichsname
 from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
+                      haeufigkeiten_laden, leertrennung_reparieren,
                       trennung_reparieren, wortschatz_laden)
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
@@ -45,6 +46,7 @@ DATEN = WURZEL / "data"
 # Trennung ist und welcher ein Gedankenstrich, entscheidet der Wortschatz
 # aus 03_auswerten.py — siehe textwerk.py.
 WORTSCHATZ = wortschatz_laden(DATEN / "wortschatz.json")
+HAEUFIGKEITEN = haeufigkeiten_laden(DATEN / "wortschatz.json")
 DOCS = WURZEL / "docs"
 
 ERGEBNIS = re.compile(r"Ergebnis der Beschlussfassung\s*:?\s*(.{0,70})")
@@ -133,7 +135,10 @@ def pdf_text(pfad: Path) -> str:
     Wortschatz erst in Schritt 03 entsteht — der Speicher haelt deshalb den
     unbehandelten Text.
     """
-    return trennung_reparieren(roh_text(pfad), WORTSCHATZ)
+    # Erst die Trennungen mit Bindestrich, dann die, bei denen er beim
+    # Auslesen verloren ging und nur ein Leerzeichen blieb.
+    return leertrennung_reparieren(
+        trennung_reparieren(roh_text(pfad), WORTSCHATZ), HAEUFIGKEITEN)
 
 
 # Der Beschlusstext steht zwischen der Einleitung „Beschluss:" und der

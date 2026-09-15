@@ -33,6 +33,7 @@ from pathlib import Path
 from begriffe import begriffe_finden
 from seite import fuss, kopf
 from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
+                      haeufigkeiten_laden, leertrennung_reparieren,
                       trennung_reparieren, wortschatz_laden)
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
@@ -48,6 +49,7 @@ DATEN = WURZEL / "data"
 # Trennung ist und welcher ein Gedankenstrich, entscheidet der Wortschatz
 # aus 03_auswerten.py — siehe textwerk.py.
 WORTSCHATZ = wortschatz_laden(DATEN / "wortschatz.json")
+HAEUFIGKEITEN = haeufigkeiten_laden(DATEN / "wortschatz.json")
 AUSGABEN = WURZEL / "docs" / "ausgaben"
 
 # Wie lange ein Beschlussprotokoll nach der Sitzung auf sich warten darf, ehe
@@ -157,7 +159,10 @@ def pdf_text(pfad: Path) -> str:
     Wortschatz erst in Schritt 03 entsteht — der Speicher haelt deshalb den
     unbehandelten Text.
     """
-    return trennung_reparieren(roh_text(pfad), WORTSCHATZ)
+    # Erst die Trennungen mit Bindestrich, dann die, bei denen er beim
+    # Auslesen verloren ging und nur ein Leerzeichen blieb.
+    return leertrennung_reparieren(
+        trennung_reparieren(roh_text(pfad), WORTSCHATZ), HAEUFIGKEITEN)
 
 
 def ergebnis_lesen(roh: str) -> tuple[str | None, bool]:
