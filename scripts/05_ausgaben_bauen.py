@@ -463,7 +463,15 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
         w = wochen[kw]
         name = gremium(s["titel"])
         w["sitzungen"].append({"datum": tag, "gremium": name, "kuerzel": kuerzel(name),
-                               "protokoll": bool(s["protokolle"])})
+                               "protokoll": bool(s["protokolle"]),
+                               # Die vollstaendige Tagesordnung mitfuehren: Die
+                               # Ausgabe zeigte bisher nur, was beschlossen wurde.
+                               # Die Gemeinderatssitzung vom 20.07.2026 hatte 14
+                               # Punkte und acht Beschluesse — worueber sonst noch
+                               # beraten wurde, etwa die Elternbeitraege in den
+                               # Kindertagesstaetten, war nirgends zu sehen.
+                               "tops": [str(x) for x in (s.get("tops") or [])],
+                               "url": s.get("url") or ""})
         if not s["protokolle"]:
             w["blind"].append({"datum": tag, "gremium": name})
             continue
@@ -854,6 +862,42 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # Stelle. Fuer ein Projekt, dessen Kern die Aktenlage ist, war das eine
     # Schieflage — nicht im Wort, sondern in der Anordnung.
 
+    # --- Welche Sitzungen es gab
+    #
+    # Der Ueberblick fehlte: Die Ausgabe sprang direkt zu den Beschluessen und
+    # liess offen, welche Gremien ueberhaupt getagt haben und wie umfangreich.
+    # Wer wissen wollte, ob seine Ortschaft dabei war, musste die ganze Seite
+    # lesen. Hier steht es in einer Zeile je Sitzung — mit dem Weg zu den
+    # Beschluessen, sofern es welche gibt.
+    if len(w["sitzungen"]) > 1 or (w["sitzungen"] and w["beschluesse"]):
+        zeilen_s = []
+        for x in sorted(w["sitzungen"], key=lambda y: (y["datum"], y["gremium"])):
+            anzahl = sum(1 for b in w["beschluesse"]
+                         if b["datum"] == x["datum"] and b["gremium"] == x["gremium"])
+            marke = f"s-{x['datum']:%Y%m%d}-{x['kuerzel']}"
+            was = (f'<a href="#{marke}">{anzahl} '
+                   f"{'Beschluss' if anzahl == 1 else 'Beschlüsse'}</a>"
+                   if anzahl else
+                   ("Protokoll steht noch aus" if not x["protokoll"]
+                    else "kein Beschluss protokolliert"))
+            punkte = (f"{x['tops'] and len(x['tops']) or 0} "
+                      f"{'Punkt' if len(x['tops']) == 1 else 'Punkte'}"
+                      if x["tops"] else "Tagesordnung nicht veröffentlicht")
+            zeilen_s.append(
+                f'      <li><span class="sache">'
+                f'{markieren(e(x["gremium"]), erklaert)}'
+                f'<span class="sv">{x["datum"]:%d.%m.%Y} &middot; {punkte}</span>'
+                f'</span><span class="erg">{was}</span></li>')
+        t.append(
+            '<article class="voll">\n'
+            '  <div class="body-col">\n'
+            '    <p class="rubrik">Sitzungen in diesem Zeitraum</p>\n'
+            '    <ul class="beschluesse">\n'
+            + "\n".join(zeilen_s) + "\n"
+            '    </ul>\n'
+            '  </div>\n'
+            '</article>')
+
     # --- Wenn nichts entschieden wurde, das ausdrücklich sagen
     #
     # Der Block sagt die Lage in einem Satz und zeigt danach, was war. Vorher
@@ -867,8 +911,9 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
         for b in w["beschluesse"]:
             je_gremium[(b["datum"], b["gremium"], b["kuerzel"])].append(b)
         for (tag, name, kz), liste in sorted(je_gremium.items()):
+            marke = f"s-{tag:%Y%m%d}-{kz}"
             t.append(f"""
-<article>
+<article id="{marke}">
   <div class="rail">
     <div class="field"><span class="lab">Sitzung</span><span class="val">{e(name)}</span></div>
     <div class="field"><span class="lab">Datum</span><span class="val">{tag.strftime('%d.%m.%Y')}</span></div>
@@ -913,6 +958,34 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
       {', '.join(f"<b>{e(b['vorlage'] or '—')}</b> ({e(b['ergebnis'])})" for b in st)}.
       Die Schreibweise steht für Ja : Nein : Enthaltungen.</p>
     </div>""")
+            # --- Punkte derselben Sitzung, zu denen kein Beschluss vorliegt
+            #
+            # Die Ausgabe zeigte bisher nur, was beschlossen wurde. Eine
+            # Sitzung hat aber mehr Punkte: Berichte, Kenntnisnahmen,
+            # Informationen. Die Gemeinderatssitzung vom 20.07.2026 hatte 14
+            # Punkte und acht Beschluesse — worueber sonst beraten wurde,
+            # stand nirgends. Genau dort steckt oft, was Buerger interessiert:
+            # „Information ueber die Fortschreibung der Elternbeitraege in
+            # Kindertagesstaetten" war unsichtbar.
+            #
+            # Verglichen wird ueber den Titel: Ein Punkt gilt als behandelt,
+            # wenn ein Beschluss dieser Sitzung denselben Titel traegt.
+            sitzung = next((x for x in w["sitzungen"]
+                            if x["datum"] == tag and x["gremium"] == name), None)
+            beschlossen = {(b.get("titel") or "").strip() for b in liste}
+            offen_tops = [x for x in (sitzung or {}).get("tops", [])
+                          if x.strip() and x.strip() not in beschlossen]
+            if offen_tops:
+                zeilen_tops = "".join(
+                    f"      <li>{markieren(e(x), erklaert)}</li>\n" for x in offen_tops)
+                t.append(f"""    <details class="mehr">
+      <summary>{len(offen_tops)} {'weiterer Punkt' if len(offen_tops) == 1 else 'weitere Punkte'} der Tagesordnung</summary>
+      <ol class="agenda">
+{zeilen_tops}      </ol>
+      <p class="fussnote">{'Zu diesem Punkt weist' if len(offen_tops) == 1 else 'Zu diesen Punkten weist'} das Beschlussprotokoll keinen
+      Beschluss aus — Berichte, Kenntnisnahmen und Formalia stehen ebenso darunter
+      wie Beratungen, die vertagt wurden.</p>
+    </details>""")
             t.append("  </div>\n</article>")
 
     # --- Bekanntgaben aus nichtöffentlicher Sitzung
