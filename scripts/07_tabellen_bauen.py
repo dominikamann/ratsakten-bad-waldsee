@@ -28,7 +28,7 @@ import logging
 import re
 from pathlib import Path
 
-from textwerk import pdf_text as roh_text
+from textwerk import pdf_text as roh_text, stichtag_vorgabe
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -111,7 +111,7 @@ def schreiben(pfad: Path, spalten: list[str], zeilen: list[dict]) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--stichtag", default=dt.date.today().isoformat(),
+    p.add_argument("--stichtag", default=stichtag_vorgabe(),
                    help="Redaktionsschluss; spätere Sitzungen bleiben unberücksichtigt")
     args = p.parse_args()
 

@@ -18,6 +18,7 @@ Ein Gedankenstrich verbindet zwei Woerter, die jedes fuer sich bestehen.
 from __future__ import annotations
 
 import collections
+import datetime as dt
 import hashlib
 import json
 import re
@@ -141,3 +142,35 @@ def schwaerzen(text: str) -> str:
     for alt, neu in _ersetzungen():
         text = text.replace(alt, neu)
     return text
+
+
+# --- Stichtag ----------------------------------------------------------------
+
+SITZUNGEN = Path(__file__).resolve().parent.parent / "data" / "sitzungen.json"
+
+
+def stichtag_vorgabe() -> str:
+    """Letzter Tag, an dem jede Sitzung dieses Tages bereits begonnen hat.
+
+    Der Vergleich lief frueher nur ueber das Datum. Eine Sitzung, die am
+    Lauftag erst am Abend beginnt, galt damit schon nachmittags als
+    stattgefunden — und die Wochenausgabe wies sie als „tagte oeffentlich,
+    keine Niederschrift abrufbar" aus, bevor sie ueberhaupt getagt hatte.
+    Das ist die Fehlerklasse, die dieses Projekt vermeiden muss: eine
+    Abwesenheit behaupten, die noch gar nicht eintreten konnte.
+
+    Steht heute noch eine Sitzung aus, endet die Auswertung deshalb am
+    Vortag. Ein ausdruecklich gesetzter --stichtag bleibt unberuehrt.
+    """
+    jetzt = dt.datetime.now()
+    heute = jetzt.date()
+    try:
+        sitzungen = json.loads(SITZUNGEN.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return heute.isoformat()
+
+    noch_offen = any(
+        s["start"][:10] == heute.isoformat() and s["start"] > jetzt.isoformat()
+        for s in sitzungen
+    )
+    return (heute - dt.timedelta(days=1)).isoformat() if noch_offen else heute.isoformat()

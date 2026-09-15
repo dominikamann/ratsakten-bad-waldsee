@@ -30,7 +30,8 @@ from pathlib import Path
 from seite import fuss, kopf, kurz
 
 from vorhaben import seiten_je_vorgang, vergleichsname
-from textwerk import schwaerzen, pdf_text as roh_text, trennung_reparieren, wortschatz_laden
+from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
+                      trennung_reparieren, wortschatz_laden)
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -992,7 +993,7 @@ def bauen(vorgaenge: list[dict], stichtag: str) -> str:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--stichtag", default=dt.date.today().isoformat())
+    p.add_argument("--stichtag", default=stichtag_vorgabe())
     args = p.parse_args()
 
     vorgaenge = vorgaenge_sammeln(args.stichtag)

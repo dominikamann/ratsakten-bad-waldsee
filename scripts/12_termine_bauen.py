@@ -129,15 +129,24 @@ def main() -> None:
         raise SystemExit("data/termine.json fehlt — bitte zuerst Schritt 03 ausführen.")
     termine = json.loads(quelle.read_text(encoding="utf-8"))
     register = json.loads((DATEN / "ausgaben.json").read_text(encoding="utf-8"))
-    kennzahlen = json.loads((DATEN / "kennzahlen.json").read_text(encoding="utf-8"))
-    heute = dt.date.fromisoformat(kennzahlen["stichtag"])
+    heute = dt.date.today()
+
+    # Der Kalender richtet sich nach dem tatsaechlichen Tag, nicht nach dem
+    # Stichtag der Auswertung: Der Stichtag endet am Vortag, sobald heute noch
+    # eine Sitzung aussteht — genau diese Sitzung gehoert hier aber als
+    # anstehend ausgewiesen und nicht als vergangen. Massgeblich ist deshalb
+    # der Beginn der Sitzung, nicht ihr Datum.
+    jetzt = dt.datetime.now()
+
+    def begonnen(x: dict) -> bool:
+        return dt.datetime.fromisoformat(f"{x['datum']}T{x['zeit']}") <= jetzt
 
     # Eine durchgehende Chronik, aelteste Sitzung zuerst. Zwei gegenlaeufige
     # Listen — Kuenftiges vorwaerts, Vergangenes rueckwaerts — lasen sich beim
     # Scrollen wie ein Bruch. Der heutige Tag steht an seiner Stelle in der
     # Reihe; dorthin fuehrt eine Sprungmarke.
     termine.sort(key=lambda t: (t["datum"], t["zeit"]))
-    kuenftig = [t for t in termine if dt.date.fromisoformat(t["datum"]) > heute]
+    kuenftig = [t for t in termine if not begonnen(t)]
     mit_agenda = sum(1 for t in kuenftig if t.get("punkte"))
 
     # Jahrgaenge, die nicht das laufende Jahr sind, stehen zugeklappt da. Sonst
@@ -150,10 +159,10 @@ def main() -> None:
              f'{lang(heute)}</span></li>')
     for x in termine:
         d = dt.date.fromisoformat(x["datum"])
-        if not heute_gesetzt and d > heute:
+        if not heute_gesetzt and not begonnen(x):
             je_jahr[heute.year].append(marke)
             heute_gesetzt = True
-        je_jahr[d.year].append(eintrag(x, register, d <= heute))
+        je_jahr[d.year].append(eintrag(x, register, begonnen(x)))
     if not heute_gesetzt:                     # alle Termine liegen zurueck
         je_jahr[heute.year].append(marke)
 

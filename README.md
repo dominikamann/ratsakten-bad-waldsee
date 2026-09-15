@@ -46,14 +46,14 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Ausgezählte Abstimmungen | 337 |
 | Gremien | 12 |
 
-**Zeitraum:** 01.01.2024 – 09.09.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 14.09.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
 
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
-➡️ **[Aktuelle Ausgabe, KW 37/2026](./docs/ausgaben/2026/kw37.html)** — die wöchentliche Aktenlage
-➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 89 Ausgaben der Jahrgänge 2024 bis 2026
+➡️ **[Aktuelle Ausgabe, KW 38/2026](./docs/ausgaben/2026/kw38.html)** — die wöchentliche Aktenlage
+➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 90 Ausgaben der Jahrgänge 2024 bis 2026
 ➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
 ➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf
 ➡️ **[Termine](./docs/termine.html#heute)** — alle Sitzungen, vergangene wie angekündigte
@@ -287,7 +287,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── index.html    Archiv über alle Jahrgänge
 │       ├── 2024/         33 Ausgaben
 │       ├── 2025/         35 Ausgaben
-│       └── 2026/         21 Ausgaben
+│       └── 2026/         22 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 12
 │   ├── wochenlauf.sh   ein Befehl für den ganzen Wochenlauf
@@ -416,7 +416,7 @@ belasten.
 
 ## Geplant
 
-- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (89 Stück)
+- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (90 Stück)
 - [x] Wöchentlicher Lauf als ein Befehl (`scripts/wochenlauf.sh`, `launchd`-Vorlage)
 - [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)
 - [x] Vorgangssuche mit Zeitachse (`docs/suche.html`)

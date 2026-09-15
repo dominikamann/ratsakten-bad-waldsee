@@ -18,7 +18,8 @@ import logging
 import re
 from pathlib import Path
 
-from textwerk import pdf_text as roh_text, wortschatz_aus, wortschatz_speichern
+from textwerk import (pdf_text as roh_text, stichtag_vorgabe, wortschatz_aus,
+                      wortschatz_speichern)
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -88,7 +89,7 @@ def pdf_text(pfad: Path) -> str:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--stichtag", default=dt.date.today().isoformat(),
+    p.add_argument("--stichtag", default=stichtag_vorgabe(),
                    help="Redaktionsschluss; spätere Sitzungen bleiben unberücksichtigt")
     args = p.parse_args()
 

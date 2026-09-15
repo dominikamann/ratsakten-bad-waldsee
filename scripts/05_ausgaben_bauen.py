@@ -32,7 +32,8 @@ from pathlib import Path
 
 from begriffe import begriffe_finden
 from seite import fuss, kopf
-from textwerk import schwaerzen, pdf_text as roh_text, trennung_reparieren, wortschatz_laden
+from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
+                      trennung_reparieren, wortschatz_laden)
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -908,7 +909,7 @@ def main() -> None:
     # nicht mehr gab, und 27 mit einem abgeschnittenen Gremiumsnamen.
     p.add_argument("--jahr", type=int, default=None,
                    help="nur diesen Jahrgang bauen (Vorgabe: alle)")
-    p.add_argument("--bis", default=dt.date.today().isoformat(),
+    p.add_argument("--bis", default=stichtag_vorgabe(),
                    help="Redaktionsschluss; spätere Sitzungen bleiben unberücksichtigt")
     args = p.parse_args()
 

@@ -1324,6 +1324,17 @@
    "sitzungen": 0,
    "von_iso": "2026-08-10",
    "zeitraum": "10.08.–11.09.2026"
+  },
+  "38": {
+   "abschluesse": {},
+   "beschluesse": 0,
+   "bis_iso": "2026-09-14",
+   "einordnung": false,
+   "gremien": [],
+   "ohne_protokoll": 0,
+   "sitzungen": 0,
+   "von_iso": "2026-09-12",
+   "zeitraum": "12.09.–14.09.2026"
   }
  }
 }
