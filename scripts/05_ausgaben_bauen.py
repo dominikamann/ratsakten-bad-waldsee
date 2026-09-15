@@ -839,6 +839,92 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     # ohne Beschluesse ist sie das Einzige mit Inhalt.
     t.extend(nach_kopf)
 
+    # Reihenfolge: erst die Sache, dann die Sprache, dann die Deutung.
+    #
+    # Frueher stand die Einordnung ganz oben — ausgerechnet der Abschnitt,
+    # der als KI-Deutung gekennzeichnet und ausdruecklich nicht
+    # redaktionell geprueft ist. Das Erste, was ein Leser sah, war damit
+    # das Unsicherste der Seite, und die Beschluesse kamen an vierter
+    # Stelle. Fuer ein Projekt, dessen Kern die Aktenlage ist, war das eine
+    # Schieflage — nicht im Wort, sondern in der Anordnung.
+
+    # --- Wenn nichts entschieden wurde, das ausdrücklich sagen
+    #
+    # Der Block sagt die Lage in einem Satz und zeigt danach, was war. Vorher
+    # nannte die Seitenspalte hier nur „Beschluesse 0" — ausgerechnet dort,
+    # wo die Null steht, fehlte die Zahl, die zeigt, dass trotzdem getagt
+    # wurde. Die Ausgaben mit redaktioneller Einordnung nannten die Sitzungen
+    # laengst; das war eine Inkonsistenz, keine Gestaltung.
+    # --- Beschlüsse
+    if w["beschluesse"]:
+        je_gremium: dict[tuple, list] = collections.defaultdict(list)
+        for b in w["beschluesse"]:
+            je_gremium[(b["datum"], b["gremium"], b["kuerzel"])].append(b)
+        for (tag, name, kz), liste in sorted(je_gremium.items()):
+            t.append(f"""
+<article>
+  <div class="rail">
+    <div class="field"><span class="lab">Sitzung</span><span class="val">{e(name)}</span></div>
+    <div class="field"><span class="lab">Datum</span><span class="val">{tag.strftime('%d.%m.%Y')}</span></div>
+    <div class="field"><span class="lab">Beschlüsse</span><span class="val">{len(liste)}</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Beschlossen · {e(rubrikname(name))}</p>
+    <h2 class="headline">{len(liste)} {'Beschluss' if len(liste) == 1 else 'Beschlüsse'} am {datum_lang(tag)}</h2>
+    <ul class="beschluesse">""")
+            for b in liste:
+                klasse = " split" if b["strittig"] else ""
+                # Der groesste im Beschlusstext genannte Betrag. Bewusst neutral
+                # bezeichnet: Es ist die hoechste dort vorkommende Summe, nicht
+                # zwingend "die Kosten" — bei Haushaltspunkten etwa eine
+                # Planungsgroesse.
+                geld = ""
+                if b.get("betrag") and b["betrag"] >= BETRAGSSCHWELLE:
+                    geld = (f"""<span class="betrag" title="größter im Beschlusstext """
+                            f"""genannter Betrag">{euro(b['betrag'])}</span>""")
+                wortlaut = (f"""<span class="wortlaut">{e(b['wortlaut'])}</span>"""
+                            if b.get("wortlaut") else "")
+                unterlagen = ""
+                if b.get("dokumente"):
+                    verweise = "".join(
+                        f'<a href="{d["url"]}" target="_blank" rel="noopener noreferrer">'
+                        f'{e(d["titel"])}</a>' for d in b["dokumente"])
+                    unterlagen = f'<span class="unterlagen">{verweise}</span>' 
+                t.append(f"""      <li><span class="sache">{e(b['titel'])}"""
+                         f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span>"""
+                         f"""{wortlaut}{unterlagen}</span>"""
+                         f"""<span class="erg{klasse}">{e(b['ergebnis'])}</span></li>""")
+            t.append("    </ul>")
+            if any(b["strittig"] for b in liste):
+                st = [b for b in liste if b["strittig"]]
+                t.append(f"""    <div class="kasten">
+      <p class="lab">Nicht einstimmig</p>
+      <p>{len(st)} von {len(liste)} Beschlüssen fielen nicht einstimmig:
+      {', '.join(f"<b>{e(b['vorlage'] or '—')}</b> ({e(b['ergebnis'])})" for b in st)}.
+      Die Schreibweise steht für Ja : Nein : Enthaltungen.</p>
+    </div>""")
+            t.append("  </div>\n</article>")
+
+    # --- Bekanntgaben aus nichtöffentlicher Sitzung
+    for bg in w["bekanntgaben"]:
+        t.append(f"""
+<article>
+  <div class="rail">
+    <div class="field"><span class="lab">Bekanntgabe</span><span class="val">{e(bg['gremium'])}</span></div>
+    <div class="field"><span class="lab">Datum</span><span class="val">{bg['datum'].strftime('%d.%m.%Y')}</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">Aus nichtöffentlicher Sitzung</p>
+    <h2 class="headline">Was hinter verschlossenen Türen entschieden wurde</h2>
+    <p>Zu Beginn der Sitzung gibt das Gremium bekannt, was es zuvor nichtöffentlich
+    beschlossen hat. Im Protokoll steht dazu wörtlich:</p>
+    <div class="kasten"><p class="lab">Wortlaut des Protokolls</p><p>{e(bg['text'])}</p></div>
+    <p class="note">Bekanntgaben nennen das Ergebnis, nicht die Begründung, die Kosten oder
+    die Alternativen. Wie viel insgesamt nichtöffentlich entschieden wird, ist aus den
+    Unterlagen nicht ermittelbar.</p>
+  </div>
+</article>""")
+
     # --- Redaktionelle Einordnung, falls hinterlegt
     if einordnung:
         absaetze = "\n".join(f"    <p>{e(a)}</p>" for a in einordnung.get("absaetze", []))
@@ -863,13 +949,6 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   </div>
 </article>""")
 
-    # --- Wenn nichts entschieden wurde, das ausdrücklich sagen
-    #
-    # Der Block sagt die Lage in einem Satz und zeigt danach, was war. Vorher
-    # nannte die Seitenspalte hier nur „Beschluesse 0" — ausgerechnet dort,
-    # wo die Null steht, fehlte die Zahl, die zeigt, dass trotzdem getagt
-    # wurde. Die Ausgaben mit redaktioneller Einordnung nannten die Sitzungen
-    # laengst; das war eine Inkonsistenz, keine Gestaltung.
     # --- Auffälligkeiten
     hinweise = auffaelligkeiten(w)
     if hinweise:
@@ -946,76 +1025,6 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
       <summary>{len(gefunden)} Begriffe in dieser Ausgabe</summary>
 {eintraege}
     </details>
-  </div>
-</article>""")
-
-    # --- Beschlüsse
-    if w["beschluesse"]:
-        je_gremium: dict[tuple, list] = collections.defaultdict(list)
-        for b in w["beschluesse"]:
-            je_gremium[(b["datum"], b["gremium"], b["kuerzel"])].append(b)
-        for (tag, name, kz), liste in sorted(je_gremium.items()):
-            t.append(f"""
-<article>
-  <div class="rail">
-    <div class="field"><span class="lab">Sitzung</span><span class="val">{e(name)}</span></div>
-    <div class="field"><span class="lab">Datum</span><span class="val">{tag.strftime('%d.%m.%Y')}</span></div>
-    <div class="field"><span class="lab">Beschlüsse</span><span class="val">{len(liste)}</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">Beschlossen · {e(rubrikname(name))}</p>
-    <h2 class="headline">{len(liste)} {'Beschluss' if len(liste) == 1 else 'Beschlüsse'} am {datum_lang(tag)}</h2>
-    <ul class="beschluesse">""")
-            for b in liste:
-                klasse = " split" if b["strittig"] else ""
-                # Der groesste im Beschlusstext genannte Betrag. Bewusst neutral
-                # bezeichnet: Es ist die hoechste dort vorkommende Summe, nicht
-                # zwingend "die Kosten" — bei Haushaltspunkten etwa eine
-                # Planungsgroesse.
-                geld = ""
-                if b.get("betrag") and b["betrag"] >= BETRAGSSCHWELLE:
-                    geld = (f"""<span class="betrag" title="größter im Beschlusstext """
-                            f"""genannter Betrag">{euro(b['betrag'])}</span>""")
-                wortlaut = (f"""<span class="wortlaut">{e(b['wortlaut'])}</span>"""
-                            if b.get("wortlaut") else "")
-                unterlagen = ""
-                if b.get("dokumente"):
-                    verweise = "".join(
-                        f'<a href="{d["url"]}" target="_blank" rel="noopener noreferrer">'
-                        f'{e(d["titel"])}</a>' for d in b["dokumente"])
-                    unterlagen = f'<span class="unterlagen">{verweise}</span>' 
-                t.append(f"""      <li><span class="sache">{e(b['titel'])}"""
-                         f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span>"""
-                         f"""{wortlaut}{unterlagen}</span>"""
-                         f"""<span class="erg{klasse}">{e(b['ergebnis'])}</span></li>""")
-            t.append("    </ul>")
-            if any(b["strittig"] for b in liste):
-                st = [b for b in liste if b["strittig"]]
-                t.append(f"""    <div class="kasten">
-      <p class="lab">Nicht einstimmig</p>
-      <p>{len(st)} von {len(liste)} Beschlüssen fielen nicht einstimmig:
-      {', '.join(f"<b>{e(b['vorlage'] or '—')}</b> ({e(b['ergebnis'])})" for b in st)}.
-      Die Schreibweise steht für Ja : Nein : Enthaltungen.</p>
-    </div>""")
-            t.append("  </div>\n</article>")
-
-    # --- Bekanntgaben aus nichtöffentlicher Sitzung
-    for bg in w["bekanntgaben"]:
-        t.append(f"""
-<article>
-  <div class="rail">
-    <div class="field"><span class="lab">Bekanntgabe</span><span class="val">{e(bg['gremium'])}</span></div>
-    <div class="field"><span class="lab">Datum</span><span class="val">{bg['datum'].strftime('%d.%m.%Y')}</span></div>
-  </div>
-  <div class="body-col">
-    <p class="rubrik">Aus nichtöffentlicher Sitzung</p>
-    <h2 class="headline">Was hinter verschlossenen Türen entschieden wurde</h2>
-    <p>Zu Beginn der Sitzung gibt das Gremium bekannt, was es zuvor nichtöffentlich
-    beschlossen hat. Im Protokoll steht dazu wörtlich:</p>
-    <div class="kasten"><p class="lab">Wortlaut des Protokolls</p><p>{e(bg['text'])}</p></div>
-    <p class="note">Bekanntgaben nennen das Ergebnis, nicht die Begründung, die Kosten oder
-    die Alternativen. Wie viel insgesamt nichtöffentlich entschieden wird, ist aus den
-    Unterlagen nicht ermittelbar.</p>
   </div>
 </article>""")
 
