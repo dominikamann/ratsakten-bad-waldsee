@@ -132,6 +132,27 @@ Auftritt wäre GitHub Pages der richtige Weg — dann hätten die Seiten eine fe
 Adresse. Zum Anschauen und Weitergeben reicht githack vollkommen.
 
 
+## Warum täglich
+
+Die Stadt veröffentlicht unregelmäßig: Tagesordnungen erscheinen wenige Tage
+vor der Sitzung, Protokolle irgendwann danach. Bei einem wöchentlichen Lauf
+stünde ein Protokoll vom Dienstag sechs Tage lang nicht da. Die Ausgabe bleibt
+die Wochenausgabe — sie wächst nur täglich mit, und die laufende Woche ist als
+Zwischenstand gekennzeichnet.
+
+Der Lauf bleibt lokal: Das Ratsinformationssystem beantwortet Anfragen aus
+Rechenzentrumsnetzen mit HTTP 503, von einem privaten Anschluss aus normal.
+Das wird nicht umgangen.
+
+## Amtsdeutsch im Text erklärt
+
+Begriffe wie „gemeindliches Einvernehmen", „Abwägungs- und Satzungsbeschluss"
+oder „Feststellungsbeschluss" stehen im Beschlusswortlaut, weil er wörtlich
+zitiert wird. Wo ein solcher Begriff zum ersten Mal vorkommt, ist er gepunktet
+unterstrichen: Zeigen mit der Maus oder Antippen blendet eine Erklärung mit
+Fundstelle ein — zwölf Begriffe, in 78 von 90 Ausgaben. Das funktioniert ohne
+JavaScript; im Ausdruck stehen die Erklärungen ausgeschrieben da.
+
 ## Datenquellen
 
 Ausschließlich öffentlich zugängliche Dokumente. Es wurden **keine Zugangsbeschränkungen
@@ -290,8 +311,8 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── 2025/         35 Ausgaben
 │       └── 2026/         22 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
-├── scripts/    die Verarbeitungskette, Schritt 01 bis 13
-│   ├── wochenlauf.sh   ein Befehl für den ganzen Wochenlauf
+├── scripts/    die Verarbeitungskette, Schritt 01 bis 15
+│   ├── wochenlauf.sh   ein Befehl für den ganzen Lauf
 │   ├── seite.py        Seitenrahmen und Navigation — für alle Seiten dieselben
 │   ├── basis.css       Farben, Schrift, Seitenkopf und Fuß — für alle Seiten dieselben
 │   ├── pruefen.py      Kontrolle vor der Veröffentlichung
@@ -305,6 +326,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 # Daten holen und auswerten
 uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 uv run --with requests                       python scripts/02_protokolle_laden.py
+uv run --with requests                       python scripts/15_vorlagen_laden.py
 uv run --with pypdf                          python scripts/03_auswerten.py
 
 # Seiten bauen
@@ -362,7 +384,7 @@ Anfragen aus Rechenzentrumsnetzen mit `HTTP 503` — aus GitHub Actions heraus i
 es nicht erreichbar. Von einem normalen Anschluss antwortet es einwandfrei. Diese
 Beschränkung wird nicht umgangen.
 
-Automatisch montags früh laufen lassen:
+Automatisch täglich früh laufen lassen:
 
 ```bash
 cp scripts/launchd/eu.amannlabs.ratsakten.plist ~/Library/LaunchAgents/
@@ -381,7 +403,7 @@ Das Protokoll landet in `~/Library/Logs/ratsakten.log`.
 >
 > Zwei Wege: entweder in *Systemeinstellungen → Datenschutz & Sicherheit →
 > Festplattenvollzugriff* `/bin/bash` freigeben, oder auf die Zeitsteuerung
-> verzichten und den Wochenlauf von Hand starten. Das ist ein Befehl.
+> verzichten und den Lauf von Hand starten. Das ist ein Befehl.
 
 ### Was auf GitHub läuft
 

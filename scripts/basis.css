@@ -59,7 +59,14 @@ body{
 /* Nichts darf die Seite in die Breite ziehen. Lange Vorlagennummern, Adressen
    und Dateinamen brechen um, statt ueber den Rand zu laufen — auf einem
    Telefon entscheidet das darueber, ob die Seite lesbar ist. */
-body{overflow-wrap:break-word}
+/* Lange Woerter — „Flaechennutzungsplanaenderung", „Verwaltungsgemeinschaft"
+   — passen auf schmalen Anzeigen nicht in eine Zeile. `overflow-wrap` bricht
+   sie hart mitten durch, ohne Bindestrich: „ange" / „legt" liest sich wie ein
+   Uebertragungsfehler, und in einem Beschlusswortlaut faellt genau das auf.
+   Mit `hyphens` trennt der Browser stattdessen an Silbengrenzen und setzt
+   einen Trennstrich; die Seiten tragen dafuer `lang="de"`. Der harte Bruch
+   bleibt als Rueckfallebene fuer Woerter, die auch so nicht passen. */
+body{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
 img,svg,video,iframe{max-width:100%;height:auto}
 pre,code{max-width:100%;overflow-x:auto}
 /* Verweise auf Unterlagen tragen den Dateinamen aus dem Ratsinformationssystem,
