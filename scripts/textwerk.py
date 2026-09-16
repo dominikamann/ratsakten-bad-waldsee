@@ -113,6 +113,15 @@ LEERSTELLE = re.compile(r"\b([A-Za-zÄÖÜäöüß]{4,})\s+([a-zäöüß]{2,10})
 BRUCHSTUECK_HOECHSTENS = 8
 VERHAELTNIS = 4
 
+# Wie lang die rechte Haelfte hoechstens sein darf. Die Grenze stand auf 10
+# und war die einzige Huerde vor drei eindeutigen Faellen: „Bau vorschriften"
+# (ganz 101×, „bau" allein 2×), „Abwasser beseitigung" (18× gegen 2×) und
+# „Kin dertagesstaetten" (5× gegen 0×) — deutsche Komposita sind laenger als
+# zehn Zeichen. Ausgezaehlt ueber alle veroeffentlichten Zitate bringt jede
+# Grenze von 12 bis 20 genau diese drei und keinen einzigen Fehltreffer; die
+# Beweislast traegt ohnehin das Verhaeltnis, nicht die Wortlaenge.
+BRUCHSTUECK_LAENGE = 16
+
 
 def leertrennung_reparieren(text: str, haeufig: dict[str, int]) -> str:
     """Zerrissene Woerter zusammenfuehren — nur bei klarer Datenlage.
@@ -149,7 +158,7 @@ def leertrennung_reparieren(text: str, haeufig: dict[str, int]) -> str:
         # blieb mit einer Untergrenze von vier stehen. Die Haeufigkeitsregel
         # traegt auch kurze Teile — „die se" wird nicht zusammengezogen, weil
         # „die" viel zu haeufig allein vorkommt.
-        passt = (len(a) >= 2 and 2 <= len(b) <= 10 and b[0].islower()
+        passt = (len(a) >= 2 and 2 <= len(b) <= BRUCHSTUECK_LAENGE and b[0].islower()
                  and n_zus and n_links <= BRUCHSTUECK_HOECHSTENS
                  and n_zus >= max(VERHAELTNIS, n_links * VERHAELTNIS))
         if passt:
