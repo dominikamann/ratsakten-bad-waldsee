@@ -1133,14 +1133,13 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                     return f"{e(x)} — {e(v)}" if v else e(x)
 
                 nachsatz = ("" if not formal else
-                            f'      <p class="fussnote">Dazu die wiederkehrenden Punkte '
-                            f'{", ".join(mit_vermerk(x) for x in formal)}.</p>\n')
+                            f'      <p class="fussnote">Wiederkehrende Punkte derselben '
+                            f'Sitzung: {", ".join(mit_vermerk(x) for x in formal)}.</p>\n')
                 t.append(f"""    <details class="mehr" id="{marke}-tops" open>
       <summary>{len(sachlich)} {'weiteres Thema' if len(sachlich) == 1 else 'weitere Themen'} ohne Beschluss</summary>
       <ul class="beschluesse">
 {zeilen_tops}      </ul>
-{nachsatz}      <p class="fussnote">Was das Protokoll zu diesen Punkten vermerkt, steht
-      jeweils dahinter. Warum nicht beschlossen wurde, hält es nicht fest.</p>
+{nachsatz}
     </details>""")
             t.append("  </div>\n</article>")
 
