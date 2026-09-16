@@ -41,7 +41,7 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Erfasste Sitzungen | 167 |
 | Tagesordnungspunkte | 621 |
 | Sitzungsvorlagen | 302 |
-| Dokumente | 628 |
+| Dokumente | 630 |
 | Ausgewertete Beschlussprotokolle | 72 |
 | Ausgezählte Abstimmungen | 337 |
 | Gremien | 12 |
@@ -202,7 +202,7 @@ Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum di
 Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
 Dieser Abschnitt wird **gekürzt wiedergegeben** — bis zu 420 Zeichen, an einer
 Satzgrenze abgeschnitten, mit Verweis auf das vollständige Dokument. Alle
-übrigen Teile der Vorlage bleiben ungelesen. 628 Dokumente sind so erreichbar.
+übrigen Teile der Vorlage bleiben ungelesen. 630 Dokumente sind so erreichbar.
 
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst

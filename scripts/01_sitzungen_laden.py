@@ -96,6 +96,7 @@ def termine_holen(s: requests.Session, token: str) -> list[dict]:
 
 
 EXPORTVERMERK = re.compile(r"\s*\(exportiert:[^)]*\)\s*|\s*\(\d[\d.]*\s*KB\)\s*")
+GESAMTPAKET = re.compile(r"Gesamtes_Sitzungspaket", re.I)
 
 
 def dokumente_der_zeile(zeile) -> list[dict]:
@@ -146,6 +147,21 @@ def sitzung_auslesen(s: requests.Session, termin: dict) -> tuple[dict, list[dict
             "url": termin["url"],
             "dokumente": dokumente_der_zeile(zeile),
         })
+
+    # Nicht jede Vorlage haengt am eigenen Tagesordnungspunkt. Vier von 348
+    # Punkten mit Vorlagennummer tragen im Ratsinformationssystem gar keinen
+    # Dateiverweis — die Vorlage steckt dort nur im Gesamtpaket der Sitzung
+    # (zuletzt SV-152/2026, "Dorfmitte Osterhofen", 15.09.2026). Ohne diesen
+    # Rueckfall zeigt die Ausgabe bei ihnen die blosse Nummer und sonst nichts,
+    # obwohl die Unterlage oeffentlich abrufbar ist. Der Verweis traegt den
+    # Namen, den die Stadt der Datei gibt; eine Aussage ueber ihren Inhalt
+    # wird damit nicht gemacht.
+    paket = next((u for u in pdfs if GESAMTPAKET.search(u)), None)
+    if paket:
+        for punkt in punkte:
+            if punkt["vorlage"] and not punkt["dokumente"]:
+                punkt["dokumente"] = [{"titel": "Gesamtes Sitzungspaket",
+                                       "url": paket}]
 
     sitzung = {
         "titel": termin["title"],
