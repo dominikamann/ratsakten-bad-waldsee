@@ -161,26 +161,81 @@ def sitzung_auslesen(s: requests.Session, termin: dict) -> tuple[dict, list[dict
     return sitzung, punkte
 
 
+def vorbestand() -> dict[str, dict]:
+    """Die Sitzungen des vorigen Laufs, nach Titel und Beginn ansprechbar."""
+    datei = DATEN / "sitzungen.json"
+    if not datei.exists():
+        return {}
+    return {x["titel"] + x["start"]: x for x in json.loads(datei.read_text(encoding="utf-8"))}
+
+
+def alte_topmap() -> dict[str, list[dict]]:
+    """Die Tagesordnungspunkte des vorigen Laufs, nach Sitzungsadresse gebuendelt."""
+    datei = DATEN / "topmap.json"
+    if not datei.exists():
+        return {}
+    gebuendelt: dict[str, list[dict]] = {}
+    for punkt in json.loads(datei.read_text(encoding="utf-8")):
+        gebuendelt.setdefault(punkt["url"], []).append(punkt)
+    return gebuendelt
+
+
 def main() -> None:
     DATEN.mkdir(exist_ok=True)
     s, token = sitzung_starten()
     print(f"CSRF-Token: {token[:12]}…", file=sys.stderr)
 
+    # Der Kalender fuehrt auch Termine, die keine Sitzung sind — Neujahrsempfang,
+    # Bildungsmesse, verkaufsoffener Sonntag. Sie haben keine Detailseite und
+    # damit weder Tagesordnung noch Protokoll; sie gehoeren nicht in den Bestand.
     termine = [t for t in termine_holen(s, token) if t.get("url")]
     print(f"{len(termine)} Sitzungstermine mit Detailseite gefunden", file=sys.stderr)
 
-    sitzungen, topmap = [], []
+    # Der vorige Bestand als Rueckfallebene. Ein einzelner misslungener Abruf
+    # darf eine Sitzung nicht aus dem Datenbestand loeschen: Frueher wurde der
+    # Fehler nur nach stderr gemeldet und die Datei ohne die Sitzung neu
+    # geschrieben — die Sitzung vom 13.01.2026 verschwand auf diesem Weg, und
+    # Kennzahlen, README und Ausgaben rechneten stillschweigend mit einer
+    # Sitzung weniger weiter.
+    vorher = vorbestand()
+    alte_punkte = alte_topmap()
+
+    sitzungen, topmap, gerettet, verloren = [], [], [], []
     for i, termin in enumerate(termine, 1):
+        schluessel = termin["title"] + termin["start"]
         try:
             sitzung, punkte = sitzung_auslesen(s, termin)
         except Exception as fehler:  # noqa: BLE001 — einzelne Ausfälle nicht fatal
             print(f"  Fehler bei {termin['title']}: {fehler}", file=sys.stderr)
-            continue
+            if schluessel in vorher:
+                sitzung = vorher[schluessel]
+                punkte = alte_punkte.get(termin["url"], [])
+                gerettet.append(termin["title"])
+            else:
+                verloren.append(termin["title"])
+                continue
         sitzungen.append(sitzung)
         topmap.extend(punkte)
         if i % 25 == 0:
             print(f"  {i}/{len(termine)} …", file=sys.stderr)
         time.sleep(PAUSE)
+
+    if gerettet:
+        print(f"\n{len(gerettet)} Sitzung(en) waren nicht abrufbar und wurden aus dem "
+              f"vorigen Bestand uebernommen:", file=sys.stderr)
+        for titel in gerettet:
+            print(f"  {titel}", file=sys.stderr)
+
+    if verloren:
+        # Kein Rueckfall moeglich: Die Datei jetzt zu schreiben hiesse, eine
+        # Sitzung verschwinden zu lassen, die es im Ratsinformationssystem gibt.
+        # Lieber der alte Stand und ein lauter Abbruch als ein stiller Verlust.
+        print(f"\nAbbruch: {len(verloren)} Sitzung(en) nicht abrufbar und nicht im "
+              f"vorigen Bestand:", file=sys.stderr)
+        for titel in verloren:
+            print(f"  {titel}", file=sys.stderr)
+        print("Nichts geschrieben. Lauf spaeter wiederholen.", file=sys.stderr)
+        sys.exit(1)
 
     (DATEN / "sitzungen.json").write_text(
         json.dumps(sitzungen, ensure_ascii=False, indent=1), encoding="utf-8")
