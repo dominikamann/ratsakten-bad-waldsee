@@ -34,9 +34,13 @@ from pathlib import Path
 
 import requests
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from textwerk import paket_abschnitt, pdf_text  # noqa: E402
+
 BASIS = Path(__file__).resolve().parent.parent
 DATEN = BASIS / "data"
 ZIEL = DATEN / "vorlagen"
+PAKETE = DATEN / "pakete"
 
 # Dieselbe Pause wie beim Laden der Protokolle. Die Abfragen sind bewusst
 # langsam gehalten, damit der Server der Stadt nicht belastet wird.
@@ -70,6 +74,88 @@ def alle_vorlagen() -> dict[str, str]:
     return gefunden
 
 
+def paketname(url: str) -> str:
+    """Ein eindeutiger Dateiname fuer ein Gesamtpaket.
+
+    Im Ratsinformationssystem heisst *jedes* Paket „Gesamtes_Sitzungspaket.pdf";
+    unterschieden werden sie allein durch die Kennung davor. Der letzte
+    Pfadteil taugt deshalb nicht als Dateiname — beim ersten Versuch
+    ueberschrieben sich alle Pakete gegenseitig, und der Sachverhalt wurde aus
+    dem Paket einer fremden Sitzung geschnitten.
+    """
+    teile = [x for x in url.split("/") if x]
+    kennung = teile[-2] if len(teile) >= 2 else "paket"
+    return re.sub(r"[^A-Za-z0-9_-]+", "", kennung)[:40] + ".pdf"
+
+
+def vorlagen_ohne_pdf() -> dict[str, str]:
+    """Vorlagennummer → URL des Gesamtpakets, fuer Vorlagen ohne eigene PDF.
+
+    Sechs von 283 Vorlagen sind im Ratsinformationssystem nicht einzeln
+    veroeffentlicht — darunter die Bewerbung um die Landesgartenschau und der
+    Erwerb einer Skulptur fuer das Verwaltungsgebaeude. Ihr Sachverhalt steht
+    trotzdem im Netz, nur eben im Gesamtpaket der Sitzung. Ohne diesen Weg
+    zeigt die Ausgabe bei ihnen die blosse Vorlagennummer und sonst nichts,
+    obwohl die Auskunft oeffentlich abrufbar ist.
+    """
+    topmap = json.loads((DATEN / "topmap.json").read_text(encoding="utf-8"))
+    sitzungen = json.loads((DATEN / "sitzungen.json").read_text(encoding="utf-8"))
+
+    eigene = {p["vorlage"] for p in topmap if p.get("vorlage")
+              and any(d.get("titel", "").startswith("Sitzungsvorlage")
+                      for d in (p.get("dokumente") or []))}
+    pakete = {x["url"]: u for x in sitzungen for u in x["pdfs"]
+              if "Gesamtes_Sitzungspaket" in u}
+
+    offen: dict[str, str] = {}
+    for p in topmap:
+        nr = p.get("vorlage")
+        if nr and nr not in eigene and nr not in offen and p["url"] in pakete:
+            offen[nr] = pakete[p["url"]]
+    return offen
+
+
+def aus_paketen_nachtragen(s: requests.Session) -> tuple[int, int]:
+    """Fehlende Vorlagen aus dem Gesamtpaket der Sitzung nachtragen.
+
+    Abgelegt wird der herausgeschnittene Abschnitt als Textdatei neben den
+    Vorlagen. So bleibt der Ausgabenbauer unveraendert: Er liest die PDF,
+    wenn es sie gibt, und sonst diese Datei.
+    """
+    offen = vorlagen_ohne_pdf()
+    if not offen:
+        return 0, 0
+    PAKETE.mkdir(parents=True, exist_ok=True)
+
+    nachgetragen = leer = 0
+    for nr, url in sorted(offen.items()):
+        ziel = ZIEL / (dateiname(nr)[:-4] + ".txt")
+        if ziel.exists():
+            continue
+
+        paket = PAKETE / paketname(url)
+        if not paket.exists():
+            try:
+                antwort = s.get(url, timeout=120)
+                antwort.raise_for_status()
+                paket.write_bytes(antwort.content)
+            except Exception as f:  # noqa: BLE001
+                print(f"  Paket nicht ladbar fuer {nr}: {f}", file=sys.stderr)
+                continue
+            time.sleep(PAUSE)
+
+        abschnitt = paket_abschnitt(pdf_text(paket), nr)
+        if not abschnitt:
+            # Kein Abbruch: Eine Vorlage ohne auffindbaren Abschnitt bleibt
+            # eben ohne Sachverhalt — so wie bisher alle sechs.
+            print(f"  {nr}: im Paket kein Abschnitt gefunden", file=sys.stderr)
+            leer += 1
+            continue
+        ziel.write_text(abschnitt, encoding="utf-8")
+        nachgetragen += 1
+    return nachgetragen, leer
+
+
 def main() -> None:
     ZIEL.mkdir(parents=True, exist_ok=True)
     offen = alle_vorlagen()
@@ -93,8 +179,12 @@ def main() -> None:
             fehler += 1
         time.sleep(PAUSE)
 
+    nachgetragen, leer = aus_paketen_nachtragen(s)
+
     print(f"Sitzungsvorlagen — neu: {neu}, "
-          f"bereits vorhanden: {vorhanden}, fehlgeschlagen: {fehler}",
+          f"bereits vorhanden: {vorhanden}, fehlgeschlagen: {fehler}, "
+          f"aus Gesamtpaket nachgetragen: {nachgetragen}"
+          + (f", im Paket nicht gefunden: {leer}" if leer else ""),
           file=sys.stderr)
 
 

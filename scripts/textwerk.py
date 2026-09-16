@@ -335,8 +335,51 @@ def vermerk_lesen(protokoll: str, titel: str) -> str:
 
 # --- Sachverhalt aus einer Sitzungsvorlage -----------------------------------
 
+# Im Gesamtpaket einer Sitzung stehen die Vorlagen hintereinander. Jede
+# beginnt mit ihrer Kennung, gefolgt vom Kopf „Beratungs-/aktion Kennung
+# Gremium Datum". Diese Zeile trennt die Vorlagen zuverlaessig voneinander —
+# die blosse Vorlagennummer taugt nicht dazu, denn sie steht auch in der
+# Tagesordnung auf Seite eins und in jeder Fusszeile.
+PAKET_KOPF = re.compile(r"(SV-\d+/\d{4})\s+Beratungs")
+
+
+def paket_abschnitt(text: str, nummer: str) -> str:
+    """Aus dem Text eines Gesamtpakets den Abschnitt einer Vorlage schneiden.
+
+    Zurueck kommt alles vom Kopf der gesuchten Vorlage bis zum Kopf der
+    naechsten — also genau ein Dokument, mit seinem eigenen „III. Zum
+    Sachverhalt". Ohne diesen Schnitt faende die Suche den Sachverhalt der
+    erstbesten Vorlage im Paket und schriebe ihn der falschen zu.
+    """
+    flach = re.sub(r"\s+", " ", text)
+    koepfe = list(PAKET_KOPF.finditer(flach))
+    for i, kopf in enumerate(koepfe):
+        if kopf.group(1) != nummer:
+            continue
+        ende = koepfe[i + 1].start() if i + 1 < len(koepfe) else len(flach)
+        return flach[kopf.start():ende].strip()
+    return ""
+
+
+# Die Gliederung der Vorlagen schwankt in zwei Punkten, und beide haben Text
+# gekostet:
+#
+#   * „zum Sachverhalt" wird mal gross, mal klein geschrieben — 241× gross,
+#     36× klein. Das alte Muster verlangte die grosse Schreibung und liess
+#     damit 36 Sachverhalte ungelesen, samtlich aus 2023 und Anfang 2024.
+#   * Die Nummer davor ist nicht fest. Vorlagen mit Beschlussvorschlag zaehlen
+#     I. Beschlussvorschlag, II. Zu beraten, III. Zum Sachverhalt; Vorlagen zur
+#     blossen Kenntnisnahme haben keinen Beschlussvorschlag und zaehlen um eins
+#     versetzt — II. Zum Sachverhalt.
+#
+# Das Ende ist dagegen verlaesslich: 269 von 277 Vorlagen schliessen den
+# Abschnitt mit „IV. Weitere Ueberlegungen". Darauf wird geprueft und nicht
+# auf „die naechste roemische Zahl" — die steht auch mitten im Fliesstext.
 SACHVERHALT = re.compile(
-    r"III\.\s*Zum Sachverhalt\s*:?(.*?)(?=\bIV\.\s|\bV\.\s|$)", re.S)
+    r"\b[IVX]+\s*\.\s*zum\s+Sachverhalt\s*:?"
+    r"(.*?)"
+    r"(?=\b[IVX]+\s*\.\s*weitere\b|\bAnlage\(n\)\s*:|$)",
+    re.S | re.I)
 
 
 def sachverhalt_lesen(pfad: Path, wortschatz: set[str] | None = None,
@@ -358,9 +401,18 @@ def sachverhalt_lesen(pfad: Path, wortschatz: set[str] | None = None,
     laengste Fassung bei ueber siebentausend. Ungekuerzt wuerde eine einzelne
     Vorlage die halbe Ausgabe fuellen.
     """
-    if not pfad.exists():
-        return ""
-    treffer = SACHVERHALT.search(re.sub(r"\s+", " ", pdf_text(pfad)))
+    # Fehlt die Vorlage als eigenes PDF, steht sie im Gesamtpaket der Sitzung.
+    # Schritt 15 schneidet ihren Abschnitt dort heraus und legt ihn als
+    # Textdatei neben die PDF; gelesen wird, was vorhanden ist.
+    if pfad.exists():
+        roh = pdf_text(pfad)
+    else:
+        ersatz = pfad.with_suffix(".txt")
+        if not ersatz.exists():
+            return ""
+        roh = ersatz.read_text(encoding="utf-8")
+
+    treffer = SACHVERHALT.search(re.sub(r"\s+", " ", roh))
     if not treffer:
         return ""
 

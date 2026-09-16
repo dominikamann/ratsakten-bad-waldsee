@@ -31,3 +31,4 @@ data/termine.json
 # Sitzungsvorlagen zu Punkten ohne Beschluss. Wie die Protokolle: Quellmaterial,
 # das der Lauf selbst holt — es gehoert nicht in die Versionsgeschichte.
 data/vorlagen/
+data/pakete/
