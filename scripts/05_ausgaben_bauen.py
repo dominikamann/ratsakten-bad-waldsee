@@ -1076,6 +1076,19 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 wortlaut = (f"""<span class="wortlaut">"""
                             f"""{markieren(e(b['wortlaut']), erklaert)}</span>"""
                             if b.get("wortlaut") else "")
+                # Worum es ging, aus der Sitzungsvorlage. Der Beschluss sagt,
+                # **was** entschieden wurde; der Sachverhalt, **warum** es zur
+                # Entscheidung kam. „Fuer das Kindergartenjahr 2026/2027
+                # empfehlen die Kirchen eine Erhoehung um 4,5 %" steht in
+                # keinem Protokoll.
+                sachlage = ""
+                if b.get("vorlage"):
+                    txt = sachverhalt_lesen(
+                        VORLAGEN / (re.sub(r"[^A-Za-z0-9-]+", "-", b["vorlage"]) + ".pdf"),
+                        WORTSCHATZ, HAEUFIGKEITEN)
+                    if txt:
+                        sachlage = (f'<span class="sachlage">'
+                                    f'{markieren(e(txt), erklaert)}</span>')
                 unterlagen = ""
                 if b.get("dokumente"):
                     verweise = "".join(
@@ -1085,7 +1098,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 t.append(f"""      <li><span class="sache">"""
                          f"""{markieren(e(b['titel']), erklaert)}"""
                          f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span>"""
-                         f"""{wortlaut}{unterlagen}</span>"""
+                         f"""{sachlage}{wortlaut}{unterlagen}</span>"""
                          f"""<span class="erg{klasse}">{e(b['ergebnis'])}</span></li>""")
             t.append("    </ul>")
             if any(b["strittig"] for b in liste):

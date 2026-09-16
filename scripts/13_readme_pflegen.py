@@ -69,7 +69,7 @@ def stellen() -> list[tuple[str, str]]:
         (r"(— )\d+( Vorhaben mit ihrem vollständigen Verlauf)", vorhaben),
         (r"(alle )\d+( Erkenntnisse an einem Ort)", erkenntnisse),
         (r"(nachgeholt \()\d+( Stück\))", ausgaben),
-        (r"(Original\. )\d+( Dokumente sind so erreichbar)", k["dokumente"]),
+        (r"(ungelesen\. )\d+( Dokumente sind so erreichbar)", k["dokumente"]),
         (r"(und )\d+( Protokolldateien zu )\d+( Sitzungen)",
          (protokolldateien, k["protokolle"])),
         (r"(filtern — )\d+( Vorgänge nennen eine Million)", ueber_million),

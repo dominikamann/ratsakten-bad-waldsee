@@ -186,6 +186,22 @@ p.wann b{font-weight:600}
   }
 }
 
+/* ---------- Sachverhalt aus der Sitzungsvorlage ----------
+   Der Beschluss sagt, **was** entschieden wurde; der Sachverhalt, **warum**
+   es zur Entscheidung kam. Beide stehen untereinander und muessen sich
+   unterscheiden lassen: Der Beschluss ist der Wortlaut des Protokolls und
+   traegt deshalb den Balken, der Sachverhalt ist Vorgeschichte und steht
+   zurueckhaltender da. */
+ul.beschluesse .sachlage{
+  display:block;margin:9px 0 0;max-width:68ch;
+  font-size:15px;line-height:1.55;color:var(--ink-2);
+}
+ul.beschluesse .sachlage::before{
+  content:"Worum es ging";display:block;
+  font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px;
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);

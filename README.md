@@ -179,8 +179,9 @@ Wo Unterlagen am Tagesordnungspunkt hängen — Sitzungsvorlage, Planteil,
 Umweltbericht —, sind sie **verlinkt und öffnen in einem neuen Tab**. Die
 Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum die
 Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
-Diese Begründung wird **nicht wiedergegeben** — wer sie lesen will, liest sie im
-Original. 628 Dokumente sind so erreichbar.
+Dieser Abschnitt wird **gekürzt wiedergegeben** — bis zu 420 Zeichen, an einer
+Satzgrenze abgeschnitten, mit Verweis auf das vollständige Dokument. Alle
+übrigen Teile der Vorlage bleiben ungelesen. 628 Dokumente sind so erreichbar.
 
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst
@@ -423,17 +424,7 @@ belasten.
 
 ## Geplant
 
-- [ ] **Sachverhalt auch zu beschlossenen Punkten.** Die Sitzungsvorlage
-      enthält den Abschnitt „Zum Sachverhalt" — warum die Verwaltung etwas
-      vorschlägt. Er wird derzeit nur für Punkte **ohne** Beschluss
-      wiedergegeben (39 Vorlagen), weil dort sonst nur der Titel stünde. Für
-      die übrigen rund 320 Vorlagen ist das offen: Es wären mehr Abrufe beim
-      Ratsinformationssystem, vor allem aber enthalten Sachverhalte
-      gelegentlich Namen. In den geprüften 39 waren es acht, alle in
-      amtlicher Funktion (Polizeiposten, Integrationsbeauftragte,
-      Fachbereiche) — bei 320 lässt sich das nicht mehr von Hand prüfen.
-      Voraussetzung wäre eine belastbare Schwärzung.
-
+- [x] Sachverhalt aus der Sitzungsvorlage zu jedem Punkt (`data/vorlagen/`)
 - [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (90 Stück)
 - [x] Wöchentlicher Lauf als ein Befehl (`scripts/wochenlauf.sh`, `launchd`-Vorlage)
 - [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)

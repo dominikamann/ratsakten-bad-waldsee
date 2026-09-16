@@ -605,6 +605,22 @@ p.wann b{font-weight:600}
   }
 }
 
+/* ---------- Sachverhalt aus der Sitzungsvorlage ----------
+   Der Beschluss sagt, **was** entschieden wurde; der Sachverhalt, **warum**
+   es zur Entscheidung kam. Beide stehen untereinander und muessen sich
+   unterscheiden lassen: Der Beschluss ist der Wortlaut des Protokolls und
+   traegt deshalb den Balken, der Sachverhalt ist Vorgeschichte und steht
+   zurueckhaltender da. */
+ul.beschluesse .sachlage{
+  display:block;margin:9px 0 0;max-width:68ch;
+  font-size:15px;line-height:1.55;color:var(--ink-2);
+}
+ul.beschluesse .sachlage::before{
+  content:"Worum es ging";display:block;
+  font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px;
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -829,8 +845,8 @@ section.gruppe{scroll-margin-top:14px}
     <p class="rubrik">Beschlossen · Verwaltungsausschuss</p>
     <h2 class="headline">2 von 5 Themen mit Beschluss am 9. Juni 2026</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Abrechnung Stadtsee Aktivweg<span class="sv">SV-106/2026</span><span class="wortlaut">Der Verwaltungsausschuss stimmt der Bauabrechnung für das Projekt Stadtsee-Aktiv-Weg zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZat_56_SScFS6MDNWBS3qrtPAuypL0gWeWGQIvH0neYD/Sitzungsvorlage_SV-106-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-106/2026</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Vergabe der Schul- und Kindergartenverpflegung<span class="sv">SV-85/2026</span><span class="wortlaut">1. Der Verwaltungsausschuss stimmt der Vergabe der Schul- und Kindergartenverpflegung für das Schulzentrum Döchtbühl, die Grundschule Reute sowie das Kinderhaus Döchtbühl an die Firma Apetito ab dem 01.09.2026 zu. 2. Der Vertrag endet nach zwei Jahren mit der Option um ein weiteres Jahr zu verlängern. Das Vertragsverhältnis endet spätestens am 31.08.2029.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRslOp3J2vB23Z206Ry-dmyeUleihv09r_-KiC39HGii/Sitzungsvorlage_SV-85-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-85/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Abrechnung Stadtsee Aktivweg<span class="sv">SV-106/2026</span><span class="sachlage">Das Projekt Stadtsee-Aktiv-Weg wurde auf Grundlage des Zuwendungsbescheids im Rahmen der Tourismusförderung umgesetzt. Gegenstand der Maßnahme war die Modernisierung und Erweiterung des bisherigen Kneipp-Aktiv-Wegs beziehungsweise Stadtsee-Aktiv-Wegs. […]</span><span class="wortlaut">Der Verwaltungsausschuss stimmt der Bauabrechnung für das Projekt Stadtsee-Aktiv-Weg zu.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZat_56_SScFS6MDNWBS3qrtPAuypL0gWeWGQIvH0neYD/Sitzungsvorlage_SV-106-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-106/2026</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Vergabe der Schul- und Kindergartenverpflegung<span class="sv">SV-85/2026</span><span class="sachlage">Die letzte Vergabe der Schul- und Kindergartenverpflegung für die Mensa am Schulzentrum Döchtbühl sowie die Grundschule Reute erfolgte im Jahr 2025 im Wege einer Direktvergabe für die Dauer eines Jahres bis zum 15.08.2026. Den Zuschlag erhielt die Firma Apetito mit Sitz in Rheine. Aufgrund des auslaufenden Vertrags ist eine erneute Vergabe erforderlich. […]</span><span class="wortlaut">1. Der Verwaltungsausschuss stimmt der Vergabe der Schul- und Kindergartenverpflegung für das Schulzentrum Döchtbühl, die Grundschule Reute sowie das Kinderhaus Döchtbühl an die Firma Apetito ab dem 01.09.2026 zu. 2. Der Vertrag endet nach zwei Jahren mit der Option um ein weiteres Jahr zu verlängern. Das Vertragsverhältnis endet spätestens am 31.08.2029.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRslOp3J2vB23Z206Ry-dmyeUleihv09r_-KiC39HGii/Sitzungsvorlage_SV-85-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-85/2026</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

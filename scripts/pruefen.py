@@ -534,6 +534,82 @@ def pruefe_wochenzuordnung() -> None:
     notiz.append(f"{geprueft} Ausgaben auf ihre Kalenderwoche geprüft")
 
 
+# Muster, die auf personenbezogene Angaben hindeuten. Zwei Stufen, weil sie
+# verschieden schwer wiegen.
+#
+# **Fehler** — nichts davon gehoert je auf eine dieser Seiten:
+PERSONENDATEN = (
+    (r"\b[\w.+-]+@[\w-]+\.[A-Za-z]{2,}\b", "E-Mail-Adresse"),
+    (r"\b0\d{2,4}[ /-]\d{4,}\b", "Telefonnummer"),
+    (r"\bEhe(?:leute|paar)\s+[A-ZÄÖÜ]\w+", "Eheleute mit Namen"),
+    (r"\bFamilie\s+[A-ZÄÖÜ]\w{2,}", "Familienname"),
+    (r"\bIBAN\b|\bDE\d{2}\s?\d{4}", "Bankverbindung"),
+    # „Frau Gerda Hymer aus Bad Waldsee" — Name plus Wohnort benennt eine
+    # Privatperson, nicht eine Funktion. Genau so stand eine Spenderin in
+    # einer Sitzungsvorlage; im Beschlusswortlaut daneben war sie
+    # geschwaerzt, im Sachverhalt nicht.
+    # Auch die gebeugten Formen: „von Herrn Max Beispiel aus Bad Waldsee"
+    # ist derselbe Fall wie „Frau Gerda Hymer aus Bad Waldsee" — der
+    # Fehltest lief mit „Herrn" glatt durch.
+    (r"\b(?:Herrn?|Frau)\s+[A-ZÄÖÜ]\w+(?:\s+[A-ZÄÖÜ]\w+)?\s+aus\s+[A-ZÄÖÜ]\w+",
+     "Name mit Wohnort"),
+)
+
+# **Hinweis** — kann berechtigt sein, muss aber gesehen werden. „Herr Korn,
+# Leiter des Polizeipostens" ist eine Funktion; „Herr Meier beantragt" waere
+# eine Privatperson. Das unterscheidet kein Muster, nur ein Mensch.
+PERSONENHINWEISE = (
+    (r"\b(?:Herr|Frau)\s+[A-ZÄÖÜ]\w{2,}", "Name mit Anrede"),
+    (r"\b[A-ZÄÖÜ]\w+(?:stra(?:ß|ss)e|weg|gasse|platz)\s+\d{1,3}\b", "Anschrift"),
+    (r"\bAntragsteller(?:in)?\b", "Antragsteller"),
+)
+
+
+def pruefe_personendaten() -> None:
+    """Personenbezogene Angaben in den erzeugten Seiten.
+
+    Solange nur Beschlussprotokolle ausgewertet wurden, genuegte die
+    Schwaerzungsliste: Protokolle sind knapp und formalisiert. Mit den
+    Sachverhalten aus den Sitzungsvorlagen kommt Fliesstext hinzu — mehrere
+    hundert Dokumente, die jede Woche mehr werden. Von Hand nachsehen kann das
+    niemand mehr.
+
+    Geprueft wird der Text, den der Leser sieht: Entities aufgeloest, Markup
+    entfernt. Sonst rutscht „ver&ouml;ffentlicht" durch, wie es dem
+    Wortwahl-Waechter einmal passiert ist.
+
+    Zwei Stufen mit Absicht. Eine E-Mail-Adresse ist immer falsch — das ist
+    ein Fehler. Ein Name mit Anrede kann richtig sein: „Herr Korn, Leiter des
+    Polizeipostens" tritt in Funktion auf, „Herr Meier beantragt" waere eine
+    Privatperson. Das unterscheidet kein Muster. Deshalb steht es als Hinweis
+    da und nicht als Abbruch — ein Waechter, der bei jedem Lauf faelschlich
+    anschlaegt, wird nach drei Wochen ueberlesen.
+    """
+    gefunden_f: dict[str, list[str]] = {}
+    gefunden_h: dict[str, list[str]] = {}
+    for f in sorted(DOCS.rglob("*.html")):
+        roh = html.unescape(f.read_text(encoding="utf-8"))
+        text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", roh, flags=re.S)
+        text = re.sub(r"<[^>]+>", " ", text)
+        for muster, was in PERSONENDATEN:
+            for t in re.findall(muster, text):
+                gefunden_f.setdefault(was, []).append(f"{f.relative_to(WURZEL)}: {t}")
+        for muster, was in PERSONENHINWEISE:
+            for t in re.findall(muster, text):
+                gefunden_h.setdefault(was, []).append(str(t))
+
+    for was, stellen in gefunden_f.items():
+        fehler.append(f"{was} in {len(stellen)} Seite(n), z. B. {stellen[0]}")
+
+    if gefunden_h:
+        teile = ", ".join(f"{len(v)}× {k}" for k, v in sorted(gefunden_h.items()))
+        hinweise.append(
+            f"Personenbezogene Angaben zu pruefen: {teile}. Zulaessig sind "
+            "Personen in amtlicher Funktion und staedtische Liegenschaften; "
+            "Privatpersonen und deren Anschriften nicht.")
+    notiz.append("Personendaten geprüft")
+
+
 def main() -> None:
     if not DOCS.exists():
         sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
@@ -546,6 +622,7 @@ def main() -> None:
                      pruefe_wortwahl,
                      pruefe_zukunft,
                      pruefe_wochenzuordnung,
+                     pruefe_personendaten,
                      pruefe_reportalter):
         pruefung()
 

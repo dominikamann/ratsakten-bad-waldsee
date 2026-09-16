@@ -605,6 +605,22 @@ p.wann b{font-weight:600}
   }
 }
 
+/* ---------- Sachverhalt aus der Sitzungsvorlage ----------
+   Der Beschluss sagt, **was** entschieden wurde; der Sachverhalt, **warum**
+   es zur Entscheidung kam. Beide stehen untereinander und muessen sich
+   unterscheiden lassen: Der Beschluss ist der Wortlaut des Protokolls und
+   traegt deshalb den Balken, der Sachverhalt ist Vorgeschichte und steht
+   zurueckhaltender da. */
+ul.beschluesse .sachlage{
+  display:block;margin:9px 0 0;max-width:68ch;
+  font-size:15px;line-height:1.55;color:var(--ink-2);
+}
+ul.beschluesse .sachlage::before{
+  content:"Worum es ging";display:block;
+  font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px;
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -830,7 +846,7 @@ section.gruppe{scroll-margin-top:14px}
     <p class="rubrik">Beschlossen · Ausschuss für Umwelt, Technik und Nachhaltigkeit</p>
     <h2 class="headline">1 von 4 Themen mit Beschluss am 27. April 2026</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Carlensteichweg - erstmalige, endgültige Herstellung Planungsbeschluss<span class="sv">SV-80/2026</span><span class="wortlaut">1. Die erschließungsbeitragsrechtlich erstmalige, endgültige Herstellung des Carlensteichwegs soll geplant werden. Das Planungskonzept wird befürwortet. 2. Die Planungsleistungen zum Ausbau des Carlensteichwegs für die Leistungsphase 3 HOAI sowie evtl. Vermessungsleistungen werden im Wege der stufenweisen Beauftragung an das Ing.-Büro Kohler in Berg vergeben. Weitere Beratungsleistungen z.B. geotechnische Untersuchungen werden bei Bedarf ebenfalls an externe Partner beauftragt. 3. Die Finanzierung der Planungsleistungen erfolgt über die im Haushalt 2026 unter Konto I5410- 2210 bereitgestellten Mittel.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXkvPVoGn_VfdEtBnKzGIsLjg9tlvGy_785GVHtdbkUb/Sitzungsvorlage_SV-80-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-80/2026</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYgRxAvuBB0wPF2UBzXrTy3g_boINBuhbM0pVV6as_TR/Carlensteichweg_Ausbaukonzept.pdf" target="_blank" rel="noopener noreferrer">Carlensteichweg Ausbaukonzept</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Carlensteichweg - erstmalige, endgültige Herstellung Planungsbeschluss<span class="sv">SV-80/2026</span><span class="sachlage">Der Carlensteichweg, als Teil des Flst. 1125, Gem. Waldsee, ist zwischen der Anbindestelle an den Grünen Weg bis zum nördlichen Ende des bestehenden Straßenstichs, im erschließungsbei tragsrechtlichen Sinne noch nicht endgültig hergestellt. Die Straße ist nur abschnittsweise mit fes tem Fahrbahnbelag und Beleuchtung versehen. Der bisherige Ausbau stellt aktuell lediglich ein Provisorium dar. […]</span><span class="wortlaut">1. Die erschließungsbeitragsrechtlich erstmalige, endgültige Herstellung des Carlensteichwegs soll geplant werden. Das Planungskonzept wird befürwortet. 2. Die Planungsleistungen zum Ausbau des Carlensteichwegs für die Leistungsphase 3 HOAI sowie evtl. Vermessungsleistungen werden im Wege der stufenweisen Beauftragung an das Ing.-Büro Kohler in Berg vergeben. Weitere Beratungsleistungen z.B. geotechnische Untersuchungen werden bei Bedarf ebenfalls an externe Partner beauftragt. 3. Die Finanzierung der Planungsleistungen erfolgt über die im Haushalt 2026 unter Konto I5410- 2210 bereitgestellten Mittel.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXkvPVoGn_VfdEtBnKzGIsLjg9tlvGy_785GVHtdbkUb/Sitzungsvorlage_SV-80-2026.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-80/2026</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYgRxAvuBB0wPF2UBzXrTy3g_boINBuhbM0pVV6as_TR/Carlensteichweg_Ausbaukonzept.pdf" target="_blank" rel="noopener noreferrer">Carlensteichweg Ausbaukonzept</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

@@ -364,7 +364,11 @@ def sachverhalt_lesen(pfad: Path, wortschatz: set[str] | None = None,
     if not treffer:
         return ""
 
-    text = treffer.group(1).strip()
+    # Erst schwaerzen, dann alles Weitere: Der Sachverhalt ist Fliesstext aus
+    # einer Sitzungsvorlage und nennt gelegentlich Privatpersonen — eine
+    # Spenderin etwa. Ohne diesen Schritt stand ihr Name in der Ausgabe,
+    # waehrend er im Beschlusswortlaut daneben geschwaerzt war.
+    text = schwaerzen(treffer.group(1).strip())
     if wortschatz:
         text = trennung_reparieren(text, wortschatz)
     if haeufig:

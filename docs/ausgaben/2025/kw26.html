@@ -605,6 +605,22 @@ p.wann b{font-weight:600}
   }
 }
 
+/* ---------- Sachverhalt aus der Sitzungsvorlage ----------
+   Der Beschluss sagt, **was** entschieden wurde; der Sachverhalt, **warum**
+   es zur Entscheidung kam. Beide stehen untereinander und muessen sich
+   unterscheiden lassen: Der Beschluss ist der Wortlaut des Protokolls und
+   traegt deshalb den Balken, der Sachverhalt ist Vorgeschichte und steht
+   zurueckhaltender da. */
+ul.beschluesse .sachlage{
+  display:block;margin:9px 0 0;max-width:68ch;
+  font-size:15px;line-height:1.55;color:var(--ink-2);
+}
+ul.beschluesse .sachlage::before{
+  content:"Worum es ging";display:block;
+  font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px;
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -830,8 +846,8 @@ section.gruppe{scroll-margin-top:14px}
     <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">2 von 7 Themen mit Beschluss am 23. Juni 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Projekt Zertifizierung „Gesunde Stadt/Gesunde Gemeinde“ der Stadt Bad Waldsee<span class="sv">SV-90/2025</span><span class="wortlaut">1. Der Gemeinderat beschließt die Teilnahme der Großen Kreisstadt Bad Waldsee an der Zertifizierung „Gesunde Stadt/Gesunde Gemeinde“. 2. Die Projektdauer des Zertifizierungsprozesses beträgt 2 Jahre. 3. Für die Projektdauer ist ein Stellenumfang von 30 % vorgesehen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZacN5OTEr1YbZmt0Zhzp_lNRSGd7wGBzdn-1ihcE6PAt/Sitzungsvorlage_SV-90-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-90/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYzacHvxcoG6-6F2UtdXA8rBr-Nb5nxmbDktTmfazqDu/Vorhabenbeschreibung_Gesunde_Stadt_Bad_Waldsee.pdf" target="_blank" rel="noopener noreferrer">Vorhabenbeschreibung Gesunde Stadt Bad Waldsee</a></span></span><span class="erg">Einstimmig</span></li>
-      <li><span class="sache">Abgabe des Löschgruppenfahrzeug LF 16/12 an die Ukraine<span class="sv">SV-98/2025</span><span class="wortlaut">1. Die Verwaltung wird beauftragt, eine Gemeinde oder Stadt in der Ukraine zu suchen, die das Löschgruppenfahrzeug LF 16/12 kostenneutral ohne Beladung übernimmt. 2. Wenn eine Gemeinde gefunden wurde, wird die Verwaltung prüfen, ob und wie das Fahrzeug ohne TÜV und nicht angemeldet in die Ukraine transportiert werden kann. Gleichzeitig ist das Zoll- verfahren zu klären.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVFZ1JfBzfelFd5Smg6duikdPPcdtnY8peC5eu7RO9uB/Sitzungsvorlage_SV-98-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-98/2025</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Projekt Zertifizierung „Gesunde Stadt/Gesunde Gemeinde“ der Stadt Bad Waldsee<span class="sv">SV-90/2025</span><span class="sachlage">Ausgangssituation Städte und Gemeinden haben einen maßgeblichen Einfluss auf die Lebens-, Lern- und Freizeitbedingungen von Kindern, Jugendlichen, Familien sowie von älteren Menschen. In der Kommune werden daher wichtige Grundlagen für ein gesundes Aufwachsen und ein selbstbestimmtes Leben im Alter geschaffen. […]</span><span class="wortlaut">1. Der Gemeinderat beschließt die Teilnahme der Großen Kreisstadt Bad Waldsee an der Zertifizierung „Gesunde Stadt/Gesunde Gemeinde“. 2. Die Projektdauer des Zertifizierungsprozesses beträgt 2 Jahre. 3. Für die Projektdauer ist ein Stellenumfang von 30 % vorgesehen.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZacN5OTEr1YbZmt0Zhzp_lNRSGd7wGBzdn-1ihcE6PAt/Sitzungsvorlage_SV-90-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-90/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYzacHvxcoG6-6F2UtdXA8rBr-Nb5nxmbDktTmfazqDu/Vorhabenbeschreibung_Gesunde_Stadt_Bad_Waldsee.pdf" target="_blank" rel="noopener noreferrer">Vorhabenbeschreibung Gesunde Stadt Bad Waldsee</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Abgabe des Löschgruppenfahrzeug LF 16/12 an die Ukraine<span class="sv">SV-98/2025</span><span class="sachlage">Das Feuerwehrfahrzeug Löschgruppenfahrzeug 16/12 wurde im Jahr 1998 bei der Freiwilligen Feuerwehr Bad Waldsee, Abteilung Stadt in den Dienst gestellt. Bei einer TÜV-Untersuchung am 10.12.2024 wurden am Fahrzeugrahmen gefährliche Mängel festgestellt, die eine direkte und unmittelbare Verkehrsgefährdung darstellen. […]</span><span class="wortlaut">1. Die Verwaltung wird beauftragt, eine Gemeinde oder Stadt in der Ukraine zu suchen, die das Löschgruppenfahrzeug LF 16/12 kostenneutral ohne Beladung übernimmt. 2. Wenn eine Gemeinde gefunden wurde, wird die Verwaltung prüfen, ob und wie das Fahrzeug ohne TÜV und nicht angemeldet in die Ukraine transportiert werden kann. Gleichzeitig ist das Zoll- verfahren zu klären.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVFZ1JfBzfelFd5Smg6duikdPPcdtnY8peC5eu7RO9uB/Sitzungsvorlage_SV-98-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-98/2025</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
   </div>
 </article>

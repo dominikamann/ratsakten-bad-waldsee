@@ -605,6 +605,22 @@ p.wann b{font-weight:600}
   }
 }
 
+/* ---------- Sachverhalt aus der Sitzungsvorlage ----------
+   Der Beschluss sagt, **was** entschieden wurde; der Sachverhalt, **warum**
+   es zur Entscheidung kam. Beide stehen untereinander und muessen sich
+   unterscheiden lassen: Der Beschluss ist der Wortlaut des Protokolls und
+   traegt deshalb den Balken, der Sachverhalt ist Vorgeschichte und steht
+   zurueckhaltender da. */
+ul.beschluesse .sachlage{
+  display:block;margin:9px 0 0;max-width:68ch;
+  font-size:15px;line-height:1.55;color:var(--ink-2);
+}
+ul.beschluesse .sachlage::before{
+  content:"Worum es ging";display:block;
+  font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:3px;
+}
+
 /* ---------- Kasten ---------- */
 .kasten{
   margin:24px 0;padding:20px 22px;background:var(--surface);
@@ -829,7 +845,7 @@ section.gruppe{scroll-margin-top:14px}
     <p class="rubrik">Beschlossen · Gemeinderat</p>
     <h2 class="headline">1 von 9 Themen mit Beschluss am 8. Dezember 2025</h2>
     <ul class="beschluesse">
-      <li><span class="sache">Änderung der Entschädigungssatzung | Ergänzung um Wahlhelfer in § 3a<span class="sv">SV-259/2025</span><span class="wortlaut">Der Satzung über die Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXLTV0C2nT7sDPlfUgqm317fLXUVsbRrUGP5AvnJ0tm5/Sitzungsvorlage_SV-259-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-259/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYV8KpuufISEX6gFoIY6wGS0JPxcuB_Uvg-EdLgbwxt1/Aenderung_der_Entschaedigungssatzung_-_Wahlhelfer_--_3a.pdf" target="_blank" rel="noopener noreferrer">Änderung der Entschädigungssatzung - Wahlhelfer § 3a</a></span></span><span class="erg">Einstimmig</span></li>
+      <li><span class="sache">Änderung der Entschädigungssatzung | Ergänzung um Wahlhelfer in § 3a<span class="sv">SV-259/2025</span><span class="sachlage">Für die Durchführung der Wahl benötigt das Wahlamt Wahlhelfer, die am Wahltag im Wahllokal und im Anschluss beim Auszählen der Stimmabgaben helfen. In Bad Waldsee helfen bei den Wahlen ca. 200 Personen in 22 Wahlbezirken (Urnen- und Briefwahlbezirke). […]</span><span class="wortlaut">Der Satzung über die Änderung der Satzung über die Entschädigung für ehrenamtliche Tätigkeit wird zugestimmt.</span><span class="unterlagen"><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXLTV0C2nT7sDPlfUgqm317fLXUVsbRrUGP5AvnJ0tm5/Sitzungsvorlage_SV-259-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-259/2025</a><a href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYV8KpuufISEX6gFoIY6wGS0JPxcuB_Uvg-EdLgbwxt1/Aenderung_der_Entschaedigungssatzung_-_Wahlhelfer_--_3a.pdf" target="_blank" rel="noopener noreferrer">Änderung der Entschädigungssatzung - Wahlhelfer § 3a</a></span></span><span class="erg">Einstimmig</span></li>
     </ul>
     <details class="mehr" id="s-20251208-GR-tops" open>
       <summary>4 weitere Themen ohne Beschluss</summary>

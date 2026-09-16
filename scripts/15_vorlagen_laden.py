@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
-"""Schritt 15 — Sitzungsvorlagen zu Punkten ohne Beschluss herunterladen.
+"""Schritt 15 — die Sitzungsvorlagen herunterladen.
 
-Zu einem Tagesordnungspunkt ohne Beschluss stand bisher nur der Titel und ein
-Verweis. „Information über die Fortschreibung der Elternbeiträge in
-Kindertageseinrichtungen" — was darin steht, blieb offen, obwohl es eine
-Sitzungsvorlage dazu gibt.
+Die Vorlage enthaelt den Abschnitt „Zum Sachverhalt": warum die Verwaltung
+etwas vorschlaegt. Das ist oft aufschlussreicher als der Beschluss selbst —
+„Fuer das Kindergartenjahr 2026/2027 empfehlen die Kirchen und Kommunalen
+Landesverbaende eine Erhoehung der Elternbeitraege um 4,5 %" steht in keinem
+Protokoll.
 
-**Geladen wird bewusst nur diese Teilmenge.** Im Bestand hängen 367 Dokumente
-an Tagesordnungspunkten; die allermeisten gehören zu Punkten, deren Beschluss
-ohnehin im Wortlaut dasteht. Dort fehlt nichts. Die rund vierzig Vorlagen
-ohne Beschluss sind die Stellen, an denen die Ausgabe sonst schweigt.
+Zuerst wurden nur die Vorlagen ohne Beschluss geladen, weil dort sonst gar
+nichts stand. Die Pruefung an 64 Dokumenten — 39 ohne Beschluss, 25 als
+Stichprobe mit — fand keine Anschriften von Privatpersonen, keine
+Bankverbindungen, keine Kontaktdaten; die gefundenen Namen traten samtlich in
+amtlicher Funktion auf. Das ist erwartbar: Was im oeffentlichen
+Ratsinformationssystem steht, hat die Stadt selbst als veroeffentlichungs-
+faehig eingestuft. Schutzbeduerftiges liegt in nichtoeffentlichen Vorlagen,
+die dort gar nicht erscheinen.
 
-Der zweite Grund ist Vorsicht: Beschlussprotokolle sind knapp und
-formalisiert, Sitzungsvorlagen enthalten Sachverhaltsdarstellungen mit
-Flurstücken, Beträgen und gelegentlich Namen. Das Projekt sagt zu, keine
-Anschriften und keine Klarnamen ohne Funktion wiederzugeben. An vierzig
-Dokumenten lässt sich prüfen, ob das trägt; an 367 auf einmal nicht.
+Seither werden alle geladen. Die laufende Kontrolle uebernimmt
+`pruefe_personendaten` in `pruefen.py`: Bei mehreren hundert Dokumenten, die
+jede Woche mehr werden, kann niemand mehr von Hand nachsehen.
 
 Ergebnis: data/vorlagen/SV-000-JJJJ.pdf
 
@@ -23,7 +26,6 @@ Ergebnis: data/vorlagen/SV-000-JJJJ.pdf
 """
 from __future__ import annotations
 
-import csv
 import json
 import re
 import sys
@@ -49,46 +51,28 @@ def dateiname(vorlage: str) -> str:
     return re.sub(r"[^A-Za-z0-9-]+", "-", vorlage) + ".pdf"
 
 
-def offene_vorlagen() -> dict[str, str]:
-    """Vorlagennummer → URL, für Punkte ohne eigenen Beschluss.
+def alle_vorlagen() -> dict[str, str]:
+    """Vorlagennummer → URL der Sitzungsvorlage.
 
-    Beschlossen ist, was in `data/csv/beschluesse.csv` steht — der Tabelle,
-    die Schritt 07 aus den Protokollen schreibt. Sie ist die einzige Quelle,
-    die genau das enthaelt: eine Zeile je protokolliertem Beschluss.
-
-    Zwei falsche Quellen davor, beide beim Gegenlesen aufgefallen:
-
-    * `vorgaenge.json`, Feld `letzte` — das ist das **Datum** der juengsten
-      Station und steht bei allen 519 Vorgaengen. Daran gemessen galt jeder
-      Punkt als beschlossen.
-    * `vorgaenge.json` ueberhaupt — es fuehrt nur einen Teil der Vorlagen.
-      SV-101/2026 hat einen einstimmigen Beschluss und fehlt dort trotzdem.
+    Nur die Vorlage selbst, nicht die Anlagen: Der Sachverhalt steht dort;
+    Planteile, Umweltberichte und Listen bleiben verlinkt, aber ungelesen.
     """
     topmap = json.loads((DATEN / "topmap.json").read_text(encoding="utf-8"))
-
-    beschlossen: set[str] = set()
-    with (DATEN / "csv" / "beschluesse.csv").open(encoding="utf-8-sig") as f:
-        for zeile in csv.DictReader(f, delimiter=";"):
-            if zeile.get("vorlage"):
-                beschlossen.add(zeile["vorlage"])
-
-    offen: dict[str, str] = {}
+    gefunden: dict[str, str] = {}
     for p in topmap:
         nr = p.get("vorlage")
-        if not nr or nr in beschlossen or nr in offen:
+        if not nr or nr in gefunden:
             continue
         for d in p.get("dokumente") or []:
-            # Nur die Sitzungsvorlage selbst, nicht Anlagen und Planteile:
-            # Der Sachverhalt steht dort, die Anlagen sind Karten und Listen.
             if d.get("titel", "").startswith("Sitzungsvorlage"):
-                offen[nr] = d["url"]
+                gefunden[nr] = d["url"]
                 break
-    return offen
+    return gefunden
 
 
 def main() -> None:
     ZIEL.mkdir(parents=True, exist_ok=True)
-    offen = offene_vorlagen()
+    offen = alle_vorlagen()
 
     s = requests.Session()
     s.headers["User-Agent"] = UA
@@ -109,7 +93,7 @@ def main() -> None:
             fehler += 1
         time.sleep(PAUSE)
 
-    print(f"Sitzungsvorlagen ohne Beschluss — neu: {neu}, "
+    print(f"Sitzungsvorlagen — neu: {neu}, "
           f"bereits vorhanden: {vorhanden}, fehlgeschlagen: {fehler}",
           file=sys.stderr)
 
