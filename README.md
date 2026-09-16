@@ -487,6 +487,13 @@ amtlicher oder mandatsbezogener Funktion öffentlich gehandelt haben und dies in
 öffentlichen Protokollen so dokumentiert ist. Namen von Privatpersonen werden nicht
 wiedergegeben. Öffentliche Zustellungen wurden vollständig von der Auswertung ausgenommen.
 
+Maschinell überwacht wird das zweistufig: Was immer falsch ist — E-Mail-Adresse,
+Telefonnummer, Bankverbindung, Name mit Wohnort — bricht die Prüfung ab. Was richtig
+sein *kann* — „Herr Korn, Leiter des Polizeipostens" tritt in Funktion auf — meldet sie
+zur Durchsicht. Am 16.09.2026 wurden alle 64 Treffer im Kontext gelesen und in
+`data/personendaten_geprueft.json` mit Begründung festgehalten; gemeldet wird seither
+nur noch, was dort nicht steht.
+
 **Keine Verbindung zur Stadt.** Das Projekt ist weder von der Stadt Bad Waldsee beauftragt
 noch von ihr autorisiert oder geprüft.
 

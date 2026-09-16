@@ -565,6 +565,22 @@ PERSONENHINWEISE = (
 )
 
 
+def personendaten_bestaetigt() -> dict:
+    """Die einmal im Kontext geprueften Treffer, nach Kategorie.
+
+    Fehlt die Datei, verhaelt sich der Waechter wie zuvor: dann ist nichts
+    bestaetigt und alles gilt als zu pruefen. Das ist die sichere Richtung —
+    eine verlorene Datei darf nicht dazu fuehren, dass Treffer verschwinden.
+    """
+    pfad = DATEN / "personendaten_geprueft.json"
+    if not pfad.exists():
+        return {}
+    roh = json.loads(pfad.read_text(encoding="utf-8"))
+    bestaetigt = dict(roh.get("bestaetigt", {}))
+    bestaetigt["__datum__"] = roh.get("geprueft_am", "")
+    return bestaetigt
+
+
 def pruefe_personendaten() -> None:
     """Personenbezogene Angaben in den erzeugten Seiten.
 
@@ -591,6 +607,10 @@ def pruefe_personendaten() -> None:
         roh = html.unescape(f.read_text(encoding="utf-8"))
         text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", roh, flags=re.S)
         text = re.sub(r"<[^>]+>", " ", text)
+        # Auf eine Zeile bringen. „Friedhofstraße\n      5" ist derselbe
+        # Treffer wie „Friedhofstraße 5", sieht als Zeichenkette aber anders
+        # aus — und liesse sich in der Pruefliste nicht wiederfinden.
+        text = re.sub(r"\s+", " ", text)
         for muster, was in PERSONENDATEN:
             for t in re.findall(muster, text):
                 gefunden_f.setdefault(was, []).append(f"{f.relative_to(WURZEL)}: {t}")
@@ -601,13 +621,32 @@ def pruefe_personendaten() -> None:
     for was, stellen in gefunden_f.items():
         fehler.append(f"{was} in {len(stellen)} Seite(n), z. B. {stellen[0]}")
 
-    if gefunden_h:
-        teile = ", ".join(f"{len(v)}× {k}" for k, v in sorted(gefunden_h.items()))
+    # Ein Hinweis, der bei jedem Lauf dieselben 64 Treffer meldet, wird nach
+    # drei Wochen ueberlesen — und dann faellt der 65. nicht mehr auf. Was
+    # einmal im Kontext gelesen und als zulaessig befunden wurde, steht mit
+    # Begruendung in data/personendaten_geprueft.json. Gemeldet wird, was
+    # dort nicht steht.
+    geprueft = personendaten_bestaetigt()
+    neu_h = {was: sorted({t for t in v if t not in geprueft.get(was, {})})
+             for was, v in gefunden_h.items()}
+    neu_h = {was: v for was, v in neu_h.items() if v}
+
+    if neu_h:
+        teile = ", ".join(f"{len(v)}× {k} ({', '.join(v[:3])}"
+                          f"{' …' if len(v) > 3 else ''})"
+                          for k, v in sorted(neu_h.items()))
         hinweise.append(
-            f"Personenbezogene Angaben zu pruefen: {teile}. Zulaessig sind "
-            "Personen in amtlicher Funktion und staedtische Liegenschaften; "
-            "Privatpersonen und deren Anschriften nicht.")
-    notiz.append("Personendaten geprüft")
+            f"Neue personenbezogene Angaben, noch nicht geprueft: {teile}. "
+            "Zulaessig sind Personen in amtlicher Funktion und staedtische "
+            "Liegenschaften; Privatpersonen und deren Anschriften nicht. "
+            "Nach der Durchsicht in data/personendaten_geprueft.json "
+            "eintragen.")
+
+    bestand = sum(len(v) for v in gefunden_h.values())
+    stand = geprueft.get("__datum__", "")
+    notiz.append(f"Personendaten geprüft ({bestand} Treffer, "
+                 f"{'davon ' + str(sum(len(v) for v in neu_h.values())) + ' neu' if neu_h else 'nichts Neues'}"
+                 f"{', Durchsicht ' + stand if stand else ''})")
 
 
 def main() -> None:

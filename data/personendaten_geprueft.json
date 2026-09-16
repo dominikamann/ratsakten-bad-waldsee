@@ -1,0 +1,47 @@
+{
+ "geprueft_am": "2026-09-16",
+ "grundlage": "Alle Treffer der Hinweismuster aus pruefen.py in docs/, im Kontext gelesen.",
+ "massstab": "Zulaessig sind Personen in amtlicher oder oeffentlicher Funktion sowie staedtische Liegenschaften. Privatpersonen und deren Anschriften nicht.",
+ "bestaetigt": {
+  "Anschrift": {
+   "Augustinerstraße 21": "Abbruch im Entwicklungsprogramm Laendlicher Raum, ausserplanmaessige Ausgabe der Stadt (SV-222/2025, 10.11.2025)",
+   "Haslachstraße 26": "Abbruch im Entwicklungsprogramm Laendlicher Raum, ausserplanmaessige Ausgabe der Stadt (SV-222/2025, 10.11.2025)",
+   "Oberamteigasse 16": "Abbruch als Bauabschnitt der Aussenanlagen des Neuen Rathauses, Eigenanteil der Stadt (SV-243/2024, 09.12.2024)",
+   "Döchtbühlweg 2": "Gymnasium Bad Waldsee, staedtischer Neubau (Sachstandsbericht, 21.07.2025)",
+   "Hauptstraße 10": "Verwaltungsgebaeude der Stadt, Bauabrechnung Erweiterung (SV-241/2024)",
+   "Hauptstraße 12": "Neues Rathaus (SV-243/2024)",
+   "Hauptstraße 29": "Historisches Rathaus (SV-179/2025)",
+   "Schützenstraße 27": "Staedtischer Baubetriebshof, Dachsanierung (SV-145/2025, 16.09.2025)",
+   "Landesstraße 285": "Keine Anschrift — Nummer einer Landesstrasse zwischen Gaisbeuren und Reute (SV-127/2024)",
+   "Friedhofstraße 5": "Falschtreffer — auf der Themenuebersicht steht „Frauenbergstraße-Friedhofstraße 5 Stationen“; die 5 zaehlt Stationen, keine Hausnummer",
+   "Holzstraße 2": "Falschtreffer — auf der Themenuebersicht steht „Holzstraße 2 Stationen“; die 2 zaehlt Stationen, keine Hausnummer"
+  },
+  "Antragsteller": {
+   "Antragstellerin": "Rolle im staedtebaulichen Vertrag, ohne Namen (Beschluss 18.06.2024)"
+  },
+  "Name mit Anrede": {
+   "Frau Anna": "Anna Göttel, Geschaeftsfuehrerin der Kinder- und Jugendakademie (SV-15/2025)",
+   "Frau Oberstudienrätin": "dieselbe Person in Amtsbezeichnung (SV-15/2025)",
+   "Frau Jana": "Jana Eschenbach, Leitung des Waldkindergartens (SV-36/2025)",
+   "Frau Nicole": "Nicole Saile, Flaechenmanagerin der Stadt (SV-36/2025)",
+   "Frau Saile": "dieselbe Person im weiteren Text (SV-36/2025)",
+   "Frau Schaden": "Vortragende zum Rechenschaftsbericht des Unternehmerforums, Tagesordnungspunkt 15.07.2025",
+   "Frau Vidakovic": "Integrationsbeauftragte der Stadt, Integrationsbericht im Verwaltungsausschuss",
+   "Frau Weidmann": "Kinder- und Jugendbeauftragte der Stadt, Vorstellung im Arbeitskreis 31.03.2025",
+   "Herr Achim": "Achim Strobel, vom Ortschaftsrat Reute-Gaisbeuren gewaehlt (OR-Beschluss 16.07.2024)",
+   "Herr Frieder": "Frieder Skowronski, vom Ortschaftsrat Michelwinnaden gewaehlt (OR-Beschluss 18.07.2024)",
+   "Herr Andreas": "Andreas Korn, Leiter des Polizeipostens Bad Waldsee, Kriminalstatistik 2024",
+   "Herr Korn": "derselbe Posten, Kriminalstatistik 2023",
+   "Herr Herzhauser": "oertlicher Polizeiposten, Kriminalstatistik 2023",
+   "Herr Brutschin": "Sachbearbeiter Abteilung Gruenflaechen der Stadt (SV-146/2024)",
+   "Herr Christopher": "Christopher Dürste, im Gemeinderat gewaehlter Fachbereichsleiter Personal, Organisation, IT",
+   "Herr Markus": "Markus Mohr, Fachbereich Finanzen der Stadt, Pflegesatzverhandlungen",
+   "Herr Armin": "Armin Nold, Fachbereich Finanzen der Stadt, Pflegesatzverhandlungen",
+   "Herr Roland": "Roland Haug, Spitalverwaltung, Pflegesatzverhandlungen",
+   "Herr Uwe": "Uwe Stehle, als externes Mitglied der Baumkommission fuer den NABU bestellt",
+   "Herr Martin": "Martin Gratz, Verabschiedung als Tagesordnungspunkt",
+   "Herr Peter": "Peter Natterer, Verabschiedung als Tagesordnungspunkt",
+   "Herr Walter": "Walter Gschwind, Verabschiedung als Tagesordnungspunkt"
+  }
+ }
+}
