@@ -1018,9 +1018,19 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 teile.append(f'<a href="#{marke}">{mit_beschluss} '
                              f"{'Thema' if mit_beschluss == 1 else 'Themen'} "
                              f"mit Beschluss</a>")
-            if weitere:
+            # „ohne" ist die Ellipse zu „mit Beschluss" davor — steht das
+            # erste Stueck nicht da, bleibt ein angefangener Satz uebrig:
+            # „4 Themen ohne". Dann wird ausgeschrieben.
+            #
+            # Und: „ohne Beschluss" setzt ein Protokoll voraus. Nur dort
+            # steht, worueber nicht entschieden wurde. Fehlt es, ist ueber
+            # die Punkte gar nichts bekannt — der Arbeitskreis vom
+            # 31.03.2025 hat vier Themen und kein Protokoll, und die Zeile
+            # behauptete, zu allen vieren sei nichts beschlossen worden.
+            if weitere and x["protokoll"]:
                 teile.append(f'<a href="#{marke}-tops">{weitere} '
-                             f"{'Thema' if weitere == 1 else 'Themen'} ohne</a>")
+                             f"{'Thema' if weitere == 1 else 'Themen'} ohne"
+                             f"{'' if mit_beschluss else ' Beschluss'}</a>")
             # Die Zeile geht von selbst auf, seit jedes Thema in der Liste
             # steht: Beschluesse plus weitere Themen ergeben die Themenzahl.
             # Solange Formalpunkte gesondert behandelt wurden, fehlte hier
@@ -1037,8 +1047,12 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                     frisch = any(a["datum"] == x["datum"]
                                  and a["gremium"] == x["gremium"]
                                  for a in w.get("ausstehend", []))
-                    teile.append("Protokoll steht noch aus" if frisch
-                                 else "kein Protokoll abrufbar")
+                    stand = ("Protokoll steht noch aus" if frisch
+                             else "kein Protokoll abrufbar")
+                    # Der Weg zur Tagesordnung bleibt: Sie ist bei diesen
+                    # Sitzungen das Einzige, was ueberhaupt vorliegt.
+                    teile.append(f'<a href="#{marke}-tops">{stand}</a>'
+                                 if x["tops"] else stand)
                 else:
                     teile.append("kein Beschluss protokolliert")
             was = " &middot; ".join(teile)
