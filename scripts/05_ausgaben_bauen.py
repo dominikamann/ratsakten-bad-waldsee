@@ -67,17 +67,16 @@ VORLAGEN = DATEN / "vorlagen"
 # Die Frist ist bewusst grosszuegig. Sie soll niemandem ein Versaeumnis
 # vorwerfen, das keines ist. Wird sie nachgerechnet, die Zahl hier mitziehen —
 # das Skript nennt sie am Ende.
-# Wiederkehrende Formalpunkte. Sie stehen auf fast jeder Tagesordnung —
-# „Verschiedenes" 74 Mal im Bestand, „Bekanntgaben" 62 Mal — und sagen fuer
-# sich genommen nichts darueber, was in der Stadt los war. Sie verschwinden
-# nicht, aber sie rechtfertigen keinen eigenen Abschnitt: Ein Block mit der
-# Ueberschrift „1 weiterer Punkt der Tagesordnung", dem Eintrag
-# „Verschiedenes" und drei Zeilen Fussnote ist mehr Rahmen als Inhalt.
-FORMALIA = re.compile(
-    r"^(Verschiedenes|Bekanntgaben|Anfragen|Einwohnerfragestunde"
-    r"|Bekanntgabe der in nicht\s?öffentlicher Sitzung.*"
-    r"|Informationen des Oberbürgermeisters"
-    r"|Genehmigung der Niederschrift.*)$", re.IGNORECASE)
+# Wiederkehrende Punkte wie „Verschiedenes" oder „Bekanntgaben" wurden eine
+# Zeit lang gesondert behandelt: aus der Themenliste herausgefiltert und in
+# einem Nachsatz zusammengefasst. Das ist wieder entfallen. Jede Sonderregel
+# braucht eine Erklaerung, und die Erklaerung war laenger als das, was sie
+# ersparte — „Dazu ohne Ergebnis: …" ist selbst ein Satz, den niemand braucht.
+#
+# Jedes Thema wird jetzt gleich dargestellt: Titel, was daran haengt, und was
+# das Protokoll dazu vermerkt. Bei „Verschiedenes" steht dann eben „Keine
+# Punkte seitens der Verwaltung" — das ist kurz, wahr und verlangt kein
+# Vorwissen ueber die Bauart der Ausgabe.
 
 KARENZ_TAGE = 14
 
@@ -746,6 +745,32 @@ def artikel(gremium: str) -> str:
     return "die" if name.endswith(("kommission", "gruppe", "runde")) else "der"
 
 
+def beschlossene_punkte(w: dict, datum, gremium: str) -> set[str]:
+    """Titel der Tagesordnungspunkte einer Sitzung, zu denen ein Beschluss steht.
+
+    Verglichen wird ueber die **Vorlagennummer**, nicht ueber den Titel: Der
+    Beschlusstitel stammt aus der Tagesordnung des Ratsinformationssystems,
+    der Punkttitel aus der Sitzungsseite — sie sind meist, aber nicht immer
+    zeichengleich. Wo sie auseinanderfielen, galt derselbe Punkt einmal als
+    beschlossen und einmal als offen und wurde doppelt gezaehlt: „8 Themen"
+    und daneben „6 mit Beschluss, 4 ohne".
+
+    Punkte ohne Vorlagennummer — Formalia meist — werden weiterhin ueber den
+    Titel verglichen; etwas anderes gibt es dort nicht.
+    """
+    nummern = {b["vorlage"] for b in w["beschluesse"]
+               if b["datum"] == datum and b["gremium"] == gremium and b.get("vorlage")}
+    titel = {(b.get("titel") or "").strip() for b in w["beschluesse"]
+             if b["datum"] == datum and b["gremium"] == gremium}
+    sitzung = next((x for x in w["sitzungen"]
+                    if x["datum"] == datum and x["gremium"] == gremium), None)
+    getroffen = set()
+    for d in (sitzung or {}).get("punkte", []):
+        if (d.get("vorlage") and d["vorlage"] in nummern) or d["titel"].strip() in titel:
+            getroffen.add(d["titel"].strip())
+    return getroffen
+
+
 def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     mo, so = w["von"], w["bis"]
     n_besch = len(w["beschluesse"])
@@ -959,8 +984,6 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     if len(w["sitzungen"]) > 1 or (w["sitzungen"] and w["beschluesse"]):
         zeilen_s = []
         for x in sorted(w["sitzungen"], key=lambda y: (y["datum"], y["gremium"])):
-            anzahl = sum(1 for b in w["beschluesse"]
-                         if b["datum"] == x["datum"] and b["gremium"] == x["gremium"])
             marke = f"s-{x['datum']:%Y%m%d}-{x['kuerzel']}"
             # Beides verlinken, was es zu sehen gibt: die Beschluesse und
             # die uebrigen Punkte derselben Sitzung. Wer nach einem Thema
@@ -968,27 +991,30 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             # Nur sachliche Punkte zaehlen — dieselbe Auswahl wie im Block
             # darunter. Sonst versprach die Uebersicht "6 weitere Themen" und
             # der Sprung fuehrte zu zweien.
-            beschlossen_hier = {(b.get("titel") or "").strip() for b in w["beschluesse"]
-                                if b["datum"] == x["datum"] and b["gremium"] == x["gremium"]}
+            beschlossen_hier = beschlossene_punkte(w, x["datum"], x["gremium"])
             weitere = sum(1 for top in x["tops"]
-                          if top.strip() and top.strip() not in beschlossen_hier
-                          and not FORMALIA.match(top.strip()))
+                          if top.strip() and top.strip() not in beschlossen_hier)
+            # Durchgehend Themen zaehlen, nicht Beschluesse.
+            #
+            # Vorher stand hier „7 Beschluesse · 4 weitere Themen" neben „8
+            # Themen" — zwei verschiedene Einheiten in einer Zeile, und die
+            # Summe ging nicht auf. Ein Tagesordnungspunkt kann mehrere
+            # Beschluesse tragen: „Wirtschaftsplaene mit Finanzplanung" sind
+            # vier Beschluesse zu einem Thema. Wie viele Beschluesse es sind,
+            # sagt die Ueberschrift des Blocks.
+            mit_beschluss = len(beschlossen_hier)
             teile = []
-            if anzahl:
-                teile.append(f'<a href="#{marke}">{anzahl} '
-                             f"{'Beschluss' if anzahl == 1 else 'Beschlüsse'}</a>")
+            if mit_beschluss:
+                teile.append(f'<a href="#{marke}">{mit_beschluss} '
+                             f"{'Thema' if mit_beschluss == 1 else 'Themen'} "
+                             f"mit Beschluss</a>")
             if weitere:
                 teile.append(f'<a href="#{marke}-tops">{weitere} '
-                             f"{'weiteres Thema' if weitere == 1 else 'weitere Themen'}</a>")
-            # Die Zeile muss aufgehen: „4 Themen" und daneben nur „3
-            # Beschluesse" laesst den Leser nach dem vierten suchen. Es ist
-            # „Verschiedenes" — ein wiederkehrender Punkt, der keinen eigenen
-            # Block bekommt. Also wird er hier benannt, ohne Verweis, denn es
-            # gibt nichts zu sehen.
-            rest = len(x["tops"]) - anzahl - weitere if x["tops"] else 0
-            if rest > 0:
-                teile.append(f"{rest} wiederkehrende"
-                             f"{'r Punkt' if rest == 1 else ' Punkte'}")
+                             f"{'Thema' if weitere == 1 else 'Themen'} ohne</a>")
+            # Die Zeile geht von selbst auf, seit jedes Thema in der Liste
+            # steht: Beschluesse plus weitere Themen ergeben die Themenzahl.
+            # Solange Formalpunkte gesondert behandelt wurden, fehlte hier
+            # ein Rest, der eigens benannt werden musste.
 
             if not teile:
                 # „Steht noch aus" gilt nur, solange die Frist laeuft. Bei einer
@@ -1044,9 +1070,15 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             # Die Ueberschrift nannte nur die Beschluesse und verschwieg,
             # dass die Sitzung mehr Punkte hatte. „8 Beschluesse" klang nach
             # der ganzen Sitzung; es waren 8 von 14.
+            # Beschluesse und Themen sind nicht dasselbe: Zu einem Thema
+            # koennen mehrere Beschluesse gefasst werden. Die Ueberschrift
+            # nennt deshalb beides, wenn es auseinanderfaellt.
+            themen_hier = len(beschlossene_punkte(w, tag, name)) or len(liste)
             ueberschrift = (
-                f"{len(liste)} von {n_tops} Themen mit Beschluss "
-                f"am {datum_lang(tag)}" if n_tops > len(liste) else
+                f"{len(liste)} {'Beschluss' if len(liste) == 1 else 'Beschlüsse'} "
+                f"zu {themen_hier} {'Thema' if themen_hier == 1 else 'Themen'} "
+                f"am {datum_lang(tag)}"
+                if themen_hier != len(liste) else
                 f"{len(liste)} {'Beschluss' if len(liste) == 1 else 'Beschlüsse'} "
                 f"am {datum_lang(tag)}")
             t.append(f"""
@@ -1121,10 +1153,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             #
             # Verglichen wird ueber den Titel: Ein Punkt gilt als behandelt,
             # wenn ein Beschluss dieser Sitzung denselben Titel traegt.
-            beschlossen = {(b.get("titel") or "").strip() for b in liste}
+            beschlossen = beschlossene_punkte(w, tag, name)
             offen_tops = [x for x in (sitzung or {}).get("tops", [])
                           if x.strip() and x.strip() not in beschlossen]
-            sachlich = [x for x in offen_tops if not FORMALIA.match(x.strip())]
+            sachlich = offen_tops
             if sachlich:
                 # Container ist die Beschlussliste, nicht die Tagesordnung:
                 # Deren Stile gelten fuer `.sache`, `.sv`, `.unterlagen` und
@@ -1159,19 +1191,6 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                     zeilen_tops += (
                         f'      <li><span class="sache">{markieren(e(x), erklaert)}'
                         f'{"".join(zusatz)}</span>{vermerk}</li>\n')
-                # Die wiederkehrenden Punkte werden nicht mehr aufgezaehlt.
-                #
-                # Sie standen hier mit ihrem Vermerk — dreissig Woerter
-                # Amtsdeutsch fuer die Auskunft „dort gab es nichts":
-                # „Informationen des Oberbuergermeisters — Keine Punkte
-                # seitens der Verwaltung, Verschiedenes — Keine Punkte seitens
-                # der Verwaltung, Bekanntgaben — Keine Bekanntgaben."
-                #
-                # Nachgezaehlt ueber den ganzen Bestand: **kein einziger** von
-                # 228 Formalpunkten traegt einen Vermerk mit Inhalt — 214
-                # sagen „keine", 14 sagen gar nichts. Der Satz konnte also nie
-                # etwas mitteilen. Ihre Zahl steht in der Sitzungsuebersicht,
-                # damit die Rechnung aufgeht; mehr gibt es nicht zu sagen.
                 nachsatz = ""
                 t.append(f"""    <details class="mehr" id="{marke}-tops" open>
       <summary>{len(sachlich)} {'weiteres Thema' if len(sachlich) == 1 else 'weitere Themen'} ohne Beschluss</summary>
@@ -1198,7 +1217,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                for b in w["beschluesse"]):
             continue                      # hat einen eigenen Beschlussblock
         sach = [d for d in x["punkte"]
-                if d["titel"] and not FORMALIA.match(d["titel"])]
+                if d["titel"]]
         if not sach:
             continue
         zeilen_o = ""
