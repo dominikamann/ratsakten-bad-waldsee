@@ -1126,6 +1126,58 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     </details>""")
             t.append("  </div>\n</article>")
 
+    # --- Protokollierte Sitzungen, aus denen kein Beschluss stammt
+    #
+    # Sie hatten bisher keinen Block: Die Themenliste haengt am Beschlussblock,
+    # und den gibt es nur, wo etwas beschlossen wurde. Der Verwaltungsausschuss
+    # vom 14.05.2024 hat ein Protokoll und sechs Punkte — sichtbar war davon
+    # nichts, und die Sitzungsuebersicht verwies ins Leere.
+    for x in sorted(w["sitzungen"], key=lambda y: (y["datum"], y["gremium"])):
+        # Auch ohne Protokoll: Die Tagesordnung steht im
+        # Ratsinformationssystem, sobald eingeladen wurde. Der Arbeitskreis
+        # Kinder, Jugend und Bildung vom 31.03.2025 hat kein Protokoll, aber
+        # drei Themen — sichtbar war davon nichts.
+        if not x.get("punkte"):
+            continue
+        if any(b["datum"] == x["datum"] and b["gremium"] == x["gremium"]
+               for b in w["beschluesse"]):
+            continue                      # hat einen eigenen Beschlussblock
+        sach = [d for d in x["punkte"]
+                if d["titel"] and not FORMALIA.match(d["titel"])]
+        if not sach:
+            continue
+        zeilen_o = ""
+        for d in sach:
+            zusatz = ""
+            if d.get("vorlage"):
+                zusatz += f'<span class="sv">{e(d["vorlage"])}</span>'
+            for k in d.get("dokumente", []):
+                zusatz += (f'<span class="unterlagen"><a href="{k["url"]}" '
+                           f'target="_blank" rel="noopener noreferrer">'
+                           f'{e(k["titel"])}</a></span>')
+            verm = (f'<span class="erg">{e(d["vermerk"])}</span>'
+                    if d.get("vermerk") else "")
+            zeilen_o += (f'      <li><span class="sache">'
+                         f'{markieren(e(d["titel"]), erklaert)}{zusatz}</span>'
+                         f'{verm}</li>\n')
+        marke_o = f"s-{x['datum']:%Y%m%d}-{x['kuerzel']}"
+        t.append(f"""
+<article id="{marke_o}">
+  <div class="rail">
+    <div class="field"><span class="lab">Sitzung</span><span class="val">{e(rubrikname(x['gremium']))}</span></div>
+    <div class="field"><span class="lab">Datum</span><span class="val">{x['datum']:%d.%m.%Y}</span></div>
+    <div class="field"><span class="lab">Themen</span><span class="val">{len(x['punkte'])}</span></div>
+    <div class="field"><span class="lab">Beschlüsse</span><span class="val">0</span></div>
+  </div>
+  <div class="body-col">
+    <p class="rubrik">{'Beraten' if x['protokoll'] else 'Auf der Tagesordnung'} · {e(rubrikname(x['gremium']))}</p>
+    <h2 class="headline">{len(sach)} {'Thema' if len(sach) == 1 else 'Themen'} am {datum_lang(x['datum'])}{', kein Beschluss' if x['protokoll'] else ''}</h2>
+    <ul class="beschluesse" id="{marke_o}-tops">
+{zeilen_o}    </ul>
+    <p class="fussnote">{'Das Protokoll dieser Sitzung weist keinen Beschluss aus. Was es zu den einzelnen Punkten vermerkt, steht jeweils dahinter.' if x['protokoll'] else 'Zu dieser Sitzung ist kein Beschlussprotokoll abrufbar. Die Themen stehen in der Tagesordnung; wie entschieden wurde, sagt erst das Protokoll.'}</p>
+  </div>
+</article>""")
+
     # --- Bekanntgaben aus nichtöffentlicher Sitzung
     for bg in w["bekanntgaben"]:
         t.append(f"""
