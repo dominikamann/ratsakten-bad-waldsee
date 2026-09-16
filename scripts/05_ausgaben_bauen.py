@@ -964,6 +964,16 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             if weitere:
                 teile.append(f'<a href="#{marke}-tops">{weitere} '
                              f"{'weiteres Thema' if weitere == 1 else 'weitere Themen'}</a>")
+            # Die Zeile muss aufgehen: „4 Themen" und daneben nur „3
+            # Beschluesse" laesst den Leser nach dem vierten suchen. Es ist
+            # „Verschiedenes" — ein wiederkehrender Punkt, der keinen eigenen
+            # Block bekommt. Also wird er hier benannt, ohne Verweis, denn es
+            # gibt nichts zu sehen.
+            rest = len(x["tops"]) - anzahl - weitere if x["tops"] else 0
+            if rest > 0:
+                teile.append(f"{rest} wiederkehrende"
+                             f"{'r Punkt' if rest == 1 else ' Punkte'}")
+
             if not teile:
                 # „Steht noch aus" gilt nur, solange die Frist laeuft. Bei einer
                 # Sitzung von 2024 steht nichts mehr aus — dort ist schlicht
