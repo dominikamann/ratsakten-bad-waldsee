@@ -145,7 +145,11 @@ def leertrennung_reparieren(text: str, haeufig: dict[str, int]) -> str:
         zusammen = (a + b).lower()
         n_zus = haeufig.get(zusammen, 0)
         n_links = haeufig.get(a.lower(), 0)
-        passt = (len(a) >= 4 and 2 <= len(b) <= 10 and b[0].islower()
+        # Linke Haelfte ab zwei Zeichen: „ei nen" ist eine echte Trennung und
+        # blieb mit einer Untergrenze von vier stehen. Die Haeufigkeitsregel
+        # traegt auch kurze Teile — „die se" wird nicht zusammengezogen, weil
+        # „die" viel zu haeufig allein vorkommt.
+        passt = (len(a) >= 2 and 2 <= len(b) <= 10 and b[0].islower()
                  and n_zus and n_links <= BRUCHSTUECK_HOECHSTENS
                  and n_zus >= max(VERHAELTNIS, n_links * VERHAELTNIS))
         if passt:
@@ -327,3 +331,48 @@ def vermerk_lesen(protokoll: str, titel: str) -> str:
     treffer = [(m.start(), v) for v in VERMERKE
                if (m := re.search(rf"\b{re.escape(v)}", fenster, re.IGNORECASE))]
     return min(treffer)[1] if treffer else ""
+
+
+# --- Sachverhalt aus einer Sitzungsvorlage -----------------------------------
+
+SACHVERHALT = re.compile(
+    r"III\.\s*Zum Sachverhalt\s*:?(.*?)(?=\bIV\.\s|\bV\.\s|$)", re.S)
+
+
+def sachverhalt_lesen(pfad: Path, wortschatz: set[str] | None = None,
+                      haeufig: dict[str, int] | None = None,
+                      zeichen: int = 420) -> str:
+    """Den Abschnitt „Zum Sachverhalt" einer Sitzungsvorlage, gekuerzt.
+
+    Sitzungsvorlagen der Stadt sind einheitlich gegliedert: I.
+    Beschlussvorschlag, II. Zu beraten ist ueber, III. Zum Sachverhalt, IV.
+    Weitere Ueberlegungen. Alle 39 geprueften Vorlagen halten sich daran.
+
+    Der Text durchlaeuft dieselbe Reparatur wie die Protokolle — mit und ohne
+    Bindestrich. Ohne sie steht „auf Grundlage der gemeinsa men Empfehlung"
+    in der Ausgabe, und das liest sich wie ein Uebertragungsfehler, der es ja
+    auch ist.
+
+    Gekuerzt wird an einer Satzgrenze, nicht mitten im Wort, und nur wenn der
+    Text laenger ist als die Grenze: Der Median liegt bei 275 Zeichen, die
+    laengste Fassung bei ueber siebentausend. Ungekuerzt wuerde eine einzelne
+    Vorlage die halbe Ausgabe fuellen.
+    """
+    if not pfad.exists():
+        return ""
+    treffer = SACHVERHALT.search(re.sub(r"\s+", " ", pdf_text(pfad)))
+    if not treffer:
+        return ""
+
+    text = treffer.group(1).strip()
+    if wortschatz:
+        text = trennung_reparieren(text, wortschatz)
+    if haeufig:
+        text = leertrennung_reparieren(text, haeufig)
+
+    if len(text) <= zeichen:
+        return text
+    schnitt = text.rfind(". ", 0, zeichen)
+    if schnitt < zeichen // 2:
+        schnitt = text.rfind(" ", 0, zeichen)
+    return text[:schnitt + 1].strip() + " […]"

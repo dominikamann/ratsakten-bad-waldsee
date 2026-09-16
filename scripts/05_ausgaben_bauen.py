@@ -34,7 +34,8 @@ from begriffe import markieren
 from seite import aktuelle_ausgabe_setzen, fuss, kopf
 from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
                       haeufigkeiten_laden, leertrennung_reparieren,
-                      trennung_reparieren, vermerk_lesen, wortschatz_laden)
+                      sachverhalt_lesen, trennung_reparieren, vermerk_lesen,
+                      wortschatz_laden)
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -51,6 +52,7 @@ DATEN = WURZEL / "data"
 WORTSCHATZ = wortschatz_laden(DATEN / "wortschatz.json")
 HAEUFIGKEITEN = haeufigkeiten_laden(DATEN / "wortschatz.json")
 AUSGABEN = WURZEL / "docs" / "ausgaben"
+VORLAGEN = DATEN / "vorlagen"
 
 # Wie lange ein Beschlussprotokoll nach der Sitzung auf sich warten darf, ehe
 # sein Fehlen als „Blinder Fleck" gilt.
@@ -527,7 +529,21 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
                                    {"titel": str(x).strip(),
                                     **punkt_infos.get((tag_iso, str(x).strip()),
                                                       {"vorlage": "", "dokumente": []}),
-                                    "vermerk": vermerk_lesen(ptext, str(x))}
+                                    "vermerk": vermerk_lesen(ptext, str(x)),
+                                    # Worum es ging, steht in der
+                                    # Sitzungsvorlage — geladen wird sie nur
+                                    # fuer Punkte ohne Beschluss, denn nur
+                                    # dort fehlt die Auskunft.
+                                    "sachverhalt": sachverhalt_lesen(
+                                        VORLAGEN / (re.sub(
+                                            r"[^A-Za-z0-9-]+", "-",
+                                            punkt_infos.get(
+                                                (tag_iso, str(x).strip()), {}
+                                            ).get("vorlage", "")) + ".pdf"),
+                                        WORTSCHATZ, HAEUFIGKEITEN)
+                                    if punkt_infos.get(
+                                        (tag_iso, str(x).strip()), {}
+                                    ).get("vorlage") else ""}
                                    for x in (s.get("tops") or [])]})
         if not s["protokolle"]:
             w["blind"].append({"datum": tag, "gremium": name})
@@ -1124,6 +1140,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                             f'{e(k["titel"])}</a></span>' for k in d["dokumente"]))
                     vermerk = (f'<span class="erg">{e(d["vermerk"])}</span>'
                                if d.get("vermerk") else "")
+                    # Worum es ging — woertlich aus der Sitzungsvorlage.
+                    if d.get("sachverhalt"):
+                        zusatz.insert(0, f'<span class="wortlaut">'
+                                         f'{markieren(e(d["sachverhalt"]), erklaert)}</span>')
                     zeilen_tops += (
                         f'      <li><span class="sache">{markieren(e(x), erklaert)}'
                         f'{"".join(zusatz)}</span>{vermerk}</li>\n')
@@ -1172,6 +1192,9 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 zusatz += (f'<span class="unterlagen"><a href="{k["url"]}" '
                            f'target="_blank" rel="noopener noreferrer">'
                            f'{e(k["titel"])}</a></span>')
+            if d.get("sachverhalt"):
+                zusatz = (f'<span class="wortlaut">'
+                          f'{markieren(e(d["sachverhalt"]), erklaert)}</span>') + zusatz
             verm = (f'<span class="erg">{e(d["vermerk"])}</span>'
                     if d.get("vermerk") else "")
             zeilen_o += (f'      <li><span class="sache">'

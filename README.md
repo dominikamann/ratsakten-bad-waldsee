@@ -423,6 +423,17 @@ belasten.
 
 ## Geplant
 
+- [ ] **Sachverhalt auch zu beschlossenen Punkten.** Die Sitzungsvorlage
+      enthält den Abschnitt „Zum Sachverhalt" — warum die Verwaltung etwas
+      vorschlägt. Er wird derzeit nur für Punkte **ohne** Beschluss
+      wiedergegeben (39 Vorlagen), weil dort sonst nur der Titel stünde. Für
+      die übrigen rund 320 Vorlagen ist das offen: Es wären mehr Abrufe beim
+      Ratsinformationssystem, vor allem aber enthalten Sachverhalte
+      gelegentlich Namen. In den geprüften 39 waren es acht, alle in
+      amtlicher Funktion (Polizeiposten, Integrationsbeauftragte,
+      Fachbereiche) — bei 320 lässt sich das nicht mehr von Hand prüfen.
+      Voraussetzung wäre eine belastbare Schwärzung.
+
 - [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (90 Stück)
 - [x] Wöchentlicher Lauf als ein Befehl (`scripts/wochenlauf.sh`, `launchd`-Vorlage)
 - [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)

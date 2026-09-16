@@ -27,3 +27,7 @@ data/vorgaenge.json
 
 # Vollstaendiger Sitzungskalender, aus den Crawl-Daten erzeugt (Schritt 03).
 data/termine.json
+
+# Sitzungsvorlagen zu Punkten ohne Beschluss. Wie die Protokolle: Quellmaterial,
+# das der Lauf selbst holt — es gehoert nicht in die Versionsgeschichte.
+data/vorlagen/
