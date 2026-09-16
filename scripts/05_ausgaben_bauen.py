@@ -1125,7 +1125,6 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             offen_tops = [x for x in (sitzung or {}).get("tops", [])
                           if x.strip() and x.strip() not in beschlossen]
             sachlich = [x for x in offen_tops if not FORMALIA.match(x.strip())]
-            formal = [x for x in offen_tops if FORMALIA.match(x.strip())]
             if sachlich:
                 # Container ist die Beschlussliste, nicht die Tagesordnung:
                 # Deren Stile gelten fuer `.sache`, `.sv`, `.unterlagen` und
@@ -1160,14 +1159,20 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                     zeilen_tops += (
                         f'      <li><span class="sache">{markieren(e(x), erklaert)}'
                         f'{"".join(zusatz)}</span>{vermerk}</li>\n')
-                def mit_vermerk(x: str) -> str:
-                    v = infos.get(x.strip(), {}).get("vermerk", "")
-                    # Den Vermerk so wiedergeben, wie er im Protokoll steht.
-                    return f"{e(x)} — {e(v)}" if v else e(x)
-
-                nachsatz = ("" if not formal else
-                            f'      <p class="fussnote">Wiederkehrende Punkte derselben '
-                            f'Sitzung: {", ".join(mit_vermerk(x) for x in formal)}.</p>\n')
+                # Die wiederkehrenden Punkte werden nicht mehr aufgezaehlt.
+                #
+                # Sie standen hier mit ihrem Vermerk — dreissig Woerter
+                # Amtsdeutsch fuer die Auskunft „dort gab es nichts":
+                # „Informationen des Oberbuergermeisters — Keine Punkte
+                # seitens der Verwaltung, Verschiedenes — Keine Punkte seitens
+                # der Verwaltung, Bekanntgaben — Keine Bekanntgaben."
+                #
+                # Nachgezaehlt ueber den ganzen Bestand: **kein einziger** von
+                # 228 Formalpunkten traegt einen Vermerk mit Inhalt — 214
+                # sagen „keine", 14 sagen gar nichts. Der Satz konnte also nie
+                # etwas mitteilen. Ihre Zahl steht in der Sitzungsuebersicht,
+                # damit die Rechnung aufgeht; mehr gibt es nicht zu sagen.
+                nachsatz = ""
                 t.append(f"""    <details class="mehr" id="{marke}-tops" open>
       <summary>{len(sachlich)} {'weiteres Thema' if len(sachlich) == 1 else 'weitere Themen'} ohne Beschluss</summary>
       <ul class="beschluesse">
