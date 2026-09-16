@@ -862,12 +862,22 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
         # denn ohne sie waere nicht eingeladen worden. Ohne sie bleibt eine
         # Ausgabe uebrig, die nichts erzaehlt.
         offen = w["ausstehend"][0]
+        # Dieselbe Sitzung bekommt weiter unten einen eigenen Block — mit
+        # denselben Punkten, dazu Vorlagennummer, Unterlagen und Sachverhalt.
+        # Der Block hier stand aus der Zeit, als es den unteren noch nicht gab;
+        # seither stand die Tagesordnung in der aktuellen Ausgabe zweimal auf
+        # der Seite, die zweite Fassung reicher als die erste. Bleibt nur die
+        # Fussnote zur Protokollfrist, auf die der Stern im Untertitel zeigt.
+        eigener_block = any(
+            x["datum"] == offen["datum"] and x["gremium"] == offen["gremium"]
+            and any(d["titel"] for d in (x.get("punkte") or []))
+            for x in w["sitzungen"])
         punkte = "".join(
             f"      <li>{e(str(x))}</li>\n" for x in offen["tops"])
         quelle = (f'    <p class="note"><a class="doc" href="{e(offen["url"])}" '
                   f'target="_blank" rel="noopener noreferrer">Sitzung im '
                   f'Ratsinformationssystem</a></p>\n' if offen["url"] else "")
-        if offen["tops"]:
+        if offen["tops"] and not eigener_block:
             nach_kopf.append(
                 '<article class="voll">\n'
                 '  <div class="body-col">\n'
@@ -1238,6 +1248,32 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                          f'{markieren(e(d["titel"]), erklaert)}{zusatz}</span>'
                          f'{verm}</li>\n')
         marke_o = f"s-{x['datum']:%Y%m%d}-{x['kuerzel']}"
+        # Der Weg zur Quelle. Er stand bisher nur im Tagesordnungsblock der
+        # aktuellen Ausgabe; in den uebrigen Ausgaben fuehrte von diesen
+        # Themen aus kein Verweis zur Sitzung im Ratsinformationssystem.
+        quelle_o = (f'    <p class="note"><a class="doc" href="{e(x["url"])}" '
+                    f'target="_blank" rel="noopener noreferrer">Sitzung im '
+                    f'Ratsinformationssystem</a></p>\n' if x.get("url") else "")
+        # „Kein Protokoll abrufbar" liest sich wie ein Mangel. Bei einer
+        # Sitzung von vorgestern ist es der Normalfall — das Protokoll kann
+        # noch gar nicht da sein. `ausstehend` fuehrt genau diese frischen
+        # Sitzungen; was aelter als die Karenzfrist ist, steht unter `blind`
+        # und wird auch weiterhin als Fehlen benannt.
+        if x["protokoll"]:
+            fussnote_o = ('Das Protokoll dieser Sitzung weist keinen Beschluss aus. '
+                    'Was es zu den einzelnen Punkten vermerkt, steht jeweils '
+                    'dahinter.')
+        elif any(b["datum"] == x["datum"] and b["gremium"] == x["gremium"]
+                 for b in w.get("ausstehend", [])):
+            # Die Frist selbst steht schon in der Fussnote zum Stern unter
+            # dem Untertitel. Hier nur, was sie fuer diesen Block bedeutet —
+            # sonst steht dieselbe Auskunft zweimal auf der Seite.
+            fussnote_o = ('Das Beschlussprotokoll steht noch aus; bis dahin ist die '
+                    'Tagesordnung alles, was öffentlich vorliegt.')
+        else:
+            fussnote_o = ('Zu dieser Sitzung ist kein Beschlussprotokoll abrufbar. '
+                    'Die Themen stehen in der Tagesordnung; wie entschieden '
+                    'wurde, sagt erst das Protokoll.')
         t.append(f"""
 <article id="{marke_o}">
   <div class="rail">
@@ -1251,7 +1287,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     <h2 class="headline">{len(sach)} {'Thema' if len(sach) == 1 else 'Themen'} am {datum_lang(x['datum'])}{', kein Beschluss' if x['protokoll'] else ''}</h2>
     <ul class="beschluesse" id="{marke_o}-tops">
 {zeilen_o}    </ul>
-    <p class="fussnote">{'Das Protokoll dieser Sitzung weist keinen Beschluss aus. Was es zu den einzelnen Punkten vermerkt, steht jeweils dahinter.' if x['protokoll'] else 'Zu dieser Sitzung ist kein Beschlussprotokoll abrufbar. Die Themen stehen in der Tagesordnung; wie entschieden wurde, sagt erst das Protokoll.'}</p>
+{quelle_o}    <p class="fussnote">{fussnote_o}</p>
   </div>
 </article>""")
 
