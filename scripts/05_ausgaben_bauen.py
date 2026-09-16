@@ -1098,6 +1098,14 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             sachlich = [x for x in offen_tops if not FORMALIA.match(x.strip())]
             formal = [x for x in offen_tops if FORMALIA.match(x.strip())]
             if sachlich:
+                # Container ist die Beschlussliste, nicht die Tagesordnung:
+                # Deren Stile gelten fuer `.sache`, `.sv`, `.unterlagen` und
+                # `.erg` — unter `ol.agenda` griffen sie nicht, die
+                # Vorlagennummer klebte am Titel und „Ohne Beschlussfassung"
+                # brach in einer zu schmalen Spalte buchstabenweise um. Und
+                # eine Nummerierung waere hier irrefuehrend: Die Liste zeigt
+                # „1, 2", gemeint sind die Tagesordnungspunkte 3 und 11.
+                #
                 # Zu jedem Punkt zeigen, was daran haengt: der Vermerk aus dem
                 # Protokoll, die Vorlagennummer und die Unterlagen. Ein blosser
                 # Titel sagt, dass etwas Thema war; erst das Uebrige sagt, wo
@@ -1129,8 +1137,8 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                             f'{", ".join(mit_vermerk(x) for x in formal)}.</p>\n')
                 t.append(f"""    <details class="mehr" id="{marke}-tops" open>
       <summary>{len(sachlich)} {'weiteres Thema' if len(sachlich) == 1 else 'weitere Themen'} ohne Beschluss</summary>
-      <ol class="agenda">
-{zeilen_tops}      </ol>
+      <ul class="beschluesse">
+{zeilen_tops}      </ul>
 {nachsatz}      <p class="fussnote">Was das Protokoll zu diesen Punkten vermerkt, steht
       jeweils dahinter. Warum nicht beschlossen wurde, hält es nicht fest.</p>
     </details>""")
