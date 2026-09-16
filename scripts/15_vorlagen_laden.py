@@ -35,7 +35,7 @@ from pathlib import Path
 import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from textwerk import paket_abschnitt, pdf_text  # noqa: E402
+from textwerk import paket_abschnitt, pdf_text
 
 BASIS = Path(__file__).resolve().parent.parent
 DATEN = BASIS / "data"
@@ -139,7 +139,7 @@ def aus_paketen_nachtragen(s: requests.Session) -> tuple[int, int]:
                 antwort = s.get(url, timeout=120)
                 antwort.raise_for_status()
                 paket.write_bytes(antwort.content)
-            except Exception as f:  # noqa: BLE001
+            except Exception as f:
                 print(f"  Paket nicht ladbar fuer {nr}: {f}", file=sys.stderr)
                 continue
             time.sleep(PAUSE)
@@ -174,7 +174,7 @@ def main() -> None:
             antwort.raise_for_status()
             ziel.write_bytes(antwort.content)
             neu += 1
-        except Exception as f:  # noqa: BLE001
+        except Exception as f:
             print(f"  Fehler: {ziel.name}: {f}", file=sys.stderr)
             fehler += 1
         time.sleep(PAUSE)

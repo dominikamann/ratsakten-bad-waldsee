@@ -317,6 +317,8 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │   ├── basis.css       Farben, Schrift, Seitenkopf und Fuß — für alle Seiten dieselben
 │   ├── pruefen.py      Kontrolle vor der Veröffentlichung
 │   └── launchd/        Vorlage für den automatischen Montagslauf
+├── ruff.toml   welche Regeln der Code einhält — ohne sie prüft ruff gegen seine
+│            jeweilige Vorgabeauswahl, die sich mit jeder Version ändert
 └── data/       Kennzahlen, Ausgabenregister und 74 Protokolldateien zu 72 Sitzungen
 ```
 
@@ -342,6 +344,7 @@ npm install jsdom && node scripts/04_vorrendern.js
 uv run                                       python scripts/13_readme_pflegen.py
 
 # kontrollieren
+uv run --with ruff                           ruff check scripts/
 uv run --with lxml                           python scripts/pruefen.py
 ```
 

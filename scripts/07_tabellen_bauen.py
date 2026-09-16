@@ -28,7 +28,8 @@ import logging
 import re
 from pathlib import Path
 
-from textwerk import pdf_text as roh_text, stichtag_vorgabe
+from textwerk import pdf_text as roh_text
+from textwerk import stichtag_vorgabe
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.

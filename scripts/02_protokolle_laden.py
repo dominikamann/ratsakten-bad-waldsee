@@ -58,7 +58,7 @@ def main() -> None:
                 antwort.raise_for_status()
                 ziel.write_bytes(antwort.content)
                 neu += 1
-            except Exception as f:  # noqa: BLE001
+            except Exception as f:
                 print(f"  Fehler: {ziel.name}: {f}", file=sys.stderr)
                 fehler += 1
             time.sleep(PAUSE)

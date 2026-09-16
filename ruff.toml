@@ -1,0 +1,42 @@
+# Regelwerk fuer ruff.
+#
+# Ohne diese Datei prueft ruff gegen seine Vorgabeauswahl — und die aendert
+# sich mit jeder Version. Dann meldet ein Werkzeug, das Fehler finden soll,
+# bei jedem Update etwas anderes, ohne dass sich der Code geaendert haette.
+# Hier steht, was fuer dieses Projekt gilt.
+#
+#     uv run --with ruff ruff check scripts/
+#
+# Ausgewaehlt ist, was Fehler findet — nicht, was Geschmack durchsetzt.
+# Umformatiert wird nichts: `ruff format` laeuft hier nicht, und E501
+# (Zeilenlaenge) ist bewusst nicht dabei. Die Seitenbauer tragen HTML in
+# Zeichenketten; eine Laengengrenze wuerde dort Umbrueche erzwingen, die das
+# Ergebnis schlechter lesbar machen als die lange Zeile.
+
+target-version = "py313"
+
+[lint]
+select = [
+  "F",    # pyflakes — unbenutzte Importe, undefinierte Namen, tote Variablen
+  "E4",   # Importe an falscher Stelle
+  "E7",   # Anweisungsfehler (Vergleich mit ==, nacktes except)
+  "E9",   # Syntax- und Einrueckungsfehler
+  "B",    # bugbear — echte Fehlerklassen, etwa veraenderliche Vorgabewerte
+  "I",    # Importreihenfolge
+  "UP",   # Sprachstand: was seit Python 3.13 einfacher geht
+  "RUF",  # ruff-eigene Regeln, darunter veraltete noqa-Vermerke
+]
+
+ignore = [
+  # „Mehrdeutige" Unicode-Zeichen: gemeint sind deutsche Anfuehrungszeichen
+  # („ "), Gedankenstriche und geschuetzte Leerzeichen. In einem Projekt,
+  # das auf Deutsch schreibt und deutsche Typografie ausliefert, ist das
+  # kein Befund.
+  "RUF001", "RUF002", "RUF003",
+]
+
+[lint.per-file-ignores]
+# Die Schritte liegen flach nebeneinander und teilen sich `textwerk`,
+# `seite` und `begriffe`. Damit der Import ohne Paketinstallation findet,
+# steht vor ihm ein sys.path.insert — also nach dem ersten Import.
+"scripts/15_vorlagen_laden.py" = ["E402"]

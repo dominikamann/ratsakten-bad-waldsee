@@ -20,7 +20,6 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-
 # Sitzungstitel lauten immer „<Gremium>, N. Sitzung". Frueher wurde alles ab
 # dem ersten Komma entfernt — das verstuemmelte den „Ausschuss fuer Umwelt,
 # Technik und Nachhaltigkeit" zu „Ausschuss fuer Umwelt", also zu einem
@@ -221,7 +220,10 @@ def main() -> None:
         schluessel = termin["title"] + termin["start"]
         try:
             sitzung, punkte = sitzung_auslesen(s, termin)
-        except Exception as fehler:  # noqa: BLE001 — einzelne Ausfälle nicht fatal
+        # Breit gefangen mit Absicht: Ein einzelner Ausfall — Zeitueberschreitung,
+        # geaenderte Seitenstruktur, was auch immer — darf den Lauf nicht
+        # beenden. Was dann geschieht, steht unten.
+        except Exception as fehler:
             print(f"  Fehler bei {termin['title']}: {fehler}", file=sys.stderr)
             if schluessel in vorher:
                 sitzung = vorher[schluessel]

@@ -84,6 +84,14 @@ log "13/13  Kennzahlen in die README eintragen"
 uv run --quiet python scripts/13_readme_pflegen.py
 
 # --- Pruefen ------------------------------------------------------------------
+# Der Code zuerst, dann das Ergebnis. ruff findet unbenutzte Importe, tote
+# Variablen und Schleifenvariablen, die ein Lambda erst spaeter nachschlaegt —
+# Dinge, die eine erzeugte Seite nicht verraet, weil sie noch stimmt. Was
+# geprueft wird, steht in ruff.toml; ohne diese Datei waere es die
+# Vorgabeauswahl der jeweiligen ruff-Version.
+log "Code pruefen"
+uv run --quiet --with ruff ruff check scripts/
+
 log "Pruefung"
 uv run --quiet --with lxml python scripts/pruefen.py
 

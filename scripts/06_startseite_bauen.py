@@ -409,51 +409,55 @@ def naechste_termine(kennzahlen: dict) -> str:
             eintraege = []
             for p in punkte:
                 dok = "".join(
-                    '<a class="doc" href="%s" target="_blank" rel="noopener noreferrer">%s</a>'
-                    % (e(x["url"]), e(x["titel"])) for x in p["dokumente"])
-                nummer = ('<span class="sv">%s</span>' % e(p["vorlage"])) if p["vorlage"] else ""
+                    f'<a class="doc" href="{e(x["url"])}" target="_blank" '
+                    f'rel="noopener noreferrer">{e(x["titel"])}</a>'
+                    for x in p["dokumente"])
+                nummer = (f'<span class="sv">{e(p["vorlage"])}</span>'
+                          if p["vorlage"] else "")
+                unterlagen = f'<span class="unterlagen">{dok}</span>' if dok else ""
                 eintraege.append(
-                    '        <li><span class="sache">%s%s</span>%s</li>'
-                    % (e(p["titel"]), nummer,
-                       ('<span class="unterlagen">%s</span>' % dok) if dok else ""))
+                    f'        <li><span class="sache">{e(p["titel"])}{nummer}</span>'
+                    f'{unterlagen}</li>')
             wort = "Tagesordnungspunkt" if len(punkte) == 1 else "Tagesordnungspunkte"
+            quelle = (f'        <p class="quelle"><a href="{e(sitzung)}" target="_blank" '
+                      f'rel="noopener noreferrer">Sitzung im '
+                      f'Ratsinformationssystem</a></p>\n' if sitzung else "")
+            tops = "\n".join(eintraege)
             agenda = (
-                '      <details class="agenda">\n'
-                '        <summary>%d %s</summary>\n'
-                '        <ol class="tops">\n%s\n        </ol>\n'
-                '%s'
-                '      </details>'
-                % (len(punkte), wort, "\n".join(eintraege),
-                   ('        <p class="quelle"><a href="%s" target="_blank" '
-                    'rel="noopener noreferrer">Sitzung im Ratsinformationssystem</a></p>\n'
-                    % e(sitzung)) if sitzung else ""))
+                f'      <details class="agenda">\n'
+                f'        <summary>{len(punkte)} {wort}</summary>\n'
+                f'        <ol class="tops">\n{tops}\n        </ol>\n'
+                f'{quelle}'
+                f'      </details>')
         else:
-            agenda = ('      <p class="agenda offen">Tagesordnung noch nicht ver&ouml;ffentlicht'
-                      + (' &middot; <a href="%s" target="_blank" rel="noopener noreferrer">'
-                         'Termin im Ratsinformationssystem</a>' % e(sitzung) if sitzung else "")
-                      + "</p>")
+            termin_quelle = (f' &middot; <a href="{e(sitzung)}" target="_blank" '
+                             f'rel="noopener noreferrer">Termin im '
+                             f'Ratsinformationssystem</a>' if sitzung else "")
+            agenda = ('      <p class="agenda offen">Tagesordnung noch nicht '
+                      f'ver&ouml;ffentlicht{termin_quelle}</p>')
 
+        jahreszahl = "" if d.year == heute.year else " " + str(d.year)
+        hinweis = f'<span class="bald">{bald}</span>' if bald else ""
         zeilen.append(
-            '    <li>\n'
-            '      <p class="wann">%s, %d. %s%s<span class="uhr">%s Uhr</span>%s</p>\n'
-            '      <p class="gremium">%s</p>\n'
-            '%s\n'
-            '    </li>'
-            % (tage[d.weekday()], d.day, monate[d.month - 1],
-               "" if d.year == heute.year else " " + str(d.year),
-               t["zeit"],
-               ('<span class="bald">%s</span>' % bald) if bald else "",
-               e(t["gremium"]), agenda))
+            f'    <li>\n'
+            f'      <p class="wann">{tage[d.weekday()]}, {d.day}. '
+            f'{monate[d.month - 1]}{jahreszahl}'
+            f'<span class="uhr">{t["zeit"]} Uhr</span>{hinweis}</p>\n'
+            f'      <p class="gremium">{e(t["gremium"])}</p>\n'
+            f'{agenda}\n'
+            f'    </li>')
 
+    liste = "\n".join(zeilen)
     return (
-        '\n<section>\n'
-        '  <h2>Was als N&auml;chstes ansteht</h2>\n'
-        '  <ol class="termine">\n%s\n  </ol>\n'
-        '  <p class="fussnote">Angek&uuml;ndigte Sitzungen aus dem Ratsinformationssystem. '
-        'Sie sind &ouml;ffentlich, soweit nicht ausdr&uuml;cklich nicht&ouml;ffentlich beraten wird — '
-        'wer hingehen will, kann das ohne Anmeldung. '
-        '<a href="./termine.html#heute">Alle Termine, auch vergangene</a>.</p>\n'
-        '</section>\n' % "\n".join(zeilen))
+        f'\n<section>\n'
+        f'  <h2>Was als N&auml;chstes ansteht</h2>\n'
+        f'  <ol class="termine">\n{liste}\n  </ol>\n'
+        f'  <p class="fussnote">Angek&uuml;ndigte Sitzungen aus dem Ratsinformationssystem. '
+        f'Sie sind &ouml;ffentlich, soweit nicht ausdr&uuml;cklich nicht&ouml;ffentlich beraten wird — '
+        f'wer hingehen will, kann das ohne Anmeldung. '
+        f'<a href="./termine.html#heute">Alle Termine, auch vergangene</a>.</p>\n'
+        f'</section>\n')
+
 
 def main() -> None:
     DOCS.mkdir(exist_ok=True)

@@ -106,8 +106,12 @@ def jahrgaenge_ergaenzen(text: str) -> str:
     for jahr in fehlen:
         # An die letzte vorhandene Zeile anhaengen, Einrueckung uebernehmen.
         letzte = re.findall(rf"^.*── {max(vorhanden)}/.*$", text, re.M)[-1]
+        # `jahr` als Vorgabewert binden: Der Lambda wird hier sofort
+        # ausgewertet, aber ein Lambda, der eine Schleifenvariable erst beim
+        # Aufruf nachschlaegt, ist eine Falle, sobald ihn jemand aufhebt.
         neu = re.sub(r"── \d{4}/(\s+)\d+( Ausgaben)",
-                     lambda m: f"── {jahr}/{m.group(1)}{len(register[jahr])}{m.group(2)}",
+                     lambda m, jahr=jahr: (f"── {jahr}/{m.group(1)}"
+                                           f"{len(register[jahr])}{m.group(2)}"),
                      letzte)
         # Der vorletzte Jahrgang bekommt den Abzweig, der neue den Abschluss.
         text = text.replace(letzte, letzte.replace("└──", "├──") + "\n" + neu, 1)

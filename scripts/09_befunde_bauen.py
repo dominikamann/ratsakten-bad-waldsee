@@ -25,9 +25,8 @@ import re
 import sys
 from pathlib import Path
 
-from seite import fuss, kopf
-
 from lxml import html as H
+from seite import fuss, kopf
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"

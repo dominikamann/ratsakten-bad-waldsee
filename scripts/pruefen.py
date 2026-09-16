@@ -25,6 +25,7 @@ import json
 import re
 import sys
 import urllib.parse
+from itertools import pairwise
 from pathlib import Path
 
 from lxml import html as H
@@ -100,7 +101,7 @@ def pruefe_zeitraeume() -> None:
                  for _, a in sorted(ausgaben.items(), key=lambda kv: int(kv[0]))
                  if a.get("von_iso")]
         geprueft += len(paare)
-        for (_, ende), (start, _) in zip(paare, paare[1:], strict=False):
+        for (_, ende), (start, _) in pairwise(paare):
             if ende >= start:
                 fehler.append(f"{jahr}: Berichtszeiträume überschneiden sich bei "
                               f"{ende} / {start}")

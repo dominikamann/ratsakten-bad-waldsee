@@ -199,7 +199,7 @@ def pdf_text(pfad: Path) -> str:
         return ziel.read_text(encoding="utf-8")
     try:
         roh = "\n".join(s.extract_text() or "" for s in PdfReader(pfad).pages)
-    except Exception:  # noqa: BLE001
+    except Exception:
         return ""
     text = re.sub(r"[­\s]+", " ", roh)
     CACHE.mkdir(parents=True, exist_ok=True)

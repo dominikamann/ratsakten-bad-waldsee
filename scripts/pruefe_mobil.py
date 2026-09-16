@@ -4,14 +4,15 @@
 Optional: pip install playwright && playwright install chromium webkit
 Aufruf: python scripts/pruefe_mobil.py
 """
+import json
+import sys
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-import json
 from pathlib import Path
-import sys
 from threading import Thread
 
-from playwright.sync_api import Error as PlaywrightError, sync_playwright
+from playwright.sync_api import Error as PlaywrightError
+from playwright.sync_api import sync_playwright
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 
@@ -55,7 +56,7 @@ def seiten() -> list[str]:
             "gremien.html", "themen/index.html", "themen/drei-eichen-vi.html",
             "ausgaben/index.html"]
     try:
-        return fest + [neueste_ausgabe(), neuester_report()]
+        return [*fest, neueste_ausgabe(), neuester_report()]
     except (OSError, ValueError, KeyError) as fehler:
         print(f"   Pruefung nicht startklar: {fehler}", file=sys.stderr)
         print("   Zuerst die Dokumente erzeugen (Schritte 05 und 04).",

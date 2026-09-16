@@ -27,11 +27,16 @@ import re
 from pathlib import Path
 
 from seite import fuss, kopf, kurz
-
+from textwerk import (
+    haeufigkeiten_laden,
+    leertrennung_reparieren,
+    schwaerzen,
+    stichtag_vorgabe,
+    trennung_reparieren,
+    wortschatz_laden,
+)
+from textwerk import pdf_text as roh_text
 from vorhaben import seiten_je_vorgang, vergleichsname
-from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
-                      haeufigkeiten_laden, leertrennung_reparieren,
-                      trennung_reparieren, wortschatz_laden)
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.

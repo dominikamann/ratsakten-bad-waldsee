@@ -32,10 +32,17 @@ from pathlib import Path
 
 from begriffe import markieren
 from seite import aktuelle_ausgabe_setzen, fuss, kopf
-from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
-                      haeufigkeiten_laden, leertrennung_reparieren,
-                      sachverhalt_lesen, trennung_reparieren, vermerk_lesen,
-                      wortschatz_laden)
+from textwerk import (
+    haeufigkeiten_laden,
+    leertrennung_reparieren,
+    sachverhalt_lesen,
+    schwaerzen,
+    stichtag_vorgabe,
+    trennung_reparieren,
+    vermerk_lesen,
+    wortschatz_laden,
+)
+from textwerk import pdf_text as roh_text
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
