@@ -26,7 +26,7 @@
   <array>
     <string>/usr/bin/osascript</string>
     <string>-e</string>
-    <string>display notification "Lauf starten: Doppelklick auf „Ratsakten Wochenlauf“ auf dem Schreibtisch." with title "Ratsakten Bad Waldsee" subtitle "Neue Sitzungsunterlagen abholen" sound name "Glass"</string>
+    <string>display notification "Lauf starten: Doppelklick auf „Ratsakten Lauf“ auf dem Schreibtisch." with title "Ratsakten Bad Waldsee" subtitle "Neue Sitzungsunterlagen abholen" sound name "Glass"</string>
   </array>
 
   <!-- Ohne Weekday-Schluessel feuert launchd jeden Tag zur genannten Zeit. -->

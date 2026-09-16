@@ -48,7 +48,7 @@ def seiten() -> list[str]:
 
     Standen sie auf Modulebene, schlug ein fehlendes `data/ausgaben.json` oder
     ein leeres `docs/report/` schon beim Laden zu und beendete das Skript mit
-    Code 1. `wochenlauf.sh` haelt Code 2 fuer „Browser nicht bereit" und alles
+    Code 1. `lauf.sh` haelt Code 2 fuer „Browser nicht bereit" und alles
     andere fuer einen Befund an den Seiten — eine fehlende Datei brach damit
     die Veroeffentlichung ab, mit einer Meldung ueber die Browserpruefung.
     """

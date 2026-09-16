@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Doppelklick-Starter für den Wochenlauf.
+# Doppelklick-Starter für den Lauf.
 #
 # Liegt auf dem Schreibtisch und öffnet ein Terminalfenster. Von Hand gestartet
 # gilt der Zugriffsschutz von macOS nicht — anders als beim zeitgesteuerten Lauf
@@ -15,10 +15,10 @@ cd "$PROJEKT" 2>/dev/null || {
   exit 1
 }
 
-printf '\033[1m Ratsakten Bad Waldsee — Wochenlauf \033[0m\n'
+printf '\033[1m Ratsakten Bad Waldsee — Lauf \033[0m\n'
 printf ' %s\n\n' "$(date '+%A, %d. %B %Y, %H:%M')"
 
-./scripts/wochenlauf.sh
+./scripts/lauf.sh
 ERGEBNIS=$?
 
 echo

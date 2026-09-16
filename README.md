@@ -312,7 +312,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       └── 2026/         22 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 15
-│   ├── wochenlauf.sh   ein Befehl für den ganzen Lauf
+│   ├── lauf.sh         ein Befehl für den ganzen Lauf
 │   ├── seite.py        Seitenrahmen und Navigation — für alle Seiten dieselben
 │   ├── basis.css       Farben, Schrift, Seitenkopf und Fuß — für alle Seiten dieselben
 │   ├── pruefen.py      Kontrolle vor der Veröffentlichung
@@ -351,7 +351,7 @@ uv run --with lxml                           python scripts/pruefen.py
 Die Reihenfolge ist nicht beliebig: Schritt 6 (Startseite) liest Kennzahlen aus
 dem, was die vorigen Schritte geschrieben haben, und Schritt 9 liest den
 vorgerenderten Report — deshalb steht Schritt 4 am Ende und wird beim nächsten
-Lauf gelesen. `scripts/wochenlauf.sh` führt genau diese Kette aus.
+Lauf gelesen. `scripts/lauf.sh` führt genau diese Kette aus.
 
 Schritt 13 trägt die Kennzahlen dieses Laufs in die Tabellen und Sätze dieser
 README ein — Sitzungszahl, Stichtag, Ausgabenzahl, aktuelle Ausgabe und so
@@ -372,10 +372,10 @@ sie nach `data/kennzahlen.json`. Wer eine Angabe im Report nachrechnen will,
 findet die Rechenregel in `scripts/03_auswerten.py` — jede Zahl entsteht dort
 und nur dort.
 
-## Eine neue Woche hinzufügen
+## Den Bestand nachführen
 
 ```bash
-./scripts/wochenlauf.sh
+./scripts/lauf.sh
 ```
 
 Das Skript prüft zuerst, ob das Ratsinformationssystem erreichbar ist, führt dann
@@ -451,7 +451,7 @@ belasten.
 
 - [x] Sachverhalt aus der Sitzungsvorlage zu jedem Punkt (`data/vorlagen/`)
 - [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (90 Stück)
-- [x] Wöchentlicher Lauf als ein Befehl (`scripts/wochenlauf.sh`, `launchd`-Vorlage)
+- [x] Täglicher Lauf als ein Befehl (`scripts/lauf.sh`, `launchd`-Vorlage)
 - [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)
 - [x] Vorgangssuche mit Zeitachse (`docs/suche.html`)
 - [x] Herkunft jeder Aussage gekennzeichnet (Beleg · Regelbasiert · KI-Deutung)

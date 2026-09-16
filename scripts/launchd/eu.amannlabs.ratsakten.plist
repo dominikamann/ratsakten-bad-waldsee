@@ -32,7 +32,7 @@
   <array>
     <string>/bin/bash</string>
     <string>-lc</string>
-    <string>/Users/dominikamannprivat/Documents/AmannLabs/ratsakten-bad-waldsee/scripts/wochenlauf.sh</string>
+    <string>/Users/dominikamannprivat/Documents/AmannLabs/ratsakten-bad-waldsee/scripts/lauf.sh</string>
   </array>
 
   <!-- Ohne Weekday-Schluessel feuert launchd jeden Tag zur genannten Zeit. -->

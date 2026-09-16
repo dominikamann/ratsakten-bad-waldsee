@@ -6,7 +6,7 @@ name: Prüfung
 #
 # Bewusst OHNE Abruf des Ratsinformationssystems: Dessen Server beantwortet
 # Anfragen aus Rechenzentrumsnetzen mit HTTP 503. Das Holen der Daten geschieht
-# deshalb lokal über scripts/wochenlauf.sh — die Beschränkung wird nicht umgangen.
+# deshalb lokal über scripts/lauf.sh — die Beschränkung wird nicht umgangen.
 on:
   push:
     branches: [main]

@@ -218,7 +218,7 @@ def main() -> None:
     t.append(fuss(ende=False))
 
     # --- Die Tagesmarke beim Lesen nachfuehren -------------------------------
-    # Die Seite ist statisch: Gebaut wird sie beim Wochenlauf, gelesen
+    # Die Seite ist statisch: Gebaut wird sie beim Lauf, gelesen
     # vielleicht drei Tage spaeter. Ohne dieses Skript stuende die Marke auf
     # dem Tag des Laufs — als Stand korrekt bezeichnet, aber eben nicht heute.
     #
@@ -226,7 +226,7 @@ def main() -> None:
     # stehen und sagt die Wahrheit. Mit JavaScript wandert sie an den
     # heutigen Tag und heisst dann auch so. Die Zustandsangaben der Eintraege
     # ruehrt es nicht an — ob zu einer Sitzung eine Ausgabe vorliegt, weiss
-    # nur der Wochenlauf, nicht der Browser.
+    # nur der Lauf, nicht der Browser.
     t.append("""<script>
 (function () {
   var marke = document.getElementById("heute");

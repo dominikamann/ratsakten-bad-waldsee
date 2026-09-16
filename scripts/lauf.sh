@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 #
-# Wochenlauf — holt nach, was seit der letzten Ausgabe erschienen ist, baut alle
-# Dokumente neu und veroeffentlicht das Ergebnis.
+# Lauf — holt nach, was seit dem letzten Mal erschienen ist, baut alle Dokumente
+# neu und veroeffentlicht das Ergebnis.
+#
+# Hiess bis September 2026 „wochenlauf.sh". Der Lauf findet seit der Umstellung
+# taeglich statt, weil die Stadt unregelmaessig veroeffentlicht — die Ausgabe
+# bleibt die Wochenausgabe und waechst taeglich mit. Der Name nennt deshalb
+# keine Haeufigkeit mehr; die steht in scripts/launchd/, wo sie hingehoert.
 #
 # Laeuft bewusst lokal und nicht auf einem GitHub-Runner: Das
 # Ratsinformationssystem beantwortet Anfragen aus Rechenzentrumsnetzen mit
 # HTTP 503. Von einem privaten Anschluss aus antwortet es normal. Diese
 # Beschraenkung wird nicht umgangen.
 #
-#   ./scripts/wochenlauf.sh              # holen, bauen, committen, pushen
-#   ./scripts/wochenlauf.sh --trocken    # nur holen und bauen, nichts committen
+#   ./scripts/lauf.sh              # holen, bauen, committen, pushen
+#   ./scripts/lauf.sh --trocken    # nur holen und bauen, nichts committen
 #
 set -euo pipefail
 

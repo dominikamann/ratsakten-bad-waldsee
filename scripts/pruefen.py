@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prüfung — kontrolliert das erzeugte Ergebnis, bevor es veröffentlicht wird.
 
-Läuft am Ende des Wochenlaufs und zusätzlich bei jedem Push auf GitHub. Findet
+Läuft am Ende des Laufs und zusätzlich bei jedem Push auf GitHub. Findet
 sie einen Fehler, endet sie mit einem Fehlercode und der Lauf bricht ab.
 
 Geprüft wird:
