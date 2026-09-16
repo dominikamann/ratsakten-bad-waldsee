@@ -86,6 +86,11 @@ ul.beschluesse .erg{
 }
 /* Nicht einstimmig ist bemerkenswert, aber kein Fehler — Infofarbe, kein Alarm. */
 ul.beschluesse .erg.split{color:var(--s1)}
+/* Das Archiv fasst eine ganze Woche in einer Zeile zusammen — Sitzungen,
+   Themen, Beschluesse, fehlende Protokolle. Das sind bis zu 62 Zeichen und
+   passt auf 320 px nicht in eine Zeile. Abstimmungsverhaeltnisse duerfen
+   nicht umbrechen ("25 : 0 : 1"), diese Aufzaehlung schon. */
+ul.beschluesse .erg.weit{white-space:normal}
 
 /* ---------- Zwischenstand einer laufenden Woche ----------
    Zurueckhaltend gehalten: Es ist ein Hinweis auf den Stand, keine Warnung.
@@ -248,6 +253,10 @@ ol.agenda .art{
 /* ---------- Kolophon / Fuß ---------- */
 .kolophon{padding:46px 0 40px}
 .kolophon + .kolophon{padding-top:18px}
+/* Im Archiv folgt die Jahrgangsliste unmittelbar auf den Kopf. Die 46 px sind
+   fuer Bloecke gedacht, die nach dem Haupttext kommen — hier schoben sie das
+   Einzige, weswegen man die Seite aufruft, ohne Grund nach unten. */
+header + .kolophon{padding-top:20px}
 .kolophon h3{margin-top:0}
 .kolophon p,.kolophon li{font-size:15px;color:var(--ink-2)}
 .kolophon ul{padding-left:20px;margin:0 0 16px}

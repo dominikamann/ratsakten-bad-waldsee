@@ -1551,6 +1551,7 @@ def archiv_bauen(register: dict) -> str:
     ges_a = sum(len(register[j]) for j in jahre)
     ges_b = sum(a["beschluesse"] for j in jahre for a in register[j].values())
     ges_s = sum(a["sitzungen"] for j in jahre for a in register[j].values())
+    ges_t = sum(a.get("themen", 0) for j in jahre for a in register[j].values())
 
     t = [kopf("Archiv · Ratsakten Bad Waldsee", hoch="../", hier="archiv",
           beschreibung="Alle bisher erschienenen Wochenausgaben der "
@@ -1566,17 +1567,10 @@ def archiv_bauen(register: dict) -> str:
     <span><b>Jahrgänge</b> {', '.join(jahre)}</span>
     <span><b>Ausgaben</b> {ges_a}</span>
     <span><b>Sitzungen</b> {ges_s}</span>
+    <span><b>Themen</b> {ges_t}</span>
     <span><b>Beschlüsse</b> {ges_b}</span>
   </div>
-</header>
-<section class="kolophon">
-  <p class="rubrik">Übersicht</p>
-  <h3>Erscheinungsweise</h3>
-  <p>Es erscheint eine Ausgabe für jede Kalenderwoche, in der mindestens eine Sitzung
-  stattgefunden hat, sowie stets eine Ausgabe für die laufende Woche. Dazwischenliegende
-  sitzungsfreie Wochen bekommen keine Ausgabe — deshalb ist die Nummerierung
-  lückenhaft.</p>
-</section>""")
+</header>""")
 
     for jahr in jahre:
         ausgaben = register[jahr]
@@ -1587,20 +1581,44 @@ def archiv_bauen(register: dict) -> str:
   <ul class="beschluesse">""")
         for kw in sorted(ausgaben, key=int, reverse=True):
             a = ausgaben[kw]
+            # Was die Woche umfasst, in einer Zeile: wie viele Gremien getagt
+            # haben, worueber, und was davon beschlossen wurde. Bisher stand
+            # hier nur die Zahl der Beschluesse; Wochen ohne Beschluss trugen
+            # das blosse „ohne Beschluss" und sahen leer aus, obwohl in KW
+            # 38/2026 fuenf Themen beraten wurden.
             teile = []
+            if a["sitzungen"]:
+                teile.append(f"{a['sitzungen']} "
+                             f"{'Sitzung' if a['sitzungen'] == 1 else 'Sitzungen'}")
+            if a.get("themen"):
+                teile.append(f"{a['themen']} "
+                             f"{'Thema' if a['themen'] == 1 else 'Themen'}")
             if a["beschluesse"]:
                 teile.append(f"{a['beschluesse']} "
                              f"{'Beschluss' if a['beschluesse'] == 1 else 'Beschlüsse'}")
+            elif a["sitzungen"]:
+                teile.append("ohne Beschluss")
             if a["ohne_protokoll"]:
                 teile.append(f"{a['ohne_protokoll']} ohne Protokoll")
             gremien = " · ".join(a["gremien"]) if a["gremien"] else "keine Sitzung"
             t.append(f"""    <li><span class="sache">
       <a class="doc" href="./{jahr}/kw{int(kw):02d}.html">KW {int(kw)} / {jahr}</a>
       <span class="sv">{e(a['zeitraum'])} &middot; {e(gremien)}</span></span>
-      <span class="erg">{e(' · '.join(teile)) or 'ohne Beschluss'}</span></li>""")
+      <span class="erg weit">{e(' · '.join(teile)) or 'ohne Beschluss'}</span></li>""")
         t.append("  </ul>\n</section>")
 
+    # Die Erscheinungsweise erklaert eine Luecke in der Nummerierung — eine
+    # Frage, die erst aufkommt, wenn man die Liste gesehen hat. Ueber der Liste
+    # stand sie einem Leser im Weg, der nur zu seiner Ausgabe wollte.
     t.append(f"""
+<section class="kolophon">
+  <p class="rubrik">Übersicht</p>
+  <h3>Erscheinungsweise</h3>
+  <p>Es erscheint eine Ausgabe für jede Kalenderwoche, in der mindestens eine Sitzung
+  stattgefunden hat, sowie stets eine Ausgabe für die laufende Woche. Dazwischenliegende
+  sitzungsfreie Wochen bekommen keine Ausgabe — deshalb ist die Nummerierung
+  lückenhaft.</p>
+</section>
 <section class="kolophon" style="border-bottom:none">
 {DISCLAIMER}
   <p class="note"><a class="doc" href="../index.html">Zur Startseite</a></p>
@@ -1666,6 +1684,11 @@ def main() -> None:
                 "von_iso": w["von"].isoformat(),
                 "bis_iso": w["bis"].isoformat(),
                 "sitzungen": len(w["sitzungen"]),
+                # Die Tagesordnungspunkte der Woche. Im Archiv stand bisher
+                # nur die Zahl der Beschluesse — eine Ausgabe ohne Beschluss
+                # sah dort leer aus, obwohl beraten wurde. Themen gibt es auch
+                # ohne Protokoll, Beschluesse nur mit.
+                "themen": sum(len(s["tops"]) for s in w["sitzungen"]),
                 "beschluesse": len(w["beschluesse"]),
                 "ohne_protokoll": len(w["blind"]),
                 # Getrennt gefuehrt, damit Startseite und Archiv eine frische

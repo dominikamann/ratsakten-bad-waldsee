@@ -12,6 +12,7 @@
    "laufend": false,
    "ohne_protokoll": 4,
    "sitzungen": 4,
+   "themen": 0,
    "von_iso": "2024-01-15",
    "zeitraum": "15.01.–21.01.2024"
   },
@@ -30,6 +31,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 10,
    "von_iso": "2024-01-22",
    "zeitraum": "22.01.–28.01.2024"
   },
@@ -45,6 +47,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 8,
    "von_iso": "2024-01-29",
    "zeitraum": "29.01.–04.02.2024"
   },
@@ -60,6 +63,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2024-02-05",
    "zeitraum": "05.02.–25.02.2024"
   },
@@ -80,6 +84,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 19,
    "von_iso": "2024-02-26",
    "zeitraum": "26.02.–03.03.2024"
   },
@@ -98,6 +103,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 4,
+   "themen": 11,
    "von_iso": "2024-03-04",
    "zeitraum": "04.03.–10.03.2024"
   },
@@ -113,6 +119,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2024-03-11",
    "zeitraum": "11.03.–17.03.2024"
   },
@@ -132,6 +139,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 6,
    "von_iso": "2024-03-18",
    "zeitraum": "18.03.–24.03.2024"
   },
@@ -147,6 +155,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2024-03-25",
    "zeitraum": "25.03.–14.04.2024"
   },
@@ -168,6 +177,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 3,
+   "themen": 8,
    "von_iso": "2024-04-15",
    "zeitraum": "15.04.–21.04.2024"
   },
@@ -190,6 +200,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 3,
+   "themen": 22,
    "von_iso": "2024-04-22",
    "zeitraum": "22.04.–28.04.2024"
   },
@@ -206,6 +217,7 @@
    "laufend": false,
    "ohne_protokoll": 3,
    "sitzungen": 3,
+   "themen": 0,
    "von_iso": "2024-04-29",
    "zeitraum": "29.04.–12.05.2024"
   },
@@ -224,6 +236,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 12,
    "von_iso": "2024-05-13",
    "zeitraum": "13.05.–19.05.2024"
   },
@@ -239,6 +252,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 15,
    "von_iso": "2024-05-20",
    "zeitraum": "20.05.–09.06.2024"
   },
@@ -254,6 +268,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2024-06-10",
    "zeitraum": "10.06.–16.06.2024"
   },
@@ -270,6 +285,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 13,
    "von_iso": "2024-06-17",
    "zeitraum": "17.06.–23.06.2024"
   },
@@ -285,6 +301,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2024-06-24",
    "zeitraum": "24.06.–07.07.2024"
   },
@@ -303,6 +320,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 14,
    "von_iso": "2024-07-08",
    "zeitraum": "08.07.–14.07.2024"
   },
@@ -321,6 +339,7 @@
    "laufend": false,
    "ohne_protokoll": 4,
    "sitzungen": 5,
+   "themen": 10,
    "von_iso": "2024-07-15",
    "zeitraum": "15.07.–21.07.2024"
   },
@@ -336,6 +355,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2024-07-22",
    "zeitraum": "22.07.–04.08.2024"
   },
@@ -351,6 +371,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 11,
    "von_iso": "2024-08-05",
    "zeitraum": "05.08.–11.08.2024"
   },
@@ -366,6 +387,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2024-08-12",
    "zeitraum": "12.08.–15.09.2024"
   },
@@ -388,6 +410,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 11,
    "von_iso": "2024-09-16",
    "zeitraum": "16.09.–22.09.2024"
   },
@@ -410,6 +433,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 15,
    "von_iso": "2024-09-23",
    "zeitraum": "23.09.–29.09.2024"
   },
@@ -428,6 +452,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 3,
    "von_iso": "2024-09-30",
    "zeitraum": "30.09.–06.10.2024"
   },
@@ -445,6 +470,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 6,
    "von_iso": "2024-10-07",
    "zeitraum": "07.10.–13.10.2024"
   },
@@ -461,6 +487,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 9,
    "von_iso": "2024-10-14",
    "zeitraum": "14.10.–20.10.2024"
   },
@@ -476,6 +503,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 11,
    "von_iso": "2024-10-21",
    "zeitraum": "21.10.–10.11.2024"
   },
@@ -491,6 +519,7 @@
    "laufend": false,
    "ohne_protokoll": 3,
    "sitzungen": 3,
+   "themen": 0,
    "von_iso": "2024-11-11",
    "zeitraum": "11.11.–24.11.2024"
   },
@@ -511,6 +540,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 15,
    "von_iso": "2024-11-25",
    "zeitraum": "25.11.–01.12.2024"
   },
@@ -532,6 +562,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 15,
    "von_iso": "2024-12-02",
    "zeitraum": "02.12.–08.12.2024"
   },
@@ -547,6 +578,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 16,
    "von_iso": "2024-12-09",
    "zeitraum": "09.12.–15.12.2024"
   },
@@ -562,6 +594,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2024-12-16",
    "zeitraum": "16.12.–22.12.2024"
   }
@@ -579,6 +612,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2025-01-13",
    "zeitraum": "13.01.–19.01.2025"
   },
@@ -594,6 +628,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2025-01-20",
    "zeitraum": "20.01.–26.01.2025"
   },
@@ -610,6 +645,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 11,
    "von_iso": "2025-01-27",
    "zeitraum": "27.01.–02.02.2025"
   },
@@ -626,6 +662,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 17,
    "von_iso": "2025-02-03",
    "zeitraum": "03.02.–09.02.2025"
   },
@@ -641,6 +678,7 @@
    "laufend": false,
    "ohne_protokoll": 3,
    "sitzungen": 3,
+   "themen": 0,
    "von_iso": "2025-02-10",
    "zeitraum": "10.02.–23.02.2025"
   },
@@ -656,6 +694,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2025-02-24",
    "zeitraum": "24.02.–16.03.2025"
   },
@@ -671,6 +710,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2025-03-17",
    "zeitraum": "17.03.–23.03.2025"
   },
@@ -693,6 +733,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 12,
    "von_iso": "2025-03-24",
    "zeitraum": "24.03.–30.03.2025"
   },
@@ -709,6 +750,7 @@
    "laufend": false,
    "ohne_protokoll": 3,
    "sitzungen": 3,
+   "themen": 4,
    "von_iso": "2025-03-31",
    "zeitraum": "31.03.–06.04.2025"
   },
@@ -729,6 +771,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 13,
    "von_iso": "2025-04-07",
    "zeitraum": "07.04.–13.04.2025"
   },
@@ -749,6 +792,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 11,
    "von_iso": "2025-04-14",
    "zeitraum": "14.04.–04.05.2025"
   },
@@ -764,6 +808,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2025-05-05",
    "zeitraum": "05.05.–11.05.2025"
   },
@@ -779,6 +824,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2025-05-12",
    "zeitraum": "12.05.–18.05.2025"
   },
@@ -794,6 +840,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2025-05-19",
    "zeitraum": "19.05.–25.05.2025"
   },
@@ -809,6 +856,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 12,
    "von_iso": "2025-05-26",
    "zeitraum": "26.05.–01.06.2025"
   },
@@ -827,6 +875,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 7,
    "von_iso": "2025-06-02",
    "zeitraum": "02.06.–29.06.2025"
   },
@@ -842,6 +891,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2025-06-30",
    "zeitraum": "30.06.–06.07.2025"
   },
@@ -858,6 +908,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 13,
    "von_iso": "2025-07-07",
    "zeitraum": "07.07.–13.07.2025"
   },
@@ -874,6 +925,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2025-07-14",
    "zeitraum": "14.07.–20.07.2025"
   },
@@ -890,6 +942,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 17,
    "von_iso": "2025-07-21",
    "zeitraum": "21.07.–27.07.2025"
   },
@@ -908,6 +961,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 4,
    "von_iso": "2025-07-28",
    "zeitraum": "28.07.–03.08.2025"
   },
@@ -923,6 +977,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2025-08-04",
    "zeitraum": "04.08.–14.09.2025"
   },
@@ -941,6 +996,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 10,
    "von_iso": "2025-09-15",
    "zeitraum": "15.09.–21.09.2025"
   },
@@ -956,6 +1012,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2025-09-22",
    "zeitraum": "22.09.–28.09.2025"
   },
@@ -973,6 +1030,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 4,
+   "themen": 17,
    "von_iso": "2025-09-29",
    "zeitraum": "29.09.–05.10.2025"
   },
@@ -992,6 +1050,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 8,
    "von_iso": "2025-10-06",
    "zeitraum": "06.10.–12.10.2025"
   },
@@ -1007,6 +1066,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2025-10-13",
    "zeitraum": "13.10.–19.10.2025"
   },
@@ -1027,6 +1087,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 19,
    "von_iso": "2025-10-20",
    "zeitraum": "20.10.–26.10.2025"
   },
@@ -1042,6 +1103,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2025-10-27",
    "zeitraum": "27.10.–09.11.2025"
   },
@@ -1057,6 +1119,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 12,
    "von_iso": "2025-11-10",
    "zeitraum": "10.11.–16.11.2025"
   },
@@ -1072,6 +1135,7 @@
    "laufend": false,
    "ohne_protokoll": 4,
    "sitzungen": 4,
+   "themen": 0,
    "von_iso": "2025-11-17",
    "zeitraum": "17.11.–23.11.2025"
   },
@@ -1087,6 +1151,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 6,
    "von_iso": "2025-11-24",
    "zeitraum": "24.11.–30.11.2025"
   },
@@ -1106,6 +1171,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 14,
    "von_iso": "2025-12-01",
    "zeitraum": "01.12.–07.12.2025"
   },
@@ -1123,6 +1189,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 9,
    "von_iso": "2025-12-08",
    "zeitraum": "08.12.–14.12.2025"
   },
@@ -1138,6 +1205,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2025-12-15",
    "zeitraum": "15.12.–21.12.2025"
   }
@@ -1155,6 +1223,7 @@
    "laufend": false,
    "ohne_protokoll": 4,
    "sitzungen": 4,
+   "themen": 0,
    "von_iso": "2026-01-12",
    "zeitraum": "12.01.–18.01.2026"
   },
@@ -1173,6 +1242,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 11,
    "von_iso": "2026-01-19",
    "zeitraum": "19.01.–25.01.2026"
   },
@@ -1193,6 +1263,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 22,
    "von_iso": "2026-01-26",
    "zeitraum": "26.01.–08.02.2026"
   },
@@ -1208,6 +1279,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2026-02-09",
    "zeitraum": "09.02.–01.03.2026"
   },
@@ -1228,6 +1300,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 2,
+   "themen": 12,
    "von_iso": "2026-03-02",
    "zeitraum": "02.03.–08.03.2026"
   },
@@ -1243,6 +1316,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2026-03-09",
    "zeitraum": "09.03.–15.03.2026"
   },
@@ -1258,6 +1332,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2026-03-16",
    "zeitraum": "16.03.–22.03.2026"
   },
@@ -1278,6 +1353,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 14,
    "von_iso": "2026-03-23",
    "zeitraum": "23.03.–29.03.2026"
   },
@@ -1302,6 +1378,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 3,
+   "themen": 18,
    "von_iso": "2026-03-30",
    "zeitraum": "30.03.–19.04.2026"
   },
@@ -1317,6 +1394,7 @@
    "laufend": false,
    "ohne_protokoll": 3,
    "sitzungen": 3,
+   "themen": 0,
    "von_iso": "2026-04-20",
    "zeitraum": "20.04.–26.04.2026"
   },
@@ -1335,6 +1413,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 7,
    "von_iso": "2026-04-27",
    "zeitraum": "27.04.–03.05.2026"
   },
@@ -1350,6 +1429,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 14,
    "von_iso": "2026-05-04",
    "zeitraum": "04.05.–17.05.2026"
   },
@@ -1365,6 +1445,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2026-05-18",
    "zeitraum": "18.05.–24.05.2026"
   },
@@ -1382,6 +1463,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 5,
    "von_iso": "2026-05-25",
    "zeitraum": "25.05.–14.06.2026"
   },
@@ -1398,6 +1480,7 @@
    "laufend": false,
    "ohne_protokoll": 3,
    "sitzungen": 3,
+   "themen": 0,
    "von_iso": "2026-06-15",
    "zeitraum": "15.06.–28.06.2026"
   },
@@ -1414,6 +1497,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 3,
+   "themen": 9,
    "von_iso": "2026-06-29",
    "zeitraum": "29.06.–05.07.2026"
   },
@@ -1435,6 +1519,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 10,
    "von_iso": "2026-07-06",
    "zeitraum": "06.07.–12.07.2026"
   },
@@ -1457,6 +1542,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
+   "themen": 18,
    "von_iso": "2026-07-13",
    "zeitraum": "13.07.–26.07.2026"
   },
@@ -1472,6 +1558,7 @@
    "laufend": false,
    "ohne_protokoll": 2,
    "sitzungen": 2,
+   "themen": 0,
    "von_iso": "2026-07-27",
    "zeitraum": "27.07.–02.08.2026"
   },
@@ -1487,6 +1574,7 @@
    "laufend": false,
    "ohne_protokoll": 1,
    "sitzungen": 1,
+   "themen": 0,
    "von_iso": "2026-08-03",
    "zeitraum": "03.08.–09.08.2026"
   },
@@ -1500,6 +1588,7 @@
    "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 0,
+   "themen": 0,
    "von_iso": "2026-08-10",
    "zeitraum": "10.08.–11.09.2026"
   },
@@ -1515,6 +1604,7 @@
    "laufend": true,
    "ohne_protokoll": 0,
    "sitzungen": 1,
+   "themen": 5,
    "von_iso": "2026-09-12",
    "zeitraum": "12.09.–16.09.2026"
   }
