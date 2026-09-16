@@ -326,7 +326,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 # Daten holen und auswerten
 uv run --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 uv run --with requests                       python scripts/02_protokolle_laden.py
-uv run --with requests                       python scripts/15_vorlagen_laden.py
+uv run --with requests --with pypdf          python scripts/15_vorlagen_laden.py
 uv run --with pypdf                          python scripts/03_auswerten.py
 
 # Seiten bauen

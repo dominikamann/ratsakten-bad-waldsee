@@ -22,7 +22,7 @@ jede Woche mehr werden, kann niemand mehr von Hand nachsehen.
 
 Ergebnis: data/vorlagen/SV-000-JJJJ.pdf
 
-    uv run --with requests python scripts/15_vorlagen_laden.py
+    uv run --with requests --with pypdf python scripts/15_vorlagen_laden.py
 """
 from __future__ import annotations
 
