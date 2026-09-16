@@ -258,3 +258,55 @@ def stichtag_vorgabe() -> str:
         for s in sitzungen
     )
     return (heute - dt.timedelta(days=1)).isoformat() if noch_offen else heute.isoformat()
+
+
+# --- Vermerke zu Punkten ohne Beschluss --------------------------------------
+
+# Was ein Beschlussprotokoll zu einem Punkt notiert, zu dem nichts beschlossen
+# wurde. Nur diese Wendungen werden erkannt — erkannt wird, was dasteht, und
+# nichts anderes. Eine freie Uebernahme des Textes zwischen zwei Punkten
+# brachte sonst Bruchstuecke des naechsten Beschlusses mit.
+VERMERKE = (
+    "Ohne Beschlussfassung",
+    "Keine Punkte seitens der Verwaltung",
+    "Keine Bekanntgaben",
+    "Keine Anfragen",
+    "Zur Kenntnis genommen",
+    "Kenntnis genommen",
+    "Vertagt",
+    "Abgesetzt",
+)
+
+
+def vermerk_lesen(protokoll: str, titel: str) -> str:
+    """Den Protokollvermerk zu einem Tagesordnungspunkt ohne Beschluss.
+
+    Gesucht wird der Titel im Protokoll; unmittelbar danach steht, was das
+    Gremium zu diesem Punkt festgehalten hat — „Ohne Beschlussfassung", „Keine
+    Punkte seitens der Verwaltung". Gibt es keinen der bekannten Vermerke,
+    kommt ein leerer String zurueck: Lieber keine Angabe als eine geratene.
+
+    Der Titel wird beim Suchen entschaerft, weil er im Protokoll umbrochen
+    sein kann — verglichen wird ueber die ersten Woerter.
+    """
+    if not protokoll or not titel:
+        return ""
+    flach = re.sub(r"\s+", " ", protokoll)
+    anfang = " ".join(re.sub(r"\s+", " ", titel).split()[:6])
+    i = flach.find(anfang)
+    if i < 0:
+        return ""
+    # Nur das unmittelbar Folgende betrachten: Weiter hinten beginnt der
+    # naechste Punkt, und dessen Beschluss gehoert nicht hierher.
+    fenster = flach[i + len(anfang): i + len(anfang) + 160]
+    # Den **fruehesten** Treffer nehmen, nicht den ersten der Liste. Sonst
+    # bekam „Informationen des Oberbuergermeisters" den Vermerk des naechsten
+    # Punktes: Im Fenster stand erst „Keine Punkte seitens der Verwaltung",
+    # dann „Ohne Beschlussfassung" — und gemeldet wurde, was in VERMERKE
+    # zufaellig oben stand.
+    treffer = []
+    for v in VERMERKE:
+        m = re.search(rf"\b{re.escape(v)}", fenster, re.IGNORECASE)
+        if m:
+            treffer.append((m.start(), v))
+    return min(treffer)[1] if treffer else ""

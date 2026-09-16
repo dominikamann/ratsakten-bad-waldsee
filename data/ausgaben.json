@@ -1507,7 +1507,7 @@
    "abschluesse": {},
    "ausstehend": 1,
    "beschluesse": 0,
-   "bis_iso": "2026-09-15",
+   "bis_iso": "2026-09-16",
    "einordnung": false,
    "gremien": [
     "VA"
@@ -1516,7 +1516,7 @@
    "ohne_protokoll": 0,
    "sitzungen": 1,
    "von_iso": "2026-09-12",
-   "zeitraum": "12.09.–15.09.2026"
+   "zeitraum": "12.09.–16.09.2026"
   }
  }
 }

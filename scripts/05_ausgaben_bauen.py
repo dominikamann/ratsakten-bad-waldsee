@@ -34,7 +34,7 @@ from begriffe import markieren
 from seite import fuss, kopf
 from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
                       haeufigkeiten_laden, leertrennung_reparieren,
-                      trennung_reparieren, wortschatz_laden)
+                      trennung_reparieren, vermerk_lesen, wortschatz_laden)
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -423,6 +423,22 @@ def einordnungen_laden() -> dict:
 
 # ------------------------------------------------------------------ Sammeln
 
+def protokolltext(sitzung: dict, protokolle: dict) -> str:
+    """Den Text des Beschlussprotokolls einer Sitzung, falls vorhanden.
+
+    Dieselbe Zuordnung wie beim Auslesen der Beschluesse: Der Dateiname traegt
+    Datum und Gremium. Mehrere Dateien zu einer Sitzung werden aneinander
+    gehaengt — welche den gesuchten Punkt enthaelt, ist nicht vorhersehbar.
+    """
+    if not sitzung.get("protokolle"):
+        return ""
+    tag = sitzung["start"][:10]
+    erwartet = f"{tag}_{dateiname(sitzung['titel'])}"
+    teile = [pdf_text(pfad) for pfad in protokolle.get(tag, [])
+             if pfad.stem == erwartet or pfad.stem.startswith(erwartet + "_")]
+    return "\n".join(teile)
+
+
 def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[int, dict]:
     quelle = DATEN / "sitzungen.json"
     if not quelle.exists():  # HINWEIS_01
@@ -442,6 +458,18 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
     for p in punkte:
         if p.get("dokumente"):
             dokumente_je_punkt[(p["datum"], p["vorlage"] or "")] = p["dokumente"]
+
+    # Was an einem Tagesordnungspunkt haengt, auch wenn zu ihm nichts
+    # beschlossen wurde: die Vorlagennummer und die Unterlagen. Gerade dort
+    # steckt der Inhalt — „Information ueber die Fortschreibung der
+    # Elternbeitraege" hat eine Sitzungsvorlage, aber keinen Beschluss.
+    punkt_infos: dict[tuple[str, str], dict] = {}
+    for p in punkte:
+        if p.get("titel"):
+            punkt_infos[(p["datum"], p["titel"].strip())] = {
+                "vorlage": p.get("vorlage") or "",
+                "dokumente": p.get("dokumente") or [],
+            }
 
     termine_je_vorlage: dict[str, list[str]] = collections.defaultdict(list)
     for p in punkte:
@@ -474,6 +502,8 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
         kw = tag.isocalendar()[1]
         w = wochen[kw]
         name = gremium(s["titel"])
+        tag_iso = s["start"][:10]
+        ptext = protokolltext(s, protokolle)
         w["sitzungen"].append({"datum": tag, "gremium": name, "kuerzel": kuerzel(name),
                                "protokoll": bool(s["protokolle"]),
                                # Die vollstaendige Tagesordnung mitfuehren: Die
@@ -483,7 +513,22 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
                                # beraten wurde, etwa die Elternbeitraege in den
                                # Kindertagesstaetten, war nirgends zu sehen.
                                "tops": [str(x) for x in (s.get("tops") or [])],
-                               "url": s.get("url") or ""})
+                               "url": s.get("url") or "",
+                               # Der Protokolltext wird fuer die Vermerke zu
+                               # Punkten ohne Beschluss gebraucht.
+                               "protokolltext": ptext,
+                               # Zu jedem Punkt, was ueber ihn bekannt ist:
+                               # Vorlagennummer und Unterlagen aus der
+                               # Tagesordnung, Vermerk aus dem Protokoll.
+                               # Gerade bei Punkten ohne Beschluss ist das
+                               # alles, was es gibt — und es ist mehr als
+                               # nichts.
+                               "punkte": [
+                                   {"titel": str(x).strip(),
+                                    **punkt_infos.get((tag_iso, str(x).strip()),
+                                                      {"vorlage": "", "dokumente": []}),
+                                    "vermerk": vermerk_lesen(ptext, str(x))}
+                                   for x in (s.get("tops") or [])]})
         if not s["protokolle"]:
             w["blind"].append({"datum": tag, "gremium": name})
             continue
@@ -1043,17 +1088,41 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             sachlich = [x for x in offen_tops if not FORMALIA.match(x.strip())]
             formal = [x for x in offen_tops if FORMALIA.match(x.strip())]
             if sachlich:
-                zeilen_tops = "".join(
-                    f"      <li>{markieren(e(x), erklaert)}</li>\n" for x in sachlich)
+                # Zu jedem Punkt zeigen, was daran haengt: der Vermerk aus dem
+                # Protokoll, die Vorlagennummer und die Unterlagen. Ein blosser
+                # Titel sagt, dass etwas Thema war; erst das Uebrige sagt, wo
+                # man nachlesen kann, worum es ging.
+                infos = {x["titel"]: x for x in (sitzung or {}).get("punkte", [])}
+                zeilen_tops = ""
+                for x in sachlich:
+                    d = infos.get(x.strip(), {})
+                    zusatz = []
+                    if d.get("vorlage"):
+                        zusatz.append(f'<span class="sv">{e(d["vorlage"])}</span>')
+                    if d.get("dokumente"):
+                        zusatz.append("".join(
+                            f'<span class="unterlagen"><a href="{k["url"]}" '
+                            f'target="_blank" rel="noopener noreferrer">'
+                            f'{e(k["titel"])}</a></span>' for k in d["dokumente"]))
+                    vermerk = (f'<span class="erg">{e(d["vermerk"])}</span>'
+                               if d.get("vermerk") else "")
+                    zeilen_tops += (
+                        f'      <li><span class="sache">{markieren(e(x), erklaert)}'
+                        f'{"".join(zusatz)}</span>{vermerk}</li>\n')
+                def mit_vermerk(x: str) -> str:
+                    v = infos.get(x.strip(), {}).get("vermerk", "")
+                    # Den Vermerk so wiedergeben, wie er im Protokoll steht.
+                    return f"{e(x)} — {e(v)}" if v else e(x)
+
                 nachsatz = ("" if not formal else
                             f'      <p class="fussnote">Dazu die wiederkehrenden Punkte '
-                            f'{", ".join(e(x) for x in formal)}.</p>\n')
+                            f'{", ".join(mit_vermerk(x) for x in formal)}.</p>\n')
                 t.append(f"""    <details class="mehr" id="{marke}-tops" open>
       <summary>{len(sachlich)} {'weiteres Thema' if len(sachlich) == 1 else 'weitere Themen'} ohne Beschluss</summary>
       <ol class="agenda">
 {zeilen_tops}      </ol>
-{nachsatz}      <p class="fussnote">Beraten, aber nicht beschlossen — das Protokoll nennt
-      den Grund nicht.</p>
+{nachsatz}      <p class="fussnote">Was das Protokoll zu diesen Punkten vermerkt, steht
+      jeweils dahinter. Warum nicht beschlossen wurde, hält es nicht fest.</p>
     </details>""")
             t.append("  </div>\n</article>")
 
