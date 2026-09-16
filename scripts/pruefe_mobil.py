@@ -18,8 +18,9 @@ DOCS = Path(__file__).resolve().parent.parent / "docs"
 # Wie viele Verweise die Markenleiste traegt, stand hier als 7 fest verdrahtet
 # und schlug fehl, sobald ein Menuepunkt dazukam. Gezaehlt wird jetzt dieselbe
 # Quelle, aus der die Seiten die Leiste bauen.
-ERWARTETE_LINKS = len(json.loads(
-    (Path(__file__).resolve().parent / "navigation.json").read_text(encoding="utf-8")))
+def erwartete_links() -> int:
+    return len(json.loads((Path(__file__).resolve().parent
+                           / "navigation.json").read_text(encoding="utf-8")))
 
 
 def neueste_ausgabe() -> str:
@@ -41,9 +42,25 @@ def neuester_report() -> str:
     return f"report/{max(p.name for p in (DOCS / 'report').glob('*.html'))}"
 
 
-SEITEN = ["index.html", "termine.html", "suche.html", "befunde.html",
-          "gremien.html", "themen/index.html", "themen/drei-eichen-vi.html",
-          "ausgaben/index.html", neueste_ausgabe(), neuester_report()]
+def seiten() -> list[str]:
+    """Die zu pruefenden Seiten — erst beim Lauf ermittelt, nicht beim Import.
+
+    Standen sie auf Modulebene, schlug ein fehlendes `data/ausgaben.json` oder
+    ein leeres `docs/report/` schon beim Laden zu und beendete das Skript mit
+    Code 1. `wochenlauf.sh` haelt Code 2 fuer „Browser nicht bereit" und alles
+    andere fuer einen Befund an den Seiten — eine fehlende Datei brach damit
+    die Veroeffentlichung ab, mit einer Meldung ueber die Browserpruefung.
+    """
+    fest = ["index.html", "termine.html", "suche.html", "befunde.html",
+            "gremien.html", "themen/index.html", "themen/drei-eichen-vi.html",
+            "ausgaben/index.html"]
+    try:
+        return fest + [neueste_ausgabe(), neuester_report()]
+    except (OSError, ValueError, KeyError) as fehler:
+        print(f"   Pruefung nicht startklar: {fehler}", file=sys.stderr)
+        print("   Zuerst die Dokumente erzeugen (Schritte 05 und 04).",
+              file=sys.stderr)
+        raise SystemExit(2) from None
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -68,6 +85,8 @@ class Server(ThreadingHTTPServer):
 
 
 def main():
+    alle_seiten = seiten()
+    ERWARTETE_LINKS_N = erwartete_links()
     server = Server(("127.0.0.1", 0), partial(Handler, directory=str(DOCS)))
     Thread(target=server.serve_forever, daemon=True).start()
     origin = f"http://127.0.0.1:{server.server_port}"
@@ -95,7 +114,7 @@ def main():
                 page = context.new_page()
                 for width in (320, 390, 620, 621, 1024):
                     page.set_viewport_size({"width": width, "height": 844})
-                    for path in SEITEN:
+                    for path in alle_seiten:
                         # Ein zweiter Versuch, falls die Seite gerade neu
                         # geschrieben wird — das passiert, wenn direkt nach
                         # einem Bauflauf geprueft wird.
@@ -132,8 +151,8 @@ def main():
                         }""")
                         label = f"{engine.name} {width}px {path}"
                         assert result["scrollWidth"] <= result["width"] + 1, (label, result)
-                        assert len(result["links"]) == ERWARTETE_LINKS, (
-                            label, len(result["links"]), ERWARTETE_LINKS)
+                        assert len(result["links"]) == ERWARTETE_LINKS_N, (
+                            label, len(result["links"]), ERWARTETE_LINKS_N)
                         assert all(a["inside"] for a in result["links"]), (label, result)
                         if width <= 620:
                             assert all(a["height"] >= 44 for a in result["links"]), label
@@ -143,7 +162,7 @@ def main():
                         page.locator('.brandbar nav a').first.focus()
                         # Vom ersten zum letzten Verweis: ein Tastendruck
                         # weniger, als es Verweise gibt. Stand als 6 fest da.
-                        for _ in range(ERWARTETE_LINKS - 1):
+                        for _ in range(ERWARTETE_LINKS_N - 1):
                             # WebKit folgt unter macOS der Safari-Voreinstellung:
                             # Option-Tab nimmt Links in die Tab-Reihenfolge auf.
                             page.keyboard.press("Alt+Tab" if engine.name == "webkit"
@@ -165,7 +184,7 @@ def main():
                 for geraet in ("iPhone 13", "iPhone 14 Pro Max"):
                     handy = browser.new_context(**p.devices[geraet])
                     h = handy.new_page()
-                    for pfad in SEITEN:
+                    for pfad in alle_seiten:
                         h.goto(f"{origin}/{pfad}")
                         h.wait_for_timeout(400)
                         mass = h.evaluate("""() => ({

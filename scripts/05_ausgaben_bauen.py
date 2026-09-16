@@ -31,7 +31,7 @@ import re
 from pathlib import Path
 
 from begriffe import markieren
-from seite import fuss, kopf
+from seite import aktuelle_ausgabe_setzen, fuss, kopf
 from textwerk import (schwaerzen, pdf_text as roh_text, stichtag_vorgabe,
                       haeufigkeiten_laden, leertrennung_reparieren,
                       trennung_reparieren, vermerk_lesen, wortschatz_laden)
@@ -1511,12 +1511,24 @@ def main() -> None:
     jahre = ([args.jahr] if args.jahr
              else sorted({int(j) for j in register} | {dt.date.today().year}))
 
+    # Erst sammeln, dann rendern. Der Menuepunkt „Aktuelle Ausgabe" braucht
+    # sein Ziel, bevor die erste Seite geschrieben wird — das Register auf der
+    # Platte ist zu diesem Zeitpunkt noch das des letzten Laufs.
+    je_jahr: dict[int, dict] = {}
+    for jahr in jahre:
+        (AUSGABEN / str(jahr)).mkdir(parents=True, exist_ok=True)
+        register.setdefault(str(jahr), {})
+        je_jahr[jahr] = wochen_sammeln(jahr, args.bis, register[str(jahr)])
+
+    if any(je_jahr.values()):
+        j_neu = max(j for j, w in je_jahr.items() if w)
+        aktuelle_ausgabe_setzen(
+            f"ausgaben/{j_neu}/kw{max(je_jahr[j_neu]):02d}.html")
+
     neueste_kw = neuestes_jahr = None
     for jahr in jahre:
         ordner = AUSGABEN / str(jahr)
-        ordner.mkdir(parents=True, exist_ok=True)
-        register.setdefault(str(jahr), {})
-        wochen = wochen_sammeln(jahr, args.bis, register[str(jahr)])
+        wochen = je_jahr[jahr]
 
         for kw, w in wochen.items():
             schluessel = f"{jahr}-kw{kw:02d}"

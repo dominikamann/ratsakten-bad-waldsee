@@ -302,7 +302,9 @@ def zeitleiste(register: dict, stichtag: str) -> str:
     Alle vier Stufen halten mindestens 3:1 Kontrast zum Seitengrund, damit auch
     eine einzelne Sitzung noch als anklickbare Flaeche erkennbar ist.
     """
-    heute = dt.date.fromisoformat(stichtag)
+    # Auch hier der Kalendertag: Sonst fehlt die Zelle der laufenden Woche an
+    # jedem Tag, an dem abends noch eine Sitzung ansteht.
+    heute = dt.date.today()
     letzte_kw = heute.isocalendar()[1]
     zeilen = []
     for jahr in sorted(register, reverse=True):
@@ -389,7 +391,12 @@ def naechste_termine(kennzahlen: dict) -> str:
             "Freitag", "Samstag", "Sonntag"]
     monate = ["Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni", "Juli",
               "August", "September", "Oktober", "November", "Dezember"]
-    heute = dt.date.fromisoformat(kennzahlen["stichtag"])
+    # Der tatsaechliche Tag, nicht der Stichtag der Auswertung. Der faellt auf
+    # den Vortag zurueck, solange heute noch eine Sitzung aussteht — und genau
+    # diese Sitzung wurde dann als „morgen" angekuendigt, obwohl sie heute
+    # Abend stattfindet. Dieselbe Verwechslung wie auf der Terminseite, die
+    # sie laengst nicht mehr macht.
+    heute = dt.date.today()
     zeilen = []
     for t in kommend:
         d = dt.date.fromisoformat(t["datum"])

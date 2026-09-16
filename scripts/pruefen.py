@@ -266,7 +266,7 @@ def pruefe_schwaerzung() -> None:
     if not paare:
         return
     for f in sorted(DOCS.rglob("*.html")):
-        text = f.read_text(encoding="utf-8")
+        text = html.unescape(f.read_text(encoding="utf-8"))
         for alt, _ in paare:
             if alt in text:
                 fehler.append(f"{f.relative_to(WURZEL)}: geschwärzte Stelle wieder "

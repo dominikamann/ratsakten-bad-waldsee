@@ -54,6 +54,21 @@ def kurz(wert) -> str:
 
 # ---------- Navigation ----------
 
+_AKTUELLE_AUSGABE: str | None = None
+
+
+def aktuelle_ausgabe_setzen(pfad: str) -> None:
+    """Das Ziel des Menuepunkts von aussen vorgeben.
+
+    Schritt 05 kennt die neueste Ausgabe, **bevor** er sie schreibt — das
+    Register auf der Platte ist zu diesem Zeitpunkt noch das der Vorwoche.
+    Ohne diesen Weg zeigte der Menuepunkt auf jeder frisch gebauten Seite
+    eine Woche zurueck, bis der naechste Lauf ihn einholte.
+    """
+    global _AKTUELLE_AUSGABE
+    _AKTUELLE_AUSGABE = pfad
+
+
 def aktuelle_ausgabe() -> str:
     """Pfad der juengsten Wochenausgabe, relativ zu docs/.
 
@@ -61,6 +76,12 @@ def aktuelle_ausgabe() -> str:
     stehen: Sein Ziel wechselt jede Woche. Ermittelt wird es aus dem
     Ausgabenregister — derselben Quelle, aus der die Startseite verlinkt.
     """
+    # Einmal gesetzt oder einmal gelesen — `navigation()` fragt je Menueeintrag
+    # nach, das waeren sonst sechzehn Dateizugriffe pro Seite.
+    global _AKTUELLE_AUSGABE
+    if _AKTUELLE_AUSGABE is not None:
+        return _AKTUELLE_AUSGABE
+
     register = WURZEL / "data" / "ausgaben.json"
     if not register.exists():
         return "ausgaben/index.html"          # Archiv als Rueckfallebene
@@ -68,7 +89,8 @@ def aktuelle_ausgabe() -> str:
     if not r:
         return "ausgaben/index.html"
     jahr = max(r, key=int)
-    return f"ausgaben/{jahr}/kw{max(r[jahr], key=int)}.html"
+    _AKTUELLE_AUSGABE = f"ausgaben/{jahr}/kw{max(r[jahr], key=int)}.html"
+    return _AKTUELLE_AUSGABE
 
 
 def navigation(hoch: str = "", hier: str = "") -> str:

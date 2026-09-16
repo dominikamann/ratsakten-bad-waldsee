@@ -126,6 +126,14 @@ fi
 
 INHALTLICH=$(git diff -U0 | grep -E '^[-+][^-+]' | grep -cv 'aktualisiert am' || true)
 if [[ "$INHALTLICH" -eq 0 && -z "$(git status --porcelain --untracked-files=all | grep -v '^ M')" ]]; then
+  if [[ $TROCKEN -eq 1 ]]; then
+    # Ein Trockenlauf aendert nichts — auch nicht durch Aufraeumen. Ohne
+    # diese Abfrage haette „--trocken" den Arbeitsstand verworfen, sobald
+    # zufaellig nur Fusszeilendaten abwichen: genau das Gegenteil dessen,
+    # was ein Trockenlauf zusagt.
+    log "Trockenlauf — nur das Datum in den Fusszeilen weicht ab. Nichts veraendert."
+    exit 0
+  fi
   log "Nichts Neues — nur das Datum in den Fusszeilen. Aenderungen verworfen."
   git checkout -- .
   exit 0
