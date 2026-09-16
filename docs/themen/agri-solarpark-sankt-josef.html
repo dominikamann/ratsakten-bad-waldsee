@@ -177,10 +177,29 @@ body{
 }
 ::selection{background:rgba(57,135,229,.3)}
 
-/* Nichts darf die Seite in die Breite ziehen. Lange Vorlagennummern, Adressen
-   und Dateinamen brechen um, statt ueber den Rand zu laufen — auf einem
-   Telefon entscheidet das darueber, ob die Seite lesbar ist. */
-body{overflow-wrap:break-word}
+/* Nichts darf die Seite in die Breite ziehen. Lange Vorlagennummern,
+   Adressen und Dateinamen brechen um, statt ueber den Rand zu laufen — auf
+   einem Telefon entscheidet das darueber, ob die Seite lesbar ist. Dafuer
+   sorgt `overflow-wrap`: passt ein Wort in keine Zeile, bricht es hart und
+   ohne Trennstrich.
+
+   Hart ist aber haesslich, und lange Woerter sind hier die Regel, nicht die
+   Ausnahme — „Flaechennutzungsplanaenderung", „Verwaltungsgemeinschaft".
+   `hyphens` laesst den Browser deshalb vorher an einer Silbengrenze trennen
+   und einen Strich setzen; die Seiten tragen dafuer `lang="de"`.
+
+   **Nicht ueberall.** `hyphens` vererbt sich, und an einem Bezeichner ist
+   ein eingefuegter Trennstrich nicht von einem echten zu unterscheiden: Wer
+   die Adresse
+   „https://www.bad-waldsee.de/buerger/de/rathaus-service/haushalts-plan"
+   vom Bildschirm abtippt, landet bei einem 404, und derselbe Fehler
+   passiert mit einem RIS-Dateinamen, der in die Suchmaske uebertragen wird.
+   Deshalb bleibt die Trennung aus, wo kein Fliesstext steht: bei Verweisen,
+   Dateinamen und allem in Schreibmaschinenschrift. */
+body{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+a[href],a.doc,.unterlagen,.unterlagen a,.mono,.sv,code,kbd{
+  hyphens:none;-webkit-hyphens:none;
+}
 img,svg,video,iframe{max-width:100%;height:auto}
 pre,code{max-width:100%;overflow-x:auto}
 /* Verweise auf Unterlagen tragen den Dateinamen aus dem Ratsinformationssystem,
@@ -384,7 +403,10 @@ footer nav span[aria-hidden]{opacity:.35}
   footer{border-top:1px solid var(--rule);margin-top:24px;padding:12px 0}
   header{padding-top:0}
   a{color:#000;text-decoration:none}
-  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555;word-break:break-all}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555;
+    /* Auf Papier laesst sich ein Trennstrich der Darstellung nicht von
+       einem Teil der Adresse unterscheiden. */
+    word-break:break-all;hyphens:none;-webkit-hyphens:none}
   article,section,li,tr{break-inside:avoid}
   h1,h2,h3{break-after:avoid}
 }
