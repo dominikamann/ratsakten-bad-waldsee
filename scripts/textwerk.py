@@ -281,32 +281,49 @@ VERMERKE = (
 def vermerk_lesen(protokoll: str, titel: str) -> str:
     """Den Protokollvermerk zu einem Tagesordnungspunkt ohne Beschluss.
 
-    Gesucht wird der Titel im Protokoll; unmittelbar danach steht, was das
-    Gremium zu diesem Punkt festgehalten hat — „Ohne Beschlussfassung", „Keine
-    Punkte seitens der Verwaltung". Gibt es keinen der bekannten Vermerke,
-    kommt ein leerer String zurueck: Lieber keine Angabe als eine geratene.
+    Gesucht wird der **vollstaendige** Titel; unmittelbar danach steht, was
+    das Gremium festgehalten hat — „Ohne Beschlussfassung", „Keine Punkte
+    seitens der Verwaltung". Erkannt wird nur, was in VERMERKE steht: lieber
+    keine Angabe als eine geratene.
 
-    Der Titel wird beim Suchen entschaerft, weil er im Protokoll umbrochen
-    sein kann — verglichen wird ueber die ersten Woerter.
+    Drei Fallen, alle beim Gegenlesen der Original-PDF aufgefallen:
+
+    * **Der Beschlusstext enthaelt dieselben Wendungen.** „Die Informationen
+      zum Breitbandausbau werden zur Kenntnis genommen" ist ein *Beschluss*;
+      daraus „Zur Kenntnis genommen" als Vermerk zu lesen, machte aus einer
+      Entscheidung eine Nicht-Entscheidung. Steht hinter dem Titel ein
+      Beschluss, endet die Suche dort — mit und ohne Doppelpunkt, denn beide
+      Schreibweisen kommen vor.
+    * **Der Titel geht weiter, als man denkt.** Ueber die ersten Woerter
+      gesucht, lag der Rest des Titels noch im Fenster und der Vermerk
+      dahinter — oder schlimmer, ein fremder Vermerk davor. Deshalb der ganze
+      Titel und danach nur ein kurzes Fenster.
+    * **Der fruehste Treffer zaehlt**, nicht der erste der Liste. Sonst bekam
+      „Informationen des Oberbuergermeisters" den Vermerk des naechsten
+      Punktes.
+
+    Titel und Protokoll werden zum Vergleich entschaerft: Zeilenumbrueche,
+    Mehrfachabstaende und Trennstriche am Zeilenende verschwinden.
     """
     if not protokoll or not titel:
         return ""
-    flach = re.sub(r"\s+", " ", protokoll)
-    anfang = " ".join(re.sub(r"\s+", " ", titel).split()[:6])
-    i = flach.find(anfang)
+
+    def flach(x: str) -> str:
+        x = re.sub(r"(\w)-\s+(\w)", r"\1\2", x)   # „Ge- schwindigkeit"
+        return re.sub(r"\s+", " ", x).strip()
+
+    text, gesucht = flach(protokoll), flach(titel)
+    i = text.find(gesucht)
     if i < 0:
         return ""
-    # Nur das unmittelbar Folgende betrachten: Weiter hinten beginnt der
-    # naechste Punkt, und dessen Beschluss gehoert nicht hierher.
-    fenster = flach[i + len(anfang): i + len(anfang) + 160]
-    # Den **fruehesten** Treffer nehmen, nicht den ersten der Liste. Sonst
-    # bekam „Informationen des Oberbuergermeisters" den Vermerk des naechsten
-    # Punktes: Im Fenster stand erst „Keine Punkte seitens der Verwaltung",
-    # dann „Ohne Beschlussfassung" — und gemeldet wurde, was in VERMERKE
-    # zufaellig oben stand.
-    treffer = []
-    for v in VERMERKE:
-        m = re.search(rf"\b{re.escape(v)}", fenster, re.IGNORECASE)
-        if m:
-            treffer.append((m.start(), v))
+
+    # Kurzes Fenster direkt hinter dem Titel: Dort steht die Vorlagennummer
+    # und der Vermerk, noch nicht der naechste Punkt.
+    fenster = text[i + len(gesucht): i + len(gesucht) + 90]
+    ende = re.search(r"\bBeschluss\b\s*:?", fenster, re.IGNORECASE)
+    if ende:
+        fenster = fenster[:ende.start()]
+
+    treffer = [(m.start(), v) for v in VERMERKE
+               if (m := re.search(rf"\b{re.escape(v)}", fenster, re.IGNORECASE))]
     return min(treffer)[1] if treffer else ""

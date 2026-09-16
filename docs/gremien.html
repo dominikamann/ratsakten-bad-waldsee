@@ -145,7 +145,15 @@
   --rule:#272C32;
   --grid:#22262B;
   --s1:#3987e5;              /* Hinweis, Verweis, Zahl */
-  /* Der zweite Akzent ist derzeit unbenutzt. Er stand frueher an Rubriken und
+  /* Gedaempftes Grau fuer das, was fehlt — im Report die Balken „ohne
+     Protokoll" und ihr Legendenfeld. Es wurde einmal als totes CSS entfernt,
+     weil kein *Bauskript* es erzeugt; `src/report.html` nutzt es aber an zwei
+     Stellen, und `04_vorrendern.js` zieht basis.css in den Report hinein.
+     Ohne die Definition ist `fill:var(--absent)` ungueltig, faellt auf
+     Schwarz zurueck und die Balken verschwinden auf dunklem Grund. */
+  --absent:#3C444D;
+
+  /* Der zweite Akzent wird von src/report.html verwendet. Er stand frueher an Rubriken und
      Erkenntnissen; dort gelesen wirkten Auffaelligkeiten wie Warnungen, und
      genau das sollen sie nicht. Er bleibt im Farbsatz, weil er zur Marke
      gehoert — wer ihn wieder einsetzt, soll es bewusst tun. */
@@ -456,6 +464,23 @@ a.doc{color:var(--s1);text-decoration:none;border-bottom:1px solid rgba(57,135,2
 a.doc:hover{border-bottom-color:var(--s1)}
 a:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 
+/* ---------- Ausgabenummer im Titel ----------
+   Der Name der Reihe steht auf allen 90 Ausgaben gleich und sagt nichts
+   ueber die, die man gerade offen hat. Die Nummer gehoert dazu — aber als
+   Beisatz, nicht gleichberechtigt: Der Name ist die Marke, die Nummer die
+   Fundstelle. Deshalb in der Schreibmaschinenschrift der Kennzahlen und
+   eine Stufe leiser. Auf schmalen Anzeigen rutscht sie in die naechste
+   Zeile, statt den Namen umzubrechen. */
+h1 .nummer{
+  /* Dieselbe Schrift wie der Titel, damit die Zeile eine bleibt — die
+     Unterscheidung macht das Gewicht und die Farbe, nicht die Schriftart.
+     Der Name ist die Marke, die Nummer sagt, welche Ausgabe man vor sich
+     hat. */
+  display:inline-block;font-weight:400;color:var(--ink-2);
+  font-size:.62em;letter-spacing:-.01em;
+  margin-left:.4em;white-space:nowrap;
+}
+
 /* ---------- Beschlussliste ---------- */
 ul.beschluesse{margin:20px 0;padding:0;list-style:none}
 ul.beschluesse li{
@@ -504,6 +529,80 @@ p.note{font-size:15px;color:var(--ink-2)}
 p.fussnote{
   font-size:13.5px;font-style:italic;color:var(--ink-2);
   margin:14px 0 0;max-width:62ch;line-height:1.55;
+}
+
+/* ---------- Legende ----------
+   Zwei Schreibweisen, die man kennen muss, standen als Einschuebe mitten im
+   Fliesstext: „… der Stadt Bad Waldsee. 25 : 0 : 1 heisst Ja : Nein :
+   Enthaltungen. SV-000/JJJJ ist die Vorlagennummer — …". Drei Gedanken in
+   einem Absatz, zwei davon in Schreibmaschinenschrift. Eine Legende gehoert
+   nicht in einen Satz, sondern neben das, was sie erklaert. */
+dl.legende{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 20px;
+  margin:14px 0 0;max-width:62ch;align-items:baseline;
+}
+dl.legende dt{white-space:nowrap}
+dl.legende dd{margin:0;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){
+  /* Nebeneinander wird es auf dem Telefon zu eng — untereinander mit
+     Einzug bleibt die Zuordnung erhalten. */
+  dl.legende{grid-template-columns:minmax(0,1fr);gap:2px}
+  dl.legende dd{margin:0 0 10px 0}
+}
+
+/* Wer und wann — die Zeile unter einer Rubrik, die keinen Satz braucht. */
+p.wann{font-size:17px;margin:0 0 4px}
+p.wann b{font-weight:600}
+
+/* ---------- Begriff im Text erklaert ----------
+   Die Erklaerung steht dort, wo das Wort steht — nicht als Kapitel am Ende,
+   das man erst erreicht, wenn die Frage laengst aufgekommen ist.
+
+   Ohne JavaScript: Sichtbar wird sie ueber `:hover` fuer die Maus und
+   `:focus-within` fuers Antippen und die Tastatur. Das Wort traegt dafuer
+   `tabindex`. Im Ausdruck und in der iOS-Dateivorschau, wo weder gezeigt noch
+   getippt werden kann, steht die Erklaerung ausgeschrieben da. */
+.erklaert{
+  position:relative;
+  border-bottom:1px dotted var(--s1);
+  cursor:help;
+}
+.erklaert:focus{outline:2px solid var(--s1);outline-offset:2px}
+.erklaert > .tooltip{
+  position:absolute;left:0;top:calc(100% + 8px);z-index:20;
+  display:none;width:max(260px,min(38ch,80vw));
+  padding:13px 15px;background:var(--surface);
+  border-left:3px solid var(--s1);box-shadow:var(--shadow);
+  font-family:var(--sans);font-size:14.5px;line-height:1.5;
+  font-weight:400;font-style:normal;color:var(--ink-2);
+  text-align:left;white-space:normal;
+}
+.erklaert > .tooltip b{display:block;color:var(--ink);margin-bottom:4px}
+.erklaert > .tooltip .fundstelle{
+  display:block;margin-top:8px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.04em;color:var(--muted);
+}
+.erklaert:hover > .tooltip,
+.erklaert:focus-within > .tooltip{display:block}
+
+/* Auf dem Telefon taugt ein Kasten am Wort nicht: Steht der Begriff weit
+   links oder rechts, ragt die Erklaerung aus dem Bild — am Wort ausgerichtet
+   laesst sich das nicht loesen, weil das Wort ueberall stehen kann. Sie legt
+   sich deshalb als Leiste an den unteren Rand, wo sie immer vollstaendig
+   sichtbar ist und den Text nicht verschiebt. */
+@media (max-width:620px){
+  .erklaert > .tooltip{
+    position:fixed;left:12px;right:12px;bottom:12px;top:auto;
+    width:auto;max-height:50vh;overflow-y:auto;
+    box-shadow:0 -6px 24px rgba(0,0,0,.45);
+  }
+}
+
+@media print{
+  .erklaert > .tooltip{
+    display:block;position:static;width:auto;margin:6px 0;
+    box-shadow:none;
+  }
 }
 
 /* ---------- Kasten ---------- */
@@ -715,7 +814,7 @@ section.gruppe{scroll-margin-top:14px}
   <div class="issueline">
     <span><b>Gremien</b> 12</span>
     <span><b>Sitzungen</b> 167</span>
-    <span><b>Stand</b> 15.09.2026</span>
+    <span><b>Stand</b> 16.09.2026</span>
     <span><b>Herkunft</b> Beleg &middot; Hauptsatzung, Gemeindeordnung, Baugesetzbuch</span>
   </div>
 </header>
@@ -828,7 +927,7 @@ und entschieden wurde, kann die Einsicht bei der Stadt verlangen.</p>
   <p>Sie enthält keine Auswertung und keine Deutung, sondern gibt geltendes Recht
   und die Hauptsatzung der Stadt wieder. Maßgeblich ist immer der Originaltext;
   die Hauptsatzung liegt im Ratsinformationssystem der Stadt aus. Stand der
-  Auswertungszahlen: 15.09.2026.</p>
+  Auswertungszahlen: 16.09.2026.</p>
 </div>
 
 </div>
@@ -852,7 +951,7 @@ und entschieden wurde, kann die Einsicht bei der Stadt verlangen.</p>
     <a href="gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; Datenstand 15.09.2026 &middot; aktualisiert am 15.09.2026</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; Datenstand 16.09.2026 &middot; aktualisiert am 16.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>
