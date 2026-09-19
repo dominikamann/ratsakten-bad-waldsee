@@ -44,48 +44,53 @@ case "$CODE" in
 esac
 
 # --- Verarbeitungskette -------------------------------------------------------
-log "1/13  Sitzungen und Tagesordnungen laden"
+log "1/14  Sitzungen und Tagesordnungen laden"
 uv run --quiet --with requests --with beautifulsoup4 python scripts/01_sitzungen_laden.py
 
-log "2/13  Neue Protokolle laden"
+log "2/14  Neue Protokolle laden"
 uv run --quiet --with requests python scripts/02_protokolle_laden.py
 
 # Vorlagen werden oft erst nach der Einladung nachgereicht — SV-152/2026
 # ("Dorfmitte Osterhofen") stand am 15.09.2026 nur im Gesamtpaket und kam erst
 # einen Tag spaeter einzeln dazu. Solange dieser Schritt ein Handgriff war,
 # blieb so etwas bis zum naechsten manuellen Aufruf unsichtbar.
-log "3/13  Neue Sitzungsvorlagen laden"
+log "3/14  Neue Sitzungsvorlagen laden"
 uv run --quiet --with requests --with pypdf python scripts/15_vorlagen_laden.py | tail -1
 
-log "4/13  Kennzahlen berechnen"
+log "4/14  Kennzahlen berechnen"
 uv run --quiet --with pypdf python scripts/03_auswerten.py | head -3
 
-log "5/13  Ausgaben erzeugen (alle Jahrgänge)"
+log "5/14  Ausgaben erzeugen (alle Jahrgänge)"
 uv run --quiet --with pypdf python scripts/05_ausgaben_bauen.py | tail -2
 
-log "6/13  Tabellen und Suche erzeugen"
+log "6/14  Tabellen und Suche erzeugen"
 uv run --quiet --with pypdf python scripts/07_tabellen_bauen.py | tail -4
 uv run --quiet --with pypdf python scripts/08_suche_bauen.py
 
-log "7/13  Themenseiten erzeugen"
+log "7/14  Themenseiten erzeugen"
 uv run --quiet python scripts/11_themen_bauen.py
 
-log "8/13  Terminseite erzeugen"
+log "8/14  Terminseite erzeugen"
 uv run --quiet python scripts/12_termine_bauen.py
 
-log "9/13  Erkenntnisse sammeln"
+log "9/14  Erkenntnisse sammeln"
 uv run --quiet --with lxml python scripts/09_befunde_bauen.py
 
-log "10/13  Seite „Wer entscheidet was“ erzeugen"
+log "10/14  Seite „Wer entscheidet was“ erzeugen"
 uv run --quiet python scripts/10_gremien_bauen.py
 
-log "11/13  Startseite erzeugen"
+log "11/14  Startseite erzeugen"
 uv run --quiet python scripts/06_startseite_bauen.py
 
-log "12/13  Report vorrendern"
+# Vor dem Vorrendern, nicht danach: Schritt 04 liest den Quelltext des Reports
+# und schreibt ihn unter dem Stichtag als Dateinamen nach docs/report/.
+log "12/14  Kennzahlen in den Report eintragen"
+uv run --quiet python scripts/16_report_pflegen.py
+
+log "13/14  Report vorrendern"
 node scripts/04_vorrendern.js | tail -1
 
-log "13/13  Kennzahlen in die README eintragen"
+log "14/14  Kennzahlen in die README eintragen"
 uv run --quiet python scripts/13_readme_pflegen.py
 
 # --- Pruefen ------------------------------------------------------------------

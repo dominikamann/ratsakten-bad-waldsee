@@ -40,8 +40,17 @@ const TOOLTIP_JS = `
 
 /* Die woechentlichen Ausgaben entstehen in Schritt 05, die Startseite in Schritt 06 —
    beide sind bereits statisch. Hier laeuft nur durch, was Inhalt per JavaScript aufbaut. */
+/* Der Dateiname des Reports war fest eingetragen. Ein neuer Report bedeutete
+   damit: Datum hier aendern, Datum im Report aendern, Zahlen im Report
+   aendern — dreimal von Hand, und die Reihenfolge merkte sich niemand.
+   Er kommt jetzt aus dem Stichtag der Auswertung, so wie die Zahlen des
+   Reports seit Schritt 16 auch. */
+const STICHTAG = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "..", "data", "kennzahlen.json"), "utf8")
+).stichtag;
+
 const SEITEN = [
-  ["report.html", "report/2026-09-09.html",
+  ["report.html", `report/${STICHTAG}.html`,
    "Datenanalyse der Gremienarbeit der Stadt Bad Waldsee, Januar 2024 bis September 2026."],
 ];
 
