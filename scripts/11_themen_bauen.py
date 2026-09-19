@@ -215,9 +215,7 @@ def worum_html(stationen: list[dict], erklaert: set[str]) -> str:
   <p class="woher">Beleg &middot; Abschnitt „Zum Sachverhalt“</p>
   <p class="text">{markieren(e(st['sv']), erklaert)}</p>
   <p class="quelle">Sitzungsvorlage{nummer}, behandelt am {wann}; gekürzt.
-  So beschreibt die Verwaltung den Vorgang — oft beginnt sie dabei mit der
-  Vorgeschichte des Verfahrens und nicht mit dem Vorhaben selbst. Maßgeblich
-  ist die Vorlage.</p>
+  Die Verwaltung beginnt dort oft mit der Vorgeschichte des Verfahrens.</p>
 </section>
 """
 
@@ -279,20 +277,11 @@ def weg_html(weg: list[dict], stationen: list[dict],
         satz = (f"{wo} läuft getrennt nach Teilbereich "
                 f"{e(und_liste(bereiche))}.")
 
-    # „Gleich benannte Schritte kommen mehrfach vor" gilt nicht ueberall: Bei
-    # „Waldseer Strasse" traegt jeder Schritt einen anderen Namen. Der Satz
-    # steht deshalb nur, wo er zutrifft.
-    doppelte = len({s["name"] for s in weg}) < len(weg)
     straenge = ""
     if satz:
-        zusatz = (" Gleich benannte Schritte kommen mehrfach vor — jedes "
-                  "Verfahren durchläuft sie einmal." if doppelte else "")
-        straenge = (f'\n  <p class="hinweis">{satz} Unter jedem Schritt steht, '
-                    f'zu welchem Verfahren er gehört. Die Liste ist nach Datum '
-                    f'geordnet und folgt deshalb nicht dem Ablauf eines '
-                    f'einzelnen Verfahrens: Ein Satzungsbeschluss — das Ende — '
-                    f'kann vor einem Aufstellungsbeschluss stehen, dem Anfang '
-                    f'des nächsten.{zusatz}</p>')
+        straenge = (f'\n  <p class="hinweis">{satz} Geordnet ist nach Datum — '
+                    f'ein Satzungsbeschluss kann deshalb vor einem '
+                    f'Aufstellungsbeschluss stehen.</p>')
 
     zeilen = []
     for sch in weg:
@@ -325,22 +314,17 @@ def weg_html(weg: list[dict], stationen: list[dict],
     uebrig = len(stationen) - sum(s["stationen"] for s in weg)
     rest = ""
     if uebrig == 1:
-        rest = (" Eine Station fehlt hier, weil ihr Titel keinen "
-                "Verfahrensschritt nennt; sie steht unten in der Chronik.")
+        rest = (" Eine Station nennt keinen Schritt und steht nur in der "
+                "Chronik.")
     elif uebrig:
-        rest = (f" {zahlwort(uebrig)} Stationen fehlen hier, weil ihr Titel "
-                f"keinen Verfahrensschritt nennt; sie stehen unten in der "
-                f"Chronik.")
+        rest = (f" {zahlwort(uebrig)} Stationen nennen keinen Schritt und "
+                f"stehen nur in der Chronik.")
 
     return f"""
 <section class="weg" aria-labelledby="wegtitel">
   <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
   <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
-  <p class="hinweis">Die Liste zeigt die Verfahrensschritte, die in den
-  amtlichen Titeln selbst stehen — in der Reihenfolge, in der sie zum ersten Mal
-  auf einer Tagesordnung standen. Eine Vorlage, die nacheinander durch mehrere
-  Gremien geht, steht nur einmal.{rest} Jede Zeile führt zur ausführlichen
-  Station weiter unten.</p>{straenge}
+  <p class="hinweis">Eine Vorlage durch mehrere Gremien zählt einmal.{rest}</p>{straenge}
   <ol class="wegliste">
 {chr(10).join(zeilen)}
   </ol>
@@ -377,9 +361,8 @@ def seite_bauen(vg: dict) -> str:
                    f"Einer von {zahlwort(anzahl_titel, gross=False)} amtlichen Titeln")
         amtstitel = (f'<p class="amtstitel"><b>{vorsatz}</b> {e(lang_titel)}'
                      + ("" if anzahl_titel <= 1 else
-                        " <i>Die Stadt benennt die Stationen dieses Vorhabens "
-                        "unterschiedlich; hier steht der ausführlichste "
-                        "Wortlaut. Die übrigen stehen in der Chronik.</i>")
+                        " <i>Der ausführlichste; die übrigen stehen in der "
+                        "Chronik.</i>")
                      + "</p>")
 
     t = [kopf(f"{vg['t']} · Chronik eines Vorhabens", hoch="../", hier="themen",
@@ -391,8 +374,7 @@ def seite_bauen(vg: dict) -> str:
 <header>
   <p class="eyebrow">Vorhaben</p>
   <h1>{e(vg['t'])}</h1>
-  <p class="lede">Der Weg dieses Vorhabens durch die Gremien — in der
-  Reihenfolge, in der es behandelt wurde.</p>
+  <p class="lede">Alle Stationen in den Gremien, in zeitlicher Reihenfolge.</p>
   <div class="issueline">
     <span><b>Stationen</b> {len(stationen)}</span>
     <span><b>Zeitraum</b> {datum_lang(von)} bis {datum_lang(bis)}</span>
@@ -408,9 +390,8 @@ def seite_bauen(vg: dict) -> str:
 
 <h2 class="abschnitt">Alle Stationen im Wortlaut</h2>
 <p class="woherfrei">Beleg &middot; aus den Beschlussprotokollen</p>
-<p class="hinweisfrei">Der Wortlaut stammt aus den Beschlussprotokollen, die
-Abstimmungsergebnisse aus der Zeile „Ergebnis der Beschlussfassung“.
-Nichtöffentliche Beratungen sind nicht enthalten.</p>
+<p class="hinweisfrei">Abstimmungsergebnisse aus der Zeile „Ergebnis der
+Beschlussfassung“. Nichtöffentliche Beratungen sind nicht enthalten.</p>
 
 <ol class="chronik">
 {chr(10).join(station_html(s, erklaert) for s in stationen)}
