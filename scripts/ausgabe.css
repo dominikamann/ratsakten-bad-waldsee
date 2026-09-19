@@ -374,7 +374,3 @@ section.gruppe{scroll-margin-top:14px}
 
 /* Gremienangabe unter der Kennzahlenzeile einer Themenseite — zu lang fuer
    die Zeile selbst, gehoert aber in denselben Block. */
-.gremienzeile{
-  margin:8px 0 0;font-family:var(--mono);font-size:11px;
-  line-height:1.5;color:var(--muted);max-width:70ch;
-}

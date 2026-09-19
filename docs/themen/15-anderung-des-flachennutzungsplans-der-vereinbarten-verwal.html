@@ -310,7 +310,7 @@ h1{
    Vorlagen, deshalb hier die genauere Auszeichnung. */
 header + h2,header + h3,header + p,header + ol,header + ul,
 header + h2.headline,header + .sprungmarken,header + .suchfeld,
-header + .kasten,header + .gremienzeile{margin-top:32px}
+header + .kasten{margin-top:32px}
 
 /* ---------- Herkunft einer Aussage ----------
    Drei Stufen, auf jeder Seite dieselben: belegt, regelbasiert, gedeutet.
@@ -815,10 +815,6 @@ section.gruppe{scroll-margin-top:14px}
 
 /* Gremienangabe unter der Kennzahlenzeile einer Themenseite — zu lang fuer
    die Zeile selbst, gehoert aber in denselben Block. */
-.gremienzeile{
-  margin:8px 0 0;font-family:var(--mono);font-size:11px;
-  line-height:1.5;color:var(--muted);max-width:70ch;
-}
 </style>
 <style>
 /* Nur die Themenseiten brauchen diese Stile: die Chronik eines Vorhabens und
@@ -834,17 +830,11 @@ p.woherfrei{margin:6px 0 0;font-family:var(--mono);font-size:11px;
   letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 p.hinweisfrei{margin:10px 0 0;font-size:13.5px;line-height:1.6;
   color:var(--muted);max-width:62ch}
-/* Die Gremienzeile verweist auf „Wer entscheidet was": Der Name allein sagt
-   einem Buerger nicht, was ein Gemeinsamer Ausschuss ist.
-   **Bewusst keine Kaesten.** Als Marken gestaltet ergaben sie ungleich breite
-   Rechtecke mit ausgefranstem Rand, und bei dem 86 Zeichen langen Namen des
-   Gemeinsamen Ausschusses rutschte die Zahl ans andere Ende des Kastens. Ein
-   solcher Name passt in keine Chip-Reihe. Es bleibt eine Zeile Text, in der
-   nur die Namen als Verweis erkennbar sind. */
-p.gremienzeile a{color:inherit;text-decoration:underline;
+/* Die Gremiumsmarken stehen in der Kennzahlenzeile; ihr Name ist ein
+   Verweis auf „Wer entscheidet was". */
+.issueline a{color:inherit;text-decoration:underline;
   text-decoration-color:var(--rule);text-underline-offset:3px}
-p.gremienzeile a:hover{text-decoration-color:var(--s1)}
-p.gremienzeile b{color:var(--ink-2);font-weight:600}
+.issueline a:hover{text-decoration-color:var(--s1)}
 ol.chronik{list-style:none;margin:18px 0 0;padding:0;counter-reset:station}
 ol.chronik > li{
   position:relative;margin:0;padding:18px 0 22px 22px;border-top:1px solid var(--rule);
@@ -940,10 +930,13 @@ a.karte .meta{
     <span><b>Zeitraum</b> 17. Juni 2024 bis 29. Juli 2025</span>
     <span><b>Vorlagen</b> 2</span>
     <span><b>Herkunft</b> regelbasiert gezählt</span>
+    <span><a href="../gremien.html#ausschuesse" title="Was dieses Gremium entscheidet"><b>Ausschuss für Umwelt und Technik</b></a> 1&times;</span>
+    <span><a href="../gremien.html#gemeinderat" title="Was dieses Gremium entscheidet"><b>Gemeinderat</b></a> 2&times;</span>
+    <span><a href="../gremien.html#gemeinsamer-ausschuss" title="Was dieses Gremium entscheidet"><b>Gemeinsamer Ausschuss</b></a> 2&times;</span>
+    <span><a href="../gremien.html#ausschuesse" title="Was dieses Gremium entscheidet"><b>Ausschuss für Umwelt, Technik und Nachhaltigkeit</b></a> 1&times;</span>
   </div>
 </header>
 
-<p class="gremienzeile"><a href="../gremien.html#ausschuesse" title="Was dieses Gremium entscheidet">Ausschuss für Umwelt und Technik</a> <b>1&times;</b> &middot; <a href="../gremien.html#gemeinderat" title="Was dieses Gremium entscheidet">Gemeinderat</a> <b>2&times;</b> &middot; <a href="../gremien.html#gemeinsamer-ausschuss" title="Was dieses Gremium entscheidet">Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute</a> <b>2&times;</b> &middot; <a href="../gremien.html#ausschuesse" title="Was dieses Gremium entscheidet">Ausschuss für Umwelt, Technik und Nachhaltigkeit</a> <b>1&times;</b></p>
 
 <section class="worum" aria-labelledby="worumtitel">
   <h2 id="worumtitel">Aus der ersten Sitzungsvorlage</h2>

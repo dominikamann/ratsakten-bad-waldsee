@@ -31,7 +31,7 @@ import re
 from pathlib import Path
 
 from begriffe import markieren
-from seite import aktuelle_ausgabe_setzen, fuss, kopf
+from seite import aktuelle_ausgabe_setzen, fuss, kopf, rubrikname
 from textwerk import (
     haeufigkeiten_laden,
     leertrennung_reparieren,
@@ -115,20 +115,6 @@ ABSCHLUSS = re.compile(r"Satzungsbeschluss|als Satzung beschlossen|wird als Satz
 # Jahresabschluesse und Rechenschaftsberichte nennen das Haushaltsjahr, das sie
 # betreffen. Liegt es weit zurueck, wird ein Rueckstand aufgearbeitet.
 RUECKSTAND = re.compile(r"Jahresabschluss\w*\s+(?:der\s+\w+\s+)?(\d{4})", re.I)
-
-# Fuer Rubriken: ein Name, den man lesen kann. Das Kuerzel („GR", „GA") ist
-# die Sprache des Ratsinformationssystems und sagt einem Buerger nichts; der
-# volle Name des Gemeinsamen Ausschusses ist dagegen 86 Zeichen lang und
-# sprengt jede Rubrikzeile.
-RUBRIKNAME = {
-    "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft "
-    "Bad Waldsee-Bergatreute": "Gemeinsamer Ausschuss",
-}
-
-
-def rubrikname(name: str) -> str:
-    return RUBRIKNAME.get(name, name)
-
 
 KURZ = {
     "Gemeinderat": "GR",

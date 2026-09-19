@@ -44,6 +44,19 @@ def zahlwort(n: int, gross: bool = True) -> str:
     return wort if gross else wort.lower()
 
 
+# Fuer Rubriken und Marken: ein Name, den man lesen kann. Der volle Name des
+# Gemeinsamen Ausschusses ist 86 Zeichen lang und sprengt jede Zeile. Stand
+# vorher nur in 05; die Themenseiten brauchen ihn seit der Gremienmarke auch.
+RUBRIKNAME = {
+    "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft "
+    "Bad Waldsee-Bergatreute": "Gemeinsamer Ausschuss",
+}
+
+
+def rubrikname(name: str) -> str:
+    return RUBRIKNAME.get(name, name)
+
+
 EINTRAEGE = json.loads((SKRIPTE / "navigation.json").read_text(encoding="utf-8"))
 
 TAGE = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]

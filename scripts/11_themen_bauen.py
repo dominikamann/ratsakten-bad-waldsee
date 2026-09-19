@@ -21,7 +21,7 @@ import json
 from pathlib import Path
 
 from begriffe import markieren
-from seite import fuss, kopf, zahlwort
+from seite import fuss, kopf, rubrikname, zahlwort
 from verfahrensweg import lohnt, schritte
 from vorhaben import MINDEST_STATIONEN, zusammenfuehren
 
@@ -58,17 +58,11 @@ p.woherfrei{margin:6px 0 0;font-family:var(--mono);font-size:11px;
   letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 p.hinweisfrei{margin:10px 0 0;font-size:13.5px;line-height:1.6;
   color:var(--muted);max-width:62ch}
-/* Die Gremienzeile verweist auf „Wer entscheidet was": Der Name allein sagt
-   einem Buerger nicht, was ein Gemeinsamer Ausschuss ist.
-   **Bewusst keine Kaesten.** Als Marken gestaltet ergaben sie ungleich breite
-   Rechtecke mit ausgefranstem Rand, und bei dem 86 Zeichen langen Namen des
-   Gemeinsamen Ausschusses rutschte die Zahl ans andere Ende des Kastens. Ein
-   solcher Name passt in keine Chip-Reihe. Es bleibt eine Zeile Text, in der
-   nur die Namen als Verweis erkennbar sind. */
-p.gremienzeile a{color:inherit;text-decoration:underline;
+/* Die Gremiumsmarken stehen in der Kennzahlenzeile; ihr Name ist ein
+   Verweis auf „Wer entscheidet was". */
+.issueline a{color:inherit;text-decoration:underline;
   text-decoration-color:var(--rule);text-underline-offset:3px}
-p.gremienzeile a:hover{text-decoration-color:var(--s1)}
-p.gremienzeile b{color:var(--ink-2);font-weight:600}
+.issueline a:hover{text-decoration-color:var(--s1)}
 ol.chronik{list-style:none;margin:18px 0 0;padding:0;counter-reset:station}
 ol.chronik > li{
   position:relative;margin:0;padding:18px 0 22px 22px;border-top:1px solid var(--rule);
@@ -177,13 +171,21 @@ GREMIENSEITE = (
 
 
 def marke_html(name: str, anzahl: int) -> str:
-    """Ein Gremium mit Anzahl, der Name als Verweis auf seine Erklaerung."""
+    """Ein Gremium als Marke in der Kennzahlenzeile, mit Anzahl und Verweis.
+
+    Gehoert dorthin und nicht in eine eigene Zeile: Die Kennzahlenzeile ist
+    bereits eine umbrechende Reihe kleiner Marken. Eigene Kaesten darunter
+    ergaben ungleich breite Rechtecke, und bei dem 86 Zeichen langen Namen des
+    Gemeinsamen Ausschusses rutschte die Zahl ans andere Ende — deshalb hier
+    `rubrikname`.
+    """
     marke = next((m for wort, m in GREMIENSEITE if name.startswith(wort)), None)
-    zahl = f' <b>{anzahl}&times;</b>'
+    kurz = e(rubrikname(name))
     if not marke:
-        return f"{e(name)}{zahl}"
-    return (f'<a href="../gremien.html#{marke}" '
-            f'title="Was dieses Gremium entscheidet">{e(name)}</a>{zahl}')
+        return f"<span><b>{kurz}</b> {anzahl}&times;</span>"
+    return (f'<span><a href="../gremien.html#{marke}" '
+            f'title="Was dieses Gremium entscheidet"><b>{kurz}</b></a> '
+            f'{anzahl}&times;</span>')
 
 
 def und_liste(teile: list[str]) -> str:
@@ -379,8 +381,8 @@ def seite_bauen(vg: dict) -> str:
     haeufig: dict[str, int] = {}
     for st in stationen:
         haeufig[st["gl"]] = haeufig.get(st["gl"], 0) + 1
-    gremienzeile = " &middot; ".join(marke_html(name, anzahl)
-                                     for name, anzahl in haeufig.items())
+    gremienmarken = "\n    ".join(marke_html(name, anzahl)
+                                  for name, anzahl in haeufig.items())
     nummern = [n for n in vg["v"].split(" · ") if n]
     # Der amtliche Titel stand hier frueher als eigener Block. Er sagte dem
     # Leser nichts: Es ist einer von zwoelf, er nennt nur ein Teilverfahren,
@@ -403,10 +405,10 @@ def seite_bauen(vg: dict) -> str:
     <span><b>Zeitraum</b> {datum_lang(von)} bis {datum_lang(bis)}</span>
     <span><b>Vorlagen</b> {len(nummern)}</span>
     <span><b>Herkunft</b> regelbasiert gezählt</span>
+    {gremienmarken}
   </div>
 </header>
 
-<p class="gremienzeile">{gremienzeile}</p>
 {worum_html(stationen, erklaert)}
 {weg_html(weg, stationen, erklaert) if lohnt(weg, stationen) else ""}
 
