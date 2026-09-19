@@ -143,6 +143,49 @@ def pruefe_begriffe() -> None:
     notiz.append(f"{gesamt} Begriffserklärungen geprüft")
 
 
+def pruefe_einordnungen() -> None:
+    """Jede Abstimmungszahl einer Einordnung muss in den Daten stehen.
+
+    Die Einordnungen sind der einzige Text des Projekts, den nicht ein Skript
+    aus den Akten erzeugt. Sie tragen die Marke **KI-Deutung** und sind damit
+    als pruefbeduerftig gekennzeichnet — aber niemand hat sie bisher gegen die
+    Daten gehalten.
+
+    Beim Gegenlesen am 19.09.2026 stand dort ein „groesstes Bauvolumen", das
+    keine erhobene Groesse ist, und ein Superlativ ueber den Jahrgang, der
+    nicht zutraf. Die Deutung bleibt Deutung; **die Zahlen darin muessen
+    stimmen.** Geprueft wird deshalb, was sich pruefen laesst: jedes genannte
+    Abstimmungsergebnis, in beiden Schreibweisen („21 : 4 : 1" und „21 zu 4
+    Stimmen"), gegen die Ergebnisse aus den Beschlussprotokollen.
+    """
+    quelle = DATEN / "einordnungen.json"
+    daten = DATEN / "vorgaenge.json"
+    if not quelle.exists() or not daten.exists():
+        return
+    bekannt: set[tuple[int, int]] = set()
+    for vorgang in json.loads(daten.read_text(encoding="utf-8")):
+        for station in vorgang.get("s", []):
+            for teil in (station.get("e") or "").split("→"):
+                m = re.match(r"\s*(\d+) : (\d+) : (\d+)\s*$", teil)
+                if m:
+                    bekannt.add((int(m.group(1)), int(m.group(2))))
+    gesamt = 0
+    for schluessel, eintrag in json.loads(quelle.read_text(encoding="utf-8")).items():
+        if not isinstance(eintrag, dict):
+            continue
+        text = " ".join(eintrag.get("absaetze", []))
+        paare = [(int(a), int(b)) for a, b in
+                 re.findall(r"(\d+) : (\d+) : \d+", text)]
+        paare += [(int(a), int(b)) for a, b in
+                  re.findall(r"(\d+) zu (\d+) Stimmen", text)]
+        for ja, nein in paare:
+            gesamt += 1
+            if (ja, nein) not in bekannt:
+                fehler.append(f"Einordnung {schluessel}: Abstimmung "
+                              f"„{ja} : {nein}“ steht in keinem Protokoll")
+    notiz.append(f"{gesamt} Abstimmungsangabe(n) der Einordnungen geprüft")
+
+
 def pruefe_schriften() -> None:
     gesamt = 0
     for f in sorted(DOCS.rglob("*.html")):
@@ -259,6 +302,15 @@ BEHAUPTUNGEN = [
     # Dritter Anlauf auf dieselbe Behauptung — deshalb jetzt mit Vorsilbe.
     (r"kein(?:e)? \w*(?:protokoll|niederschrift)\w* ver(?:ö|oe)ffentlicht",
      "„kein Protokoll veröffentlicht“ — geprüft ist nur die Abrufbarkeit"),
+    # **Vierter Anlauf auf dieselbe Behauptung.** In der Einordnung zu KW 37
+    # stand „hat kein Gremium … ein Beschlussprotokoll veröffentlicht" — das
+    # Muster darueber verlangt „kein" unmittelbar vor dem Protokollwort und
+    # griff deshalb nicht. Jetzt duerfen Woerter dazwischenstehen, solange es
+    # derselbe Satz ist.
+    (r"kein[^.!?]{0,90}(?:protokoll|niederschrift)[^.!?]{0,40}"
+     r"ver(?:ö|oe)ffentlicht",
+     "Verneinung und „veröffentlicht“ im selben Satz — geprüft ist nur die "
+     "Abrufbarkeit, nicht das Handeln der Stadt"),
 ]
 
 
@@ -734,6 +786,7 @@ def main() -> None:
         sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
 
     for pruefung in (pruefe_verweise, pruefe_sprungmarken, pruefe_begriffe,
+                     pruefe_einordnungen,
                      pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
                      pruefe_stil, pruefe_schwaerzung, pruefe_readme,
