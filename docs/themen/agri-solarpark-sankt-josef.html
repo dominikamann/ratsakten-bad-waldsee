@@ -849,7 +849,18 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
 /* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
    Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
    statt einer breiten Tabellenzeile. */
-section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+/* „Worum es geht" — der Sachverhalt der ersten Sitzungsvorlage. Ohne ihn
+   erklaert die Seite den Verfahrensweg eines Wohnbaugebiets, ohne je zu
+   sagen, dass es ein Wohnbaugebiet ist. */
+section.worum{margin:26px 0 0;padding:18px 16px 14px;border:1px solid var(--rule)}
+section.worum h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.worum .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.worum p.text{margin:10px 0 0;font-size:15px;line-height:1.65;max-width:62ch}
+section.worum .quelle{margin:10px 0 0;font-size:13px;line-height:1.6;
+  color:var(--muted);max-width:62ch;font-family:inherit;letter-spacing:0;
+  text-transform:none}
+section.weg{margin:26px 0 0;padding:18px 16px 10px;background:var(--surface);
   border:1px solid var(--rule)}
 section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
 section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
@@ -870,8 +881,6 @@ ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
 ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
 ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 ol.wegliste .sv{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
-section.weg .rest{margin:12px 0 12px;padding-top:12px;border-top:1px solid var(--rule);
-  font-size:13px;line-height:1.6;color:var(--muted);max-width:62ch}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -924,19 +933,31 @@ a.karte .meta{
 </header>
 
 <p class="gremienzeile">Ausschuss für Umwelt und Technik, Ausschuss für Umwelt, Technik und Nachhaltigkeit, Gemeinderat, Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute</p>
-<p class="amtstitel"><b>Amtlicher Titel</b> 16. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Waldsee-Bergatreute für die Sonderbaufläche "Agri-Solarpark Sankt Josef", Gemarkung Mittelurbach - Abwägung und Feststellungsbeschluss</p>
+<p class="amtstitel"><b>Einer von sechs amtlichen Titeln</b> 16. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Waldsee-Bergatreute für die Sonderbaufläche "Agri-Solarpark Sankt Josef", Gemarkung Mittelurbach - Abwägung und Feststellungsbeschluss <i>Die Stadt benennt die Stationen dieses Vorhabens unterschiedlich; hier steht der ausführlichste Wortlaut. Die übrigen stehen in der Chronik.</i></p>
+
+<section class="worum" aria-labelledby="worumtitel">
+  <h2 id="worumtitel">Worum es geht</h2>
+  <p class="woher">Beleg &middot; aus der Sitzungsvorlage</p>
+  <p class="text">Der Gemeinderat der Großen Kreisstadt Bad Waldsee hat am 02.06.2014 das Energie- und Klimaschutzkonzept Stadt Bad Waldsee 2020/2050 beschlossen. Für die solare Stromerzeugung auf Frei- flächen entlang der Bahnlinien wurde für Bad Waldsee ein theoretisches Potenzial auf ca. 122,77 ha Fläche ermittelt (siehe Seite 36 und 37 des Energie- und Klimaschutzkonzepts). […]</p>
+  <p class="quelle">Aus dem Abschnitt „Zum Sachverhalt" der Sitzungsvorlage SV-33/2024,
+  behandelt am 15. April 2024. Das ist die Darstellung der Verwaltung zu
+  diesem einen Beschluss — nicht eine Beschreibung des ganzen Vorhabens. Gekürzt;
+  maßgeblich ist die Vorlage selbst.</p>
+</section>
+
 
 <section class="weg" aria-labelledby="wegtitel">
   <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
   <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
   <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
   Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
-  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt. Jede
-  Zeile führt zur zugehörigen Station.</p>
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.
+  Jede Zeile führt zur zugehörigen Station.</p>
+  <p class="hinweis">Dieses Vorhaben läuft in mehreren Verfahren nebeneinander: Bebauungsplan und Flächennutzungsplan. Hinter jedem Schritt steht, zu welchem Verfahren er gehört. Die Daten steigen deshalb nicht durchgehend an — ein Verfahren kann abgeschlossen sein, während ein anderes erst beginnt.</p>
   <ol class="wegliste">
     <li><a href="#station-1">
       <span class="wann">15. April 2024</span>
-      <span class="wasname">Aufstellungsbeschluss</span>
+      <span class="wasname"><span class="erklaert" tabindex="0">Aufstellungsbeschluss<span class="tooltip" role="note"><b>Aufstellungsbeschluss</b> Der erste Schritt eines Bauleitplanverfahrens — das Gegenstück zum Satzungsbeschluss am Ende. Er entscheidet noch nichts über den Inhalt, sondern eröffnet das Verfahren; das Baugesetzbuch nennt ihn an dieser Stelle mit einer einzigen Vorgabe: „Der Beschluss, einen Bauleitplan aufzustellen, ist ortsüblich bekannt zu machen.“ Zwischen beiden liegen Entwurf, Beteiligung der Öffentlichkeit und Abwägung; bei größeren Vorhaben vergehen dabei mehrere Jahre und der Plan kommt mehrfach auf die Tagesordnung.<span class="fundstelle">§ 2 Abs. 1 Satz 2 Baugesetzbuch</span></span></span></span>
       <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt und Technik &middot; <span class="sv">SV-33/2024</span></span>
     </a></li>
     <li><a href="#station-2">
@@ -946,7 +967,7 @@ a.karte .meta{
     </a></li>
     <li><a href="#station-5">
       <span class="wann">17. Juni 2024</span>
-      <span class="wasname">Abwägung und Entwurfsbeschluss</span>
+      <span class="wasname"><span class="erklaert" tabindex="0">Abwägung<span class="tooltip" role="note"><b>Abwägung</b> Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.<span class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</span></span></span> und <span class="erklaert" tabindex="0">Entwurfsbeschluss<span class="tooltip" role="note"><b>Entwurfsbeschluss</b> Der Beschluss über den Planentwurf. Auf ihn folgt die Beteiligung der Öffentlichkeit: „Die Entwürfe der Bauleitpläne sind mit der Begründung … für die Dauer eines Monats, mindestens jedoch für die Dauer von 30 Tagen … im Internet zu veröffentlichen.“ Wer will, kann dazu Stellung nehmen; was eingeht, wird anschließend abgewogen. In 33 Beschlüssen des Bestands ordnet der Entwurfsbeschluss diese Beteiligung ausdrücklich an.<span class="fundstelle">§ 3 Abs. 2 Satz 1 Baugesetzbuch</span></span></span></span>
       <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt und Technik &middot; <span class="sv">SV-87/2024</span></span>
     </a></li>
     <li><a href="#station-6">
@@ -956,16 +977,15 @@ a.karte .meta{
     </a></li>
     <li><a href="#station-9">
       <span class="wann">16. September 2024</span>
-      <span class="wasname">Abwägung und Satzungsbeschluss</span>
+      <span class="wasname">Abwägung und <span class="erklaert" tabindex="0">Satzungsbeschluss<span class="tooltip" role="note"><b>Satzungsbeschluss</b> Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.<span class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</span></span></span></span>
       <span class="wo">Bebauungsplan &middot; zuletzt Gemeinderat, 23. September 2024 &middot; <span class="sv">SV-98/2024</span></span>
     </a></li>
     <li><a href="#station-10">
       <span class="wann">16. September 2024</span>
-      <span class="wasname">Abwägung und Feststellungsbeschluss</span>
+      <span class="wasname">Abwägung und <span class="erklaert" tabindex="0">Feststellungsbeschluss<span class="tooltip" role="note"><b>Feststellungsbeschluss</b> Der Abschluss eines Flächennutzungsplan-Verfahrens. Was beim Bebauungsplan der Satzungsbeschluss ist, ist hier der Feststellungsbeschluss — mit einem Unterschied: Der Flächennutzungsplan wird damit noch nicht wirksam. Er bedarf der Genehmigung der höheren Verwaltungsbehörde, und wirksam wird er erst, wenn deren Erteilung ortsüblich bekannt gemacht ist.<span class="fundstelle">§ 6 Abs. 1 und Abs. 5 Baugesetzbuch</span></span></span></span>
       <span class="wo">Flächennutzungsplan &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 2. Oktober 2024 &middot; <span class="sv">SV-99/2024</span></span>
     </a></li>
   </ol>
-  
 </section>
 
 
@@ -978,7 +998,7 @@ nicht enthalten.</p>
     <p class="wann">15. April 2024 &middot; Ausschuss für Umwelt und Technik
       <span class="sv">SV-33/2024</span></p>
     <p class="sache">Vorhabenbezogener Bebauungsplan "Agri-Solarpark Sankt Josef" und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach - Aufstellungsbeschluss</p>
-    <p class="wortlaut">1. Für den im Lageplan vom 29.01.2024 dargestellten Geltungsbereich mit ca. 8,34 ha wird der vorhabenbezogene Bebauungsplan „Agri-Solarpark Sankt Josef“ und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach, Flst. Nr. 25, aufgestellt. 2. Es sollen die planungsrechtlichen Voraussetzungen für die Errichtung einer Agri-Photovoltaik-Freiflächenanlage nordöstlich von Unterurbach, Gemarkung Mittelurbach, Flst. Nr. 25, geschaffen werden. 3. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 4. Die Verwaltung wird beauftragt, den Aufstellungsbeschluss bekanntzumachen und das weitere Verfahren durchzuführen.</p>
+    <p class="wortlaut">1. Für den im Lageplan vom 29.01.2024 dargestellten Geltungsbereich mit ca. 8,34 ha wird der vorhabenbezogene <span class="erklaert" tabindex="0">Bebauungsplan<span class="tooltip" role="note"><b>Bebauungsplan</b> Der Plan, der für ein bestimmtes Gebiet verbindlich festlegt, was dort gebaut werden darf: Er enthält „die rechtsverbindlichen Festsetzungen für die städtebauliche Ordnung“. Anders als der Flächennutzungsplan, der die Bodennutzung für das ganze Gemeindegebiet nur in den Grundzügen darstellt, kann er unmittelbar Baurecht begründen. Setzt er mindestens Art und Maß der baulichen Nutzung, die überbaubaren Grundstücksflächen und die örtlichen Verkehrsflächen fest, ist ein Vorhaben dort zulässig, wenn es diesen Festsetzungen nicht widerspricht <b>und die Erschließung gesichert ist</b>.<span class="fundstelle">§ 5 Abs. 1 Satz 1, § 8 Abs. 1 Satz 1 und § 30 Abs. 1 Baugesetzbuch</span></span></span> „Agri-Solarpark Sankt Josef“ und die örtlichen Bauvorschriften hierzu, Gemarkung Mittelurbach, Flst. Nr. 25, aufgestellt. 2. Es sollen die planungsrechtlichen Voraussetzungen für die Errichtung einer Agri-Photovoltaik-Freiflächenanlage nordöstlich von Unterurbach, Gemarkung Mittelurbach, Flst. Nr. 25, geschaffen werden. 3. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 4. Die Verwaltung wird beauftragt, den Aufstellungsbeschluss bekanntzumachen und das weitere Verfahren durchzuführen.</p>
     <span class="erg">einstimmig</span>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZcYS6O0tLr5G5v-DL0pCnWlFyaKygK7gRxTnqKqH8nj_/Sitzungsvorlage_SV-33-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-33/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw16.html">In der Wochenausgabe nachlesen</a></p>
@@ -987,7 +1007,7 @@ nicht enthalten.</p>
     <p class="wann">15. April 2024 &middot; Ausschuss für Umwelt und Technik
       <span class="sv">SV-34/2024</span></p>
     <p class="sache">16. Änderung des Flächennutzungsplans der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute für die Sonderbaufläche "Agri-Solarpark Sankt Josef", Gemarkung Mittelurbach - Aufstellungsbeschluss</p>
-    <p class="wortlaut">1. Im Bereich nordöstlich von Unterurbach, Gemarkung Mittelurbach, Flst. Nr. 25 wird eine Fläche von ca. 8,34 ha von Fläche für die Landwirtschaft in Sonderbaufläche „Photovoltaik- Freiflächenanlage“ geändert. Grundlage ist die Darstellung im Lageplan vom 29.01.2024. 2. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 3. Die Verwaltung wird beauftragt, im weiteren Verfahren die frühzeitige Beteiligung der Öffentlichkeit nach § 3 Abs. 1 Baugesetzbuch (BauGB) und die Beteiligung der Behörden und Träger öffentlicher Belange nach § 4 Abs. 1 BauGB durchzuführen. 4. Die Vertreter von Bad Waldsee werden beauftragt, im Gemeinsamen Ausschuss der 16. Änderung des Flächennutzungsplans zuzustimmen.</p>
+    <p class="wortlaut">1. Im Bereich nordöstlich von Unterurbach, Gemarkung Mittelurbach, Flst. Nr. 25 wird eine Fläche von ca. 8,34 ha von Fläche für die Landwirtschaft in Sonderbaufläche „Photovoltaik- Freiflächenanlage“ geändert. Grundlage ist die Darstellung im Lageplan vom 29.01.2024. 2. Die planerischen Leistungen werden vom Büro Sieber Consult GmbH aus Lindau erbracht. 3. Die Verwaltung wird beauftragt, im weiteren Verfahren die frühzeitige Beteiligung der Öffentlichkeit nach § 3 Abs. 1 Baugesetzbuch (BauGB) und die Beteiligung der Behörden und Träger öffentlicher Belange nach § 4 Abs. 1 BauGB durchzuführen. 4. Die Vertreter von Bad Waldsee werden beauftragt, im <span class="erklaert" tabindex="0">Gemeinsamen Ausschuss<span class="tooltip" role="note"><b>Gemeinsamer Ausschuss</b> Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft. Deren Erfüllungsaufgabe ist die vorbereitende Bauleitplanung — also der Flächennutzungsplan. Darüber entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss beider Gemeinden.<span class="fundstelle">§ 61 Abs. 4 Gemeindeordnung für Baden-Württemberg</span></span></span> der 16. Änderung des <span class="erklaert" tabindex="0">Flächennutzungsplan<span class="tooltip" role="note"><b>Flächennutzungsplan</b> Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht erst über den Bebauungsplan.<span class="fundstelle">§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch</span></span></span>s zuzustimmen.</p>
     <span class="erg">einstimmig</span>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaafrrJtmrGiXjhwfRE10iezFa-Vs9S2N3TKi9oOC2t_/Sitzungsvorlage_SV-34-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-34/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw16.html">In der Wochenausgabe nachlesen</a></p>

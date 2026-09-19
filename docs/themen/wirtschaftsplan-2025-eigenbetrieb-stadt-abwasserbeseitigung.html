@@ -849,7 +849,18 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
 /* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
    Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
    statt einer breiten Tabellenzeile. */
-section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+/* „Worum es geht" — der Sachverhalt der ersten Sitzungsvorlage. Ohne ihn
+   erklaert die Seite den Verfahrensweg eines Wohnbaugebiets, ohne je zu
+   sagen, dass es ein Wohnbaugebiet ist. */
+section.worum{margin:26px 0 0;padding:18px 16px 14px;border:1px solid var(--rule)}
+section.worum h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.worum .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.worum p.text{margin:10px 0 0;font-size:15px;line-height:1.65;max-width:62ch}
+section.worum .quelle{margin:10px 0 0;font-size:13px;line-height:1.6;
+  color:var(--muted);max-width:62ch;font-family:inherit;letter-spacing:0;
+  text-transform:none}
+section.weg{margin:26px 0 0;padding:18px 16px 10px;background:var(--surface);
   border:1px solid var(--rule)}
 section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
 section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
@@ -870,8 +881,6 @@ ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
 ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
 ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 ol.wegliste .sv{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
-section.weg .rest{margin:12px 0 12px;padding-top:12px;border-top:1px solid var(--rule);
-  font-size:13px;line-height:1.6;color:var(--muted);max-width:62ch}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -924,6 +933,17 @@ a.karte .meta{
 </header>
 
 <p class="gremienzeile">Ausschuss für Umwelt, Technik und Nachhaltigkeit, Gemeinderat</p>
+
+
+<section class="worum" aria-labelledby="worumtitel">
+  <h2 id="worumtitel">Worum es geht</h2>
+  <p class="woher">Beleg &middot; aus der Sitzungsvorlage</p>
+  <p class="text">Der Wirtschaftsplan wurde in der Sitzung am 09.12.2024 in den Gemeinderat eingebracht. Die Vorberatung im Ausschuss für Umwelt und Technik findet am 27.01.2025 statt, die Beschlussfassung ist für die GR-Sitzung am 03.02.2025 vorgesehen. Der Beschlussvorschlag befindet sich auf Seite 3 des Planheftes.</p>
+  <p class="quelle">Aus dem Abschnitt „Zum Sachverhalt" der Sitzungsvorlage SV-199/2024,
+  behandelt am 27. Januar 2025. Das ist die Darstellung der Verwaltung zu
+  diesem einen Beschluss — nicht eine Beschreibung des ganzen Vorhabens. Gekürzt;
+  maßgeblich ist die Vorlage selbst.</p>
+</section>
 
 
 

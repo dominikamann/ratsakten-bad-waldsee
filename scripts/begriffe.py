@@ -103,24 +103,49 @@ BEGRIFFE: list[dict[str, str]] = [
         "muster": r"Bebauungsplan",
         "satz": (
             "Der Plan, der für ein bestimmtes Gebiet verbindlich festlegt, was dort "
-            "gebaut werden darf — Art und Maß der Bebauung, überbaubare Flächen, "
-            "Verkehrsflächen. Anders als der Flächennutzungsplan, der nur die "
-            "Grundzüge für das ganze Stadtgebiet umreißt, begründet er unmittelbar "
-            "Baurecht: Ein Vorhaben ist dort zulässig, wenn es seinen Festsetzungen "
-            "nicht widerspricht <b>und die Erschließung gesichert ist</b>."),
-        "fundstelle": "§ 1 Abs. 2, § 8 Abs. 1 und § 30 Abs. 1 Baugesetzbuch",
+            "gebaut werden darf: Er enthält „die rechtsverbindlichen Festsetzungen "
+            "für die städtebauliche Ordnung“. Anders als der Flächennutzungsplan, "
+            "der die Bodennutzung für das ganze Gemeindegebiet nur in den Grundzügen "
+            "darstellt, kann er unmittelbar Baurecht begründen. Setzt er mindestens "
+            "Art und Maß der baulichen Nutzung, die überbaubaren Grundstücksflächen "
+            "und die örtlichen Verkehrsflächen fest, ist ein Vorhaben dort zulässig, "
+            "wenn es diesen Festsetzungen nicht widerspricht <b>und die Erschließung "
+            "gesichert ist</b>."),
+        "fundstelle": ("§ 5 Abs. 1 Satz 1, § 8 Abs. 1 Satz 1 und § 30 Abs. 1 "
+                       "Baugesetzbuch"),
     },
     {
         "name": "Aufstellungsbeschluss",
-        "muster": r"Aufstellungsbeschluss|Aufstellung des Bebauungsplans",
+        # „Aufstellungs- und Überleitungsbeschluss" und „Aufstellungs- und
+        # Entwurfsbeschluss" enthalten das ganze Wort nicht — 22 Vorkommen im
+        # Bestand. Dieselbe Komposita-Lücke wie seinerzeit beim
+        # Wortwahl-Wächter. Erfasst wird die **ganze** Wendung: „Aufstellungs"
+        # allein zu unterstreichen ergäbe einen Wortfetzen mit Bindestrich.
+        "muster": (r"Aufstellungsbeschluss|Aufstellungs- und \w+beschluss|"
+                   r"Aufstellung des Bebauungsplans"),
         "satz": (
             "Der erste Schritt eines Bauleitplanverfahrens — das Gegenstück zum "
             "Satzungsbeschluss am Ende. Er entscheidet noch nichts über den Inhalt, "
-            "sondern eröffnet das Verfahren. Zwischen beiden liegen Entwurf, "
-            "Beteiligung der Öffentlichkeit und Abwägung; bei größeren Vorhaben "
-            "vergehen dabei mehrere Jahre und der Plan kommt mehrfach auf die "
-            "Tagesordnung."),
+            "sondern eröffnet das Verfahren; das Baugesetzbuch nennt ihn an dieser "
+            "Stelle mit einer einzigen Vorgabe: „Der Beschluss, einen Bauleitplan "
+            "aufzustellen, ist ortsüblich bekannt zu machen.“ Zwischen beiden liegen "
+            "Entwurf, Beteiligung der Öffentlichkeit und Abwägung; bei größeren "
+            "Vorhaben vergehen dabei mehrere Jahre und der Plan kommt mehrfach auf "
+            "die Tagesordnung."),
         "fundstelle": "§ 2 Abs. 1 Satz 2 Baugesetzbuch",
+    },
+    {
+        "name": "Entwurfsbeschluss",
+        "muster": r"Entwurfsbeschluss",
+        "satz": (
+            "Der Beschluss über den Planentwurf. Auf ihn folgt die Beteiligung "
+            "der Öffentlichkeit: „Die Entwürfe der Bauleitpläne sind mit der "
+            "Begründung … für die Dauer eines Monats, mindestens jedoch für die "
+            "Dauer von 30 Tagen … im Internet zu veröffentlichen.“ Wer will, kann "
+            "dazu Stellung nehmen; was eingeht, wird anschließend abgewogen. In "
+            "33 Beschlüssen des Bestands ordnet der Entwurfsbeschluss diese "
+            "Beteiligung ausdrücklich an."),
+        "fundstelle": "§ 3 Abs. 2 Satz 1 Baugesetzbuch",
     },
     {
         "name": "Feststellungsbeschluss",

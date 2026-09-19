@@ -20,6 +20,7 @@ import datetime as dt
 import json
 from pathlib import Path
 
+from begriffe import markieren
 from seite import fuss, kopf, zahlwort
 from verfahrensweg import lohnt, schritte
 from vorhaben import MINDEST_STATIONEN, zusammenfuehren
@@ -72,7 +73,18 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
 /* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
    Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
    statt einer breiten Tabellenzeile. */
-section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+/* „Worum es geht" — der Sachverhalt der ersten Sitzungsvorlage. Ohne ihn
+   erklaert die Seite den Verfahrensweg eines Wohnbaugebiets, ohne je zu
+   sagen, dass es ein Wohnbaugebiet ist. */
+section.worum{margin:26px 0 0;padding:18px 16px 14px;border:1px solid var(--rule)}
+section.worum h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.worum .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.worum p.text{margin:10px 0 0;font-size:15px;line-height:1.65;max-width:62ch}
+section.worum .quelle{margin:10px 0 0;font-size:13px;line-height:1.6;
+  color:var(--muted);max-width:62ch;font-family:inherit;letter-spacing:0;
+  text-transform:none}
+section.weg{margin:26px 0 0;padding:18px 16px 10px;background:var(--surface);
   border:1px solid var(--rule)}
 section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
 section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
@@ -93,8 +105,6 @@ ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
 ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
 ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 ol.wegliste .sv{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
-section.weg .rest{margin:12px 0 12px;padding-top:12px;border-top:1px solid var(--rule);
-  font-size:13px;line-height:1.6;color:var(--muted);max-width:62ch}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -109,13 +119,14 @@ a.karte .meta{
 """
 
 
-def station_html(st: dict) -> str:
+def station_html(st: dict, erklaert: set[str]) -> str:
     dok = "".join(
         f'<a class="doc" href="{e(d["url"])}" target="_blank" '
         f'rel="noopener noreferrer">{e(d["titel"])}</a>'
         for d in st.get("dok", []))
     unterlagen = f'<div class="unterlagen">{dok}</div>' if dok else ""
-    wortlaut = f'<p class="wortlaut">{e(st["w"])}</p>' if st.get("w") else ""
+    wortlaut = (f'<p class="wortlaut">{markieren(e(st["w"]), erklaert)}</p>'
+                if st.get("w") else "")
     ergebnis = (f'<span class="erg">{e(st["e"])}</span>'
                 if st.get("e") else '<span class="erg">ohne Abstimmung</span>')
     ausgabe = st.get("a") or ""
@@ -126,7 +137,7 @@ def station_html(st: dict) -> str:
     return f"""  <li id="station-{st['_nr']}">
     <p class="wann">{datum_lang(st['d'])} &middot; {e(st['gl'])}
       {f'<span class="sv">{e(st["v"])}</span>' if st.get("v") else ""}</p>
-    <p class="sache">{e(st['t'])}</p>
+    <p class="sache">{markieren(e(st['t']), erklaert)}</p>
     {wortlaut}
     {ergebnis}
     {unterlagen}
@@ -134,11 +145,77 @@ def station_html(st: dict) -> str:
   </li>"""
 
 
-def weg_html(weg: list[dict], stationen: list[dict]) -> str:
+def und_liste(teile: list[str]) -> str:
+    """„a, b und c" — fuer Aufzaehlungen im Fliesstext."""
+    if len(teile) <= 1:
+        return teile[0] if teile else ""
+    return ", ".join(teile[:-1]) + " und " + teile[-1]
+
+
+def worum_html(stationen: list[dict], erklaert: set[str]) -> str:
+    """Worum es bei diesem Vorhaben sachlich geht.
+
+    Die Seite erklaerte bisher den Verfahrensweg eines Wohnbaugebiets, ohne je
+    zu sagen, dass es ein Wohnbaugebiet ist: Beschluesse benennen den
+    Verwaltungsvorgang, nicht die Sache. Der Abschnitt „Zum Sachverhalt" der
+    ersten Sitzungsvorlage sagt es — Schritt 08 legt ihn an die Station.
+
+    Es ist die Darstellung der Verwaltung zu **einem** Beschluss, nicht eine
+    neutrale Beschreibung des Vorhabens. Genau so ist sie ausgewiesen.
+    """
+    mit = [s for s in sorted(stationen, key=lambda x: x["d"]) if s.get("sv")]
+    if not mit:
+        return ""
+    st = mit[0]
+    nummer = f' {e(st["v"])}' if st.get("v") else ""
+    return f"""
+<section class="worum" aria-labelledby="worumtitel">
+  <h2 id="worumtitel">Worum es geht</h2>
+  <p class="woher">Beleg &middot; aus der Sitzungsvorlage</p>
+  <p class="text">{markieren(e(st['sv']), erklaert)}</p>
+  <p class="quelle">Aus dem Abschnitt „Zum Sachverhalt" der Sitzungsvorlage{nummer},
+  behandelt am {datum_lang(st['d'])}. Das ist die Darstellung der Verwaltung zu
+  diesem einen Beschluss — nicht eine Beschreibung des ganzen Vorhabens. Gekürzt;
+  maßgeblich ist die Vorlage selbst.</p>
+</section>
+"""
+
+
+def weg_html(weg: list[dict], stationen: list[dict],
+             erklaert: set[str]) -> str:
     """Die Kurzfassung des Verfahrensverlaufs als Sprungliste in die Chronik."""
     # Den Strang nur nennen, wo er unterscheidet. Laeuft ein Vorhaben nur als
     # Flaechennutzungsplanaenderung, stuende in jeder Zeile dasselbe Wort.
+    namen = {s["strang"] for s in weg if s["strang"]}
     mehrere = len({s["strang"] for s in weg}) > 1
+
+    # Ohne diesen Satz liest sich die Liste falsch: Bei „Drei Eichen VI" faellt
+    # der Satzungsbeschluss fuer Teilbereich A auf den 25.11.2024, der fuer
+    # Teilbereich B erst auf den 07.04.2025 — untereinander sieht das aus, als
+    # sei ein fertiger Plan wieder aufgeschnuert worden. Tatsaechlich laufen
+    # zwei Verfahren nebeneinander.
+    # Planart und Teilbereich getrennt aufzaehlen. Zusammengesetzt lautet der
+    # Satz „… nebeneinander: Bebauungsplan, Bebauungsplan, Teilbereich A,
+    # Bebauungsplan, Teilbereich B, …" — die Kommas der Namen und die der
+    # Aufzaehlung sind dann nicht mehr auseinanderzuhalten.
+    arten = sorted({n.split(", Teilbereich")[0] for n in namen})
+    bereiche = sorted({n.split(", Teilbereich ")[1] for n in namen
+                       if ", Teilbereich " in n})
+    straenge = ""
+    if mehrere:
+        satz = (f"Dieses Vorhaben läuft in mehreren Verfahren nebeneinander: "
+                f"{e(und_liste(arten))}." if len(arten) > 1 else
+                f"Das Verfahren zum {e(arten[0])} läuft in getrennten "
+                f"Teilbereichen." if arten else "")
+        if bereiche and len(arten) > 1:
+            satz += (f" Einzelne davon sind zusätzlich nach Teilbereichen "
+                     f"getrennt ({e(und_liste(bereiche))}).")
+        elif bereiche:
+            satz += f" Es sind die Teilbereiche {e(und_liste(bereiche))}."
+        straenge = (f'\n  <p class="hinweis">{satz} Hinter jedem Schritt steht, '
+                    f'zu welchem Verfahren er gehört. Die Daten steigen deshalb '
+                    f'nicht durchgehend an — ein Verfahren kann abgeschlossen '
+                    f'sein, während ein anderes erst beginnt.</p>')
 
     zeilen = []
     for sch in weg:
@@ -158,22 +235,25 @@ def weg_html(weg: list[dict], stationen: list[dict]) -> str:
             teile.append(f'<span class="sv">{e(sch["vorlage"])}</span>')
         zeilen.append(f"""    <li><a href="#station-{sch['nr']}">
       <span class="wann">{datum_lang(sch['von'])}</span>
-      <span class="wasname">{e(sch['name'])}</span>
+      <span class="wasname">{markieren(e(sch['name']), erklaert)}</span>
       <span class="wo">{' &middot; '.join(teile)}</span>
     </a></li>""")
 
     # Was die Kurzfassung nicht zeigt, muss sie selbst sagen — sonst liest sie
-    # sich als vollstaendiger Verlauf.
+    # sich als vollstaendiger Verlauf. Der Satz steht **vor** der Liste, im
+    # Einleitungsabsatz: Als abgesetzter Nachsatz unter einer Trennlinie ueber
+    # die volle Breite las sich diese Linie wie die Unterkante des Kastens, und
+    # der Satz wirkte herausgefallen. Ausserdem kam er zu spaet — wer die Liste
+    # gelesen hat, haelt sie da schon fuer den ganzen Verlauf.
     uebrig = len(stationen) - sum(s["stationen"] for s in weg)
     rest = ""
     if uebrig == 1:
-        rest = ('<p class="rest">Nicht aufgeführt ist eine weitere Station dieses '
-                'Vorhabens: ihr amtlicher Titel nennt keinen Verfahrensschritt. '
-                'Sie steht in der Chronik darunter.</p>')
+        rest = (" Eine weitere Station nennt in ihrem Titel keinen "
+                "Verfahrensschritt; sie steht nur in der Chronik darunter.")
     elif uebrig:
-        rest = (f'<p class="rest">Nicht aufgeführt sind {zahlwort(uebrig, gross=False)} weitere '
-                f'Stationen dieses Vorhabens: ihr amtlicher Titel nennt keinen '
-                f'Verfahrensschritt. Sie stehen in der Chronik darunter.</p>')
+        rest = (f" {zahlwort(uebrig)} weitere Stationen nennen in ihrem Titel "
+                f"keinen Verfahrensschritt; sie stehen nur in der Chronik "
+                f"darunter.")
 
     return f"""
 <section class="weg" aria-labelledby="wegtitel">
@@ -181,12 +261,11 @@ def weg_html(weg: list[dict], stationen: list[dict]) -> str:
   <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
   <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
   Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
-  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt. Jede
-  Zeile führt zur zugehörigen Station.</p>
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.{rest}
+  Jede Zeile führt zur zugehörigen Station.</p>{straenge}
   <ol class="wegliste">
 {chr(10).join(zeilen)}
   </ol>
-  {rest}
 </section>
 """
 
@@ -196,15 +275,34 @@ def seite_bauen(vg: dict) -> str:
     for nr, st in enumerate(stationen, 1):
         st["_nr"] = nr
     weg = schritte(stationen)
+    # Ein Begriff wird je Seite einmal aufgemacht. Die Reihenfolge der Ausgabe
+    # bestimmt, wo: zuerst „Worum es geht", dann der Verfahrensweg, dann die
+    # Chronik — der f-String unten wird von oben nach unten ausgewertet.
+    erklaert: set[str] = set()
     von, bis = stationen[0]["d"], stationen[-1]["d"]
     gremien = sorted({s["gl"] for s in stationen})
     nummern = [n for n in vg["v"].split(" · ") if n]
     # Der amtliche Titel ist oft ein ganzer Absatz und taugt nicht als Vorspann.
     # Er gehoert trotzdem auf die Seite — wer im Ratsinformationssystem sucht,
     # findet den Vorgang nur unter diesem Wortlaut.
+    #
+    # Er ist aber **einer von mehreren**: „Drei Eichen VI" laeuft unter zwoelf
+    # verschiedenen Titeln, und der laengste davon nennt nur die Aenderung des
+    # Flaechennutzungsplans in Teilbereich B. Unbeschriftet als „Amtlicher
+    # Titel" gelesen, hielte man die ganze Seite dafuer. Also wird gesagt,
+    # wie viele es sind.
     lang_titel = (vg.get("u") or "").strip()
-    amtstitel = (f'<p class="amtstitel"><b>Amtlicher Titel</b> {e(lang_titel)}</p>'
-                 if lang_titel and lang_titel != vg["t"] else "")
+    anzahl_titel = len({" ".join((s.get("t") or "").split()) for s in stationen})
+    amtstitel = ""
+    if lang_titel and lang_titel != vg["t"]:
+        vorsatz = ("Amtlicher Titel" if anzahl_titel <= 1 else
+                   f"Einer von {zahlwort(anzahl_titel, gross=False)} amtlichen Titeln")
+        amtstitel = (f'<p class="amtstitel"><b>{vorsatz}</b> {e(lang_titel)}'
+                     + ("" if anzahl_titel <= 1 else
+                        " <i>Die Stadt benennt die Stationen dieses Vorhabens "
+                        "unterschiedlich; hier steht der ausführlichste "
+                        "Wortlaut. Die übrigen stehen in der Chronik.</i>")
+                     + "</p>")
 
     t = [kopf(f"{vg['t']} · Chronik eines Vorhabens", hoch="../", hier="themen",
               beschreibung=f"Alle Stationen des Vorhabens „{vg['t']}\u201c in den "
@@ -228,14 +326,15 @@ def seite_bauen(vg: dict) -> str:
 
 <p class="gremienzeile">{e(', '.join(gremien))}</p>
 {amtstitel}
-{weg_html(weg, stationen) if lohnt(weg, stationen) else ""}
+{worum_html(stationen, erklaert)}
+{weg_html(weg, stationen, erklaert) if lohnt(weg, stationen) else ""}
 
 <p>Der Wortlaut stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse
 aus der Zeile „Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind
 nicht enthalten.</p>
 
 <ol class="chronik">
-{chr(10).join(station_html(s) for s in stationen)}
+{chr(10).join(station_html(s, erklaert) for s in stationen)}
 </ol>
 """)
     t.append("</div>")

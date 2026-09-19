@@ -849,7 +849,18 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
 /* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
    Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
    statt einer breiten Tabellenzeile. */
-section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+/* „Worum es geht" — der Sachverhalt der ersten Sitzungsvorlage. Ohne ihn
+   erklaert die Seite den Verfahrensweg eines Wohnbaugebiets, ohne je zu
+   sagen, dass es ein Wohnbaugebiet ist. */
+section.worum{margin:26px 0 0;padding:18px 16px 14px;border:1px solid var(--rule)}
+section.worum h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.worum .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.worum p.text{margin:10px 0 0;font-size:15px;line-height:1.65;max-width:62ch}
+section.worum .quelle{margin:10px 0 0;font-size:13px;line-height:1.6;
+  color:var(--muted);max-width:62ch;font-family:inherit;letter-spacing:0;
+  text-transform:none}
+section.weg{margin:26px 0 0;padding:18px 16px 10px;background:var(--surface);
   border:1px solid var(--rule)}
 section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
 section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
@@ -870,8 +881,6 @@ ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
 ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
 ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 ol.wegliste .sv{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
-section.weg .rest{margin:12px 0 12px;padding-top:12px;border-top:1px solid var(--rule);
-  font-size:13px;line-height:1.6;color:var(--muted);max-width:62ch}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -924,15 +933,26 @@ a.karte .meta{
 </header>
 
 <p class="gremienzeile">Gemeinderat</p>
-<p class="amtstitel"><b>Amtlicher Titel</b> Sanierung Bad Waldsee "Altstadt III" – Sanierungssatzung – Verlängerung der Durchführungsfrist</p>
+<p class="amtstitel"><b>Einer von vier amtlichen Titeln</b> Sanierung Bad Waldsee "Altstadt III" – Sanierungssatzung – Verlängerung der Durchführungsfrist <i>Die Stadt benennt die Stationen dieses Vorhabens unterschiedlich; hier steht der ausführlichste Wortlaut. Die übrigen stehen in der Chronik.</i></p>
+
+<section class="worum" aria-labelledby="worumtitel">
+  <h2 id="worumtitel">Worum es geht</h2>
+  <p class="woher">Beleg &middot; aus der Sitzungsvorlage</p>
+  <p class="text">Mit Beschluss vom 06.02.2017 (ortsüblich bekanntgemacht am 09.03.2017) hat der Gemeinderat der Stadt Bad Waldsee die Sanierungssatzung für das Gebiet „Altstadt III“ beschlossen. Bei der förmlichen Festlegung eines Sanierungsgebietes ist gemäß § 142 Abs. 3 BauGB die Frist festzulegen, in der die Sanierung durchgeführt werden soll, die Frist soll 15 Jahre nicht überschrei- ten. […]</p>
+  <p class="quelle">Aus dem Abschnitt „Zum Sachverhalt" der Sitzungsvorlage SV-42/2024,
+  behandelt am 18. März 2024. Das ist die Darstellung der Verwaltung zu
+  diesem einen Beschluss — nicht eine Beschreibung des ganzen Vorhabens. Gekürzt;
+  maßgeblich ist die Vorlage selbst.</p>
+</section>
+
 
 <section class="weg" aria-labelledby="wegtitel">
   <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
   <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
   <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
   Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
-  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt. Jede
-  Zeile führt zur zugehörigen Station.</p>
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt. Zwei weitere Stationen nennen in ihrem Titel keinen Verfahrensschritt; sie stehen nur in der Chronik darunter.
+  Jede Zeile führt zur zugehörigen Station.</p>
   <ol class="wegliste">
     <li><a href="#station-3">
       <span class="wann">10. November 2025</span>
@@ -950,7 +970,6 @@ a.karte .meta{
       <span class="wo">Gemeinderat &middot; <span class="sv">SV-49/2026</span></span>
     </a></li>
   </ol>
-  <p class="rest">Nicht aufgeführt sind zwei weitere Stationen dieses Vorhabens: ihr amtlicher Titel nennt keinen Verfahrensschritt. Sie stehen in der Chronik darunter.</p>
 </section>
 
 
@@ -999,7 +1018,7 @@ nicht enthalten.</p>
     <p class="wann">2. März 2026 &middot; Gemeinderat
       <span class="sv">SV-49/2026</span></p>
     <p class="sache">Sanierungsgebiet „Altstadt III“ – 4. Änderungssatzung zur Teilaufhebung des Sanierungsgebietes</p>
-    <p class="wortlaut">1. Die als Anlage beigefügte 4. Änderungssatzung zur Teilaufhebung des Sanierungsgebietes "Altstadt III" in Bad Waldsee wird als Satzung beschlossen.</p>
+    <p class="wortlaut">1. Die als Anlage beigefügte 4. Änderungssatzung zur Teilaufhebung des Sanierungsgebietes "Altstadt III" in Bad Waldsee wird <span class="erklaert" tabindex="0">als Satzung<span class="tooltip" role="note"><b>Satzungsbeschluss</b> Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.<span class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</span></span></span> beschlossen.</p>
     <span class="erg">einstimmig</span>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZ5OgVJSGyOasoYslmn6iUi1DR_d8CXzU191fS1UgO8I/Sitzungsvorlage_SV-49-2026_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-49/2026 1. Nachtrag</a></div>
     <p class="quelle"><a href="../ausgaben/2026/kw10.html">In der Wochenausgabe nachlesen</a></p>

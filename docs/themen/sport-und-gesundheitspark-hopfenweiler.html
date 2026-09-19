@@ -849,7 +849,18 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
 /* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
    Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
    statt einer breiten Tabellenzeile. */
-section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+/* „Worum es geht" — der Sachverhalt der ersten Sitzungsvorlage. Ohne ihn
+   erklaert die Seite den Verfahrensweg eines Wohnbaugebiets, ohne je zu
+   sagen, dass es ein Wohnbaugebiet ist. */
+section.worum{margin:26px 0 0;padding:18px 16px 14px;border:1px solid var(--rule)}
+section.worum h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.worum .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.worum p.text{margin:10px 0 0;font-size:15px;line-height:1.65;max-width:62ch}
+section.worum .quelle{margin:10px 0 0;font-size:13px;line-height:1.6;
+  color:var(--muted);max-width:62ch;font-family:inherit;letter-spacing:0;
+  text-transform:none}
+section.weg{margin:26px 0 0;padding:18px 16px 10px;background:var(--surface);
   border:1px solid var(--rule)}
 section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
 section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
@@ -870,8 +881,6 @@ ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
 ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
 ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 ol.wegliste .sv{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
-section.weg .rest{margin:12px 0 12px;padding-top:12px;border-top:1px solid var(--rule);
-  font-size:13px;line-height:1.6;color:var(--muted);max-width:62ch}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -924,28 +933,38 @@ a.karte .meta{
 </header>
 
 <p class="gremienzeile">Ausschuss für Umwelt, Technik und Nachhaltigkeit, Gemeinderat</p>
-<p class="amtstitel"><b>Amtlicher Titel</b> 2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Entwurfsbeschluss</p>
+<p class="amtstitel"><b>Einer von zwei amtlichen Titeln</b> 2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Entwurfsbeschluss <i>Die Stadt benennt die Stationen dieses Vorhabens unterschiedlich; hier steht der ausführlichste Wortlaut. Die übrigen stehen in der Chronik.</i></p>
+
+<section class="worum" aria-labelledby="worumtitel">
+  <h2 id="worumtitel">Worum es geht</h2>
+  <p class="woher">Beleg &middot; aus der Sitzungsvorlage</p>
+  <p class="text">Der Ausschuss für Umwelt, Technik und Nachhaltigkeit (AUTN) hat am 31.01.2022 den <span class="erklaert" tabindex="0">Aufstellungsbeschluss<span class="tooltip" role="note"><b>Aufstellungsbeschluss</b> Der erste Schritt eines Bauleitplanverfahrens — das Gegenstück zum Satzungsbeschluss am Ende. Er entscheidet noch nichts über den Inhalt, sondern eröffnet das Verfahren; das Baugesetzbuch nennt ihn an dieser Stelle mit einer einzigen Vorgabe: „Der Beschluss, einen Bauleitplan aufzustellen, ist ortsüblich bekannt zu machen.“ Zwischen beiden liegen Entwurf, Beteiligung der Öffentlichkeit und Abwägung; bei größeren Vorhaben vergehen dabei mehrere Jahre und der Plan kommt mehrfach auf die Tagesordnung.<span class="fundstelle">§ 2 Abs. 1 Satz 2 Baugesetzbuch</span></span></span> für die 2. Änderung des <span class="erklaert" tabindex="0">Bebauungsplan<span class="tooltip" role="note"><b>Bebauungsplan</b> Der Plan, der für ein bestimmtes Gebiet verbindlich festlegt, was dort gebaut werden darf: Er enthält „die rechtsverbindlichen Festsetzungen für die städtebauliche Ordnung“. Anders als der Flächennutzungsplan, der die Bodennutzung für das ganze Gemeindegebiet nur in den Grundzügen darstellt, kann er unmittelbar Baurecht begründen. Setzt er mindestens Art und Maß der baulichen Nutzung, die überbaubaren Grundstücksflächen und die örtlichen Verkehrsflächen fest, ist ein Vorhaben dort zulässig, wenn es diesen Festsetzungen nicht widerspricht <b>und die Erschließung gesichert ist</b>.<span class="fundstelle">§ 5 Abs. 1 Satz 1, § 8 Abs. 1 Satz 1 und § 30 Abs. 1 Baugesetzbuch</span></span></span>s „Sport- und Gesundheitspark Hopfenweiler“ beschlossen. Das fürstliche Haus Waldburg zu Wolfegg und Waldsee beabsichtigt zur Standortsicherung und Attraktivitätssteigerung verschiedene Baumaßnahmen auf dem Areal. […]</p>
+  <p class="quelle">Aus dem Abschnitt „Zum Sachverhalt" der Sitzungsvorlage SV-28/2025,
+  behandelt am 7. Juli 2025. Das ist die Darstellung der Verwaltung zu
+  diesem einen Beschluss — nicht eine Beschreibung des ganzen Vorhabens. Gekürzt;
+  maßgeblich ist die Vorlage selbst.</p>
+</section>
+
 
 <section class="weg" aria-labelledby="wegtitel">
   <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
   <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
   <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
   Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
-  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt. Jede
-  Zeile führt zur zugehörigen Station.</p>
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.
+  Jede Zeile führt zur zugehörigen Station.</p>
   <ol class="wegliste">
     <li><a href="#station-1">
       <span class="wann">7. Juli 2025</span>
-      <span class="wasname">Abwägungs- und Entwurfsbeschluss</span>
+      <span class="wasname"><span class="erklaert" tabindex="0">Abwägung<span class="tooltip" role="note"><b>Abwägung</b> Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen Einwendungen behandelt werden: „Bei der Aufstellung der Bauleitpläne sind die öffentlichen und privaten Belange gegeneinander und untereinander gerecht abzuwägen.“ In der Abwägungsvorlage steht zu jedem Einwand, ob ihm gefolgt wird und warum.<span class="fundstelle">§ 1 Abs. 7 Baugesetzbuch</span></span></span>s- und <span class="erklaert" tabindex="0">Entwurfsbeschluss<span class="tooltip" role="note"><b>Entwurfsbeschluss</b> Der Beschluss über den Planentwurf. Auf ihn folgt die Beteiligung der Öffentlichkeit: „Die Entwürfe der Bauleitpläne sind mit der Begründung … für die Dauer eines Monats, mindestens jedoch für die Dauer von 30 Tagen … im Internet zu veröffentlichen.“ Wer will, kann dazu Stellung nehmen; was eingeht, wird anschließend abgewogen. In 33 Beschlüssen des Bestands ordnet der Entwurfsbeschluss diese Beteiligung ausdrücklich an.<span class="fundstelle">§ 3 Abs. 2 Satz 1 Baugesetzbuch</span></span></span></span>
       <span class="wo">Ausschuss für Umwelt, Technik und Nachhaltigkeit &middot; <span class="sv">SV-28/2025</span></span>
     </a></li>
     <li><a href="#station-2">
       <span class="wann">23. März 2026</span>
-      <span class="wasname">Abwägungs- und Satzungsbeschluss</span>
+      <span class="wasname">Abwägungs- und <span class="erklaert" tabindex="0">Satzungsbeschluss<span class="tooltip" role="note"><b>Satzungsbeschluss</b> Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde beschließt den Bebauungsplan als Satzung.“ Danach wird er ortsüblich bekannt gemacht und tritt in Kraft — ab dann gilt er als Ortsrecht.<span class="fundstelle">§ 10 Abs. 1 und Abs. 3 Baugesetzbuch</span></span></span></span>
       <span class="wo">zuletzt Gemeinderat, 13. April 2026 &middot; <span class="sv">SV-165/2025</span></span>
     </a></li>
   </ol>
-  
 </section>
 
 

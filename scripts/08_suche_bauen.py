@@ -30,13 +30,14 @@ from seite import fuss, kopf, kurz
 from textwerk import (
     haeufigkeiten_laden,
     leertrennung_reparieren,
+    sachverhalt_lesen,
     schwaerzen,
     stichtag_vorgabe,
     trennung_reparieren,
     wortschatz_laden,
 )
 from textwerk import pdf_text as roh_text
-from vorhaben import seiten_je_vorgang, vergleichsname
+from vorhaben import MINDEST_STATIONEN, seiten_je_vorgang, vergleichsname
 
 # pypdf meldet bei vielen Protokollen "Ignoring wrong pointing object" — ein
 # Schoenheitsfehler in den erzeugten PDFs, der die Textextraktion nicht stoert.
@@ -52,6 +53,7 @@ DATEN = WURZEL / "data"
 # aus 03_auswerten.py — siehe textwerk.py.
 WORTSCHATZ = wortschatz_laden(DATEN / "wortschatz.json")
 HAEUFIGKEITEN = haeufigkeiten_laden(DATEN / "wortschatz.json")
+VORLAGEN = DATEN / "vorlagen"
 DOCS = WURZEL / "docs"
 
 ERGEBNIS = re.compile(r"Ergebnis der Beschlussfassung\s*:?\s*(.{0,70})")
@@ -345,6 +347,30 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
                             not st["e"].endswith(": 0 : 0") for st in stationen),
             "b": max((st["b"] for st in stationen), default=0),
         })
+
+    # Worum es bei einem mehrstufigen Vorgang ueberhaupt geht, steht nirgends
+    # in den Beschluessen — die benennen den Verwaltungsvorgang, nicht die
+    # Sache. Es steht im Abschnitt „Zum Sachverhalt" der ersten Sitzungsvorlage.
+    #
+    # Gelesen wird er hier und nicht in Schritt 11: Dieser Schritt hat die
+    # PDF-Bibliothek und den Wortschatz fuer die Trennungsreparatur ohnehin
+    # geladen. Schritt 11 bliebe sonst nicht mehr ohne PDF-Abhaengigkeit
+    # lauffaehig — und laeuft in lauf.sh genau so.
+    #
+    # Der Vermerk haengt an der **Station**, nicht am Vorgang: Schritt 11 fuehrt
+    # gleichnamige Vorgaenge zu einem Vorhaben zusammen, und dabei ueberlebt nur
+    # der Kopf des ersten. Stationen ueberleben alle.
+    for v in vorgaenge:
+        if len(v["s"]) < MINDEST_STATIONEN:
+            continue
+        for st in sorted(v["s"], key=lambda x: x["d"]):
+            if not st.get("v"):
+                continue
+            pfad = VORLAGEN / (re.sub(r"[^A-Za-z0-9-]+", "-", st["v"]) + ".pdf")
+            text = sachverhalt_lesen(pfad, WORTSCHATZ, HAEUFIGKEITEN)
+            if text:
+                st["sv"] = text
+            break
 
     # Zu jedem Vorgang die Themenseite vermerken, sofern es eine gibt. Die
     # Zuordnung stammt aus demselben Modul, aus dem Schritt 11 die Seiten baut —
