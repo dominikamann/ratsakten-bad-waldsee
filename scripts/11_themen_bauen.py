@@ -190,16 +190,34 @@ def worum_html(stationen: list[dict], erklaert: set[str]) -> str:
     if not mit:
         return ""
     st = mit[0]
-    nummer = f' {e(st["v"])}' if st.get("v") else ""
+
+    # Die Vorlage nennen und nicht verlinken hiesse, den Leser mit einer
+    # Kennung allein zu lassen. Verlinkt wird **nur** das Dokument, das die
+    # Vorlagennummer im Titel traegt — im ganzen Bestand ist das eindeutig
+    # (26 von 26). Gibt es keinen solchen Treffer, bleibt die Nummer Text:
+    # lieber kein Verweis als ein falscher.
+    ziel = next((d for d in st.get("dok", [])
+                 if st.get("v") and st["v"] in d.get("titel", "")), None)
+    if not st.get("v"):
+        nummer = ""
+    elif ziel:
+        nummer = (f' <a class="doc" href="{e(ziel["url"])}" target="_blank" '
+                  f'rel="noopener noreferrer">{e(st["v"])}</a>')
+    else:
+        nummer = f' {e(st["v"])}'
+    # Die Station steht weiter unten mit Beschlusswortlaut, Abstimmung und
+    # allen Unterlagen — dorthin fuehrt das Datum.
+    wann = (f'<a href="#station-{st["_nr"]}">{datum_lang(st["d"])}</a>'
+            if st.get("_nr") else datum_lang(st["d"]))
     return f"""
 <section class="worum" aria-labelledby="worumtitel">
   <h2 id="worumtitel">Aus der ersten Sitzungsvorlage</h2>
   <p class="woher">Beleg &middot; Abschnitt „Zum Sachverhalt“</p>
   <p class="text">{markieren(e(st['sv']), erklaert)}</p>
-  <p class="quelle">Sitzungsvorlage{nummer}, behandelt am {datum_lang(st['d'])};
-  gekürzt. So beschreibt die Verwaltung den Vorgang — oft beginnt sie dabei mit
-  der Vorgeschichte des Verfahrens und nicht mit dem Vorhaben selbst.
-  Maßgeblich ist die Vorlage.</p>
+  <p class="quelle">Sitzungsvorlage{nummer}, behandelt am {wann}; gekürzt.
+  So beschreibt die Verwaltung den Vorgang — oft beginnt sie dabei mit der
+  Vorgeschichte des Verfahrens und nicht mit dem Vorhaben selbst. Maßgeblich
+  ist die Vorlage.</p>
 </section>
 """
 
@@ -224,11 +242,17 @@ def weg_html(weg: list[dict], stationen: list[dict],
     namen = {s["strang"] for s in weg if s["strang"]}
     mehrere = len({s["strang"] for s in weg}) > 1
 
-    # Ohne diesen Satz liest sich die Liste falsch: Bei „Drei Eichen VI" faellt
-    # der Satzungsbeschluss fuer Teilbereich A auf den 25.11.2024, der fuer
-    # Teilbereich B erst auf den 07.04.2025 — untereinander sieht das aus, als
-    # sei ein fertiger Plan wieder aufgeschnuert worden. Tatsaechlich laufen
-    # zwei Verfahren nebeneinander.
+    # Ohne diesen Satz liest sich die Liste falsch: Bei „Drei Eichen VI" steht
+    # der Satzungsbeschluss — das Ende eines Verfahrens — vor dem
+    # Aufstellungsbeschluss, seinem Anfang. Untereinander sieht das aus, als sei
+    # ein fertiger Plan wieder aufgeschnuert worden. Tatsaechlich sind es zwei
+    # Verfahren, eines fuer Teilbereich A und eines fuer B.
+    #
+    # **Fruehere Fassung war falsch.** Sie sagte „Die Daten steigen deshalb
+    # nicht durchgehend an". Das stimmt nicht: `schritte()` geht die Stationen
+    # nach Datum durch und haengt in dieser Reihenfolge an — ueber alle 15
+    # Bloecke nachgerechnet, keiner faellt zurueck. Nicht die Datumsfolge ist
+    # gestoert, sondern die Reihenfolge der Verfahrensschritte.
     #
     # Planart und Teilbereich werden getrennt aufgezaehlt. Zusammengesetzt lautet
     # der
@@ -244,24 +268,31 @@ def weg_html(weg: list[dict], stationen: list[dict],
     # stuende dann „laeuft in getrennten Teilbereichen" ueber einem Vorhaben,
     # das keine hat. Im heutigen Bestand tritt der Fall nicht auf; er waere
     # eine falsche Tatsachenbehauptung, sobald er auftritt.
+    teilsatz = (f", teils getrennt nach Teilbereich {e(und_liste(bereiche))}"
+                if bereiche else "")
     satz = ""
     if len(arten) > 1:
-        satz = (f"Dieses Vorhaben läuft in mehreren Verfahren nebeneinander: "
-                f"{e(und_liste(arten))}.")
-        if bereiche:
-            satz += (f" Einzelne davon sind zusätzlich nach Teilbereichen "
-                     f"getrennt ({e(und_liste(bereiche))}).")
+        satz = (f"Zu diesem Vorhaben laufen mehrere Verfahren nebeneinander: "
+                f"{e(und_liste(arten))}{teilsatz}.")
     elif bereiche:
         wo = f"Das Verfahren zum {e(arten[0])}" if arten else "Dieses Vorhaben"
-        satz = (f"{wo} läuft in getrennten Teilbereichen "
-                f"({e(und_liste(bereiche))}).")
+        satz = (f"{wo} läuft getrennt nach Teilbereich "
+                f"{e(und_liste(bereiche))}.")
 
+    # „Gleich benannte Schritte kommen mehrfach vor" gilt nicht ueberall: Bei
+    # „Waldseer Strasse" traegt jeder Schritt einen anderen Namen. Der Satz
+    # steht deshalb nur, wo er zutrifft.
+    doppelte = len({s["name"] for s in weg}) < len(weg)
     straenge = ""
     if satz:
-        straenge = (f'\n  <p class="hinweis">{satz} Hinter jedem Schritt steht, '
-                    f'zu welchem Verfahren er gehört. Die Daten steigen deshalb '
-                    f'nicht durchgehend an — ein Verfahren kann abgeschlossen '
-                    f'sein, während ein anderes erst beginnt.</p>')
+        zusatz = (" Gleich benannte Schritte kommen mehrfach vor — jedes "
+                  "Verfahren durchläuft sie einmal." if doppelte else "")
+        straenge = (f'\n  <p class="hinweis">{satz} Unter jedem Schritt steht, '
+                    f'zu welchem Verfahren er gehört. Die Liste ist nach Datum '
+                    f'geordnet und folgt deshalb nicht dem Ablauf eines '
+                    f'einzelnen Verfahrens: Ein Satzungsbeschluss — das Ende — '
+                    f'kann vor einem Aufstellungsbeschluss stehen, dem Anfang '
+                    f'des nächsten.{zusatz}</p>')
 
     zeilen = []
     for sch in weg:
@@ -294,21 +325,22 @@ def weg_html(weg: list[dict], stationen: list[dict],
     uebrig = len(stationen) - sum(s["stationen"] for s in weg)
     rest = ""
     if uebrig == 1:
-        rest = (" Eine weitere Station nennt in ihrem Titel keinen "
-                "Verfahrensschritt; sie steht nur in der Chronik darunter.")
+        rest = (" Eine Station fehlt hier, weil ihr Titel keinen "
+                "Verfahrensschritt nennt; sie steht unten in der Chronik.")
     elif uebrig:
-        rest = (f" {zahlwort(uebrig)} weitere Stationen nennen in ihrem Titel "
-                f"keinen Verfahrensschritt; sie stehen nur in der Chronik "
-                f"darunter.")
+        rest = (f" {zahlwort(uebrig)} Stationen fehlen hier, weil ihr Titel "
+                f"keinen Verfahrensschritt nennt; sie stehen unten in der "
+                f"Chronik.")
 
     return f"""
 <section class="weg" aria-labelledby="wegtitel">
   <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
   <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
-  <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
-  Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
-  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.{rest}
-  Jede Zeile führt zur zugehörigen Station.</p>{straenge}
+  <p class="hinweis">Die Liste zeigt die Verfahrensschritte, die in den
+  amtlichen Titeln selbst stehen — in der Reihenfolge, in der sie zum ersten Mal
+  auf einer Tagesordnung standen. Eine Vorlage, die nacheinander durch mehrere
+  Gremien geht, steht nur einmal.{rest} Jede Zeile führt zur ausführlichen
+  Station weiter unten.</p>{straenge}
   <ol class="wegliste">
 {chr(10).join(zeilen)}
   </ol>
