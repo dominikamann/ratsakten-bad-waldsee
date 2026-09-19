@@ -198,9 +198,16 @@ def eingehalten() -> list[tuple[str, str, str]]:
     if "Verfahren abgeschlossen" in wochen:
         posten = gesammelt.get("Verfahren abgeschlossen", [])
         eintraege.append((
-            f"{len(posten)} Planverfahren wurden zu Ende gebracht",
-            "Ein Bauleitplanverfahren endet damit, dass das Ergebnis als Satzung "
-            "beschlossen wird; über die Qualität des Ergebnisses sagt das nichts.",
+            # Gezaehlt wird, was das Muster misst: Beschluesse mit „als Satzung
+            # beschlossen". Das sind ueberwiegend Bebauungsplaene, aber nicht
+            # nur — SV-49/2026 ist die Teilaufhebung eines Sanierungsgebiets.
+            # „Planverfahren" war deshalb zu eng benannt: die Zahl haengt am
+            # Satzungsbeschluss, nicht an der Bauleitplanung.
+            f"{len(posten)} Verfahren wurden mit einem Satzungsbeschluss "
+            f"abgeschlossen",
+            "Gezählt ist, wie oft ein Verfahren mit einem Satzungsbeschluss "
+            "endete — überwiegend Bebauungspläne, daneben andere Satzungen. "
+            "Über die Qualität des Ergebnisses sagt das nichts.",
             "Vorlagen: " + nummern(posten),
         ))
 

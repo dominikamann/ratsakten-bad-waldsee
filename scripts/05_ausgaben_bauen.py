@@ -366,9 +366,12 @@ def auffaelligkeiten(w: dict) -> list[dict]:
         treffer.append({
             "art": "Verfahren abgeschlossen",
             "ton": "neutral",
-            "text": "Ein Planverfahren endet damit, dass das Ergebnis als Satzung "
-                    "beschlossen wird. Das Verfahren ist dann abgeschlossen; über "
-                    "die Qualität des Ergebnisses sagt das nichts.",
+            # Nicht „Planverfahren": ABSCHLUSS misst den Satzungsbeschluss, und
+            # den fasst auch eine Sanierungssatzung. Die Bezeichnung muss
+            # nennen, was gezaehlt wurde.
+            "text": "Das Verfahren endet damit, dass das Ergebnis als Satzung "
+                    "beschlossen wird — meist ein Bebauungsplan. Über die "
+                    "Qualität des Ergebnisses sagt das nichts.",
             "posten": [f"{b['vorlage']} — {b['titel']}" for b in abgeschlossen],
         })
 
