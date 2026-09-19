@@ -247,7 +247,7 @@ def bauen() -> str:
   Bekanntmachungen</a>. Es wurden keine Zugangsbeschr&auml;nkungen umgangen.</p>
 </section>
 
-<section style="border-bottom:none">
+<section id="hinweise" style="border-bottom:none">
   <h2>Hinweise</h2>
   <div class="hinweis">
     <p class="lab">Privates Lernprojekt &middot; maschinell erzeugt &middot; ohne Gew&auml;hr</p>

@@ -73,16 +73,38 @@ def pruefe_sprungmarken() -> None:
     Verschoebe sich die Nummerierung der Stationen, zeigten die Zeilen ins
     Leere — sichtbar nur dem, der jede Zeile anklickt.
     """
-    gesamt = 0
+    # Die Marken jeder Seite einmal einlesen: Seitenuebergreifende Verweise
+    # fragen sie mehrfach ab.
+    marken_je_seite: dict[Path, set[str]] = {}
+    baeume = {}
     for f in sorted(DOCS.rglob("*.html")):
         baum = H.parse(str(f)).getroot()
-        marken = set(baum.xpath("//*/@id")) | set(baum.xpath("//a/@name"))
+        baeume[f] = baum
+        marken_je_seite[f] = (set(baum.xpath("//*/@id"))
+                              | set(baum.xpath("//a/@name")))
+
+    gesamt = 0
+    for f, baum in baeume.items():
         for ziel in baum.xpath("//a/@href"):
-            if not ziel.startswith("#") or ziel == "#":
+            if ziel.startswith(("http", "mailto:")) or "#" not in ziel:
+                continue
+            pfad, _, roh = ziel.partition("#")
+            marke = urllib.parse.unquote(roh)
+            if not marke:
                 continue
             gesamt += 1
-            marke = urllib.parse.unquote(ziel[1:])
-            if marke not in marken:
+            # Ohne Pfad meint der Verweis dieselbe Seite. Mit Pfad eine andere —
+            # und **die** war bisher ungeprueft: `pruefe_verweise` schneidet die
+            # Raute ab und sieht nur die Datei. Der Fussverweis auf
+            # „index.html#hinweise" liefe unbemerkt ins Leere, wenn der
+            # Abschnitt seine Marke verloere.
+            if not pfad:
+                ziel_datei = f
+            else:
+                ziel_datei = (f.parent / urllib.parse.unquote(pfad)).resolve()
+                if ziel_datei not in marken_je_seite:
+                    continue          # fehlende Datei meldet pruefe_verweise
+            if marke not in marken_je_seite[ziel_datei]:
                 meldung = f"Sprungmarke fehlt: {f.relative_to(WURZEL)} → {ziel}"
                 if meldung not in fehler:
                     fehler.append(meldung)

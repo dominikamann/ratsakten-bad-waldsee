@@ -205,6 +205,11 @@ def fuss(hoch: str = "", meta: str = "", ende: bool = True,
     if stand:
         teile.append(f"aktualisiert am {kurz(dt.date.today())}")
     zusatz = "".join(f" &middot; {x}" for x in teile)
+    # Der Fuss trug bisher nur den Kurzhinweis; der ausfuehrliche
+    # Haftungsausschluss stand allein auf der Startseite. Wer ueber eine
+    # Wochenausgabe oder eine Themenseite einsteigt — und das ist der Regelfall,
+    # weil Verweise dorthin geteilt werden —, fand ihn nie. Jetzt von ueberall.
+    hinweise = f'<a href="{hoch}index.html#hinweise">Hinweise</a>'
     # `ende=False` fuer Seiten, die nach dem Fuss noch ein Skript mitgeben.
     schluss = "\n</body>\n</html>" if ende else ""
     return f"""
@@ -213,6 +218,7 @@ def fuss(hoch: str = "", meta: str = "", ende: bool = True,
     {navigation(hoch)}
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr{zusatz}</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr
+    &middot; {hinweise}{zusatz}</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>{schluss}"""
