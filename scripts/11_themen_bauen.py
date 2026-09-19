@@ -49,7 +49,16 @@ EIGEN = """
    die Kartenliste aller Vorhaben. */
 .quelle{margin:8px 0 0;font-family:var(--mono);font-size:11px;
   letter-spacing:.06em;text-transform:uppercase}
-ol.chronik{list-style:none;margin:26px 0 0;padding:0;counter-reset:station}
+/* Die Chronik ist zu lang fuer einen Kasten, soll aber denselben Aufbau
+   tragen wie „Worum es geht" und „Der Weg durch das Verfahren": Ueberschrift,
+   Herkunftsmarke, Hinweis. Vorher stand ihre Herkunftsangabe als loser Absatz
+   zwischen zwei beschrifteten Kaesten und gehoerte sichtbar zu nichts. */
+h2.abschnitt{margin:34px 0 0;font-size:17px;letter-spacing:-.01em}
+p.woherfrei{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+p.hinweisfrei{margin:10px 0 0;font-size:13.5px;line-height:1.6;
+  color:var(--muted);max-width:62ch}
+ol.chronik{list-style:none;margin:18px 0 0;padding:0;counter-reset:station}
 ol.chronik > li{
   position:relative;margin:0;padding:18px 0 22px 22px;border-top:1px solid var(--rule);
 }
@@ -341,9 +350,8 @@ def seite_bauen(vg: dict) -> str:
 <header>
   <p class="eyebrow">Vorhaben</p>
   <h1>{e(vg['t'])}</h1>
-  <p class="lede">Der Weg dieses Vorhabens durch die Gremien — in der Reihenfolge,
-  in der es behandelt wurde, mit dem beschlossenen Wortlaut und dem
-  Abstimmungsergebnis jeder Station.</p>
+  <p class="lede">Der Weg dieses Vorhabens durch die Gremien — in der
+  Reihenfolge, in der es behandelt wurde.</p>
   <div class="issueline">
     <span><b>Stationen</b> {len(stationen)}</span>
     <span><b>Zeitraum</b> {datum_lang(von)} bis {datum_lang(bis)}</span>
@@ -357,9 +365,11 @@ def seite_bauen(vg: dict) -> str:
 {worum_html(stationen, erklaert)}
 {weg_html(weg, stationen, erklaert) if lohnt(weg, stationen) else ""}
 
-<p>Der Wortlaut stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse
-aus der Zeile „Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind
-nicht enthalten.</p>
+<h2 class="abschnitt">Alle Stationen im Wortlaut</h2>
+<p class="woherfrei">Beleg &middot; aus den Beschlussprotokollen</p>
+<p class="hinweisfrei">Der Wortlaut stammt aus den Beschlussprotokollen, die
+Abstimmungsergebnisse aus der Zeile „Ergebnis der Beschlussfassung“.
+Nichtöffentliche Beratungen sind nicht enthalten.</p>
 
 <ol class="chronik">
 {chr(10).join(station_html(s, erklaert) for s in stationen)}
