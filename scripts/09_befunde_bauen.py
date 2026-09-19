@@ -168,7 +168,10 @@ def eingehalten() -> list[tuple[str, str, str]]:
     einstimmig = abstimmungen.get("einstimmig")
     if gesamt and einstimmig:
         eintraege.append((
-            f"{einstimmig} von {gesamt} Beschlüssen fielen einstimmig",
+            # Gezaehlt sind Abstimmungen: Zu einem Beschluss koennen zwei
+            # gehoeren, wenn zuerst ueber einen Aenderungsantrag entschieden
+            # wird. „337 Beschluesse" waere eine andere Zahl.
+            f"{einstimmig} von {gesamt} Abstimmungen fielen einstimmig",
             f"Das sind {einstimmig / gesamt * 100:.0f} Prozent. Die Angabe stammt "
             f"wörtlich aus der Zeile „Ergebnis der Beschlussfassung“ der "
             f"Protokolle. Was sie bedeutet, ist damit nicht gesagt: Sie kann "
