@@ -127,7 +127,16 @@ def main() -> None:
     # Der Wortschatz entsteht hier, weil dieser Lauf ohnehin jedes Protokoll
     # liest. Die spaeteren Schritte laden ihn, um Silbentrennungen von
     # Gedankenstrichen unterscheiden zu koennen.
+    #
+    # **Die Sitzungsvorlagen gehoeren dazu.** Er stammte lange nur aus den
+    # Protokollen — die Sachverhalte auf den Themenseiten und in den Ausgaben
+    # kommen aber aus den Vorlagen. Woerter, die nur dort vorkommen, waren
+    # damit nie belegt, und ihre Trennungen blieben stehen: „Frei- flaechen",
+    # „Orts- teil", „be- antragen". Mit den Vorlagen sind es 17 Woerter mehr,
+    # die sich zusammenfuegen lassen.
     wortschatz: collections.Counter[str] = collections.Counter()
+    for pdf in sorted((DATEN / "vorlagen").glob("*.pdf")):
+        wortschatz_aus(pdf_text(pdf), wortschatz)
     for pdf in sorted((DATEN / "protokolle").glob("*.pdf")):
         jahr = pdf.name[:4]
         text = pdf_text(pdf)

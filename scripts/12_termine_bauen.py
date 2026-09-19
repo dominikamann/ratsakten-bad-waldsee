@@ -198,8 +198,8 @@ def main() -> None:
   <h1>Termine</h1>
   <p class="lede">Alle öffentlichen Sitzungen der Stadt in einer durchgehenden Reihe —
   von der ersten erfassten Sitzung bis zum letzten angekündigten Termin. Die Sitzungen
-  sind öffentlich, soweit nicht ausdrücklich nichtöffentlich beraten wird; wer hingehen
-  möchte, kann das ohne Anmeldung.</p>
+  sind öffentlich, soweit nicht ausdrücklich nichtöffentlich beraten wird
+  (<a href="./gremien.html#gemeinderat">was das heißt</a>).</p>
   <div class="issueline">
     <span><b>Termine</b> {len(termine)}</span>
     <span><b>angekündigt</b> {len(kuenftig)}</span>
