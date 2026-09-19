@@ -1113,7 +1113,23 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
     <p class="rubrik">Beschlossen · {e(rubrikname(name))}</p>
     <h2 class="headline">{ueberschrift}</h2>
     <ul class="beschluesse">""")
+            # Zu einer Vorlage kann mehrfach abgestimmt werden — ueber einen
+            # Aenderungsantrag und danach ueber den Beschluss, oder in fuenf
+            # Wahlgaengen wie bei den Ortsvorstehern (SV-54/2024). Bisher stand
+            # jeder dieser Beschluesse als vollstaendiger Eintrag da:
+            # **fuenfmal derselbe Titel, fuenfmal derselbe Sachverhalt in voller
+            # Laenge**, und nur der Beschlusstext unterschied sich. Betroffen
+            # waren fuenf Ausgaben mit zusammen acht Wiederholungen.
+            #
+            # Titel und Sachverhalt stehen deshalb nur beim ersten Eintrag; die
+            # weiteren sagen, dass sie zur selben Vorlage gehoeren. Was dort
+            # abgestimmt wurde, steht im Beschlusstext — welcher Durchgang der
+            # Aenderungsantrag war, behauptet die Ausgabe nicht.
+            gesehen: set[str] = set()
             for b in liste:
+                wiederholung = bool(b.get("vorlage")) and b["vorlage"] in gesehen
+                if b.get("vorlage"):
+                    gesehen.add(b["vorlage"])
                 klasse = " split" if b["strittig"] else ""
                 # Der groesste im Beschlusstext genannte Betrag. Bewusst neutral
                 # bezeichnet: Es ist die hoechste dort vorkommende Summe, nicht
@@ -1134,7 +1150,7 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                 # empfehlen die Kirchen eine Erhoehung um 4,5 %" steht in
                 # keinem Protokoll.
                 sachlage = ""
-                if b.get("vorlage"):
+                if b.get("vorlage") and not wiederholung:
                     txt = sachverhalt_lesen(
                         VORLAGEN / (re.sub(r"[^A-Za-z0-9-]+", "-", b["vorlage"]) + ".pdf"),
                         WORTSCHATZ, HAEUFIGKEITEN)
@@ -1147,9 +1163,13 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
                         f'<a href="{d["url"]}" target="_blank" rel="noopener noreferrer">'
                         f'{e(d["titel"])}</a>' for d in b["dokumente"])
                     unterlagen = f'<span class="unterlagen">{verweise}</span>' 
+                kopfzeile = (f'<span class="folgeabstimmung">Weitere Abstimmung '
+                             f'zu {e(b["vorlage"])}</span>' if wiederholung
+                             else markieren(e(b["titel"]), erklaert))
+                nummer = ("" if wiederholung else
+                          f'<span class="sv">{e(b["vorlage"] or "—")}{geld}</span>')
                 t.append(f"""      <li><span class="sache">"""
-                         f"""{markieren(e(b['titel']), erklaert)}"""
-                         f"""<span class="sv">{e(b['vorlage'] or '—')}{geld}</span>"""
+                         f"""{kopfzeile}{nummer}"""
                          f"""{sachlage}{wortlaut}{unterlagen}</span>"""
                          f"""<span class="erg{klasse}">{e(b['ergebnis'])}</span></li>""")
             t.append("    </ul>")

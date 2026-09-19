@@ -76,6 +76,12 @@ ul.beschluesse{max-width:74ch}
 ul.beschluesse li:last-child{border-bottom:none}
 ul.beschluesse .sache{font-size:16px;line-height:1.45}
 ul.beschluesse .sache b{font-weight:600}
+/* Eine weitere Abstimmung zur selben Vorlage: Sie traegt keinen eigenen Titel
+   und keinen eigenen Sachverhalt — beides stand beim ersten Eintrag. */
+ul.beschluesse .folgeabstimmung{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);
+}
 ul.beschluesse .sv{
   display:block;font-family:var(--mono);font-size:10.5px;
   color:var(--muted);letter-spacing:.04em;margin-top:3px;
