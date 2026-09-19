@@ -58,6 +58,18 @@ p.woherfrei{margin:6px 0 0;font-family:var(--mono);font-size:11px;
   letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 p.hinweisfrei{margin:10px 0 0;font-size:13.5px;line-height:1.6;
   color:var(--muted);max-width:62ch}
+/* Die Gremienzeile liest sich als Reihe von Marken. Als Marke gestaltet und
+   mit Verweis auf „Wer entscheidet was": Der Name allein sagt einem Buerger
+   nicht, was ein Gemeinsamer Ausschuss ist. Mindesthoehe 44 px, damit sie auf
+   dem Handy zu treffen ist. */
+p.gremienzeile{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+p.gremienzeile a,p.gremienzeile span.marke{
+  display:inline-flex;align-items:center;gap:6px;min-height:44px;
+  padding:6px 10px;border:1px solid var(--rule);background:var(--surface);
+  font-size:13px;line-height:1.3;color:inherit;text-decoration:none}
+p.gremienzeile a:hover{border-color:var(--s1)}
+p.gremienzeile b{font-family:var(--mono);font-size:11px;color:var(--muted);
+  font-weight:600}
 ol.chronik{list-style:none;margin:18px 0 0;padding:0;counter-reset:station}
 ol.chronik > li{
   position:relative;margin:0;padding:18px 0 22px 22px;border-top:1px solid var(--rule);
@@ -150,6 +162,29 @@ def station_html(st: dict, erklaert: set[str]) -> str:
     {unterlagen}
     {verweis}
   </li>"""
+
+
+# Welcher Abschnitt von „Wer entscheidet was" ein Gremium erklaert. Bewusst
+# eine feste Zuordnung und kein Raten: Ein Verweis, der am falschen Abschnitt
+# landet, ist schlechter als keiner. Was hier fehlt, bleibt Text.
+GREMIENSEITE = (
+    ("Gemeinsame", "gemeinsamer-ausschuss"),
+    ("Ortschaftsrat", "ortschaftsraete"),
+    ("Gemeinderat", "gemeinderat"),
+    ("Verwaltungsausschuss", "ausschuesse"),
+    ("Ausschuss", "ausschuesse"),
+    ("Arbeitskreis", "ausschuesse"),
+)
+
+
+def marke_html(name: str, anzahl: int) -> str:
+    """Ein Gremium als Marke, wenn moeglich mit Verweis auf seine Erklaerung."""
+    marke = next((m for wort, m in GREMIENSEITE if name.startswith(wort)), None)
+    inhalt = f'{e(name)} <b>{anzahl}&times;</b>'
+    if not marke:
+        return f'<span class="marke">{inhalt}</span>'
+    return (f'<a href="../gremien.html#{marke}" '
+            f'title="Was dieses Gremium entscheidet">{inhalt}</a>')
 
 
 def und_liste(teile: list[str]) -> str:
@@ -345,8 +380,8 @@ def seite_bauen(vg: dict) -> str:
     haeufig: dict[str, int] = {}
     for st in stationen:
         haeufig[st["gl"]] = haeufig.get(st["gl"], 0) + 1
-    gremienzeile = " &middot; ".join(
-        f'{e(name)} <b>{anzahl}&times;</b>' for name, anzahl in haeufig.items())
+    gremienzeile = "".join(marke_html(name, anzahl)
+                           for name, anzahl in haeufig.items())
     nummern = [n for n in vg["v"].split(" · ") if n]
     # Der amtliche Titel stand hier frueher als eigener Block. Er sagte dem
     # Leser nichts: Es ist einer von zwoelf, er nennt nur ein Teilverfahren,

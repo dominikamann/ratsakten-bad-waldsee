@@ -87,7 +87,7 @@ def main() -> None:
   </div>
 </header>
 
-<h2 class="headline">Der Gemeinderat</h2>
+<h2 class="headline" id="gemeinderat">Der Gemeinderat</h2>
 <p>Der Gemeinderat ist nach der Hauptsatzung „die Vertretung der Bürger und das
 Hauptorgan der Stadt". Er legt die Grundsätze für die Verwaltung fest und
 entscheidet über alle Angelegenheiten der Stadt — <b>soweit er sie nicht den
@@ -97,7 +97,7 @@ als Vorsitzendem und den ehrenamtlichen Stadträten.</p>
 <p>Im ausgewerteten Zeitraum tagte er {gr} Mal öffentlich.</p>
 {beleg("§ 2 und § 3 Hauptsatzung der Stadt Bad Waldsee, Stand Juli 2024")}
 
-<h2 class="headline">Die beschließenden Ausschüsse</h2>
+<h2 class="headline" id="ausschuesse">Die beschließenden Ausschüsse</h2>
 <p>Bad Waldsee hat zwei davon: den <b>Verwaltungsausschuss</b> und den
 <b>Ausschuss für Umwelt, Technik und Nachhaltigkeit</b>. Jeder besteht aus der
 Hälfte der Gemeinderatsmitglieder und dem Bürgermeister.</p>
@@ -120,7 +120,7 @@ bis Juni 2024 „Ausschuss für Umwelt und Technik"; die Zahl umfasst beide
 Bezeichnungen.</p>
 {beleg("§ 4, § 5 Abs. 1 und 2, § 7 und § 8 Hauptsatzung")}
 
-<h2 class="headline">Die Ortschaftsräte</h2>
+<h2 class="headline" id="ortschaftsraete">Die Ortschaftsräte</h2>
 <p>Bad Waldsee hat vier Ortschaften: Haisterkirch, Michelwinnaden, Mittelurbach
 und Reute-Gaisbeuren. Jede hat einen eigenen Ortschaftsrat. Seine erste Aufgabe
 ist die Beratung: Er ist zu wichtigen Angelegenheiten der Ortschaft zu hören und
@@ -152,7 +152,7 @@ Gemeinderat im Einvernehmen mit dem Ortschaftsrat eine Beamtin oder einen
 Beamten der Stadt.</p>
 {beleg("§ 17 Hauptsatzung")}
 
-<h2 class="headline">Der Gemeinsame Ausschuss</h2>
+<h2 class="headline" id="gemeinsamer-ausschuss">Der Gemeinsame Ausschuss</h2>
 <p>Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft.
 Deren Erfüllungsaufgabe ist nach der Gemeindeordnung die <b>vorbereitende
 Bauleitplanung</b> — also der Flächennutzungsplan, der festlegt, wo in beiden
