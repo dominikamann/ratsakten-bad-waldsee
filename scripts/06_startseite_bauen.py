@@ -22,7 +22,7 @@ import html
 import json
 from pathlib import Path
 
-from seite import fuss, kopf, kurz
+from seite import fuss, kopf, kurz, zahlwort
 
 WURZEL = Path(__file__).resolve().parent.parent
 DATEN = WURZEL / "data"
@@ -31,15 +31,6 @@ DOCS = WURZEL / "docs"
 MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
           "August", "September", "Oktober", "November", "Dezember"]
 
-ZAHLWORT = {
-    1: "Eine", 2: "Zwei", 3: "Drei", 4: "Vier", 5: "Fünf", 6: "Sechs",
-    7: "Sieben", 8: "Acht", 9: "Neun", 10: "Zehn", 11: "Elf", 12: "Zwölf",
-    13: "Dreizehn", 14: "Vierzehn", 15: "Fünfzehn", 16: "Sechzehn",
-    17: "Siebzehn", 18: "Achtzehn", 19: "Neunzehn", 20: "Zwanzig",
-    21: "Einundzwanzig", 22: "Zweiundzwanzig", 23: "Dreiundzwanzig",
-    24: "Vierundzwanzig", 25: "Fünfundzwanzig",
-}
-
 
 def e(t: str) -> str:
     return html.escape(str(t), quote=False)
@@ -47,10 +38,6 @@ def e(t: str) -> str:
 
 def datum_lang(d: dt.date) -> str:
     return f"{d.day}. {MONATE[d.month - 1]} {d.year}"
-
-
-def zahlwort(n: int) -> str:
-    return ZAHLWORT.get(n, str(n))
 
 
 def juengster_report() -> tuple[str, dt.date] | None:

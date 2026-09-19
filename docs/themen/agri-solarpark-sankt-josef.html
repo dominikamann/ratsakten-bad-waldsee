@@ -857,18 +857,21 @@ section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
 section.weg .hinweis{margin:10px 0 0;font-size:13.5px;line-height:1.6;
   color:var(--muted);max-width:62ch}
 ol.wegliste{list-style:none;margin:14px 0 0;padding:0;counter-reset:wegschritt}
-ol.wegliste > li{border-top:1px solid var(--rule)}
+ol.wegliste > li{position:relative;border-top:1px solid var(--rule)}
 ol.wegliste > li:first-child{border-top:0}
 ol.wegliste a{display:block;position:relative;padding:12px 0 12px 26px;
   text-decoration:none;color:inherit;min-height:44px}
 ol.wegliste a:hover .wasname{text-decoration:underline}
 ol.wegliste > li::before{
   counter-increment:wegschritt;content:counter(wegschritt);position:absolute;
-  margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  left:0;top:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
 ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
 ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
+ol.wegliste .sv{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+section.weg .rest{margin:12px 0 12px;padding-top:12px;border-top:1px solid var(--rule);
+  font-size:13px;line-height:1.6;color:var(--muted);max-width:62ch}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -928,42 +931,41 @@ a.karte .meta{
   <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
   <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
   Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
-  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.
-  Stationen, deren Titel keinen Verfahrensschritt nennt, stehen nur in der
-  Chronik darunter — diese Übersicht ersetzt sie nicht. Jede Zeile führt zur
-  zugehörigen Station.</p>
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt. Jede
+  Zeile führt zur zugehörigen Station.</p>
   <ol class="wegliste">
     <li><a href="#station-1">
       <span class="wann">15. April 2024</span>
       <span class="wasname">Aufstellungsbeschluss</span>
-      <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt und Technik</span>
+      <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt und Technik &middot; <span class="sv">SV-33/2024</span></span>
     </a></li>
     <li><a href="#station-2">
       <span class="wann">15. April 2024</span>
       <span class="wasname">Aufstellungsbeschluss</span>
-      <span class="wo">Flächennutzungsplan &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 23. April 2024</span>
+      <span class="wo">Flächennutzungsplan &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 23. April 2024 &middot; <span class="sv">SV-34/2024</span></span>
     </a></li>
     <li><a href="#station-5">
       <span class="wann">17. Juni 2024</span>
       <span class="wasname">Abwägung und Entwurfsbeschluss</span>
-      <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt und Technik</span>
+      <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt und Technik &middot; <span class="sv">SV-87/2024</span></span>
     </a></li>
     <li><a href="#station-6">
       <span class="wann">17. Juni 2024</span>
       <span class="wasname">Abwägung und Entwurfsbeschluss</span>
-      <span class="wo">Flächennutzungsplan &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 11. Juli 2024</span>
+      <span class="wo">Flächennutzungsplan &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 11. Juli 2024 &middot; <span class="sv">SV-88/2024</span></span>
     </a></li>
     <li><a href="#station-9">
       <span class="wann">16. September 2024</span>
       <span class="wasname">Abwägung und Satzungsbeschluss</span>
-      <span class="wo">Bebauungsplan &middot; zuletzt Gemeinderat, 23. September 2024</span>
+      <span class="wo">Bebauungsplan &middot; zuletzt Gemeinderat, 23. September 2024 &middot; <span class="sv">SV-98/2024</span></span>
     </a></li>
     <li><a href="#station-10">
       <span class="wann">16. September 2024</span>
       <span class="wasname">Abwägung und Feststellungsbeschluss</span>
-      <span class="wo">Flächennutzungsplan &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 2. Oktober 2024</span>
+      <span class="wo">Flächennutzungsplan &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 2. Oktober 2024 &middot; <span class="sv">SV-99/2024</span></span>
     </a></li>
   </ol>
+  
 </section>
 
 

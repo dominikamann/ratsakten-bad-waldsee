@@ -21,6 +21,29 @@ from pathlib import Path
 SKRIPTE = Path(__file__).resolve().parent
 WURZEL = SKRIPTE.parent
 
+# Zahlen bis 25 als Wort. Stand zweimal im Quelltext — einmal großgeschrieben
+# für den Satzanfang auf der Startseite, einmal klein für die Themenseiten.
+# Zwei Tabellen derselben Sache laufen früher oder später auseinander. Hier und
+# nicht in textwerk.py, weil jenes Modul pypdf hereinzieht: Schritt 06 und 11
+# kämen sonst ohne PDF-Bibliothek nicht mehr durch.
+ZAHLWORT = {
+    1: "Eine", 2: "Zwei", 3: "Drei", 4: "Vier", 5: "Fünf", 6: "Sechs",
+    7: "Sieben", 8: "Acht", 9: "Neun", 10: "Zehn", 11: "Elf", 12: "Zwölf",
+    13: "Dreizehn", 14: "Vierzehn", 15: "Fünfzehn", 16: "Sechzehn",
+    17: "Siebzehn", 18: "Achtzehn", 19: "Neunzehn", 20: "Zwanzig",
+    21: "Einundzwanzig", 22: "Zweiundzwanzig", 23: "Dreiundzwanzig",
+    24: "Vierundzwanzig", 25: "Fünfundzwanzig",
+}
+
+
+def zahlwort(n: int, gross: bool = True) -> str:
+    """Die Zahl als Wort; jenseits der Tabelle als Ziffer."""
+    wort = ZAHLWORT.get(n)
+    if wort is None:
+        return str(n)
+    return wort if gross else wort.lower()
+
+
 EINTRAEGE = json.loads((SKRIPTE / "navigation.json").read_text(encoding="utf-8"))
 
 TAGE = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
