@@ -360,17 +360,26 @@ def vorgaenge_sammeln(stichtag: str) -> list[dict]:
     # Der Vermerk haengt an der **Station**, nicht am Vorgang: Schritt 11 fuehrt
     # gleichnamige Vorgaenge zu einem Vorhaben zusammen, und dabei ueberlebt nur
     # der Kopf des ersten. Stationen ueberleben alle.
+    # Nach dem ersten Treffer wird abgebrochen — aber erst nach einem
+    # **Treffer**, nicht nach dem ersten Versuch: Fehlt zur fruehesten Vorlage
+    # das PDF oder hat sie keinen Sachverhaltsabschnitt, stuende das Vorhaben
+    # sonst ohne Auskunft da, obwohl die naechste Vorlage eine haette. Die Zahl
+    # der Versuche ist begrenzt, damit ein Vorhaben ohne jeden lesbaren
+    # Sachverhalt nicht alle seine Vorlagen aufschlaegt.
+    VERSUCHE = 5
     for v in vorgaenge:
         if len(v["s"]) < MINDEST_STATIONEN:
             continue
+        versuche = 0
         for st in sorted(v["s"], key=lambda x: x["d"]):
-            if not st.get("v"):
+            if not st.get("v") or versuche >= VERSUCHE:
                 continue
+            versuche += 1
             pfad = VORLAGEN / (re.sub(r"[^A-Za-z0-9-]+", "-", st["v"]) + ".pdf")
             text = sachverhalt_lesen(pfad, WORTSCHATZ, HAEUFIGKEITEN)
             if text:
                 st["sv"] = text
-            break
+                break
 
     # Zu jedem Vorgang die Themenseite vermerken, sofern es eine gibt. Die
     # Zuordnung stammt aus demselben Modul, aus dem Schritt 11 die Seiten baut —

@@ -137,14 +137,20 @@ BEGRIFFE: list[dict[str, str]] = [
     {
         "name": "Entwurfsbeschluss",
         "muster": r"Entwurfsbeschluss",
+        # Die Beschlusstexte des Bestands ordnen die Beteiligung regelmaessig
+        # selbst an (bei der Pruefung am 19.09.2026: 33 von ihnen nennen
+        # Auslegung oder Beteiligung woertlich). Diese **Zahl steht bewusst
+        # nicht im Erklaertext**: Sie ist die Trefferzahl eines Suchmusters,
+        # sie waechst mit jedem Lauf, und ein Woerterbuch, das auf neunzig
+        # Seiten steht, wuerde sie ungeprueft mitschleppen. Erklaert wird der
+        # Begriff, gezaehlt wird anderswo.
         "satz": (
-            "Der Beschluss über den Planentwurf. Auf ihn folgt die Beteiligung "
-            "der Öffentlichkeit: „Die Entwürfe der Bauleitpläne sind mit der "
-            "Begründung … für die Dauer eines Monats, mindestens jedoch für die "
-            "Dauer von 30 Tagen … im Internet zu veröffentlichen.“ Wer will, kann "
-            "dazu Stellung nehmen; was eingeht, wird anschließend abgewogen. In "
-            "33 Beschlüssen des Bestands ordnet der Entwurfsbeschluss diese "
-            "Beteiligung ausdrücklich an."),
+            "Der Beschluss über den Planentwurf: Damit steht fest, welche "
+            "Fassung des Plans der Öffentlichkeit vorgelegt wird. Anschließend "
+            "folgt deren Beteiligung — „Die Entwürfe der Bauleitpläne sind mit "
+            "der Begründung … für die Dauer eines Monats, mindestens jedoch für "
+            "die Dauer von 30 Tagen … im Internet zu veröffentlichen.“ Wer will, "
+            "kann dazu Stellung nehmen; was eingeht, wird danach abgewogen."),
         "fundstelle": "§ 3 Abs. 2 Satz 1 Baugesetzbuch",
     },
     {

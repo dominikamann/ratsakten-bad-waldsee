@@ -125,6 +125,11 @@ def station_html(st: dict, erklaert: set[str]) -> str:
         f'rel="noopener noreferrer">{e(d["titel"])}</a>'
         for d in st.get("dok", []))
     unterlagen = f'<div class="unterlagen">{dok}</div>' if dok else ""
+    # Reihenfolge ist hier inhaltlich: Ein Begriff wird je Seite einmal
+    # aufgemacht, und zwar an seiner **ersten sichtbaren** Stelle. Der Titel
+    # steht ueber dem Beschlusswortlaut — wird er spaeter markiert, klebt die
+    # Erklaerung weiter unten als dort, wo der Leser ueber das Wort stolpert.
+    sache = markieren(e(st["t"]), erklaert)
     wortlaut = (f'<p class="wortlaut">{markieren(e(st["w"]), erklaert)}</p>'
                 if st.get("w") else "")
     ergebnis = (f'<span class="erg">{e(st["e"])}</span>'
@@ -137,7 +142,7 @@ def station_html(st: dict, erklaert: set[str]) -> str:
     return f"""  <li id="station-{st['_nr']}">
     <p class="wann">{datum_lang(st['d'])} &middot; {e(st['gl'])}
       {f'<span class="sv">{e(st["v"])}</span>' if st.get("v") else ""}</p>
-    <p class="sache">{markieren(e(st['t']), erklaert)}</p>
+    <p class="sache">{sache}</p>
     {wortlaut}
     {ergebnis}
     {unterlagen}
@@ -194,24 +199,35 @@ def weg_html(weg: list[dict], stationen: list[dict],
     # Teilbereich B erst auf den 07.04.2025 — untereinander sieht das aus, als
     # sei ein fertiger Plan wieder aufgeschnuert worden. Tatsaechlich laufen
     # zwei Verfahren nebeneinander.
-    # Planart und Teilbereich getrennt aufzaehlen. Zusammengesetzt lautet der
+    #
+    # Planart und Teilbereich werden getrennt aufgezaehlt. Zusammengesetzt lautet
+    # der
     # Satz „… nebeneinander: Bebauungsplan, Bebauungsplan, Teilbereich A,
     # Bebauungsplan, Teilbereich B, …" — die Kommas der Namen und die der
     # Aufzaehlung sind dann nicht mehr auseinanderzuhalten.
     arten = sorted({n.split(", Teilbereich")[0] for n in namen})
     bereiche = sorted({n.split(", Teilbereich ")[1] for n in namen
                        if ", Teilbereich " in n})
-    straenge = ""
-    if mehrere:
+    # Jeder Zweig muss einen Satz ergeben, der auch stimmt. „Mehrere Straenge"
+    # heisst nicht zwingend „mehrere Planarten": Traegt ein Teil der Schritte
+    # gar keinen Strang, bleibt eine einzige Art uebrig — und ohne Teilbereiche
+    # stuende dann „laeuft in getrennten Teilbereichen" ueber einem Vorhaben,
+    # das keine hat. Im heutigen Bestand tritt der Fall nicht auf; er waere
+    # eine falsche Tatsachenbehauptung, sobald er auftritt.
+    satz = ""
+    if len(arten) > 1:
         satz = (f"Dieses Vorhaben läuft in mehreren Verfahren nebeneinander: "
-                f"{e(und_liste(arten))}." if len(arten) > 1 else
-                f"Das Verfahren zum {e(arten[0])} läuft in getrennten "
-                f"Teilbereichen." if arten else "")
-        if bereiche and len(arten) > 1:
+                f"{e(und_liste(arten))}.")
+        if bereiche:
             satz += (f" Einzelne davon sind zusätzlich nach Teilbereichen "
                      f"getrennt ({e(und_liste(bereiche))}).")
-        elif bereiche:
-            satz += f" Es sind die Teilbereiche {e(und_liste(bereiche))}."
+    elif bereiche:
+        wo = f"Das Verfahren zum {e(arten[0])}" if arten else "Dieses Vorhaben"
+        satz = (f"{wo} läuft in getrennten Teilbereichen "
+                f"({e(und_liste(bereiche))}).")
+
+    straenge = ""
+    if satz:
         straenge = (f'\n  <p class="hinweis">{satz} Hinter jedem Schritt steht, '
                     f'zu welchem Verfahren er gehört. Die Daten steigen deshalb '
                     f'nicht durchgehend an — ein Verfahren kann abgeschlossen '

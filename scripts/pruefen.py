@@ -89,6 +89,50 @@ def pruefe_sprungmarken() -> None:
     notiz.append(f"{gesamt} Sprungmarken")
 
 
+def pruefe_begriffe() -> None:
+    """Die Begriffserklaerungen im Text — gemessen am Ergebnis, nicht am Weg.
+
+    `begriffe.markieren` setzt die Erklaerung als verschachteltes Markup in den
+    Text. Drei Dinge koennen dabei schiefgehen, und keines faellt beim Bauen
+    auf:
+
+    * Das erklaerte Wort ist leer — dann steht eine Erklaerung an nichts.
+    * Derselbe Begriff wird auf einer Seite zweimal aufgemacht; `schon_erklaert`
+      soll das verhindern, wird aber je Seite uebergeben.
+    * Eine Erklaerung landet **in** einer anderen. `markieren` sucht dafuer auf
+      dem unveraenderten Text und ersetzt von hinten nach vorn — ein Aufrufer,
+      der bereits markierten Text ein zweites Mal hineingibt, umgeht das.
+
+    Das erste Mal wurden die Erklaerungen auf den Themenseiten ausgegeben; dort
+    laufen Sachverhalt, Verfahrensweg und Chronik durch **einen** Satz. Ohne
+    Waechter faellt eine Doppelung erst dem Leser auf.
+    """
+    gesamt = 0
+    for f in sorted(DOCS.rglob("*.html")):
+        roh = f.read_text(encoding="utf-8")
+        if 'class="erklaert"' not in roh:
+            continue
+        namen: list[str] = []
+        for m in re.finditer(
+                r'<span class="erklaert" tabindex="0">(.*?)'
+                r'<span class="tooltip" role="note"><b>([^<]+)</b>', roh, re.S):
+            gesamt += 1
+            namen.append(m.group(2))
+            wort = re.sub(r"<[^>]+>", "", m.group(1)).strip()
+            if not wort:
+                fehler.append(f"{f.relative_to(WURZEL)}: Erklärung „{m.group(2)}“ "
+                              f"hängt an keinem Wort")
+        for name, anzahl in collections.Counter(namen).items():
+            if anzahl > 1:
+                fehler.append(f"{f.relative_to(WURZEL)}: Begriff „{name}“ "
+                              f"{anzahl}-mal erklärt — einmal je Seite genügt")
+        if re.search(r'<span class="tooltip"(?:(?!</span>).)*'
+                     r'<span class="erklaert"', roh, re.S):
+            fehler.append(f"{f.relative_to(WURZEL)}: Erklärung steht in einer "
+                          f"anderen Erklärung")
+    notiz.append(f"{gesamt} Begriffserklärungen geprüft")
+
+
 def pruefe_schriften() -> None:
     gesamt = 0
     for f in sorted(DOCS.rglob("*.html")):
@@ -679,7 +723,7 @@ def main() -> None:
     if not DOCS.exists():
         sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
 
-    for pruefung in (pruefe_verweise, pruefe_sprungmarken,
+    for pruefung in (pruefe_verweise, pruefe_sprungmarken, pruefe_begriffe,
                      pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
                      pruefe_stil, pruefe_schwaerzung, pruefe_readme,
