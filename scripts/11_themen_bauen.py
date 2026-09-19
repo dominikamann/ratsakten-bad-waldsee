@@ -72,13 +72,6 @@ ol.chronik .wann{
 }
 ol.chronik .sache{margin:0 0 8px;font-weight:600;font-size:16px;max-width:62ch}
 ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height:1.6;color:var(--muted)}
-/* Der amtliche Titel eines Vorhabens ist oft ein ganzer Absatz. Als Vorspann
-   gelesen erschlug er die Seite; hier steht er als Angabe, wo er hingehoert. */
-.amtstitel{
-  margin:8px 0 0;font-family:var(--mono);font-size:11px;line-height:1.6;
-  color:var(--muted);max-width:78ch;
-}
-.amtstitel b{color:var(--ink-2);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 /* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
    Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
    statt einer breiten Tabellenzeile. */
@@ -342,28 +335,24 @@ def seite_bauen(vg: dict) -> str:
     # Chronik — der f-String unten wird von oben nach unten ausgewertet.
     erklaert: set[str] = set()
     von, bis = stationen[0]["d"], stationen[-1]["d"]
-    gremien = sorted({s["gl"] for s in stationen})
-    nummern = [n for n in vg["v"].split(" · ") if n]
-    # Der amtliche Titel ist oft ein ganzer Absatz und taugt nicht als Vorspann.
-    # Er gehoert trotzdem auf die Seite — wer im Ratsinformationssystem sucht,
-    # findet den Vorgang nur unter diesem Wortlaut.
+    # Vorher eine alphabetische Namensliste. Die sagte nichts — und sie zaehlte
+    # eine Umbenennung als zwei Gremien: „Ausschuss fuer Umwelt und Technik"
+    # tagte bis zum 17.06.2024, „Ausschuss fuer Umwelt, Technik und
+    # Nachhaltigkeit" ab dem 16.09.2024, nie beide am selben Tag.
     #
-    # Er ist aber **einer von mehreren**: „Drei Eichen VI" laeuft unter zwoelf
-    # verschiedenen Titeln, und der laengste davon nennt nur die Aenderung des
-    # Flaechennutzungsplans in Teilbereich B. Unbeschriftet als „Amtlicher
-    # Titel" gelesen, hielte man die ganze Seite dafuer. Also wird gesagt,
-    # wie viele es sind.
-    lang_titel = (vg.get("u") or "").strip()
-    anzahl_titel = len({" ".join((s.get("t") or "").split()) for s in stationen})
-    amtstitel = ""
-    if lang_titel and lang_titel != vg["t"]:
-        vorsatz = ("Amtlicher Titel" if anzahl_titel <= 1 else
-                   f"Einer von {zahlwort(anzahl_titel, gross=False)} amtlichen Titeln")
-        amtstitel = (f'<p class="amtstitel"><b>{vorsatz}</b> {e(lang_titel)}'
-                     + ("" if anzahl_titel <= 1 else
-                        " <i>Der ausführlichste; die übrigen stehen in der "
-                        "Chronik.</i>")
-                     + "</p>")
+    # Jetzt nach dem ersten Auftreten geordnet und gezaehlt: Das zeigt, wer den
+    # Vorgang wie oft behandelt hat, und stellt die Abfolge richtig dar.
+    haeufig: dict[str, int] = {}
+    for st in stationen:
+        haeufig[st["gl"]] = haeufig.get(st["gl"], 0) + 1
+    gremienzeile = " &middot; ".join(
+        f'{e(name)} <b>{anzahl}&times;</b>' for name, anzahl in haeufig.items())
+    nummern = [n for n in vg["v"].split(" · ") if n]
+    # Der amtliche Titel stand hier frueher als eigener Block. Er sagte dem
+    # Leser nichts: Es ist einer von zwoelf, er nennt nur ein Teilverfahren,
+    # und **jede Station zeigt ihren eigenen Titel samt Vorlagennummer** in der
+    # Chronik. Sein Zweck — den Vorgang im Ratsinformationssystem
+    # wiederfinden — ist seit der Verlinkung der Sitzungsvorlage erfuellt.
 
     t = [kopf(f"{vg['t']} · Chronik eines Vorhabens", hoch="../", hier="themen",
               beschreibung=f"Alle Stationen des Vorhabens „{vg['t']}\u201c in den "
@@ -383,8 +372,7 @@ def seite_bauen(vg: dict) -> str:
   </div>
 </header>
 
-<p class="gremienzeile">{e(', '.join(gremien))}</p>
-{amtstitel}
+<p class="gremienzeile">{gremienzeile}</p>
 {worum_html(stationen, erklaert)}
 {weg_html(weg, stationen, erklaert) if lohnt(weg, stationen) else ""}
 
