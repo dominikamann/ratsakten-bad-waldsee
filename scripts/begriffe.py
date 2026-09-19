@@ -141,6 +141,20 @@ BEGRIFFE: list[dict[str, str]] = [
         "fundstelle": "§ 2 Abs. 1 Satz 2 Baugesetzbuch",
     },
     {
+        "name": "Beschleunigtes Verfahren",
+        "muster": r"beschleunigte[nrs]? Verfahren|§ ?13a BauGB",
+        "kern": r"beschleunigte[nrs]? Verfahren",
+        "satz": (
+            "Ein Bebauungsplan der Innenentwicklung — „die Wiedernutzbarmachung "
+            "von Flächen, die Nachverdichtung oder andere Maßnahmen der "
+            "Innenentwicklung“ — „kann im beschleunigten Verfahren aufgestellt "
+            "werden“. Dabei wird unter anderem „von der Umweltprüfung …, von dem "
+            "Umweltbericht … sowie von der zusammenfassenden Erklärung … "
+            "abgesehen“."),
+        "fundstelle": ("§ 13a Abs. 1 Satz 1 und Abs. 2 Nr. 1 in Verbindung mit "
+                       "§ 13 Abs. 3 Satz 1 Baugesetzbuch"),
+    },
+    {
         "name": "Entwurfsbeschluss",
         "muster": r"Entwurfsbeschluss",
         # Die Beschlusstexte des Bestands ordnen die Beteiligung regelmaessig

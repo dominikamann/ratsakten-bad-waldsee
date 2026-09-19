@@ -167,15 +167,24 @@ def und_liste(teile: list[str]) -> str:
 
 
 def worum_html(stationen: list[dict], erklaert: set[str]) -> str:
-    """Worum es bei diesem Vorhaben sachlich geht.
+    """Der Sachverhaltsabschnitt der ersten Sitzungsvorlage, woertlich.
 
-    Die Seite erklaerte bisher den Verfahrensweg eines Wohnbaugebiets, ohne je
-    zu sagen, dass es ein Wohnbaugebiet ist: Beschluesse benennen den
-    Verwaltungsvorgang, nicht die Sache. Der Abschnitt „Zum Sachverhalt" der
-    ersten Sitzungsvorlage sagt es — Schritt 08 legt ihn an die Station.
+    Beschluesse benennen den Verwaltungsvorgang, nicht die Sache; der Abschnitt
+    „Zum Sachverhalt" der ersten Vorlage nennt sie. Schritt 08 legt ihn an die
+    Station.
 
-    Es ist die Darstellung der Verwaltung zu **einem** Beschluss, nicht eine
-    neutrale Beschreibung des Vorhabens. Genau so ist sie ausgewiesen.
+    **Der Kasten hiess zuerst „Worum es geht" — und hielt das nicht.** Ueber den
+    ganzen Bestand ausgezaehlt beginnen **13 der 26 Sachverhalte** mit der
+    Vorgeschichte des Verfahrens („Der Ausschuss hat am … den
+    Aufstellungsbeschluss gefasst", „Nach Schaffung der Heilungsmoeglichkeit in
+    § 215a BauGB …"), nicht mit dem Vorhaben. Eine Ueberschrift, die eine
+    Zusammenfassung verspricht, ueber einem woertlichen Zitat aus dem
+    Amtsdeutsch ist ein Versprechen, das die Haelfte der Seiten bricht.
+
+    Die Ueberschrift sagt jetzt, was der Kasten ist: ein Zitat aus der ersten
+    Sitzungsvorlage. Die Zahl 13 steht **nicht** im Seitentext — sie waechst mit
+    dem Bestand, und eine ungeprueft mitgeschleppte Zahl ist die Fehlerklasse
+    dieses Projekts.
     """
     mit = [s for s in sorted(stationen, key=lambda x: x["d"]) if s.get("sv")]
     if not mit:
@@ -184,13 +193,13 @@ def worum_html(stationen: list[dict], erklaert: set[str]) -> str:
     nummer = f' {e(st["v"])}' if st.get("v") else ""
     return f"""
 <section class="worum" aria-labelledby="worumtitel">
-  <h2 id="worumtitel">Worum es geht</h2>
-  <p class="woher">Beleg &middot; aus der Sitzungsvorlage</p>
+  <h2 id="worumtitel">Aus der ersten Sitzungsvorlage</h2>
+  <p class="woher">Beleg &middot; Abschnitt „Zum Sachverhalt“</p>
   <p class="text">{markieren(e(st['sv']), erklaert)}</p>
-  <p class="quelle">Aus dem Abschnitt „Zum Sachverhalt" der Sitzungsvorlage{nummer},
-  behandelt am {datum_lang(st['d'])}. Das ist die Darstellung der Verwaltung zu
-  diesem einen Beschluss — nicht eine Beschreibung des ganzen Vorhabens. Gekürzt;
-  maßgeblich ist die Vorlage selbst.</p>
+  <p class="quelle">Sitzungsvorlage{nummer}, behandelt am {datum_lang(st['d'])};
+  gekürzt. So beschreibt die Verwaltung den Vorgang — oft beginnt sie dabei mit
+  der Vorgeschichte des Verfahrens und nicht mit dem Vorhaben selbst.
+  Maßgeblich ist die Vorlage.</p>
 </section>
 """
 
