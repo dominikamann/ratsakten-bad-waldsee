@@ -846,6 +846,29 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
   color:var(--muted);max-width:78ch;
 }
 .amtstitel b{color:var(--ink-2);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+/* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
+   Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
+   statt einer breiten Tabellenzeile. */
+section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+  border:1px solid var(--rule)}
+section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.weg .hinweis{margin:10px 0 0;font-size:13.5px;line-height:1.6;
+  color:var(--muted);max-width:62ch}
+ol.wegliste{list-style:none;margin:14px 0 0;padding:0;counter-reset:wegschritt}
+ol.wegliste > li{border-top:1px solid var(--rule)}
+ol.wegliste > li:first-child{border-top:0}
+ol.wegliste a{display:block;position:relative;padding:12px 0 12px 26px;
+  text-decoration:none;color:inherit;min-height:44px}
+ol.wegliste a:hover .wasname{text-decoration:underline}
+ol.wegliste > li::before{
+  counter-increment:wegschritt;content:counter(wegschritt);position:absolute;
+  margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
+ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -900,12 +923,36 @@ a.karte .meta{
 <p class="gremienzeile">Ausschuss für Umwelt, Technik und Nachhaltigkeit, Gemeinderat</p>
 <p class="amtstitel"><b>Amtlicher Titel</b> 2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Entwurfsbeschluss</p>
 
+<section class="weg" aria-labelledby="wegtitel">
+  <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
+  <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
+  <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
+  Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.
+  Stationen, deren Titel keinen Verfahrensschritt nennt, stehen nur in der
+  Chronik darunter — diese Übersicht ersetzt sie nicht. Jede Zeile führt zur
+  zugehörigen Station.</p>
+  <ol class="wegliste">
+    <li><a href="#station-1">
+      <span class="wann">7. Juli 2025</span>
+      <span class="wasname">Abwägungs- und Entwurfsbeschluss</span>
+      <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit</span>
+    </a></li>
+    <li><a href="#station-2">
+      <span class="wann">23. März 2026</span>
+      <span class="wasname">Abwägungs- und Satzungsbeschluss</span>
+      <span class="wo">Bebauungsplan &middot; zuletzt Gemeinderat, 13. April 2026</span>
+    </a></li>
+  </ol>
+</section>
+
+
 <p>Der Wortlaut stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse
 aus der Zeile „Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind
 nicht enthalten.</p>
 
 <ol class="chronik">
-  <li>
+  <li id="station-1">
     <p class="wann">7. Juli 2025 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-28/2025</span></p>
     <p class="sache">2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Entwurfsbeschluss</p>
@@ -914,7 +961,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUw-dY4af8o-7BvjhR-95FAU_aDoLyXdevOEmCT8TijX/Sitzungsvorlage_SV-28-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-28/2025</a></div>
     <p class="quelle"><a href="../ausgaben/2025/kw28.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-2">
     <p class="wann">23. März 2026 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-165/2025</span></p>
     <p class="sache">2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss</p>
@@ -923,7 +970,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZfJX2mCq5En7VcRwGF_Awod3yg5FPK_B2zWgvP6ycp65/Sitzungsvorlage_SV-165-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-165/2025 (aktualisiert: 17.03.2026)</a></div>
     <p class="quelle"><a href="../ausgaben/2026/kw13.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-3">
     <p class="wann">13. April 2026 &middot; Gemeinderat
       <span class="sv">SV-165/2025</span></p>
     <p class="sache">2. Änderung des Bebauungsplanes "Sport- und Gesundheitspark Hopfenweiler" und die örtlichen Bauvorschriften hierzu, Gemarkung Waldsee – Abwägungs- und Satzungsbeschluss</p>
@@ -955,7 +1002,7 @@ nicht enthalten.</p>
     <a href="../gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; aktualisiert am 18.09.2026</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; aktualisiert am 19.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>

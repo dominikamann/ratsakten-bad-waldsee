@@ -64,6 +64,31 @@ def pruefe_verweise() -> None:
     notiz.append(f"{gesamt} interne Verweise")
 
 
+def pruefe_sprungmarken() -> None:
+    """Jede Sprungmarke muss auf dieser Seite auch ankommen.
+
+    `pruefe_verweise` ueberspringt alles, was mit „#" beginnt — dort geht es um
+    Dateipfade. Damit war eine ganze Verweisart ungeprueft: Die Kurzfassung des
+    Verfahrensverlaufs auf den Themenseiten springt in die Chronik darunter.
+    Verschoebe sich die Nummerierung der Stationen, zeigten die Zeilen ins
+    Leere — sichtbar nur dem, der jede Zeile anklickt.
+    """
+    gesamt = 0
+    for f in sorted(DOCS.rglob("*.html")):
+        baum = H.parse(str(f)).getroot()
+        marken = set(baum.xpath("//*/@id")) | set(baum.xpath("//a/@name"))
+        for ziel in baum.xpath("//a/@href"):
+            if not ziel.startswith("#") or ziel == "#":
+                continue
+            gesamt += 1
+            marke = urllib.parse.unquote(ziel[1:])
+            if marke not in marken:
+                meldung = f"Sprungmarke fehlt: {f.relative_to(WURZEL)} → {ziel}"
+                if meldung not in fehler:
+                    fehler.append(meldung)
+    notiz.append(f"{gesamt} Sprungmarken")
+
+
 def pruefe_schriften() -> None:
     gesamt = 0
     for f in sorted(DOCS.rglob("*.html")):
@@ -654,7 +679,8 @@ def main() -> None:
     if not DOCS.exists():
         sys.exit("docs/ fehlt — zuerst die Dokumente erzeugen.")
 
-    for pruefung in (pruefe_verweise, pruefe_schriften, pruefe_fremde_abrufe,
+    for pruefung in (pruefe_verweise, pruefe_sprungmarken,
+                     pruefe_schriften, pruefe_fremde_abrufe,
                      pruefe_zeitraeume, pruefe_tabellen, pruefe_seitenkopf,
                      pruefe_stil, pruefe_schwaerzung, pruefe_readme,
                      pruefe_fundstuecke,

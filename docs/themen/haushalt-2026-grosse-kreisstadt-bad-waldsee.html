@@ -846,6 +846,29 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
   color:var(--muted);max-width:78ch;
 }
 .amtstitel b{color:var(--ink-2);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+/* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
+   Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
+   statt einer breiten Tabellenzeile. */
+section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+  border:1px solid var(--rule)}
+section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.weg .hinweis{margin:10px 0 0;font-size:13.5px;line-height:1.6;
+  color:var(--muted);max-width:62ch}
+ol.wegliste{list-style:none;margin:14px 0 0;padding:0;counter-reset:wegschritt}
+ol.wegliste > li{border-top:1px solid var(--rule)}
+ol.wegliste > li:first-child{border-top:0}
+ol.wegliste a{display:block;position:relative;padding:12px 0 12px 26px;
+  text-decoration:none;color:inherit;min-height:44px}
+ol.wegliste a:hover .wasname{text-decoration:underline}
+ol.wegliste > li::before{
+  counter-increment:wegschritt;content:counter(wegschritt);position:absolute;
+  margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
+ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -900,12 +923,13 @@ a.karte .meta{
 <p class="gremienzeile">Ausschuss für Umwelt, Technik und Nachhaltigkeit, Verwaltungsausschuss</p>
 
 
+
 <p>Der Wortlaut stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse
 aus der Zeile „Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind
 nicht enthalten.</p>
 
 <ol class="chronik">
-  <li>
+  <li id="station-1">
     <p class="wann">19. Januar 2026 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-270/2025</span></p>
     <p class="sache">Haushalt 2026 - Große Kreisstadt Bad Waldsee</p>
@@ -914,7 +938,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWj6Z_P6P5_CzEgsO4f8Iu3mrqmf3YtnaKRPbIckyRvi/Sitzungsvorlage_SV-270-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-270/2025</a><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaW4BZOScjYIuvUDl-Ujk67PQ5Mb2H5hiHl1DmFcpBXT/Haushaltsplan_2026.pdf" target="_blank" rel="noopener noreferrer">Haushaltsplan 2026</a></div>
     <p class="quelle"><a href="../ausgaben/2026/kw04.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-2">
     <p class="wann">20. Januar 2026 &middot; Verwaltungsausschuss
       <span class="sv">SV-270/2025</span></p>
     <p class="sache">Haushalt 2026 - Große Kreisstadt Bad Waldsee</p>
@@ -946,7 +970,7 @@ nicht enthalten.</p>
     <a href="../gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; aktualisiert am 18.09.2026</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; aktualisiert am 19.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>

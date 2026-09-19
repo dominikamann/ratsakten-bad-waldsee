@@ -846,6 +846,29 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
   color:var(--muted);max-width:78ch;
 }
 .amtstitel b{color:var(--ink-2);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+/* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
+   Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
+   statt einer breiten Tabellenzeile. */
+section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+  border:1px solid var(--rule)}
+section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.weg .hinweis{margin:10px 0 0;font-size:13.5px;line-height:1.6;
+  color:var(--muted);max-width:62ch}
+ol.wegliste{list-style:none;margin:14px 0 0;padding:0;counter-reset:wegschritt}
+ol.wegliste > li{border-top:1px solid var(--rule)}
+ol.wegliste > li:first-child{border-top:0}
+ol.wegliste a{display:block;position:relative;padding:12px 0 12px 26px;
+  text-decoration:none;color:inherit;min-height:44px}
+ol.wegliste a:hover .wasname{text-decoration:underline}
+ol.wegliste > li::before{
+  counter-increment:wegschritt;content:counter(wegschritt);position:absolute;
+  margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
+ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -900,12 +923,81 @@ a.karte .meta{
 <p class="gremienzeile">Ausschuss für Umwelt und Technik, Ausschuss für Umwelt, Technik und Nachhaltigkeit, Gemeinderat, Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute</p>
 <p class="amtstitel"><b>Amtlicher Titel</b> 20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R 18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung der frühzeitigen Beteiligung, Aufstellungs- und Entwurfsbeschluss</p>
 
+<section class="weg" aria-labelledby="wegtitel">
+  <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
+  <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
+  <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
+  Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.
+  Stationen, deren Titel keinen Verfahrensschritt nennt, stehen nur in der
+  Chronik darunter — diese Übersicht ersetzt sie nicht. Jede Zeile führt zur
+  zugehörigen Station.</p>
+  <ol class="wegliste">
+    <li><a href="#station-1">
+      <span class="wann">26. Februar 2024</span>
+      <span class="wasname">Abwicklung über einen Erschließungsträger</span>
+      <span class="wo">Erschließung &middot; Gemeinderat</span>
+    </a></li>
+    <li><a href="#station-3">
+      <span class="wann">4. März 2024</span>
+      <span class="wasname">Planungsbeschluss</span>
+      <span class="wo">Erschließung &middot; Ausschuss für Umwelt und Technik</span>
+    </a></li>
+    <li><a href="#station-4">
+      <span class="wann">4. März 2024</span>
+      <span class="wasname">Vergabe Planungsleistungen</span>
+      <span class="wo">Erschließung &middot; Ausschuss für Umwelt und Technik</span>
+    </a></li>
+    <li><a href="#station-5">
+      <span class="wann">17. Juni 2024</span>
+      <span class="wasname">Abwägung und Entwurfsbeschluss</span>
+      <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt und Technik</span>
+    </a></li>
+    <li><a href="#station-6">
+      <span class="wann">16. September 2024</span>
+      <span class="wasname">Abwägung und Entwurfsbeschluss</span>
+      <span class="wo">Bebauungsplan &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit</span>
+    </a></li>
+    <li><a href="#station-7">
+      <span class="wann">25. November 2024</span>
+      <span class="wasname">Abwägung und Satzungsbeschluss</span>
+      <span class="wo">Bebauungsplan, Teilbereich A &middot; zuletzt Gemeinderat, 2. Dezember 2024</span>
+    </a></li>
+    <li><a href="#station-8">
+      <span class="wann">25. November 2024</span>
+      <span class="wasname">Aufstellungs- und Überleitungsbeschluss</span>
+      <span class="wo">Bebauungsplan, Teilbereich B &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit</span>
+    </a></li>
+    <li><a href="#station-9">
+      <span class="wann">25. November 2024</span>
+      <span class="wasname">Abwägung und Entwurfsbeschluss</span>
+      <span class="wo">Bebauungsplan, Teilbereich B &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit</span>
+    </a></li>
+    <li><a href="#station-12">
+      <span class="wann">27. Januar 2025</span>
+      <span class="wasname">Abwägung der frühzeitigen Beteiligung, Aufstellungs- und Entwurfsbeschluss</span>
+      <span class="wo">Flächennutzungsplan, Teilbereich B &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 4. Februar 2025</span>
+    </a></li>
+    <li><a href="#station-15">
+      <span class="wann">7. April 2025</span>
+      <span class="wasname">Abwägung und Satzungsbeschluss</span>
+      <span class="wo">Bebauungsplan, Teilbereich B &middot; zuletzt Gemeinderat, 2. Februar 2026</span>
+    </a></li>
+    <li><a href="#station-16">
+      <span class="wann">7. April 2025</span>
+      <span class="wasname">Abwägung und Feststellungsbeschluss</span>
+      <span class="wo">Flächennutzungsplan, Teilbereich B &middot; zuletzt Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, 3. Februar 2026</span>
+    </a></li>
+  </ol>
+</section>
+
+
 <p>Der Wortlaut stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse
 aus der Zeile „Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind
 nicht enthalten.</p>
 
 <ol class="chronik">
-  <li>
+  <li id="station-1">
     <p class="wann">26. Februar 2024 &middot; Gemeinderat
       <span class="sv">SV-24/2024</span></p>
     <p class="sache">Baugebiet "Drei Eichen VI" – Abwicklung über einen Erschließungsträger</p>
@@ -914,7 +1006,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXQrLFSogt15UbRubyR1YqzCc1ZDT8W28uMfQYFGJIa7/Sitzungsvorlage_SV-24-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-24/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw09.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-2">
     <p class="wann">4. März 2024 &middot; Ausschuss für Umwelt und Technik
       <span class="sv">SV-28/2024</span></p>
     <p class="sache">Bebauungsplan "Drei-Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren</p>
@@ -923,7 +1015,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbjADwhAfVKtQgmCXNnS1Ygfna8fDA_S6B7WqCQexeKx/Sitzungsvorlage_SV-28-2024_1._Ergaenzung_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-28/2024 1. Ergänzung 1. Nachtrag</a><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZX5lRgPiqrKQ3oJvCa9-tzw-e3ohnzVuBlzDxGEAp8cf/Lageplan_vom_18.10.2022_zum_Aufstellungsbeschluss_vom_28.11.2022.pdf.pdf" target="_blank" rel="noopener noreferrer">Lageplan vom 18.10.2022 zum Aufstellungsbeschluss vom 28.11.2022.pdf</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw10.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-3">
     <p class="wann">4. März 2024 &middot; Ausschuss für Umwelt und Technik
       <span class="sv">SV-27/2024</span></p>
     <p class="sache">Baugebiet "Drei-Eichen-VI" – Erschließung - Planungsbeschluss</p>
@@ -932,7 +1024,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdv15f_awp3EoBGrnKezaSOHpfCU_1aFSsDSXBhF8emo/Sitzungsvorlage_SV-27-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-27/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw10.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-4">
     <p class="wann">4. März 2024 &middot; Ausschuss für Umwelt und Technik
       <span class="sv">SV-36/2024</span></p>
     <p class="sache">Baugebiet "Drei Eichen VI" – Abwassertechnische Erschließung – Vergabe Planungsleistungen</p>
@@ -941,7 +1033,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYzynoLAsPWBXMzH8BBwEDulEc0Za_bEJMHZV_mAZzzf/Sitzungsvorlage_SV-36-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-36/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw10.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-5">
     <p class="wann">17. Juni 2024 &middot; Ausschuss für Umwelt und Technik
       <span class="sv">SV-89/2024</span></p>
     <p class="sache">Bebauungsplan "Drei-Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Entwurfsbeschluss</p>
@@ -950,7 +1042,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZWeWaod-2oNC5-n2iTfMlfXAuPjCePmagDcOdWGgsffA/Sitzungsvorlage_SV-89-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-89/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw25.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-6">
     <p class="wann">16. September 2024 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-100/2024</span></p>
     <p class="sache">Bebauungsplan "Drei-Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Entwurfsbeschluss</p>
@@ -959,7 +1051,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXCK7l9Ezx5aLHTCgjMApJ8SzKBYKSdT1rlmjE3kBXCq/Sitzungsvorlage_SV-100-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-100/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw38.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-7">
     <p class="wann">25. November 2024 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-149/2024</span></p>
     <p class="sache">Bebauungsplan Teilbereich A "Drei-Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Satzungsbeschluss</p>
@@ -968,7 +1060,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbgpNujQzUMy5RNEzlamqjFjoSgsf1m_KmHAj09-O1So/Sitzungsvorlage_SV-149-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-149/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw48.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-8">
     <p class="wann">25. November 2024 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-190/2024</span></p>
     <p class="sache">Bebauungsplan Teilbereich B "Drei Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren – Aufstellungs- und Überleitungsbeschluss</p>
@@ -977,7 +1069,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZfT2x1ngoVWX87rqv8Fya0KSs290Vueq1Z7XGlc8WwIx/Sitzungsvorlage_SV-190-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-190/2024</a><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTuNdqAKRS1lZcwUgGJGn0rHougQKF3D2PJGvHQeCRXi/Lageplan_vom_04.11.2024.pdf" target="_blank" rel="noopener noreferrer">Lageplan vom 04.11.2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw48.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-9">
     <p class="wann">25. November 2024 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-191/2024</span></p>
     <p class="sache">Bebauungsplan Teilbereich B "Drei Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren - Abwägung und Entwurfsbeschluss</p>
@@ -986,7 +1078,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTUF15OkckAuWN7X9gerWh5altY7qna3DVUa1Eie47aL/Sitzungsvorlage_SV-191-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-191/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw48.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-10">
     <p class="wann">2. Dezember 2024 &middot; Gemeinderat
       <span class="sv">SV-149/2024</span></p>
     <p class="sache">Bebauungsplan Teilbereich A "Drei-Eichen VI" und die örtlichen Bauvorschriften hierzu, Gemarkungen Reute und Gaisbeuren- Abwägung und Satzungsbeschluss</p>
@@ -995,7 +1087,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZbgpNujQzUMy5RNEzlamqjFjoSgsf1m_KmHAj09-O1So/Sitzungsvorlage_SV-149-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-149/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw49.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-11">
     <p class="wann">2. Dezember 2024 &middot; Gemeinderat
       <span class="sv">SV-233/2024</span></p>
     <p class="sache">Baugebiet „Drei Eichen VI“ – Erschließungsträger, hier: Zeitplan</p>
@@ -1004,7 +1096,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQxQCwICqOXk_2_c09IjHxsv_7x3C3oLAQwKu3yhSRED/Sitzungsvorlage_SV-233-2024_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-233/2024 1. Nachtrag</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw49.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-12">
     <p class="wann">27. Januar 2025 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-249/2024</span></p>
     <p class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R 18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung der frühzeitigen Beteiligung, Aufstellungs- und Entwurfsbeschluss</p>
@@ -1013,7 +1105,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaWoj_bXhiIW6HNpDokyDwrmlblmz4vCLo_pSA-A2jyT/Sitzungsvorlage_SV-249-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-249/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2025/kw05.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-13">
     <p class="wann">3. Februar 2025 &middot; Gemeinderat
       <span class="sv">SV-249/2024</span></p>
     <p class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R 18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung der frühzeitigen Beteiligung, Aufstellungs- und Entwurfsbeschluss</p>
@@ -1022,7 +1114,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaWoj_bXhiIW6HNpDokyDwrmlblmz4vCLo_pSA-A2jyT/Sitzungsvorlage_SV-249-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-249/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2025/kw06.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-14">
     <p class="wann">4. Februar 2025 &middot; Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute
       <span class="sv">SV-249/2024</span></p>
     <p class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R 18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung der frühzeitigen Beteiligung, Aufstellungs- und Entwurfsbeschluss</p>
@@ -1031,7 +1123,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaWoj_bXhiIW6HNpDokyDwrmlblmz4vCLo_pSA-A2jyT/Sitzungsvorlage_SV-249-2024_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-249/2024 1. Nachtrag</a></div>
     <p class="quelle"><a href="../ausgaben/2025/kw06.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-15">
     <p class="wann">7. April 2025 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-5/2025</span></p>
     <p class="sache">Bebauungsplan "Drei-Eichen VI" (Teilbereich B) und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren - Abwägung und Satzungsbeschluss</p>
@@ -1040,7 +1132,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYhL8rce2qHnXP3LloubESZUJbA2xWn8g4z9ab-g6Ijy/Sitzungsvorlage_SV-5-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-5/2025</a></div>
     <p class="quelle"><a href="../ausgaben/2025/kw15.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-16">
     <p class="wann">7. April 2025 &middot; Ausschuss für Umwelt, Technik und Nachhaltigkeit
       <span class="sv">SV-13/2025</span></p>
     <p class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung und Feststellungsbeschluss</p>
@@ -1049,7 +1141,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQjFfN6l8yLE3Jy20ZsV8YWPV3gYxZ4zqh5Xgo9ybR8N/Sitzungsvorlage_SV-13-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-13/2025</a></div>
     <p class="quelle"><a href="../ausgaben/2025/kw15.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-17">
     <p class="wann">2. Februar 2026 &middot; Gemeinderat
       <span class="sv">SV-5/2025</span></p>
     <p class="sache">Bebauungsplan "Drei-Eichen VI" (Teilbereich B) und die örtlichen Bauvorschriften hierzu, Gemarkung Gaisbeuren - Abwägung und Satzungsbeschluss</p>
@@ -1058,7 +1150,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQnvrM78UJZk1GFiGMmmD8Z8vIS9oke-qy7tjKeQOjva/Sitzungsvorlage_SV-5-2025_1._Ergaenzung.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-5/2025 1. Ergänzung</a></div>
     <p class="quelle"><a href="../ausgaben/2026/kw06.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-18">
     <p class="wann">2. Februar 2026 &middot; Gemeinderat
       <span class="sv">SV-13/2025</span></p>
     <p class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung und Feststellungsbeschluss</p>
@@ -1067,7 +1159,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZYPd-e_310Xx4NTPLO_FRHErwIXrpJYrgU1e24wbmKO1/Sitzungsvorlage_SV-13-2025_1._Ergaenzung.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-13/2025 1. Ergänzung</a></div>
     <p class="quelle"><a href="../ausgaben/2026/kw06.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-19">
     <p class="wann">3. Februar 2026 &middot; Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute
       <span class="sv">SV-13/2025</span></p>
     <p class="sache">20. Änderung des Flächennutzungsplans im Teilbereich B des Bebauungsplans (R18) "Drei-Eichen VI" der vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute, Gemarkung Gaisbeuren - Abwägung und Feststellungsbeschluss</p>
@@ -1099,7 +1191,7 @@ nicht enthalten.</p>
     <a href="../gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; aktualisiert am 18.09.2026</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; aktualisiert am 19.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>

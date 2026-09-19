@@ -21,6 +21,7 @@ import json
 from pathlib import Path
 
 from seite import fuss, kopf
+from verfahrensweg import lohnt, schritte
 from vorhaben import MINDEST_STATIONEN, zusammenfuehren
 
 WURZEL = Path(__file__).resolve().parent.parent
@@ -68,6 +69,29 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
   color:var(--muted);max-width:78ch;
 }
 .amtstitel b{color:var(--ink-2);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+/* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
+   Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
+   statt einer breiten Tabellenzeile. */
+section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+  border:1px solid var(--rule)}
+section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.weg .hinweis{margin:10px 0 0;font-size:13.5px;line-height:1.6;
+  color:var(--muted);max-width:62ch}
+ol.wegliste{list-style:none;margin:14px 0 0;padding:0;counter-reset:wegschritt}
+ol.wegliste > li{border-top:1px solid var(--rule)}
+ol.wegliste > li:first-child{border-top:0}
+ol.wegliste a{display:block;position:relative;padding:12px 0 12px 26px;
+  text-decoration:none;color:inherit;min-height:44px}
+ol.wegliste a:hover .wasname{text-decoration:underline}
+ol.wegliste > li::before{
+  counter-increment:wegschritt;content:counter(wegschritt);position:absolute;
+  margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
+ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -96,7 +120,7 @@ def station_html(st: dict) -> str:
         ausgabe = "../" + ausgabe[2:]
     verweis = (f'<p class="quelle"><a href="{e(ausgabe)}">In der Wochenausgabe nachlesen</a></p>'
                if ausgabe else "")
-    return f"""  <li>
+    return f"""  <li id="station-{st['_nr']}">
     <p class="wann">{datum_lang(st['d'])} &middot; {e(st['gl'])}
       {f'<span class="sv">{e(st["v"])}</span>' if st.get("v") else ""}</p>
     <p class="sache">{e(st['t'])}</p>
@@ -107,8 +131,45 @@ def station_html(st: dict) -> str:
   </li>"""
 
 
+def weg_html(weg: list[dict]) -> str:
+    """Die Kurzfassung des Verfahrensverlaufs als Sprungliste in die Chronik."""
+    zeilen = []
+    for sch in weg:
+        wann = datum_lang(sch["von"])
+        if sch["bis"] != sch["von"]:
+            wo = (f'zuletzt {e(sch["gremien"][-1])}, '
+                  f'{datum_lang(sch["bis"])}')
+        else:
+            wo = e(sch["gremien"][0])
+        if sch["strang"]:
+            wo = f'{e(sch["strang"])} &middot; {wo}'
+        zeilen.append(f"""    <li><a href="#station-{sch['nr']}">
+      <span class="wann">{wann}</span>
+      <span class="wasname">{e(sch['name'])}</span>
+      <span class="wo">{wo}</span>
+    </a></li>""")
+    return f"""
+<section class="weg" aria-labelledby="wegtitel">
+  <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
+  <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
+  <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
+  Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.
+  Stationen, deren Titel keinen Verfahrensschritt nennt, stehen nur in der
+  Chronik darunter — diese Übersicht ersetzt sie nicht. Jede Zeile führt zur
+  zugehörigen Station.</p>
+  <ol class="wegliste">
+{chr(10).join(zeilen)}
+  </ol>
+</section>
+"""
+
+
 def seite_bauen(vg: dict) -> str:
     stationen = sorted(vg["s"], key=lambda s: s["d"])
+    for nr, st in enumerate(stationen, 1):
+        st["_nr"] = nr
+    weg = schritte(stationen)
     von, bis = stationen[0]["d"], stationen[-1]["d"]
     gremien = sorted({s["gl"] for s in stationen})
     nummern = [n for n in vg["v"].split(" · ") if n]
@@ -141,6 +202,7 @@ def seite_bauen(vg: dict) -> str:
 
 <p class="gremienzeile">{e(', '.join(gremien))}</p>
 {amtstitel}
+{weg_html(weg) if lohnt(weg, stationen) else ""}
 
 <p>Der Wortlaut stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse
 aus der Zeile „Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind

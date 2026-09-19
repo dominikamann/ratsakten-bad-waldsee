@@ -846,6 +846,29 @@ ol.chronik .wortlaut{margin:0 0 10px;max-width:62ch;font-size:14.5px;line-height
   color:var(--muted);max-width:78ch;
 }
 .amtstitel b{color:var(--ink-2);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+/* Kurzfassung des Verfahrensverlaufs, ueber der Chronik. Sie muss auf dem
+   Handy in einem Blick lesbar sein — deshalb drei kurze Zeilen je Schritt
+   statt einer breiten Tabellenzeile. */
+section.weg{margin:26px 0 0;padding:18px 16px 6px;background:var(--surface);
+  border:1px solid var(--rule)}
+section.weg h2{margin:0;font-size:17px;letter-spacing:-.01em}
+section.weg .woher{margin:6px 0 0;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+section.weg .hinweis{margin:10px 0 0;font-size:13.5px;line-height:1.6;
+  color:var(--muted);max-width:62ch}
+ol.wegliste{list-style:none;margin:14px 0 0;padding:0;counter-reset:wegschritt}
+ol.wegliste > li{border-top:1px solid var(--rule)}
+ol.wegliste > li:first-child{border-top:0}
+ol.wegliste a{display:block;position:relative;padding:12px 0 12px 26px;
+  text-decoration:none;color:inherit;min-height:44px}
+ol.wegliste a:hover .wasname{text-decoration:underline}
+ol.wegliste > li::before{
+  counter-increment:wegschritt;content:counter(wegschritt);position:absolute;
+  margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+ol.wegliste .wann{display:block;font-family:var(--mono);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+ol.wegliste .wasname{display:block;font-weight:600;font-size:15px;margin:3px 0 2px}
+ol.wegliste .wo{display:block;font-size:13px;line-height:1.5;color:var(--muted)}
 .karten{display:grid;gap:10px;margin:24px 0}
 a.karte{
   display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);
@@ -900,12 +923,41 @@ a.karte .meta{
 <p class="gremienzeile">Gemeinderat</p>
 <p class="amtstitel"><b>Amtlicher Titel</b> Sanierung Bad Waldsee "Altstadt III" – Sanierungssatzung – Verlängerung der Durchführungsfrist</p>
 
+<section class="weg" aria-labelledby="wegtitel">
+  <h2 id="wegtitel">Der Weg durch das Verfahren</h2>
+  <p class="woher">Regelbasiert &middot; aus den amtlichen Titeln</p>
+  <p class="hinweis">Aufgeführt ist jeder Schritt, den der amtliche Titel einer
+  Station selbst benennt, in der Reihenfolge seiner ersten Behandlung. Eine
+  Vorlage, die mehrere Gremien durchläuft, steht als <i>ein</i> Schritt.
+  Stationen, deren Titel keinen Verfahrensschritt nennt, stehen nur in der
+  Chronik darunter — diese Übersicht ersetzt sie nicht. Jede Zeile führt zur
+  zugehörigen Station.</p>
+  <ol class="wegliste">
+    <li><a href="#station-3">
+      <span class="wann">10. November 2025</span>
+      <span class="wasname">3. Änderungssatzung zur Erweiterung des Sanierungsgebietes</span>
+      <span class="wo">Gemeinderat</span>
+    </a></li>
+    <li><a href="#station-4">
+      <span class="wann">1. Dezember 2025</span>
+      <span class="wasname">3. Änderungssatzung zur Erweiterung des Sanierungsgebietes</span>
+      <span class="wo">Gemeinderat</span>
+    </a></li>
+    <li><a href="#station-5">
+      <span class="wann">2. März 2026</span>
+      <span class="wasname">4. Änderungssatzung zur Teilaufhebung des Sanierungsgebietes</span>
+      <span class="wo">Gemeinderat</span>
+    </a></li>
+  </ol>
+</section>
+
+
 <p>Der Wortlaut stammt aus den Beschlussprotokollen, die Abstimmungsergebnisse
 aus der Zeile „Ergebnis der Beschlussfassung“. Nichtöffentliche Beratungen sind
 nicht enthalten.</p>
 
 <ol class="chronik">
-  <li>
+  <li id="station-1">
     <p class="wann">18. März 2024 &middot; Gemeinderat
       <span class="sv">SV-42/2024</span></p>
     <p class="sache">Verlängerung der Durchführungsfrist des Sanierungsgebietes „Altstadt III“</p>
@@ -914,7 +966,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZShdVXceCanoikz7arKSGZ4x4pY0-YcbEw406n5fsqq8/Sitzungsvorlage_SV-42-2024.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-42/2024</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw12.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-2">
     <p class="wann">22. April 2024 &middot; Gemeinderat
       <span class="sv">SV-63/2024</span></p>
     <p class="sache">Sanierung Bad Waldsee "Altstadt III" – Sanierungssatzung – Verlängerung der Durchführungsfrist</p>
@@ -923,7 +975,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZTHSE4Z5W6daQ7SqECMkl8XGecd5-AMOe5Bh6DGUe-8x/Sitzungsvorlage_SV-63-2024_1._Ergaenzung_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-63/2024 1. Ergänzung 1. Nachtrag</a><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZQb9Y4Y6ciubCZklBHzO7tvDwvUajbILyxFIMVIU_eFf/Aenderungssatzung_zur_Sanierungssatzung_2017.pdf" target="_blank" rel="noopener noreferrer">Änderungssatzung zur Sanierungssatzung 2017</a></div>
     <p class="quelle"><a href="../ausgaben/2024/kw17.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-3">
     <p class="wann">10. November 2025 &middot; Gemeinderat
       <span class="sv">SV-220/2025</span></p>
     <p class="sache">Sanierungsgebiet "Altstadt III" – 3. Änderungssatzung zur Erweiterung des Sanierungsgebietes</p>
@@ -932,7 +984,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXnxIviZTnEEVtcnFe_0nDTw1aV5iMDgFi--pRVZPp7c/Sitzungsvorlage_SV-220-2025_1._Ergaenzung_1._Nachtrag.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-220/2025 1. Ergänzung 1. Nachtrag</a><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSuprBfBwRo8YnZHNMtHhTj44Jtm_muRkFguwfaG2yBJ/3._Aenderungsatzung_zur_Erweiterung_des_Sanierungsgebietes_mit_Lageplan.pdf" target="_blank" rel="noopener noreferrer">3. Änderungsatzung zur Erweiterung des Sanierungsgebietes mit Lageplan</a></div>
     <p class="quelle"><a href="../ausgaben/2025/kw46.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-4">
     <p class="wann">1. Dezember 2025 &middot; Gemeinderat
       <span class="sv">SV-231/2025</span></p>
     <p class="sache">Sanierungsgebiet "Altstadt III" – 3. Änderungssatzung zur Erweiterung des Sanierungsgebietes</p>
@@ -941,7 +993,7 @@ nicht enthalten.</p>
     <div class="unterlagen"><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZRYM556-rnIxODsaywBm5fyiVP6bfP3INNhHAoMw7lSn/Sitzungsvorlage_SV-231-2025.pdf" target="_blank" rel="noopener noreferrer">Sitzungsvorlage SV-231/2025</a><a class="doc" href="https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVyR9gBEBsw13UDNsHHwO-ebmM9QqoJjn2JW27-sQrDW/3._Aenderungssatzung_zur_Erweiterung_des_Sanierungsgebietes_mit_Lageplan.pdf" target="_blank" rel="noopener noreferrer">3. Änderungssatzung zur Erweiterung des Sanierungsgebietes mit Lageplan</a></div>
     <p class="quelle"><a href="../ausgaben/2025/kw49.html">In der Wochenausgabe nachlesen</a></p>
   </li>
-  <li>
+  <li id="station-5">
     <p class="wann">2. März 2026 &middot; Gemeinderat
       <span class="sv">SV-49/2026</span></p>
     <p class="sache">Sanierungsgebiet „Altstadt III“ – 4. Änderungssatzung zur Teilaufhebung des Sanierungsgebietes</p>
@@ -973,7 +1025,7 @@ nicht enthalten.</p>
     <a href="../gremien.html">Wer entscheidet was</a>
   </nav>
   <p class="brand">Created by <a href="https://amannlabs.eu" rel="noopener">AmannLabs.eu</a></p>
-    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; aktualisiert am 18.09.2026</p>
+    <p class="disclaimer">Alle Angaben und Insights ohne Gew&auml;hr &middot; aktualisiert am 19.09.2026</p>
 </div></footer>
 <a class="hoch" href="#seitenanfang"><span aria-hidden="true">&uarr;</span><span class="sr">Zum Seitenanfang</span></a>
 </body>
