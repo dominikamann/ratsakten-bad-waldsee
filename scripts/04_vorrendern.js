@@ -157,5 +157,22 @@ function rendern(quelle, ziel, beschreibung) {
     fs.mkdirSync(path.dirname(ziel), { recursive: true });
     await rendern(path.join(QUELLE, von), ziel, beschreibung);
   }
+  /* Abgeloeste Reportfassungen entfernen.
+     Der Dateiname traegt den Stichtag, also entsteht bei jedem Lauf mit neuen
+     Daten eine neue Datei. Blieben die alten liegen, saemmelten sich Fassungen
+     an, die von keiner Seite mehr verlinkt sind — dieselbe Klasse wie die
+     verwaisten Wochenausgaben. Geloescht wird ausschliesslich in docs/report/
+     und ausschliesslich, was dieser Lauf nicht selbst geschrieben hat; die
+     Quelle bleibt src/report.html, die Historie liegt in Git. */
+  const aktuell = new Set(SEITEN.map(([, nach]) => path.basename(nach)));
+  const reportverzeichnis = path.join(ZIEL, "report");
+  if (fs.existsSync(reportverzeichnis)) {
+    for (const datei of fs.readdirSync(reportverzeichnis)) {
+      if (datei.endsWith(".html") && !aktuell.has(datei)) {
+        fs.unlinkSync(path.join(reportverzeichnis, datei));
+        console.log(`  abgeloeste Fassung entfernt: report/${datei}`);
+      }
+    }
+  }
   console.log("Fertig. Die Dokumente in docs/ kommen ohne JavaScript aus.");
 })();
