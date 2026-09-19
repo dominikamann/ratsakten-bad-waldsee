@@ -188,7 +188,19 @@ def worum_html(stationen: list[dict], erklaert: set[str]) -> str:
 
 def weg_html(weg: list[dict], stationen: list[dict],
              erklaert: set[str]) -> str:
-    """Die Kurzfassung des Verfahrensverlaufs als Sprungliste in die Chronik."""
+    """Die Kurzfassung des Verfahrensverlaufs als Sprungliste in die Chronik.
+
+    **Hier wird bewusst nicht erklaert.** Jede Zeile ist ein Sprunglink, und
+    `markieren` setzt ein `tabindex`-Element in den Text. Innerhalb eines Links
+    ist das zweifach schaedlich: Ein Tippen auf das erklaerte Wort loest den
+    Sprung aus, statt die Erklaerung zu zeigen — auf dem Handy waere sie
+    unerreichbar —, und ein fokussierbares Element im Link ergibt zwei
+    Tabstopps fuer eine Sache.
+
+    Die Begriffe dieser Liste stehen samt Titel noch einmal in der Chronik
+    darunter; dort wird erklaert, und `erklaert` wird durchgereicht, damit es
+    genau einmal geschieht.
+    """
     # Den Strang nur nennen, wo er unterscheidet. Laeuft ein Vorhaben nur als
     # Flaechennutzungsplanaenderung, stuende in jeder Zeile dasselbe Wort.
     namen = {s["strang"] for s in weg if s["strang"]}
@@ -251,7 +263,7 @@ def weg_html(weg: list[dict], stationen: list[dict],
             teile.append(f'<span class="sv">{e(sch["vorlage"])}</span>')
         zeilen.append(f"""    <li><a href="#station-{sch['nr']}">
       <span class="wann">{datum_lang(sch['von'])}</span>
-      <span class="wasname">{markieren(e(sch['name']), erklaert)}</span>
+      <span class="wasname">{e(sch['name'])}</span>
       <span class="wo">{' &middot; '.join(teile)}</span>
     </a></li>""")
 

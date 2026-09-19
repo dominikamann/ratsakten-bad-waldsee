@@ -35,6 +35,7 @@ BEGRIFFE: list[dict[str, str]] = [
     },
     {
         "name": "Gemeinsamer Ausschuss",
+        "kern": r"Gemeinsame[rn]? Ausschuss",
         "muster": r"Gemeinsame[rn]? Ausschuss|Verwaltungsgemeinschaft",
         "satz": (
             "Bad Waldsee und Bergatreute bilden eine Vereinbarte "
@@ -56,6 +57,7 @@ BEGRIFFE: list[dict[str, str]] = [
     },
     {
         "name": "Abwägung",
+        "kern": r"Abwägung|abgewogen",
         "muster": r"Abwägung|abgewogen|Einwend|Stellungnahmen",
         "satz": (
             "Vor dem Beschluss über einen Bauleitplan müssen die eingegangenen "
@@ -67,6 +69,7 @@ BEGRIFFE: list[dict[str, str]] = [
     },
     {
         "name": "Satzungsbeschluss",
+        "kern": r"Satzungsbeschluss",
         "muster": r"Satzungsbeschluss|als Satzung",
         "satz": (
             "Der letzte Schritt eines Bebauungsplanverfahrens: „Die Gemeinde "
@@ -76,6 +79,7 @@ BEGRIFFE: list[dict[str, str]] = [
     },
     {
         "name": "Ortschaftsrat",
+        "kern": r"Ortschaftsrat",
         "muster": r"Ortschaftsrat|Ortsvorsteher",
         "satz": (
             "Jede der vier Ortschaften hat einen eigenen Rat. Er berät die örtliche "
@@ -87,6 +91,7 @@ BEGRIFFE: list[dict[str, str]] = [
     },
     {
         "name": "Ohne Beschlussfassung",
+        "kern": r"Ohne Beschlussfassung",
         "muster": r"Ohne Beschlussfassung|Kenntnis genommen|zur Kenntnis",
         "satz": (
             "Der Punkt stand auf der Tagesordnung und wurde behandelt, aber nicht "
@@ -116,6 +121,7 @@ BEGRIFFE: list[dict[str, str]] = [
     },
     {
         "name": "Aufstellungsbeschluss",
+        "kern": r"Aufstellungsbeschluss|Aufstellungs- und \w+beschluss",
         # „Aufstellungs- und Überleitungsbeschluss" und „Aufstellungs- und
         # Entwurfsbeschluss" enthalten das ganze Wort nicht — 22 Vorkommen im
         # Bestand. Dieselbe Komposita-Lücke wie seinerzeit beim
@@ -155,6 +161,7 @@ BEGRIFFE: list[dict[str, str]] = [
     },
     {
         "name": "Feststellungsbeschluss",
+        "kern": r"Feststellungsbeschluss",
         "muster": r"Feststellungsbeschluss|Feststellung des Flächennutzungsplans",
         "satz": (
             "Der Abschluss eines Flächennutzungsplan-Verfahrens. Was beim "
@@ -167,6 +174,7 @@ BEGRIFFE: list[dict[str, str]] = [
     },
     {
         "name": "Jahresabschluss und Entlastung",
+        "kern": r"Jahresabschluss",
         "muster": r"Jahresabschluss|Entlastung",
         "satz": (
             "Die Rechnung über ein abgelaufenes Haushaltsjahr. Der Gemeinderat "
@@ -188,8 +196,20 @@ BEGRIFFE: list[dict[str, str]] = [
     },
 ]
 
+# `muster` faengt auch Umschreibungen ein, damit ein Begriff dort erklaert wird,
+# wo die Sache vorkommt. Das darf aber nicht dazu fuehren, dass die Erklaerung
+# ueberwiegend an einem **anderen** Wort haengt: „Abwägung" klebte 25-mal an
+# „Stellungnahmen" und nur 17-mal an „Abwägung" selbst, weil der Satz „Die
+# eingegangenen Stellungnahmen werden … abgewogen" das Nebenwort zuerst nennt.
+# Der Leser sieht dann ein unterstrichenes Wort und eine Erklaerung, die anders
+# heisst.
+#
+# `kern` nennt deshalb die Schreibweisen des Begriffs selbst. Gesucht wird
+# zuerst dort; nur wenn er im Text nicht vorkommt, greift `muster`.
 for _b in BEGRIFFE:
     _b["regex"] = re.compile(_b["muster"], re.IGNORECASE)
+    _b["kernregex"] = (re.compile(_b["kern"], re.IGNORECASE)
+                       if _b.get("kern") else None)
 
 
 def begriffe_finden(text: str) -> list[dict[str, str]]:
@@ -228,7 +248,9 @@ def markieren(text: str, schon_erklaert: set[str]) -> str:
     for b in BEGRIFFE:
         if b["name"] in schon_erklaert:
             continue
-        m = b["regex"].search(text)
+        m = b["kernregex"].search(text) if b["kernregex"] else None
+        if m is None:
+            m = b["regex"].search(text)
         if not m:
             continue
         # Ueberschneidungen verwerfen: „Bebauungsplan" und „Aufstellung des

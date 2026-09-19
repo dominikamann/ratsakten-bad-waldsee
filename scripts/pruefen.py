@@ -102,6 +102,10 @@ def pruefe_begriffe() -> None:
     * Eine Erklaerung landet **in** einer anderen. `markieren` sucht dafuer auf
       dem unveraenderten Text und ersetzt von hinten nach vorn — ein Aufrufer,
       der bereits markierten Text ein zweites Mal hineingibt, umgeht das.
+    * Eine Erklaerung landet **in einem Link**. Dann loest ein Tippen auf das
+      Wort den Verweis aus, statt die Erklaerung zu zeigen: Auf dem Handy ist
+      sie damit unerreichbar, und das `tabindex`-Element ergibt einen zweiten
+      Tabstopp im Link. Aufgefallen an der Sprungliste der Themenseiten.
 
     Das erste Mal wurden die Erklaerungen auf den Themenseiten ausgegeben; dort
     laufen Sachverhalt, Verfahrensweg und Chronik durch **einen** Satz. Ohne
@@ -130,6 +134,12 @@ def pruefe_begriffe() -> None:
                      r'<span class="erklaert"', roh, re.S):
             fehler.append(f"{f.relative_to(WURZEL)}: Erklärung steht in einer "
                           f"anderen Erklärung")
+        # Ueber den Baum, nicht ueber den Text: „irgendwo unterhalb eines <a>"
+        # laesst sich mit einem Muster nicht zuverlaessig fassen.
+        for el in H.parse(str(f)).getroot().xpath('//a//span[@class="erklaert"]'):
+            fehler.append(f"{f.relative_to(WURZEL)}: Erklärung „"
+                          f"{(el.text or '').strip()[:30]}“ steht in einem "
+                          f"Verweis — dort ist sie nicht aufrufbar")
     notiz.append(f"{gesamt} Begriffserklärungen geprüft")
 
 
