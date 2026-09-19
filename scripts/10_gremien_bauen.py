@@ -155,8 +155,9 @@ Beamten der Stadt.</p>
 <h2 class="headline" id="gemeinsamer-ausschuss">Der Gemeinsame Ausschuss</h2>
 <p>Bad Waldsee und Bergatreute bilden eine Vereinbarte Verwaltungsgemeinschaft.
 Deren Erfüllungsaufgabe ist nach der Gemeindeordnung die <b>vorbereitende
-Bauleitplanung</b> — also der Flächennutzungsplan, der festlegt, wo in beiden
-Gemeinden grundsätzlich gebaut, gewerbt oder freigehalten wird. Darüber
+Bauleitplanung</b> — also der Flächennutzungsplan, der für beide Gemeinden
+darstellt, welche Flächen künftig für Wohnen, Gewerbe, Landwirtschaft oder
+Freiraum vorgesehen sind. Darüber
 entscheidet nicht der Gemeinderat allein, sondern ein gemeinsamer Ausschuss
 beider Gemeinden. In den Protokollen ist erkennbar, wie das zusammenwirkt: Der
 Gemeinderat beauftragt seine Vertreter, im Gemeinsamen Ausschuss einer Änderung

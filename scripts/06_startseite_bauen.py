@@ -440,8 +440,11 @@ def naechste_termine(kennzahlen: dict) -> str:
         f'  <h2>Was als N&auml;chstes ansteht</h2>\n'
         f'  <ol class="termine">\n{liste}\n  </ol>\n'
         f'  <p class="fussnote">Angek&uuml;ndigte Sitzungen aus dem Ratsinformationssystem. '
-        f'Sie sind &ouml;ffentlich, soweit nicht ausdr&uuml;cklich nicht&ouml;ffentlich beraten wird — '
-        f'wer hingehen will, kann das ohne Anmeldung. '
+        # „ohne Anmeldung" stand hier ohne Fundstelle. Was gilt, ist die
+        # Oeffentlichkeit der Sitzung; die Einzelheiten stehen belegt auf
+        # „Wer entscheidet was" — hier nur der Verweis dorthin.
+        f'Sie sind &ouml;ffentlich, soweit nicht ausdr&uuml;cklich nicht&ouml;ffentlich '
+        f'beraten wird (<a href="./gremien.html#gemeinderat">was das hei&szlig;t</a>). '
         f'<a href="./termine.html#heute">Alle Termine, auch vergangene</a>.</p>\n'
         f'</section>\n')
 

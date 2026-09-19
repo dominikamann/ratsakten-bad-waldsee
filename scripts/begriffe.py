@@ -49,10 +49,11 @@ BEGRIFFE: list[dict[str, str]] = [
         "name": "Flächennutzungsplan",
         "muster": r"Flächennutzungsplan",
         "satz": (
-            "Der Flächennutzungsplan legt für das ganze Gemeindegebiet in Grundzügen "
-            "fest, welche Flächen künftig wofür vorgesehen sind — Wohnen, Gewerbe, "
-            "Landwirtschaft, Freiraum. Er begründet noch kein Baurecht; das entsteht "
-            "erst über den Bebauungsplan."),
+            "Der Flächennutzungsplan stellt für das ganze Gemeindegebiet in "
+            "Grundzügen dar, welche Flächen künftig wofür vorgesehen sind — Wohnen, "
+            "Gewerbe, Landwirtschaft, Freiraum. Festsetzungen trifft er nicht und "
+            "begründet deshalb noch kein Baurecht; das entsteht erst über den "
+            "Bebauungsplan."),
         "fundstelle": "§ 5 Abs. 1 Satz 1 und § 1 Abs. 2 Baugesetzbuch",
     },
     {
