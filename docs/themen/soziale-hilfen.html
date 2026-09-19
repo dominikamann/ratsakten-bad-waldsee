@@ -834,18 +834,17 @@ p.woherfrei{margin:6px 0 0;font-family:var(--mono);font-size:11px;
   letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 p.hinweisfrei{margin:10px 0 0;font-size:13.5px;line-height:1.6;
   color:var(--muted);max-width:62ch}
-/* Die Gremienzeile liest sich als Reihe von Marken. Als Marke gestaltet und
-   mit Verweis auf „Wer entscheidet was": Der Name allein sagt einem Buerger
-   nicht, was ein Gemeinsamer Ausschuss ist. Mindesthoehe 44 px, damit sie auf
-   dem Handy zu treffen ist. */
-p.gremienzeile{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-p.gremienzeile a,p.gremienzeile span.marke{
-  display:inline-flex;align-items:center;gap:6px;min-height:44px;
-  padding:6px 10px;border:1px solid var(--rule);background:var(--surface);
-  font-size:13px;line-height:1.3;color:inherit;text-decoration:none}
-p.gremienzeile a:hover{border-color:var(--s1)}
-p.gremienzeile b{font-family:var(--mono);font-size:11px;color:var(--muted);
-  font-weight:600}
+/* Die Gremienzeile verweist auf „Wer entscheidet was": Der Name allein sagt
+   einem Buerger nicht, was ein Gemeinsamer Ausschuss ist.
+   **Bewusst keine Kaesten.** Als Marken gestaltet ergaben sie ungleich breite
+   Rechtecke mit ausgefranstem Rand, und bei dem 86 Zeichen langen Namen des
+   Gemeinsamen Ausschusses rutschte die Zahl ans andere Ende des Kastens. Ein
+   solcher Name passt in keine Chip-Reihe. Es bleibt eine Zeile Text, in der
+   nur die Namen als Verweis erkennbar sind. */
+p.gremienzeile a{color:inherit;text-decoration:underline;
+  text-decoration-color:var(--rule);text-underline-offset:3px}
+p.gremienzeile a:hover{text-decoration-color:var(--s1)}
+p.gremienzeile b{color:var(--ink-2);font-weight:600}
 ol.chronik{list-style:none;margin:18px 0 0;padding:0;counter-reset:station}
 ol.chronik > li{
   position:relative;margin:0;padding:18px 0 22px 22px;border-top:1px solid var(--rule);
@@ -944,7 +943,7 @@ a.karte .meta{
   </div>
 </header>
 
-<p class="gremienzeile"><a href="../gremien.html#ausschuesse" title="Was dieses Gremium entscheidet">Verwaltungsausschuss <b>2&times;</b></a></p>
+<p class="gremienzeile"><a href="../gremien.html#ausschuesse" title="Was dieses Gremium entscheidet">Verwaltungsausschuss</a> <b>2&times;</b></p>
 
 <section class="worum" aria-labelledby="worumtitel">
   <h2 id="worumtitel">Aus der ersten Sitzungsvorlage</h2>
