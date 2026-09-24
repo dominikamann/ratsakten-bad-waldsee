@@ -1,21 +1,131 @@
 {
-  "stichtag": "2026-09-19",
+  "stichtag": "2026-09-24",
   "kommende_sitzungen": [
     {
-      "datum": "2026-09-22",
-      "zeit": "19:30",
-      "gremium": "Ortschaftsrat Reute-Gaisbeuren",
+      "datum": "2026-09-28",
+      "zeit": "17:30",
+      "gremium": "Aufsichtsrat der Stadtwerke Bad Waldsee GmbH",
       "tops": 0,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZYI3GRSmaJeR1pUdvTfqBR0",
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZY0OorbJSNHZQivLrBPD9kQ",
       "punkte": []
     },
     {
       "datum": "2026-09-28",
       "zeit": "18:15",
       "gremium": "Gemeinderat",
-      "tops": 0,
+      "tops": 11,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZdP0ydn8uQto-aOMDpyyPGU",
-      "punkte": []
+      "punkte": [
+        {
+          "top": "1",
+          "titel": "Bekanntgabe der in nichtöffentlicher Sitzung getroffenen Entscheidung/en",
+          "vorlage": "",
+          "dokumente": []
+        },
+        {
+          "top": "2",
+          "titel": "Informationen des Oberbürgermeisters",
+          "vorlage": "",
+          "dokumente": []
+        },
+        {
+          "top": "3",
+          "titel": "Ersatzbeschaffung des Rüstwagens (RW) für die Freiwillige Feuerwehr Bad Waldsee, Abteilung Stadt",
+          "vorlage": "SV-143/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-143/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdmzv_ou9dlJXWpc95bZ6myjcfjWtJj4tHTh-yihDgXq/Sitzungsvorlage_SV-143-2026.pdf"
+            },
+            {
+              "titel": "RW 2 2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaWcIccBfbW0wupz78omLeAjGk5rWrbVJnikr6V8xsx_/RW_2_2026.pdf"
+            }
+          ]
+        },
+        {
+          "top": "4",
+          "titel": "Herstellung eines Kunstrasenspielfelds im Geltungsbereich des Bebauungsplans „Sport- und Gesundheitspark Hopfenweiler“",
+          "vorlage": "SV-145/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-145/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdWv4eZqi-sjrEb3Rpl8iEZjFEK47CrZUYuIjzTX6qVv/Sitzungsvorlage_SV-145-2026.pdf"
+            }
+          ]
+        },
+        {
+          "top": "5",
+          "titel": "Tourist-Information – Verlegung und Antrag auf Förderung aus dem Tourimus- Infrastruktur-Programm",
+          "vorlage": "SV-148/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-148/2026 1. Nachtrag",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXsJxSUQJ7qWmuYOQj7KVlK33CS84a9dbzn2gXDaOpt6/Sitzungsvorlage_SV-148-2026_1._Nachtrag.pdf"
+            }
+          ]
+        },
+        {
+          "top": "6",
+          "titel": "Örtliche Bedarfsplanung für das Kindergartenjahr 2026/2027",
+          "vorlage": "SV-125/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-125/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVxPz58nHe6JhBDWu9nWUIXSiwfd6oBh-eioaYntlYpK/Sitzungsvorlage_SV-125-2026.pdf"
+            }
+          ]
+        },
+        {
+          "top": "7",
+          "titel": "Übergangsregelung Kampfhundesteuer",
+          "vorlage": "SV-158/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-158/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZeeyJfKDCZXtEp0uj0eX97qO6qdva54jDbXUSjwxlFnT/Sitzungsvorlage_SV-158-2026.pdf"
+            }
+          ]
+        },
+        {
+          "top": "8",
+          "titel": "Finanzbericht der großen Kreisstadt Bad Waldsee sowie des Eigenbetriebs Städt. Entwässerung -  1. Halbjahr 2026",
+          "vorlage": "SV-117/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-117/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXXou3T7V-755fC4jBfUcrQoB2hgPVZv1WN2pqV8o4aF/Sitzungsvorlage_SV-117-2026.pdf"
+            }
+          ]
+        },
+        {
+          "top": "9",
+          "titel": "Pflegesatzverhandlungen Städt. Alten- und Pflegeheim Spital zum Hl. Geist",
+          "vorlage": "SV-157/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-157/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSzTzDiu8eTi6o4SG6LaHME7naFKDLjWfnWLMvDeRcA5/Sitzungsvorlage_SV-157-2026.pdf"
+            },
+            {
+              "titel": "Heimentgelte Spital zum Hl. Geistab 01.10.2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZU0XLL8PL6dc7_jk3oGp_hmUAsPGFbVEPGeZULEVdi0s/Heimentgelte_Spital_zum_Hl._Geistab_01.10.2026.pdf"
+            }
+          ]
+        },
+        {
+          "top": "10",
+          "titel": "Verschiedenes",
+          "vorlage": "",
+          "dokumente": []
+        },
+        {
+          "top": "11",
+          "titel": "Bekanntgaben",
+          "vorlage": "",
+          "dokumente": []
+        }
+      ]
     },
     {
       "datum": "2026-09-30",
@@ -82,11 +192,11 @@
       "punkte": []
     }
   ],
-  "sitzungen": 167,
+  "sitzungen": 168,
   "tagesordnungspunkte": 621,
   "vorlagen": 302,
-  "dokumente": 630,
-  "protokolle": 72,
+  "dokumente": 631,
+  "protokolle": 73,
   "gremien": {
     "Gemeinderat": {
       "sitzungen": 30,
@@ -94,7 +204,7 @@
       "tops": 385
     },
     "Ortschaftsrat Reute-Gaisbeuren": {
-      "sitzungen": 28,
+      "sitzungen": 29,
       "protokolle": 0,
       "tops": 0
     },
@@ -120,7 +230,7 @@
     },
     "Verwaltungsausschuss": {
       "sitzungen": 17,
-      "protokolle": 14,
+      "protokolle": 15,
       "tops": 68
     },
     "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute": {
@@ -162,8 +272,8 @@
     "Verkehr & Mobilität": 6
   },
   "abstimmungen": {
-    "gesamt": 337,
-    "einstimmig": 274,
+    "gesamt": 338,
+    "einstimmig": 275,
     "nicht_einstimmig": 63,
     "mit_nein": 28,
     "mit_enthaltung": 50,
@@ -177,7 +287,7 @@
         "strittig": 18
       },
       "2026": {
-        "gesamt": 77,
+        "gesamt": 78,
         "strittig": 15
       }
     }

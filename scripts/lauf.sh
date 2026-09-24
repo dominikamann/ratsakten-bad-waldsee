@@ -73,22 +73,27 @@ uv run --quiet python scripts/11_themen_bauen.py
 log "8/14  Terminseite erzeugen"
 uv run --quiet python scripts/12_termine_bauen.py
 
-log "9/14  Erkenntnisse sammeln"
-uv run --quiet --with lxml python scripts/09_befunde_bauen.py
-
-log "10/14  Seite „Wer entscheidet was“ erzeugen"
-uv run --quiet python scripts/10_gremien_bauen.py
-
-log "11/14  Startseite erzeugen"
-uv run --quiet python scripts/06_startseite_bauen.py
-
 # Vor dem Vorrendern, nicht danach: Schritt 04 liest den Quelltext des Reports
 # und schreibt ihn unter dem Stichtag als Dateinamen nach docs/report/.
-log "12/14  Kennzahlen in den Report eintragen"
+log "9/14  Kennzahlen in den Report eintragen"
 uv run --quiet python scripts/16_report_pflegen.py
 
-log "13/14  Report vorrendern"
+# Der Report entsteht, **bevor** die Seiten gebaut werden, die auf ihn
+# verweisen. Schritt 09 und 06 nehmen seinen Dateinamen aus dem Bestand von
+# docs/report/, und Schritt 04 entfernt dort die abgeloeste Fassung. Stuenden
+# sie davor, verwiesen Erkenntnisse und Startseite bei jedem Stichtagswechsel
+# auf eine Datei, die dieser Lauf gerade geloescht hat.
+log "10/14  Report vorrendern"
 node scripts/04_vorrendern.js | tail -1
+
+log "11/14  Erkenntnisse sammeln"
+uv run --quiet --with lxml python scripts/09_befunde_bauen.py
+
+log "12/14  Seite „Wer entscheidet was“ erzeugen"
+uv run --quiet python scripts/10_gremien_bauen.py
+
+log "13/14  Startseite erzeugen"
+uv run --quiet python scripts/06_startseite_bauen.py
 
 log "14/14  Kennzahlen in die README eintragen"
 uv run --quiet python scripts/13_readme_pflegen.py

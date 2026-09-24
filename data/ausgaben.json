@@ -1593,20 +1593,38 @@
    "zeitraum": "10.08.–11.09.2026"
   },
   "38": {
-   "abschluesse": {},
-   "ausstehend": 1,
-   "beschluesse": 0,
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
+   "ausstehend": 0,
+   "beschluesse": 1,
    "bis_iso": "2026-09-19",
    "einordnung": false,
    "gremien": [
     "VA"
    ],
-   "laufend": true,
+   "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
    "themen": 5,
    "von_iso": "2026-09-12",
    "zeitraum": "12.09.–19.09.2026"
+  },
+  "39": {
+   "abschluesse": {},
+   "ausstehend": 1,
+   "beschluesse": 0,
+   "bis_iso": "2026-09-24",
+   "einordnung": false,
+   "gremien": [
+    "OR"
+   ],
+   "laufend": true,
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "themen": 0,
+   "von_iso": "2026-09-20",
+   "zeitraum": "20.09.–24.09.2026"
   }
  }
 }

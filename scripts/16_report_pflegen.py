@@ -119,7 +119,9 @@ def stellen() -> list[tuple[str, tuple]]:
         # Der Korrekturhinweis traegt ein eigenes Datum — das ist der Tag der
         # Korrektur, nicht der Stichtag. Er wird deshalb **nicht** mitgesetzt.
         (r"(<b>Stichtag:</b> )(?:\d+\. \w+ \d{4})", (lang,)),
-        (r"(ohne Gewähr · Stand )[\d.]+", (kurz,)),
+        # Zwischen „ohne Gewaehr" und „Stand" steht seit dem 19.09.2026 der
+        # Verweis auf den Haftungsausschluss. Das Muster traegt ihn mit.
+        (r"(Haftungsausschluss</a> · Stand )[\d.]+", (kurz,)),
         # --- Transparenzkapitel
         (r"(Belege: )\d+( erfasste Sitzungen, davon )\d+( Ortschaftsrats)",
          (sitzungen, ortschaftsrat)),
