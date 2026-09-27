@@ -388,7 +388,11 @@ def naechste_termine(kennzahlen: dict) -> str:
     for t in kommend:
         d = dt.date.fromisoformat(t["datum"])
         hin = (d - heute).days
-        bald = ("morgen" if hin == 1 else f"in {hin} Tagen" if hin <= 14 else "")
+        # „in 0 Tagen" stand am 28.09.2026 auf der Startseite: Die Staffelung
+        # kannte „morgen" und „in N Tagen", aber nicht den Tag selbst. Sichtbar
+        # wird die Luecke nur an einem Sitzungstag.
+        bald = ("heute" if hin == 0 else "morgen" if hin == 1
+                else f"in {hin} Tagen" if hin <= 14 else "")
         punkte = t.get("punkte") or []
         sitzung = t.get("url") or ""
 

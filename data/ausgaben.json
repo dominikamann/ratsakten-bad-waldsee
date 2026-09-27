@@ -1619,7 +1619,7 @@
    "gremien": [
     "OR"
    ],
-   "laufend": true,
+   "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 1,
    "themen": 0,
