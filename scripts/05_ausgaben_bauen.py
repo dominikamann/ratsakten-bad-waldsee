@@ -28,11 +28,13 @@ import html
 import json
 import logging
 import re
+from collections.abc import Sequence
 from pathlib import Path
 
 from begriffe import markieren
 from seite import aktuelle_ausgabe_setzen, fuss, kopf, rubrikname
 from textwerk import (
+    VERMERKE,
     haeufigkeiten_laden,
     leertrennung_reparieren,
     sachverhalt_lesen,
@@ -256,19 +258,70 @@ def beschluesse_lesen(text: str) -> list[dict]:
     return ergebnisse
 
 
-def bekanntgaben_lesen(text: str) -> str | None:
-    """Den Text unter „Bekanntgabe der in nichtöffentlicher Sitzung …“ holen."""
+def bekanntgaben_lesen(text: str, tops: Sequence[str] = ()) -> str | None:
+    """Den Text unter „Bekanntgabe der in nichtöffentlicher Sitzung …“ holen.
+
+    Das Ende dieses Punktes ist der **naechste Tagesordnungspunkt derselben
+    Sitzung**. Frueher wurde nur vor einer Handvoll Formalia geschnitten
+    („Informationen des", „Ehrungen", „Verschiedenes" …). Folgt stattdessen
+    ein Sachthema, lief der Auszug einfach weiter: Die Ausgabe der KW 38/2026
+    zeigte unter „Wortlaut des Protokolls" den Bekanntgabesatz und dahinter
+    zwei oeffentliche Beschluesse (Integrationsbericht SV-118/2026, Dorfmitte
+    Osterhofen SV-152/2026) — oeffentlich Beschlossenes, dargestellt als
+    Bekanntgabe aus nichtoeffentlicher Sitzung. Das ist mehr als ein
+    Schoenheitsfehler; es stellt die Herkunft einer Entscheidung falsch dar.
+
+    Die Titel stehen in `sitzungen.json` und damit unabhaengig vom Protokoll
+    fest. Geschnitten wird beim fruehesten von ihnen — nicht beim ersten der
+    Liste, denn die Reihenfolge im Protokoll muss der Tagesordnung nicht
+    folgen. Ohne Titel bleibt die alte Formalia-Regel als Rueckfall.
+    """
     m = re.search(r"Bekanntgabe der in nichtöffentlicher Sitzung getroffenen "
                   r"Entscheidung/?e?n?\s*(.{0,900})", text)
     if not m:
         return None
     roh = m.group(1).strip()
-    roh = re.split(r"\s\d{1,2}\s+(?:Informationen des|Ehrungen|Verschiedenes|"
-                   r"Bekanntgaben|Einwohnerfragestunde)", roh)[0]
+
+    # Der naechste Punkt der Tagesordnung beendet die Bekanntgabe. Verglichen
+    # wird ein Titelanfang: Im Protokoll ist der Titel umgebrochen, und die
+    # Trennung am Zeilenende ist zu diesem Zeitpunkt bereits repariert — der
+    # ganze Titel findet sich deshalb nicht immer wieder, sein Anfang schon.
+    grenzen = []
+    for titel in tops:
+        anfang = re.sub(r"\s+", " ", titel).strip()[:40]
+        if len(anfang) < 12 or anfang.startswith("Bekanntgabe der in nicht"):
+            continue
+        i = roh.find(anfang)
+        if i > 0:
+            grenzen.append(i)
+    if grenzen:
+        roh = roh[:min(grenzen)]
+    else:
+        roh = re.split(r"\s\d{1,2}\s+(?:Informationen des|Ehrungen|Verschiedenes|"
+                       r"Bekanntgaben|Einwohnerfragestunde)", roh)[0]
+
     roh = re.sub(r"Beschlussprotokoll der öffentlichen Sitzung.{0,80}", "", roh)
-    if len(roh) < 40 or re.match(r"^(Ohne Beschlussfassung|Keine Punkte)", roh):
+    # Vor dem Titel steht seine Nummer; sie bleibt sonst am Ende stehen.
+    roh = re.sub(r"\s+\d{1,2}\s*$", "", roh.strip())
+    # Steht dort ein Vermerk, gab es nichts bekanntzugeben. Geprueft wird
+    # gegen dieselbe Liste wie ueberall sonst (textwerk.VERMERKE) statt gegen
+    # zwei handgeschriebene Wendungen: „Keine Bekanntgaben." fehlte darin und
+    # stand deshalb in drei Ausgaben als Block, gefuellt mit dem Text der
+    # folgenden Punkte. Gross- und Kleinschreibung bleibt aussen vor, denn am
+    # 02.12.2024 steht „ohne Beschlussfassung" klein.
+    if any(re.match(rf"(?i)^{re.escape(v)}", roh) for v in VERMERKE):
         return None
-    return roh.strip()[:700]
+    # „Dieser Tagesordnungspunkt wurde nicht in Anspruch genommen" (29.01.2024)
+    # sagt dasselbe wie ein Vermerk: Es gab nichts bekanntzugeben. Unter der
+    # Ueberschrift „Was hinter verschlossenen Tueren entschieden wurde" waere
+    # der Satz irrefuehrend.
+    if re.match(r"(?i)^Dieser Tagesordnungspunkt wurde nicht", roh):
+        return None
+    if len(roh) < 40:
+        return None
+    # Geschwaerzt wird an der Quelle, wie beim Beschlusstext: Dieser Text geht
+    # unveraendert auf die Seite.
+    return schwaerzen(roh.strip())[:700]
 
 
 def datum_lang(d: dt.date) -> str:
@@ -562,9 +615,21 @@ def wochen_sammeln(jahr: int, bis: str, erschienen: dict | None = None) -> dict[
                 b["datum"] = tag
                 if b["titel"]:
                     w["beschluesse"].append(b)
-            bg = bekanntgaben_lesen(text)
+            bg = bekanntgaben_lesen(text, s.get("tops") or [])
             if bg:
-                w["bekanntgaben"].append({"datum": tag, "gremium": name, "text": bg})
+                # Der Weg zur Quelle. Die Dateien heissen <datum>_<gremium>.pdf
+                # und tragen ab der zweiten ein „_2", „_3" — in derselben
+                # Reihenfolge, in der die Adressen in sitzungen.json stehen.
+                # Daraus laesst sich die Adresse des gelesenen Protokolls
+                # zurueckgewinnen, ohne sie ein zweites Mal zu fuehren.
+                nr = pfad.stem[len(erwartet):].lstrip("_")
+                i = int(nr) - 1 if nr.isdigit() else 0
+                urls = s.get("protokolle") or []
+                w["bekanntgaben"].append({
+                    "datum": tag, "gremium": name, "text": bg,
+                    "url": urls[i] if i < len(urls) else "",
+                    "sitzung": s.get("url") or "",
+                })
 
     # Die laufende Woche bekommt immer eine Ausgabe, damit stets eine aktuelle
     # existiert — auch wenn in ihr nicht getagt wurde.
@@ -804,8 +869,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
             wer = (f"{artikel(gremien_kurz[0]).capitalize()} <b>{e(gremien_kurz[0])}</b> "
                    f"tagte am {w['sitzungen'][0]['datum'].strftime('%d.%m.%Y')}")
         if n_b:
-            bilanz = (f"{n_b} {'Beschluss' if n_b == 1 else 'Beschlüsse'} "
-                      "sind daraus nachlesbar")
+            # Das Zeitwort muss mitgehen: „1 Beschluss sind daraus nachlesbar"
+            # stand so in jeder Ausgabe mit genau einem Beschluss.
+            bilanz = (f"{n_b} {'Beschluss ist' if n_b == 1 else 'Beschlüsse sind'} "
+                      "daraus nachlesbar")
             if strittig_n:
                 bilanz += (f", {strittig_n} davon "
                            f"{'fiel' if strittig_n == 1 else 'fielen'} nicht einstimmig")
@@ -1323,6 +1390,16 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
 
     # --- Bekanntgaben aus nichtöffentlicher Sitzung
     for bg in w["bekanntgaben"]:
+        # Ein Zitat ohne Weg zur Quelle laesst sich nicht nachschlagen. Der
+        # Block zeigte den Wortlaut, nannte aber weder das Protokoll noch die
+        # Sitzung — als einziger Block der Ausgabe. Bevorzugt verlinkt wird
+        # das Protokoll selbst, weil genau dort der zitierte Satz steht.
+        ziel, was = ((bg.get("url"), "Beschlussprotokoll der Sitzung (PDF)")
+                     if bg.get("url") else
+                     (bg.get("sitzung"), "Sitzung im Ratsinformationssystem"))
+        quelle_bg = (f'    <p class="note"><a class="doc" href="{e(ziel)}" '
+                     f'target="_blank" rel="noopener noreferrer">{was}</a></p>\n'
+                     if ziel else "")
         t.append(f"""
 <article>
   <div class="rail">
@@ -1332,10 +1409,10 @@ def ausgabe_bauen(jahr: int, kw: int, w: dict, einordnung: dict | None) -> str:
   <div class="body-col">
     <p class="rubrik">Aus nichtöffentlicher Sitzung</p>
     <h2 class="headline">Was hinter verschlossenen Türen entschieden wurde</h2>
-    <p>Zu Beginn der Sitzung gibt das Gremium bekannt, was es zuvor nichtöffentlich
-    beschlossen hat. Im Protokoll steht dazu wörtlich:</p>
+    <p>Unter dem ersten Tagesordnungspunkt hält das Protokoll fest, was aus
+    nichtöffentlicher Sitzung bekanntgegeben wurde. Dort steht wörtlich:</p>
     <div class="kasten"><p class="lab">Wortlaut des Protokolls</p><p>{e(bg['text'])}</p></div>
-    <p class="note">Bekanntgaben nennen das Ergebnis, nicht die Begründung, die Kosten oder
+{quelle_bg}    <p class="note">Bekanntgaben nennen das Ergebnis, nicht die Begründung, die Kosten oder
     die Alternativen. Wie viel insgesamt nichtöffentlich entschieden wird, ist aus den
     Unterlagen nicht ermittelbar.</p>
   </div>
