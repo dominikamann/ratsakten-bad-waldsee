@@ -1625,6 +1625,23 @@
    "themen": 0,
    "von_iso": "2026-09-20",
    "zeitraum": "20.09.–25.09.2026"
+  },
+  "40": {
+   "abschluesse": {},
+   "ausstehend": 2,
+   "beschluesse": 0,
+   "bis_iso": "2026-09-29",
+   "einordnung": false,
+   "gremien": [
+    "GR",
+    "—"
+   ],
+   "laufend": true,
+   "ohne_protokoll": 0,
+   "sitzungen": 2,
+   "themen": 11,
+   "von_iso": "2026-09-26",
+   "zeitraum": "26.09.–29.09.2026"
   }
  }
 }

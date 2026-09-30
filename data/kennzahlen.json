@@ -1,132 +1,6 @@
 {
-  "stichtag": "2026-09-27",
+  "stichtag": "2026-09-29",
   "kommende_sitzungen": [
-    {
-      "datum": "2026-09-28",
-      "zeit": "17:30",
-      "gremium": "Aufsichtsrat der Stadtwerke Bad Waldsee GmbH",
-      "tops": 0,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZY0OorbJSNHZQivLrBPD9kQ",
-      "punkte": []
-    },
-    {
-      "datum": "2026-09-28",
-      "zeit": "18:15",
-      "gremium": "Gemeinderat",
-      "tops": 11,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZdP0ydn8uQto-aOMDpyyPGU",
-      "punkte": [
-        {
-          "top": "1",
-          "titel": "Bekanntgabe der in nichtöffentlicher Sitzung getroffenen Entscheidung/en",
-          "vorlage": "",
-          "dokumente": []
-        },
-        {
-          "top": "2",
-          "titel": "Informationen des Oberbürgermeisters",
-          "vorlage": "",
-          "dokumente": []
-        },
-        {
-          "top": "3",
-          "titel": "Ersatzbeschaffung des Rüstwagens (RW) für die Freiwillige Feuerwehr Bad Waldsee, Abteilung Stadt",
-          "vorlage": "SV-143/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-143/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdmzv_ou9dlJXWpc95bZ6myjcfjWtJj4tHTh-yihDgXq/Sitzungsvorlage_SV-143-2026.pdf"
-            },
-            {
-              "titel": "RW 2 2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZaWcIccBfbW0wupz78omLeAjGk5rWrbVJnikr6V8xsx_/RW_2_2026.pdf"
-            }
-          ]
-        },
-        {
-          "top": "4",
-          "titel": "Herstellung eines Kunstrasenspielfelds im Geltungsbereich des Bebauungsplans „Sport- und Gesundheitspark Hopfenweiler“",
-          "vorlage": "SV-145/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-145/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZdWv4eZqi-sjrEb3Rpl8iEZjFEK47CrZUYuIjzTX6qVv/Sitzungsvorlage_SV-145-2026.pdf"
-            }
-          ]
-        },
-        {
-          "top": "5",
-          "titel": "Tourist-Information – Verlegung und Antrag auf Förderung aus dem Tourimus- Infrastruktur-Programm",
-          "vorlage": "SV-148/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-148/2026 1. Nachtrag",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXsJxSUQJ7qWmuYOQj7KVlK33CS84a9dbzn2gXDaOpt6/Sitzungsvorlage_SV-148-2026_1._Nachtrag.pdf"
-            }
-          ]
-        },
-        {
-          "top": "6",
-          "titel": "Örtliche Bedarfsplanung für das Kindergartenjahr 2026/2027",
-          "vorlage": "SV-125/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-125/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZVxPz58nHe6JhBDWu9nWUIXSiwfd6oBh-eioaYntlYpK/Sitzungsvorlage_SV-125-2026.pdf"
-            }
-          ]
-        },
-        {
-          "top": "7",
-          "titel": "Übergangsregelung Kampfhundesteuer",
-          "vorlage": "SV-158/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-158/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZeeyJfKDCZXtEp0uj0eX97qO6qdva54jDbXUSjwxlFnT/Sitzungsvorlage_SV-158-2026.pdf"
-            }
-          ]
-        },
-        {
-          "top": "8",
-          "titel": "Finanzbericht der großen Kreisstadt Bad Waldsee sowie des Eigenbetriebs Städt. Entwässerung -  1. Halbjahr 2026",
-          "vorlage": "SV-117/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-117/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZXXou3T7V-755fC4jBfUcrQoB2hgPVZv1WN2pqV8o4aF/Sitzungsvorlage_SV-117-2026.pdf"
-            }
-          ]
-        },
-        {
-          "top": "9",
-          "titel": "Pflegesatzverhandlungen Städt. Alten- und Pflegeheim Spital zum Hl. Geist",
-          "vorlage": "SV-157/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-157/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZSzTzDiu8eTi6o4SG6LaHME7naFKDLjWfnWLMvDeRcA5/Sitzungsvorlage_SV-157-2026.pdf"
-            },
-            {
-              "titel": "Heimentgelte Spital zum Hl. Geistab 01.10.2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZU0XLL8PL6dc7_jk3oGp_hmUAsPGFbVEPGeZULEVdi0s/Heimentgelte_Spital_zum_Hl._Geistab_01.10.2026.pdf"
-            }
-          ]
-        },
-        {
-          "top": "10",
-          "titel": "Verschiedenes",
-          "vorlage": "",
-          "dokumente": []
-        },
-        {
-          "top": "11",
-          "titel": "Bekanntgaben",
-          "vorlage": "",
-          "dokumente": []
-        }
-      ]
-    },
     {
       "datum": "2026-09-30",
       "zeit": "19:00",
@@ -190,18 +64,34 @@
       "tops": 0,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZSqHGgfamzfxg9dIcjnYomE",
       "punkte": []
+    },
+    {
+      "datum": "2026-11-24",
+      "zeit": "18:00",
+      "gremium": "Verwaltungsausschuss",
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZWDcsPlxIWNPvszd1zwMMPE",
+      "punkte": []
+    },
+    {
+      "datum": "2026-11-30",
+      "zeit": "18:00",
+      "gremium": "Gemeinderat",
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZTpraQpaTOvFAuYbEdjK15s",
+      "punkte": []
     }
   ],
-  "sitzungen": 168,
-  "tagesordnungspunkte": 621,
-  "vorlagen": 302,
-  "dokumente": 631,
+  "sitzungen": 170,
+  "tagesordnungspunkte": 632,
+  "vorlagen": 309,
+  "dokumente": 642,
   "protokolle": 73,
   "gremien": {
     "Gemeinderat": {
-      "sitzungen": 30,
+      "sitzungen": 31,
       "protokolle": 30,
-      "tops": 385
+      "tops": 396
     },
     "Ortschaftsrat Reute-Gaisbeuren": {
       "sitzungen": 29,
@@ -257,18 +147,23 @@
       "sitzungen": 1,
       "protokolle": 0,
       "tops": 0
+    },
+    "Aufsichtsrat der Stadtwerke Bad Waldsee GmbH": {
+      "sitzungen": 1,
+      "protokolle": 0,
+      "tops": 0
     }
   },
   "themen": {
-    "Formalia ohne Sachinhalt": 251,
-    "Bauleitplanung": 120,
-    "Finanzen & Haushalt": 78,
-    "Bau & Sanierung": 50,
+    "Formalia ohne Sachinhalt": 255,
+    "Bauleitplanung": 121,
+    "Finanzen & Haushalt": 80,
+    "Bau & Sanierung": 51,
     "Energie & Klima": 40,
     "Sonstige Sachthemen": 32,
-    "Kinder, Schule, Soziales": 29,
+    "Kinder, Schule, Soziales": 31,
+    "Kultur, Tourismus, Sport": 8,
     "Gremien & Wahlen": 8,
-    "Kultur, Tourismus, Sport": 7,
     "Verkehr & Mobilität": 6
   },
   "abstimmungen": {
