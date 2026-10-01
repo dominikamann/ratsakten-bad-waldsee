@@ -1,14 +1,6 @@
 {
-  "stichtag": "2026-09-29",
+  "stichtag": "2026-10-01",
   "kommende_sitzungen": [
-    {
-      "datum": "2026-09-30",
-      "zeit": "19:00",
-      "gremium": "Ortschaftsrat Haisterkirch",
-      "tops": 0,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZetlJRm9FZRQylvzFdSgRGw",
-      "punkte": []
-    },
     {
       "datum": "2026-10-06",
       "zeit": "18:00",
@@ -80,9 +72,17 @@
       "tops": 0,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZTpraQpaTOvFAuYbEdjK15s",
       "punkte": []
+    },
+    {
+      "datum": "2026-12-07",
+      "zeit": "18:00",
+      "gremium": "Ausschuss Umwelt/Technik",
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZXrl0N-h63Bl9RX_HeBht8I",
+      "punkte": []
     }
   ],
-  "sitzungen": 170,
+  "sitzungen": 171,
   "tagesordnungspunkte": 632,
   "vorlagen": 309,
   "dokumente": 642,
@@ -103,12 +103,12 @@
       "protokolle": 0,
       "tops": 0
     },
-    "Ortschaftsrat Michelwinnaden": {
-      "sitzungen": 18,
+    "Ortschaftsrat Haisterkirch": {
+      "sitzungen": 19,
       "protokolle": 0,
       "tops": 0
     },
-    "Ortschaftsrat Haisterkirch": {
+    "Ortschaftsrat Michelwinnaden": {
       "sitzungen": 18,
       "protokolle": 0,
       "tops": 0
