@@ -41,12 +41,12 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Erfasste Sitzungen | 171 |
 | Tagesordnungspunkte | 632 |
 | Sitzungsvorlagen | 309 |
-| Dokumente | 642 |
-| Ausgewertete Beschlussprotokolle | 73 |
-| Ausgezählte Abstimmungen | 338 |
+| Dokumente | 643 |
+| Ausgewertete Beschlussprotokolle | 74 |
+| Ausgezählte Abstimmungen | 343 |
 | Gremien | 13 |
 
-**Zeitraum:** 01.01.2024 – 01.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 02.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
@@ -193,7 +193,7 @@ benannten Vorhaben verhandelt wurde, und zeigt die Kette:
 Gesucht wird über Stichwort oder Vorlagennummer; filtern lässt sich nach
 Vorgängen mit Beschluss, nicht einstimmigen Entscheidungen und mehrstufigen
 Verfahren. Zusätzlich lässt sich nach der Höhe des im Beschluss genannten Betrags
-filtern — 21 Vorgänge nennen eine Million Euro oder mehr. Jeder Treffer und jede
+filtern — 22 Vorgänge nennen eine Million Euro oder mehr. Jeder Treffer und jede
 Station führt zur Ausgabe der jeweiligen Woche.
 
 Wo Unterlagen am Tagesordnungspunkt hängen — Sitzungsvorlage, Planteil,
@@ -202,7 +202,7 @@ Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum di
 Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
 Dieser Abschnitt wird **gekürzt wiedergegeben** — bis zu 420 Zeichen, an einer
 Satzgrenze abgeschnitten, mit Verweis auf das vollständige Dokument. Alle
-übrigen Teile der Vorlage bleiben ungelesen. 642 Dokumente sind so erreichbar.
+übrigen Teile der Vorlage bleiben ungelesen. 643 Dokumente sind so erreichbar.
 
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst
@@ -319,7 +319,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │   └── launchd/        Vorlage für den automatischen Montagslauf
 ├── ruff.toml   welche Regeln der Code einhält — ohne sie prüft ruff gegen seine
 │            jeweilige Vorgabeauswahl, die sich mit jeder Version ändert
-└── data/       Kennzahlen, Ausgabenregister und 75 Protokolldateien zu 73 Sitzungen
+└── data/       Kennzahlen, Ausgabenregister und 76 Protokolldateien zu 74 Sitzungen
 ```
 
 ## Auswertung selbst nachvollziehen

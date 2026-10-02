@@ -1,5 +1,5 @@
 {
-  "stichtag": "2026-10-01",
+  "stichtag": "2026-10-02",
   "kommende_sitzungen": [
     {
       "datum": "2026-10-06",
@@ -85,12 +85,12 @@
   "sitzungen": 171,
   "tagesordnungspunkte": 632,
   "vorlagen": 309,
-  "dokumente": 642,
-  "protokolle": 73,
+  "dokumente": 643,
+  "protokolle": 74,
   "gremien": {
     "Gemeinderat": {
       "sitzungen": 31,
-      "protokolle": 30,
+      "protokolle": 31,
       "tops": 396
     },
     "Ortschaftsrat Reute-Gaisbeuren": {
@@ -167,11 +167,11 @@
     "Verkehr & Mobilität": 6
   },
   "abstimmungen": {
-    "gesamt": 338,
-    "einstimmig": 275,
-    "nicht_einstimmig": 63,
-    "mit_nein": 28,
-    "mit_enthaltung": 50,
+    "gesamt": 343,
+    "einstimmig": 278,
+    "nicht_einstimmig": 65,
+    "mit_nein": 29,
+    "mit_enthaltung": 51,
     "je_jahr": {
       "2024": {
         "gesamt": 151,
@@ -182,8 +182,8 @@
         "strittig": 18
       },
       "2026": {
-        "gesamt": 78,
-        "strittig": 15
+        "gesamt": 83,
+        "strittig": 17
       }
     }
   },
@@ -195,6 +195,7 @@
     "2026-01-19",
     "2026-01-20",
     "2026-02-02",
-    "2026-04-13"
+    "2026-04-13",
+    "2026-09-28"
   ]
 }

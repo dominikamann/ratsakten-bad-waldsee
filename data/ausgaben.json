@@ -1628,9 +1628,9 @@
   },
   "40": {
    "abschluesse": {},
-   "ausstehend": 3,
-   "beschluesse": 0,
-   "bis_iso": "2026-10-01",
+   "ausstehend": 2,
+   "beschluesse": 5,
+   "bis_iso": "2026-10-02",
    "einordnung": false,
    "gremien": [
     "GR",
@@ -1642,7 +1642,7 @@
    "sitzungen": 3,
    "themen": 11,
    "von_iso": "2026-09-26",
-   "zeitraum": "26.09.–01.10.2026"
+   "zeitraum": "26.09.–02.10.2026"
   }
  }
 }
