@@ -38,7 +38,7 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 
 | Kennzahl | Wert |
 |---|---|
-| Erfasste Sitzungen | 171 |
+| Erfasste Sitzungen | 172 |
 | Tagesordnungspunkte | 632 |
 | Sitzungsvorlagen | 309 |
 | Dokumente | 643 |
@@ -46,14 +46,14 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Ausgezählte Abstimmungen | 343 |
 | Gremien | 13 |
 
-**Zeitraum:** 01.01.2024 – 02.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 07.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
 
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
-➡️ **[Aktuelle Ausgabe, KW 40/2026](./docs/ausgaben/2026/kw40.html)** — die wöchentliche Ratswoche
-➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 92 Ausgaben der Jahrgänge 2024 bis 2026
+➡️ **[Aktuelle Ausgabe, KW 41/2026](./docs/ausgaben/2026/kw41.html)** — die wöchentliche Ratswoche
+➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 93 Ausgaben der Jahrgänge 2024 bis 2026
 ➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
 ➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf
 ➡️ **[Termine](./docs/termine.html#heute)** — alle Sitzungen, vergangene wie angekündigte
@@ -309,7 +309,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── index.html    Archiv über alle Jahrgänge
 │       ├── 2024/         33 Ausgaben
 │       ├── 2025/         35 Ausgaben
-│       └── 2026/         24 Ausgaben
+│       └── 2026/         25 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 15
 │   ├── lauf.sh         ein Befehl für den ganzen Lauf
@@ -450,7 +450,7 @@ belasten.
 ## Geplant
 
 - [x] Sachverhalt aus der Sitzungsvorlage zu jedem Punkt (`data/vorlagen/`)
-- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (92 Stück)
+- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (93 Stück)
 - [x] Täglicher Lauf als ein Befehl (`scripts/lauf.sh`, `launchd`-Vorlage)
 - [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)
 - [x] Vorgangssuche mit Zeitachse (`docs/suche.html`)

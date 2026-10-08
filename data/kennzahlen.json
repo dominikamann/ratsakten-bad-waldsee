@@ -1,14 +1,6 @@
 {
-  "stichtag": "2026-10-02",
+  "stichtag": "2026-10-07",
   "kommende_sitzungen": [
-    {
-      "datum": "2026-10-06",
-      "zeit": "18:00",
-      "gremium": "Ortschaftsrat Michelwinnaden",
-      "tops": 0,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZa4pYNWfPm2Em2N8ck18h0Q",
-      "punkte": []
-    },
     {
       "datum": "2026-10-08",
       "zeit": "19:00",
@@ -21,7 +13,7 @@
       "datum": "2026-10-12",
       "zeit": "18:00",
       "gremium": "Ausschuss Umwelt/Technik",
-      "tops": 0,
+      "tops": 8,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZXSUiNOA_2UirDaHN9pT3PA",
       "punkte": []
     },
@@ -29,9 +21,54 @@
       "datum": "2026-10-13",
       "zeit": "18:00",
       "gremium": "Verwaltungsausschuss",
-      "tops": 0,
+      "tops": 5,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZVXsCT4asupbS0_ozapxGgA",
-      "punkte": []
+      "punkte": [
+        {
+          "top": "1",
+          "titel": "Bekanntgabe der in nichtöffentlicher Sitzung getroffenen Entscheidung/en",
+          "vorlage": "",
+          "dokumente": []
+        },
+        {
+          "top": "2",
+          "titel": "Verteilung des Fördertopfs \"Soziale Hilfen\" | Zuschüsse für sozial karitativ tätige Vereine und Gruppierungen",
+          "vorlage": "SV-173/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-173/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUOKgnyeW7xfCEhBGHl2BVkq6kIkezrvAhxh3rY8US4j/Sitzungsvorlage_SV-173-2026.pdf"
+            }
+          ]
+        },
+        {
+          "top": "3",
+          "titel": "Jahresabschluss 2025 Städt. Alten- und Pflegeheim Spital zum Hl. Geist",
+          "vorlage": "SV-162/2026",
+          "dokumente": [
+            {
+              "titel": "Sitzungsvorlage SV-162/2026",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZViw7_ZJW0xL38OXdH0u35iYZmFUKp8Yu3fPeqaLl0m0/Sitzungsvorlage_SV-162-2026.pdf"
+            },
+            {
+              "titel": "Festellungsvermerk Jahresabschluss 2025 Städt. Alten- und Pflegeheim Spital zum Hl. Geist",
+              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZRYy5MxW9JmCSSLyNP4uG9deAmPN9CU-gJY9EgTvI0t/Festellungsvermerk_Jahresabschluss_2025_Staedt._Alten-_und_Pflegeheim_Spital_zum_Hl._Geist.pdf"
+            }
+          ]
+        },
+        {
+          "top": "4",
+          "titel": "Verschiedenes",
+          "vorlage": "",
+          "dokumente": []
+        },
+        {
+          "top": "5",
+          "titel": "Bekanntgaben",
+          "vorlage": "",
+          "dokumente": []
+        }
+      ]
     },
     {
       "datum": "2026-10-20",
@@ -80,9 +117,17 @@
       "tops": 0,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZXrl0N-h63Bl9RX_HeBht8I",
       "punkte": []
+    },
+    {
+      "datum": "2026-12-08",
+      "zeit": "18:00",
+      "gremium": "Verwaltungsausschuss",
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZeIMP6fE0gDox-dfFDYkXsc",
+      "punkte": []
     }
   ],
-  "sitzungen": 171,
+  "sitzungen": 172,
   "tagesordnungspunkte": 632,
   "vorlagen": 309,
   "dokumente": 643,
@@ -103,13 +148,13 @@
       "protokolle": 0,
       "tops": 0
     },
-    "Ortschaftsrat Haisterkirch": {
+    "Ortschaftsrat Michelwinnaden": {
       "sitzungen": 19,
       "protokolle": 0,
       "tops": 0
     },
-    "Ortschaftsrat Michelwinnaden": {
-      "sitzungen": 18,
+    "Ortschaftsrat Haisterkirch": {
+      "sitzungen": 19,
       "protokolle": 0,
       "tops": 0
     },
