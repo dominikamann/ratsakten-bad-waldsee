@@ -1,14 +1,6 @@
 {
-  "stichtag": "2026-10-07",
+  "stichtag": "2026-10-09",
   "kommende_sitzungen": [
-    {
-      "datum": "2026-10-08",
-      "zeit": "19:00",
-      "gremium": "Ortschaftsrat Mittelurbach",
-      "tops": 0,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZXrojZNmvBN5GYNNrrV5Nk0",
-      "punkte": []
-    },
     {
       "datum": "2026-10-12",
       "zeit": "18:00",
@@ -125,9 +117,17 @@
       "tops": 0,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZeIMP6fE0gDox-dfFDYkXsc",
       "punkte": []
+    },
+    {
+      "datum": "2026-12-14",
+      "zeit": "17:00",
+      "gremium": "Gemeinderat",
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZbk19TVLLr_VUaAgcytQqsQ",
+      "punkte": []
     }
   ],
-  "sitzungen": 172,
+  "sitzungen": 173,
   "tagesordnungspunkte": 632,
   "vorlagen": 309,
   "dokumente": 643,
@@ -144,7 +144,7 @@
       "tops": 0
     },
     "Ortschaftsrat Mittelurbach": {
-      "sitzungen": 21,
+      "sitzungen": 22,
       "protokolle": 0,
       "tops": 0
     },
