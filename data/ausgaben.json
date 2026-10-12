@@ -1653,7 +1653,7 @@
    "gremien": [
     "OR"
    ],
-   "laufend": true,
+   "laufend": false,
    "ohne_protokoll": 0,
    "sitzungen": 2,
    "themen": 0,

@@ -46,7 +46,7 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Ausgezählte Abstimmungen | 343 |
 | Gremien | 13 |
 
-**Zeitraum:** 01.01.2024 – 09.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 11.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
