@@ -38,26 +38,26 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 
 | Kennzahl | Wert |
 |---|---|
-| Erfasste Sitzungen | 173 |
-| Tagesordnungspunkte | 632 |
-| Sitzungsvorlagen | 309 |
-| Dokumente | 643 |
+| Erfasste Sitzungen | 175 |
+| Tagesordnungspunkte | 645 |
+| Sitzungsvorlagen | 316 |
+| Dokumente | 658 |
 | Ausgewertete Beschlussprotokolle | 74 |
 | Ausgezählte Abstimmungen | 343 |
 | Gremien | 13 |
 
-**Zeitraum:** 01.01.2024 – 11.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 13.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
 
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
-➡️ **[Aktuelle Ausgabe, KW 41/2026](./docs/ausgaben/2026/kw41.html)** — die wöchentliche Ratswoche
-➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 93 Ausgaben der Jahrgänge 2024 bis 2026
+➡️ **[Aktuelle Ausgabe, KW 42/2026](./docs/ausgaben/2026/kw42.html)** — die wöchentliche Ratswoche
+➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 94 Ausgaben der Jahrgänge 2024 bis 2026
 ➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
 ➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf
 ➡️ **[Termine](./docs/termine.html#heute)** — alle Sitzungen, vergangene wie angekündigte
-➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 521 Vorgänge mit ihrem Weg durch die Gremien
+➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 533 Vorgänge mit ihrem Weg durch die Gremien
 ➡️ **[Erkenntnisse](./docs/befunde.html)** — alle 25 Erkenntnisse an einem Ort, eingehaltene wie kritische
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
@@ -202,7 +202,7 @@ Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum di
 Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
 Dieser Abschnitt wird **gekürzt wiedergegeben** — bis zu 420 Zeichen, an einer
 Satzgrenze abgeschnitten, mit Verweis auf das vollständige Dokument. Alle
-übrigen Teile der Vorlage bleiben ungelesen. 643 Dokumente sind so erreichbar.
+übrigen Teile der Vorlage bleiben ungelesen. 658 Dokumente sind so erreichbar.
 
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst
@@ -309,7 +309,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── index.html    Archiv über alle Jahrgänge
 │       ├── 2024/         33 Ausgaben
 │       ├── 2025/         35 Ausgaben
-│       └── 2026/         25 Ausgaben
+│       └── 2026/         26 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 15
 │   ├── lauf.sh         ein Befehl für den ganzen Lauf
@@ -450,7 +450,7 @@ belasten.
 ## Geplant
 
 - [x] Sachverhalt aus der Sitzungsvorlage zu jedem Punkt (`data/vorlagen/`)
-- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (93 Stück)
+- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (94 Stück)
 - [x] Täglicher Lauf als ein Befehl (`scripts/lauf.sh`, `launchd`-Vorlage)
 - [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)
 - [x] Vorgangssuche mit Zeitachse (`docs/suche.html`)

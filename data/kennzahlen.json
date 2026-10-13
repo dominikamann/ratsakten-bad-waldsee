@@ -1,67 +1,6 @@
 {
-  "stichtag": "2026-10-11",
+  "stichtag": "2026-10-13",
   "kommende_sitzungen": [
-    {
-      "datum": "2026-10-12",
-      "zeit": "18:00",
-      "gremium": "Ausschuss Umwelt/Technik",
-      "tops": 8,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZXSUiNOA_2UirDaHN9pT3PA",
-      "punkte": []
-    },
-    {
-      "datum": "2026-10-13",
-      "zeit": "18:00",
-      "gremium": "Verwaltungsausschuss",
-      "tops": 5,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZVXsCT4asupbS0_ozapxGgA",
-      "punkte": [
-        {
-          "top": "1",
-          "titel": "Bekanntgabe der in nichtöffentlicher Sitzung getroffenen Entscheidung/en",
-          "vorlage": "",
-          "dokumente": []
-        },
-        {
-          "top": "2",
-          "titel": "Verteilung des Fördertopfs \"Soziale Hilfen\" | Zuschüsse für sozial karitativ tätige Vereine und Gruppierungen",
-          "vorlage": "SV-173/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-173/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZUOKgnyeW7xfCEhBGHl2BVkq6kIkezrvAhxh3rY8US4j/Sitzungsvorlage_SV-173-2026.pdf"
-            }
-          ]
-        },
-        {
-          "top": "3",
-          "titel": "Jahresabschluss 2025 Städt. Alten- und Pflegeheim Spital zum Hl. Geist",
-          "vorlage": "SV-162/2026",
-          "dokumente": [
-            {
-              "titel": "Sitzungsvorlage SV-162/2026",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZViw7_ZJW0xL38OXdH0u35iYZmFUKp8Yu3fPeqaLl0m0/Sitzungsvorlage_SV-162-2026.pdf"
-            },
-            {
-              "titel": "Festellungsvermerk Jahresabschluss 2025 Städt. Alten- und Pflegeheim Spital zum Hl. Geist",
-              "url": "https://ris.bad-waldsee.de/sdnetrim/UGhVM0hpd2NXNFdFcExjZZRYy5MxW9JmCSSLyNP4uG9deAmPN9CU-gJY9EgTvI0t/Festellungsvermerk_Jahresabschluss_2025_Staedt._Alten-_und_Pflegeheim_Spital_zum_Hl._Geist.pdf"
-            }
-          ]
-        },
-        {
-          "top": "4",
-          "titel": "Verschiedenes",
-          "vorlage": "",
-          "dokumente": []
-        },
-        {
-          "top": "5",
-          "titel": "Bekanntgaben",
-          "vorlage": "",
-          "dokumente": []
-        }
-      ]
-    },
     {
       "datum": "2026-10-20",
       "zeit": "19:30",
@@ -125,12 +64,20 @@
       "tops": 0,
       "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZbk19TVLLr_VUaAgcytQqsQ",
       "punkte": []
+    },
+    {
+      "datum": "2026-12-22",
+      "zeit": "19:30",
+      "gremium": "Ortschaftsrat Reute-Gaisbeuren",
+      "tops": 0,
+      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZUsGFlrg_wC2R5-_EOnTGJA",
+      "punkte": []
     }
   ],
-  "sitzungen": 173,
-  "tagesordnungspunkte": 632,
-  "vorlagen": 309,
-  "dokumente": 643,
+  "sitzungen": 175,
+  "tagesordnungspunkte": 645,
+  "vorlagen": 316,
+  "dokumente": 658,
   "protokolle": 74,
   "gremien": {
     "Gemeinderat": {
@@ -159,14 +106,14 @@
       "tops": 0
     },
     "Ausschuss Umwelt/Technik": {
-      "sitzungen": 18,
+      "sitzungen": 19,
       "protokolle": 17,
-      "tops": 131
+      "tops": 139
     },
     "Verwaltungsausschuss": {
-      "sitzungen": 17,
+      "sitzungen": 18,
       "protokolle": 15,
-      "tops": 68
+      "tops": 73
     },
     "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute": {
       "sitzungen": 11,
@@ -200,13 +147,13 @@
     }
   },
   "themen": {
-    "Formalia ohne Sachinhalt": 255,
-    "Bauleitplanung": 121,
-    "Finanzen & Haushalt": 80,
+    "Formalia ohne Sachinhalt": 261,
+    "Bauleitplanung": 122,
+    "Finanzen & Haushalt": 84,
     "Bau & Sanierung": 51,
-    "Energie & Klima": 40,
+    "Energie & Klima": 41,
     "Sonstige Sachthemen": 32,
-    "Kinder, Schule, Soziales": 31,
+    "Kinder, Schule, Soziales": 32,
     "Kultur, Tourismus, Sport": 8,
     "Gremien & Wahlen": 8,
     "Verkehr & Mobilität": 6
