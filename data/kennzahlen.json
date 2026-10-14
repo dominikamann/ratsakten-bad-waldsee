@@ -1,5 +1,5 @@
 {
-  "stichtag": "2026-10-13",
+  "stichtag": "2026-10-14",
   "kommende_sitzungen": [
     {
       "datum": "2026-10-20",
@@ -77,8 +77,8 @@
   "sitzungen": 175,
   "tagesordnungspunkte": 645,
   "vorlagen": 316,
-  "dokumente": 658,
-  "protokolle": 74,
+  "dokumente": 659,
+  "protokolle": 75,
   "gremien": {
     "Gemeinderat": {
       "sitzungen": 31,
@@ -107,7 +107,7 @@
     },
     "Ausschuss Umwelt/Technik": {
       "sitzungen": 19,
-      "protokolle": 17,
+      "protokolle": 18,
       "tops": 139
     },
     "Verwaltungsausschuss": {
@@ -159,8 +159,8 @@
     "Verkehr & Mobilität": 6
   },
   "abstimmungen": {
-    "gesamt": 343,
-    "einstimmig": 278,
+    "gesamt": 346,
+    "einstimmig": 281,
     "nicht_einstimmig": 65,
     "mit_nein": 29,
     "mit_enthaltung": 51,
@@ -174,7 +174,7 @@
         "strittig": 18
       },
       "2026": {
-        "gesamt": 83,
+        "gesamt": 86,
         "strittig": 17
       }
     }

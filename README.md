@@ -41,12 +41,12 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Erfasste Sitzungen | 175 |
 | Tagesordnungspunkte | 645 |
 | Sitzungsvorlagen | 316 |
-| Dokumente | 658 |
-| Ausgewertete Beschlussprotokolle | 74 |
-| Ausgezählte Abstimmungen | 343 |
+| Dokumente | 659 |
+| Ausgewertete Beschlussprotokolle | 75 |
+| Ausgezählte Abstimmungen | 346 |
 | Gremien | 13 |
 
-**Zeitraum:** 01.01.2024 – 13.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 14.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
@@ -202,7 +202,7 @@ Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum di
 Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
 Dieser Abschnitt wird **gekürzt wiedergegeben** — bis zu 420 Zeichen, an einer
 Satzgrenze abgeschnitten, mit Verweis auf das vollständige Dokument. Alle
-übrigen Teile der Vorlage bleiben ungelesen. 658 Dokumente sind so erreichbar.
+übrigen Teile der Vorlage bleiben ungelesen. 659 Dokumente sind so erreichbar.
 
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst
@@ -319,7 +319,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │   └── launchd/        Vorlage für den automatischen Montagslauf
 ├── ruff.toml   welche Regeln der Code einhält — ohne sie prüft ruff gegen seine
 │            jeweilige Vorgabeauswahl, die sich mit jeder Version ändert
-└── data/       Kennzahlen, Ausgabenregister und 76 Protokolldateien zu 74 Sitzungen
+└── data/       Kennzahlen, Ausgabenregister und 77 Protokolldateien zu 75 Sitzungen
 ```
 
 ## Auswertung selbst nachvollziehen

@@ -1628,7 +1628,7 @@
   },
   "40": {
    "abschluesse": {},
-   "ausstehend": 1,
+   "ausstehend": 0,
    "beschluesse": 5,
    "bis_iso": "2026-10-02",
    "einordnung": false,
@@ -1638,7 +1638,7 @@
     "—"
    ],
    "laufend": false,
-   "ohne_protokoll": 1,
+   "ohne_protokoll": 2,
    "sitzungen": 3,
    "themen": 11,
    "von_iso": "2026-09-26",
@@ -1661,10 +1661,12 @@
    "zeitraum": "03.10.–09.10.2026"
   },
   "42": {
-   "abschluesse": {},
-   "ausstehend": 2,
-   "beschluesse": 0,
-   "bis_iso": "2026-10-13",
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
+   "ausstehend": 1,
+   "beschluesse": 3,
+   "bis_iso": "2026-10-14",
    "einordnung": false,
    "gremien": [
     "AUT",
@@ -1675,7 +1677,7 @@
    "sitzungen": 2,
    "themen": 13,
    "von_iso": "2026-10-10",
-   "zeitraum": "10.10.–13.10.2026"
+   "zeitraum": "10.10.–14.10.2026"
   }
  }
 }
