@@ -1664,9 +1664,9 @@
    "abschluesse": {
     "Durchweg einstimmig": []
    },
-   "ausstehend": 1,
-   "beschluesse": 3,
-   "bis_iso": "2026-10-15",
+   "ausstehend": 0,
+   "beschluesse": 5,
+   "bis_iso": "2026-10-16",
    "einordnung": false,
    "gremien": [
     "AUT",
@@ -1677,7 +1677,7 @@
    "sitzungen": 2,
    "themen": 13,
    "von_iso": "2026-10-10",
-   "zeitraum": "10.10.–15.10.2026"
+   "zeitraum": "10.10.–16.10.2026"
   }
  }
 }

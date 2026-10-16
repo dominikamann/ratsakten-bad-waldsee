@@ -1,5 +1,5 @@
 {
-  "stichtag": "2026-10-15",
+  "stichtag": "2026-10-16",
   "kommende_sitzungen": [
     {
       "datum": "2026-10-20",
@@ -77,8 +77,8 @@
   "sitzungen": 175,
   "tagesordnungspunkte": 645,
   "vorlagen": 316,
-  "dokumente": 659,
-  "protokolle": 75,
+  "dokumente": 660,
+  "protokolle": 76,
   "gremien": {
     "Gemeinderat": {
       "sitzungen": 31,
@@ -112,7 +112,7 @@
     },
     "Verwaltungsausschuss": {
       "sitzungen": 18,
-      "protokolle": 15,
+      "protokolle": 16,
       "tops": 73
     },
     "Gemeinsamer Ausschuss der Vereinbarten Verwaltungsgemeinschaft Bad Waldsee-Bergatreute": {
@@ -159,8 +159,8 @@
     "Verkehr & Mobilität": 6
   },
   "abstimmungen": {
-    "gesamt": 346,
-    "einstimmig": 281,
+    "gesamt": 348,
+    "einstimmig": 283,
     "nicht_einstimmig": 65,
     "mit_nein": 29,
     "mit_enthaltung": 51,
@@ -174,7 +174,7 @@
         "strittig": 18
       },
       "2026": {
-        "gesamt": 86,
+        "gesamt": 88,
         "strittig": 17
       }
     }
