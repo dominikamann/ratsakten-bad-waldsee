@@ -1678,6 +1678,20 @@
    "themen": 13,
    "von_iso": "2026-10-10",
    "zeitraum": "10.10.–16.10.2026"
+  },
+  "43": {
+   "abschluesse": {},
+   "ausstehend": 0,
+   "beschluesse": 0,
+   "bis_iso": "2026-10-19",
+   "einordnung": false,
+   "gremien": [],
+   "laufend": true,
+   "ohne_protokoll": 0,
+   "sitzungen": 0,
+   "themen": 0,
+   "von_iso": "2026-10-17",
+   "zeitraum": "17.10.–19.10.2026"
   }
  }
 }
