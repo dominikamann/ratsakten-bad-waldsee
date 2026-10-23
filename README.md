@@ -38,7 +38,7 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 
 | Kennzahl | Wert |
 |---|---|
-| Erfasste Sitzungen | 175 |
+| Erfasste Sitzungen | 176 |
 | Tagesordnungspunkte | 645 |
 | Sitzungsvorlagen | 316 |
 | Dokumente | 660 |
@@ -46,7 +46,7 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 | Ausgezählte Abstimmungen | 348 |
 | Gremien | 13 |
 
-**Zeitraum:** 01.01.2024 – 19.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 23.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report

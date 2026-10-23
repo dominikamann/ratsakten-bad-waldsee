@@ -1,14 +1,6 @@
 {
-  "stichtag": "2026-10-19",
+  "stichtag": "2026-10-23",
   "kommende_sitzungen": [
-    {
-      "datum": "2026-10-20",
-      "zeit": "19:30",
-      "gremium": "Ortschaftsrat Reute-Gaisbeuren",
-      "tops": 0,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZavqx9_gURc5nSQ2Ov3R7tE",
-      "punkte": []
-    },
     {
       "datum": "2026-11-02",
       "zeit": "18:00",
@@ -74,7 +66,7 @@
       "punkte": []
     }
   ],
-  "sitzungen": 175,
+  "sitzungen": 176,
   "tagesordnungspunkte": 645,
   "vorlagen": 316,
   "dokumente": 660,
@@ -86,7 +78,7 @@
       "tops": 396
     },
     "Ortschaftsrat Reute-Gaisbeuren": {
-      "sitzungen": 29,
+      "sitzungen": 30,
       "protokolle": 0,
       "tops": 0
     },

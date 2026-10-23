@@ -1646,7 +1646,7 @@
   },
   "41": {
    "abschluesse": {},
-   "ausstehend": 2,
+   "ausstehend": 0,
    "beschluesse": 0,
    "bis_iso": "2026-10-09",
    "einordnung": false,
@@ -1654,7 +1654,7 @@
     "OR"
    ],
    "laufend": false,
-   "ohne_protokoll": 0,
+   "ohne_protokoll": 2,
    "sitzungen": 2,
    "themen": 0,
    "von_iso": "2026-10-03",
@@ -1681,17 +1681,19 @@
   },
   "43": {
    "abschluesse": {},
-   "ausstehend": 0,
+   "ausstehend": 1,
    "beschluesse": 0,
-   "bis_iso": "2026-10-19",
+   "bis_iso": "2026-10-23",
    "einordnung": false,
-   "gremien": [],
+   "gremien": [
+    "OR"
+   ],
    "laufend": true,
    "ohne_protokoll": 0,
-   "sitzungen": 0,
+   "sitzungen": 1,
    "themen": 0,
    "von_iso": "2026-10-17",
-   "zeitraum": "17.10.–19.10.2026"
+   "zeitraum": "17.10.–23.10.2026"
   }
  }
 }
