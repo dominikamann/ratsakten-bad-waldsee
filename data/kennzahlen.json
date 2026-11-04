@@ -1,14 +1,6 @@
 {
-  "stichtag": "2026-10-23",
+  "stichtag": "2026-11-04",
   "kommende_sitzungen": [
-    {
-      "datum": "2026-11-02",
-      "zeit": "18:00",
-      "gremium": "Gemeinderat",
-      "tops": 0,
-      "url": "https://ris.bad-waldsee.de/tops/?__=UGhVM0hpd2NXNFdFcExjZaF1uk3NCXRrkNMW_k7x0IU",
-      "punkte": []
-    },
     {
       "datum": "2026-11-23",
       "zeit": "18:00",
@@ -66,16 +58,16 @@
       "punkte": []
     }
   ],
-  "sitzungen": 176,
-  "tagesordnungspunkte": 645,
-  "vorlagen": 316,
-  "dokumente": 660,
-  "protokolle": 76,
+  "sitzungen": 177,
+  "tagesordnungspunkte": 659,
+  "vorlagen": 321,
+  "dokumente": 670,
+  "protokolle": 77,
   "gremien": {
     "Gemeinderat": {
-      "sitzungen": 31,
-      "protokolle": 31,
-      "tops": 396
+      "sitzungen": 32,
+      "protokolle": 32,
+      "tops": 410
     },
     "Ortschaftsrat Reute-Gaisbeuren": {
       "sitzungen": 30,
@@ -139,20 +131,20 @@
     }
   },
   "themen": {
-    "Formalia ohne Sachinhalt": 261,
+    "Formalia ohne Sachinhalt": 267,
     "Bauleitplanung": 122,
-    "Finanzen & Haushalt": 84,
+    "Finanzen & Haushalt": 88,
     "Bau & Sanierung": 51,
-    "Energie & Klima": 41,
-    "Sonstige Sachthemen": 32,
+    "Energie & Klima": 43,
+    "Sonstige Sachthemen": 33,
     "Kinder, Schule, Soziales": 32,
-    "Kultur, Tourismus, Sport": 8,
+    "Kultur, Tourismus, Sport": 9,
     "Gremien & Wahlen": 8,
     "Verkehr & Mobilität": 6
   },
   "abstimmungen": {
-    "gesamt": 348,
-    "einstimmig": 283,
+    "gesamt": 357,
+    "einstimmig": 292,
     "nicht_einstimmig": 65,
     "mit_nein": 29,
     "mit_enthaltung": 51,
@@ -166,7 +158,7 @@
         "strittig": 18
       },
       "2026": {
-        "gesamt": 88,
+        "gesamt": 97,
         "strittig": 17
       }
     }

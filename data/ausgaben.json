@@ -1681,19 +1681,37 @@
   },
   "43": {
    "abschluesse": {},
-   "ausstehend": 1,
+   "ausstehend": 0,
    "beschluesse": 0,
    "bis_iso": "2026-10-23",
    "einordnung": false,
    "gremien": [
     "OR"
    ],
-   "laufend": true,
-   "ohne_protokoll": 0,
+   "laufend": false,
+   "ohne_protokoll": 1,
    "sitzungen": 1,
    "themen": 0,
    "von_iso": "2026-10-17",
    "zeitraum": "17.10.–23.10.2026"
+  },
+  "45": {
+   "abschluesse": {
+    "Durchweg einstimmig": []
+   },
+   "ausstehend": 0,
+   "beschluesse": 9,
+   "bis_iso": "2026-11-04",
+   "einordnung": false,
+   "gremien": [
+    "GR"
+   ],
+   "laufend": true,
+   "ohne_protokoll": 0,
+   "sitzungen": 1,
+   "themen": 14,
+   "von_iso": "2026-10-24",
+   "zeitraum": "24.10.–04.11.2026"
   }
  }
 }

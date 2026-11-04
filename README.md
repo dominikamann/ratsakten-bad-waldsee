@@ -38,26 +38,26 @@ Der erste Report beantwortet diese Fragen für **Bad Waldsee, Januar 2024 bis Se
 
 | Kennzahl | Wert |
 |---|---|
-| Erfasste Sitzungen | 176 |
-| Tagesordnungspunkte | 645 |
-| Sitzungsvorlagen | 316 |
-| Dokumente | 660 |
-| Ausgewertete Beschlussprotokolle | 76 |
-| Ausgezählte Abstimmungen | 348 |
+| Erfasste Sitzungen | 177 |
+| Tagesordnungspunkte | 659 |
+| Sitzungsvorlagen | 321 |
+| Dokumente | 670 |
+| Ausgewertete Beschlussprotokolle | 77 |
+| Ausgezählte Abstimmungen | 357 |
 | Gremien | 13 |
 
-**Zeitraum:** 01.01.2024 – 23.10.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
+**Zeitraum:** 01.01.2024 – 04.11.2026 (Stichtag). Bereits terminierte Sitzungen nach dem
 Stichtag wurden ausgeschlossen, damit die Protokollquote nicht verzerrt wird.
 
 ## Der Report
 
 ➡️ **[Ratsanalyse 2024–2026](./docs/report/2026-09-09.html)** — die große Vollauswertung
-➡️ **[Aktuelle Ausgabe, KW 43/2026](./docs/ausgaben/2026/kw43.html)** — die wöchentliche Ratswoche
-➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 95 Ausgaben der Jahrgänge 2024 bis 2026
+➡️ **[Aktuelle Ausgabe, KW 45/2026](./docs/ausgaben/2026/kw45.html)** — die wöchentliche Ratswoche
+➡️ **[Archiv](./docs/ausgaben/index.html)** — alle 96 Ausgaben der Jahrgänge 2024 bis 2026
 ➡️ **[Wer entscheidet was](./docs/gremien.html)** — wer in der Stadt wofür zuständig ist, mit Fundstellen
-➡️ **[Themen](./docs/themen/index.html)** — 26 Vorhaben mit ihrem vollständigen Verlauf
+➡️ **[Themen](./docs/themen/index.html)** — 27 Vorhaben mit ihrem vollständigen Verlauf
 ➡️ **[Termine](./docs/termine.html#heute)** — alle Sitzungen, vergangene wie angekündigte
-➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 533 Vorgänge mit ihrem Weg durch die Gremien
+➡️ **[Vorgänge durchsuchen](./docs/suche.html)** — 545 Vorgänge mit ihrem Weg durch die Gremien
 ➡️ **[Erkenntnisse](./docs/befunde.html)** — alle 25 Erkenntnisse an einem Ort, eingehaltene wie kritische
 
 Alle Dokumente unter `docs/` sind eigenständige HTML-Dateien ohne externe
@@ -202,7 +202,7 @@ Sitzungsvorlage enthält den Abschnitt „Zum Sachverhalt": dort steht, warum di
 Verwaltung etwas vorschlägt, und das ist oft aufschlussreicher als der Beschluss.
 Dieser Abschnitt wird **gekürzt wiedergegeben** — bis zu 420 Zeichen, an einer
 Satzgrenze abgeschnitten, mit Verweis auf das vollständige Dokument. Alle
-übrigen Teile der Vorlage bleiben ungelesen. 660 Dokumente sind so erreichbar.
+übrigen Teile der Vorlage bleiben ungelesen. 670 Dokumente sind so erreichbar.
 
 Unter jeder Station steht der **beschlossene Wortlaut** — was das Gremium
 tatsächlich gefasst hat. Die Überschrift nennt nur den Verwaltungsvorgang; erst
@@ -309,7 +309,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │       ├── index.html    Archiv über alle Jahrgänge
 │       ├── 2024/         33 Ausgaben
 │       ├── 2025/         35 Ausgaben
-│       └── 2026/         27 Ausgaben
+│       └── 2026/         28 Ausgaben
 ├── src/        Vorlage des Reports (baut Diagramme und Listen per JavaScript auf)
 ├── scripts/    die Verarbeitungskette, Schritt 01 bis 15
 │   ├── lauf.sh         ein Befehl für den ganzen Lauf
@@ -319,7 +319,7 @@ Jede Aussage im Report ist auf ein Originaldokument zurückführbar:
 │   └── launchd/        Vorlage für den automatischen Montagslauf
 ├── ruff.toml   welche Regeln der Code einhält — ohne sie prüft ruff gegen seine
 │            jeweilige Vorgabeauswahl, die sich mit jeder Version ändert
-└── data/       Kennzahlen, Ausgabenregister und 78 Protokolldateien zu 76 Sitzungen
+└── data/       Kennzahlen, Ausgabenregister und 79 Protokolldateien zu 77 Sitzungen
 ```
 
 ## Auswertung selbst nachvollziehen
@@ -450,7 +450,7 @@ belasten.
 ## Geplant
 
 - [x] Sachverhalt aus der Sitzungsvorlage zu jedem Punkt (`data/vorlagen/`)
-- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (95 Stück)
+- [x] Wöchentliche Ausgaben, Jahrgänge 2024 bis 2026 nachgeholt (96 Stück)
 - [x] Täglicher Lauf als ein Befehl (`scripts/lauf.sh`, `launchd`-Vorlage)
 - [x] Prüfung bei jedem Push (`.github/workflows/pruefung.yml`)
 - [x] Vorgangssuche mit Zeitachse (`docs/suche.html`)
@@ -458,7 +458,7 @@ belasten.
 - [x] Archiv der bisherigen Ausgaben
 - [x] Rohdaten zum Nachrechnen (`data/csv/`, siehe unten)
 - [x] Seite „Wer entscheidet was" mit Fundstellen aus Gemeindeordnung und Hauptsatzung
-- [x] Themenseiten: 26 Vorhaben mit allen Stationen (`docs/themen/`)
+- [x] Themenseiten: 27 Vorhaben mit allen Stationen (`docs/themen/`)
 - [x] Sitzungskalender, vergangen und angekündigt (`docs/termine.html`)
 - [x] Ein gemeinsames Fundament für alle Seiten (`scripts/basis.css`, `scripts/seite.py`)
 
