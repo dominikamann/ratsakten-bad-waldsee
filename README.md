@@ -1,5 +1,23 @@
 # Ratsakten Bad Waldsee
 
+> [!CAUTION]
+> ### Keine automatische Aktualisierung mehr
+>
+> Das Ratsinformationssystem der Stadt Bad Waldsee steht seit Ende Oktober 2026 hinter einer
+> Web Application Firewall (WAF) mit Browserprüfung. Automatisierte Abrufe werden seither
+> abgewiesen (HTTP 403). **Dieses Projekt wird deshalb nicht mehr automatisch aktualisiert.**
+>
+> Spannenderweise ist die WAF nicht wirklich eine Hürde und kann in wenigen Minuten umgangen
+> werden. Das ist aber nicht Ziel des Projekts. Schade, dass der transparente automatische
+> Zugriff nicht toleriert wird und die Bürgerinnen und Bürger somit von einem sehr
+> schwer zugänglichen System (keine Verknüpfung zusammengehöriger Vorgänge, keine
+> Themenaufbereitung) abhängig sind.
+>
+> Das Projekt steht weiterhin zur Verfügung und kann, sofern die PDFs und Termine manuell
+> bereitgestellt werden, aktualisiert werden.
+>
+> **Danke an die zahlreichen Leserinnen und Leser, die das Projekt geschätzt haben.**
+
 **Ein Lernprojekt: Was passiert, wenn man öffentliche Gemeinderatsunterlagen maschinell auswertet?**
 
 Kommunalpolitik ist öffentlich — aber sie ist nicht zugänglich. In Bad Waldsee liegen
