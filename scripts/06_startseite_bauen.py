@@ -215,6 +215,23 @@ def bauen() -> str:
   im Netz — verteilt auf Hunderte von PDF-Dateien. Dieses Projekt wertet sie
   maschinell aus und macht daraus etwas Lesbares.</p>
 
+  <div class="hinweis">
+    <p class="lab">&#9888;&#65039; Warnung &middot; Keine automatische Aktualisierung mehr</p>
+    <p>Das Ratsinformationssystem der Stadt Bad Waldsee steht seit Ende Oktober 2026 hinter
+    einer Web Application Firewall (WAF) mit Browserpr&uuml;fung. Automatisierte Abrufe
+    werden seither abgewiesen (HTTP 403). <b>Dieses Projekt wird deshalb nicht mehr
+    automatisch aktualisiert.</b></p>
+    <p>Spannenderweise ist die WAF nicht wirklich eine H&uuml;rde und kann in wenigen
+    Minuten umgangen werden. Das ist aber nicht Ziel des Projekts. Schade, dass der
+    transparente automatische Zugriff nicht toleriert wird und die B&uuml;rgerinnen und
+    B&uuml;rger somit von einem sehr schwer zug&auml;nglichen System (keine Verkn&uuml;pfung
+    zusammengeh&ouml;riger Vorg&auml;nge, keine Themenaufbereitung) abh&auml;ngig sind.</p>
+    <p>Das Projekt steht weiterhin zur Verf&uuml;gung und kann, sofern die PDFs und Termine
+    manuell bereitgestellt werden, aktualisiert werden.</p>
+    <p><b>Danke an die zahlreichen Leserinnen und Leser, die das Projekt gesch&auml;tzt
+    und sich regelm&auml;&szlig;ig informiert haben.</b></p>
+  </div>
+
   <div class="tiles">
 {kachel_html}
   </div>

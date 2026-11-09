@@ -1,6 +1,6 @@
 # Ratsakten Bad Waldsee
 
-> [!CAUTION]
+> [!WARNING]
 > ### Keine automatische Aktualisierung mehr
 >
 > Das Ratsinformationssystem der Stadt Bad Waldsee steht seit Ende Oktober 2026 hinter einer
@@ -16,7 +16,7 @@
 > Das Projekt steht weiterhin zur Verfügung und kann, sofern die PDFs und Termine manuell
 > bereitgestellt werden, aktualisiert werden.
 >
-> **Danke an die zahlreichen Leserinnen und Leser, die das Projekt geschätzt haben.**
+> **Danke an die zahlreichen Leserinnen und Leser, die das Projekt geschätzt und sich regelmäßig informiert haben.**
 
 **Ein Lernprojekt: Was passiert, wenn man öffentliche Gemeinderatsunterlagen maschinell auswertet?**
 
